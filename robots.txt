@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /variant-dark/
+
+Sitemap: https://steppesteel.kz/sitemap.xml

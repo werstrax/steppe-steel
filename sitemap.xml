@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ЗАМЕНИТЬ steppesteel.kz на реальный домен после покупки -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://steppesteel.kz/</loc><priority>1.0</priority></url>
+  <url><loc>https://steppesteel.kz/katalog.html</loc><priority>0.9</priority></url>
+  <url><loc>https://steppesteel.kz/zernohranilishcha.html</loc><priority>0.9</priority></url>
+  <url><loc>https://steppesteel.kz/angary-sklady.html</loc><priority>0.8</priority></url>
+  <url><loc>https://steppesteel.kz/tseha-zavody.html</loc><priority>0.8</priority></url>
+  <url><loc>https://steppesteel.kz/o-kompanii.html</loc><priority>0.7</priority></url>
+  <url><loc>https://steppesteel.kz/kontakty.html</loc><priority>0.7</priority></url>
+  <url><loc>https://steppesteel.kz/blog.html</loc><priority>0.5</priority></url>
+  <url><loc>https://steppesteel.kz/blog-zerno-raschet.html</loc><priority>0.5</priority></url>
+  <url><loc>https://steppesteel.kz/blog-km-kmd.html</loc><priority>0.5</priority></url>
+  <url><loc>https://steppesteel.kz/blog-fundament.html</loc><priority>0.5</priority></url>
+  <url><loc>https://steppesteel.kz/blog-lstk-lmk.html</loc><priority>0.5</priority></url>
+</urlset>

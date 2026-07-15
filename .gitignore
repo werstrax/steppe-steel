@@ -1,0 +1,10 @@
+# служебное / приватное — не публикуем
+.claude/
+variant-dark/
+docs/
+_build_pages.py
+_page_template.html
+_*
+*.bak
+Thumbs.db
+.DS_Store
