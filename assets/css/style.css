@@ -1097,6 +1097,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .map-home .map-home-ring { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: .5; }
 .map-home-label { font-size: 18px; font-weight: 700; fill: var(--text); letter-spacing: .05em; }
 .map-sub { font-size: 13px; fill: var(--muted); }
+.map-home-label--short, .map-sub--short { display: none; }
 .logistics__content p { color: var(--text); margin-bottom: 20px; }
 .logistics__punch { font-weight: 600; }
 .logistics__content .leader-list { margin-top: 28px; }
@@ -2051,12 +2052,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   .footer__stamp .footer__cell:last-child { border-bottom: none; }
   .footer__bottom { flex-direction: column; }
   .wa-float { right: 16px; bottom: 16px; }
-  /* карта: горизонтальный скролл вместо нечитаемого сжатия */
-  .logistics__map { overflow-x: auto; }
-  .map-svg { min-width: 560px; }
-  .map-city text { font-size: 21px; }
-  .map-home-label { font-size: 22px; }
-  .map-dist { font-size: 17px; }
+  /* карта: вписываем целиком, короткие подписи — без скролла и обрезки завода */
+  .logistics__map { overflow-x: visible; }
+  .map-svg { min-width: 0; }
+  .map-country { font-size: 25px; }
+  .map-city text { font-size: 26px; }
+  .map-dist { font-size: 23px; }
+  .map-home-label { font-size: 30px; }
+  .map-sub { font-size: 21px; }
+  .map-home-label--full, .map-sub--full { display: none; }
+  .map-home-label--short, .map-sub--short { display: inline; }
 }
 
 /* ───────── Адаптив фото-блоков ───────── */
