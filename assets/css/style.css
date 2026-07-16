@@ -331,6 +331,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   letter-spacing: -.015em;
   margin-bottom: 24px;
   text-shadow: 0 2px 30px rgba(0,0,0,.4);
+  overflow-wrap: break-word;
 }
 .hero__title .accent { color: var(--accent); }
 .hero__title-term { display: block; margin-top: 14px; font-size: .58em; font-weight: 700; color: rgba(255,255,255,.9); }
@@ -2073,7 +2074,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   .prof__grid { grid-template-columns: 1fr; }
   .prof__fact { flex-direction: column; align-items: flex-start; }
   .hero { min-height: 0; padding-bottom: 0; }
-  .hero__inner { padding: 40px 0 48px; }
+  .hero__inner { padding: 40px 24px 48px; }
 }
 @media (max-width: 640px) {
   .gallery { grid-template-columns: 1fr; grid-auto-rows: 210px; }
