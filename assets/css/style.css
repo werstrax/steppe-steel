@@ -549,7 +549,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
   gap: 32px;
-  align-items: start;
+  /* stretch — иначе правая колонка (2 фото) выше левой, и слева зияет пустота */
+  align-items: stretch;
 }
 .factory__plan {
   position: relative;
