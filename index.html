@@ -3,8 +3,8 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Steppe Steel — завод металлоконструкций в Казахстане: ангары, склады, цеха под ключ | ЛСТК и чёрный металл</title>
- <meta name="description" content="Steppe Steel (Костанайская область) — современный завод металлоконструкций полного цикла: ЛСТК и чёрный металл. Ангары, склады, цеха, зернохранилища, промышленные объекты под ключ. Плазменная и лазерная резка, фермы и колонны, раздел КМ, готовность к крупным проектам. Расчёт за 24 часа — WhatsApp, КП.">
+ <title>Steppe Steel — завод металлоконструкций и ЛСТК в Казахстане</title>
+ <meta name="description" content="Steppe Steel (Костанайская обл.) — завод металлоконструкций полного цикла: ЛСТК и чёрный металл. Ангары, склады, цеха, зернохранилища под ключ. Расчёт за 24 ч.">
  <!-- ЗАМЕНИТЬ: после покупки домена вписать реальный адрес в canonical и og:url -->
  <link rel="canonical" href="https://steppesteel.kz/">
  <meta property="og:type" content="website">
@@ -19,7 +19,7 @@
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="assets/css/style.css?v=9">
+ <link rel="stylesheet" href="assets/css/style.css?v=10">
 
  <script type="application/ld+json">
  {
@@ -413,13 +413,13 @@
  <p class="section-subtitle reveal">Не «поколение» — а&nbsp;чертёж. Переключайте Sigma, C и&nbsp;П&nbsp;— сечение отрисуется прямо на&nbsp;листе, с&nbsp;размерными выносками как в&nbsp;разделе КМ. Одна линия профилирования даёт одинаковую геометрию на&nbsp;всей партии, толщина оцинкованной стали — до&nbsp;3,5&nbsp;мм под расчётную нагрузку.</p>
 
  <div class="prof__tabs reveal" role="tablist" aria-label="Профили Steppe Steel">
- <button class="prof__tab is-active mono" role="tab" aria-selected="true" data-prof="sigma">
+ <button class="prof__tab is-active mono" role="tab" aria-selected="true" data-prof="sigma" id="prof-tab-sigma" aria-controls="prof-panel-sigma">
  <svg viewBox="0 0 24 24" class="prof__glyph" aria-hidden="true"><path d="M18 5 H7 V10 L11 12 L7 14 V19 H18" fill="none"/></svg>Σ SIGMA
  </button>
- <button class="prof__tab mono" role="tab" aria-selected="false" data-prof="c">
+ <button class="prof__tab mono" role="tab" aria-selected="false" data-prof="c" id="prof-tab-c" aria-controls="prof-panel-c">
  <svg viewBox="0 0 24 24" class="prof__glyph" aria-hidden="true"><path d="M18 5 H7 V19 H18 M18 5 V8 M18 19 V16" fill="none"/></svg>С C-ПРОФИЛЬ
  </button>
- <button class="prof__tab mono" role="tab" aria-selected="false" data-prof="p">
+ <button class="prof__tab mono" role="tab" aria-selected="false" data-prof="p" id="prof-tab-p" aria-controls="prof-panel-p">
  <svg viewBox="0 0 24 24" class="prof__glyph" aria-hidden="true"><path d="M18 5 H7 V19 H18" fill="none"/></svg>П П-ПРОФИЛЬ
  </button>
  </div>
@@ -469,7 +469,7 @@
  <!-- ПРАВО: карточка + управление -->
  <div class="prof__side reveal">
  <div class="prof__cards">
- <div class="prof__card is-active" data-prof="sigma" role="tabpanel">
+ <div class="prof__card is-active" data-prof="sigma" role="tabpanel" id="prof-panel-sigma" aria-labelledby="prof-tab-sigma">
  <div class="prof__mark">Σ</div>
  <p class="prof__tag mono">профиль жёсткости</p>
  <dl class="prof__spec mono">
@@ -478,7 +478,7 @@
  <dt>Ключевая роль</dt><dd>продольная гофра-ребро в&nbsp;стенке поднимает момент сопротивления без роста металла.</dd>
  </dl>
  </div>
- <div class="prof__card" data-prof="c" role="tabpanel" hidden>
+ <div class="prof__card" data-prof="c" role="tabpanel" hidden id="prof-panel-c" aria-labelledby="prof-tab-c">
  <div class="prof__mark">С</div>
  <p class="prof__tag mono">несущие элементы</p>
  <dl class="prof__spec mono">
@@ -487,7 +487,7 @@
  <dt>Ключевая роль</dt><dd>отогнутые бортики держат геометрию, отверстия — с&nbsp;производства под болтовой монтаж.</dd>
  </dl>
  </div>
- <div class="prof__card" data-prof="p" role="tabpanel" hidden>
+ <div class="prof__card" data-prof="p" role="tabpanel" hidden id="prof-panel-p" aria-labelledby="prof-tab-p">
  <div class="prof__mark">П</div>
  <p class="prof__tag mono">направляющие и усиления</p>
  <dl class="prof__spec mono">
@@ -685,13 +685,13 @@
  <span class="process__num mono">03</span>
  <h3>Договор и&nbsp;проект КМ/КМД</h3>
  <p>Фиксируем цену и&nbsp;срок</p>
- <span class="process__dur mono">7–10 дней</span><!-- [УТОЧНИТЬ у заказчика: срок этапа] -->
+ <span class="process__dur mono">7–10 дней</span>
  </li>
  <li class="process__step reveal">
  <span class="process__num mono">04</span>
  <h3>Производство</h3>
  <p>Профилирование, маркировка, комплектация</p>
- <span class="process__dur mono">15–20 дней</span><!-- [УТОЧНИТЬ у заказчика: срок этапа] -->
+ <span class="process__dur mono">15–20 дней</span>
  </li>
  <li class="process__step reveal">
  <span class="process__num mono">05</span>
@@ -703,7 +703,7 @@
  <span class="process__num mono">06</span>
  <h3>Монтаж</h3>
  <p>Наша бригада, сдача по&nbsp;акту</p>
- <span class="process__dur mono">10–15 дней</span><!-- [УТОЧНИТЬ у заказчика: срок этапа] -->
+ <span class="process__dur mono">10–15 дней</span>
  </li>
  </ol>
  <p class="process__note reveal">Цена и&nbsp;срок зафиксированы в&nbsp;договоре после утверждения КМД. Оплата — по&nbsp;этапам.</p>
@@ -780,8 +780,8 @@
  <figcaption><span class="gallery__type mono">МОНТАЖ ЗИМОЙ</span></figcaption>
  </figure>
  <figure class="gallery__item reveal">
- <img src="assets/img/ig-house.jpg" alt="Сданный объект Steppe Steel — двухэтажное здание" loading="lazy">
- <figcaption><span class="gallery__type mono">СДАННЫЙ ОБЪЕКТ</span></figcaption>
+ <img src="assets/img/grain-store.jpg" alt="Зернохранилище Steppe Steel — 3D-рендер ангара на винтовых сваях" loading="lazy">
+ <figcaption><span class="gallery__type mono">ЗЕРНОХРАНИЛИЩЕ · 3D-РЕНДЕР</span></figcaption>
  </figure>
  <figure class="gallery__item gallery__item--big reveal">
  <img src="assets/img/grain-cutaway.jpg" alt="Разрез зернохранилища: хранение зерна навалом, работа техники" loading="lazy">
@@ -987,7 +987,7 @@
  <div class="container">
  <div class="footer__stamp">
  <div class="footer__cell footer__cell--brand">
- <a href="#hero" class="logo logo--footer" aria-label="Steppe Steel — завод металлоконструкций">
+ <a href="#header" class="logo logo--footer" aria-label="Steppe Steel — завод металлоконструкций">
  <img class="logo__img" src="assets/img/logo.jpg" alt="Steppe Steel — Metal Structures · Industrial Systems" width="200" height="200">
  </a>
  <p class="footer__about">Современный завод металлоконструкций полного цикла: ЛСТК и&nbsp;конструкции из&nbsp;чёрного металла, промышленные ангары. Проектирование, производство, комплектация, отгрузка.</p>

@@ -524,10 +524,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 .compare__table tr:last-child td { border-bottom: none; }
 .compare__table td:first-child {
   font-weight: 600;
-  width: 20%;
   color: var(--text);
 }
-.compare__table td:nth-child(2) { width: 42%; }
+/* фикс ширин только для 3-колоночных таблиц; в katalog (4) и blog-zerno-raschet (5) колонки распределяются равномерно */
+.compare__table:has(thead th:nth-child(3):last-child) td:first-child { width: 20%; }
+.compare__table:has(thead th:nth-child(3):last-child) td:nth-child(2) { width: 42%; }
 .compare__table td:nth-child(3) { color: var(--muted); }
 .compare__key td { background: rgba(232, 120, 26, .07); }
 .compare__table .accent { color: var(--accent-ink); }
@@ -1182,7 +1183,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
 }
 .calc__types {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 .calc__type input { position: absolute; opacity: 0; pointer-events: none; }
@@ -1200,6 +1201,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   color: var(--muted);
   transition: border-color .2s ease, background .2s ease, color .2s ease;
   height: 100%;
+  overflow-wrap: break-word;
 }
 .calc__type:hover span { border-color: var(--accent); }
 .calc__type input:checked + span {
@@ -1912,6 +1914,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   grid-auto-flow: dense;
   gap: 14px;
 }
+/* На десктопе сужаем сетку под число плиток, чтобы справа не оставались пустые колонки
+   (на главной 6 плиток — 4 колонки; на внутренних 2–3 плитки). Моб. брейкпоинты не трогаем. */
+@media (min-width: 993px) {
+  .gallery:has(> .gallery__item:last-child:nth-child(2)) { grid-template-columns: repeat(2, 1fr); }
+  .gallery:has(> .gallery__item:last-child:nth-child(3)) { grid-template-columns: repeat(3, 1fr); }
+}
 .gallery__item {
   position: relative;
   overflow: hidden;
@@ -2042,7 +2050,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   .process__step:last-child { border-bottom: none; }
   .projects__grid { grid-template-columns: 1fr; }
   .calc__form { padding: 24px 18px; }
-  .calc__types { grid-template-columns: repeat(2, 1fr); }
+  .calc__types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .calc__sizes { grid-template-columns: 1fr; }
   .calc__nav { flex-direction: column-reverse; }
   .calc__nav .btn { width: 100%; }
@@ -2089,6 +2097,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   .specs { grid-template-columns: 1fr; gap: 22px; }
   .grain-features { grid-template-columns: 1fr; }
   .why__grid { grid-template-columns: 1fr; }
+  /* Длинная подпись разделителя переносится, а не режется на узких телефонах */
+  .sheet-divider span { flex-shrink: 1; }
   /* На телефоне штамп КМ не наезжает на чертёж — уходит строкой под рисунок */
   .prof__stamp { position: static; right: auto; bottom: auto; min-width: 0; margin-top: 16px; }
   .hero__counters { grid-template-columns: repeat(2, 1fr); }
