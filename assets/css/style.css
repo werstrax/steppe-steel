@@ -624,6 +624,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 1.
   gap: 40px;
   align-items: start;
 }
+/* без иллюстрации — калькулятор один, по центру, не на всю ширину контейнера */
+.agro__layout--calc-only { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+.agro__layout--calc-only .agro__calc { width: 100%; max-width: 460px; }
 .agro-svg { width: 100%; height: auto; }
 .agro-axis { stroke: var(--bp-30); stroke-width: 1.5; }
 .agro-bar rect { fill: none; stroke: var(--blueprint); stroke-width: 1.5; }
