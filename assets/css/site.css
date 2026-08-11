@@ -855,6 +855,14 @@ a {
 
 .video-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
+/* В кино-hero кнопка уезжает вниз: сверху её перекрывает фиксированная шапка */
+.hero__media .video-toggle {
+  top: auto;
+  bottom: 3.6rem;
+  right: 1rem;
+}
+
+
 img[data-fade] {
   opacity: 0;
   transition: opacity 0.6s ease;
@@ -2440,7 +2448,23 @@ html:not(.js) .line-in { transform: none; }
 
 @media (max-width: 720px) {
   .hero__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero__coords { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Свободного места в кадре нет: кнопка паузы встаёт в одну линию с меткой
+     «Визуализация», а строка координат уступает им правый угол. */
+  .hero__coords {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 8.5rem);
+  }
+
+  .hero__viz { right: 3.9rem; }
+
+  .hero__media .video-toggle {
+    bottom: 0.8rem;
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* Карточки «почему» */

@@ -32,12 +32,12 @@ export function renderHome(d) {
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="container hero__inner">
-        <p class="hero__kicker mono">Завод металлоконструкций · Костанайская обл. · Industrial Standard</p>
-        <h1 class="hero__title">Сталь для степи.<br>Полный цикл — один завод</h1>
+        <p class="hero__kicker mono">Завод металлоконструкций полного цикла · Доставка по всему Казахстану</p>
+        <h1 class="hero__title">Ангары, склады<br>и зернохранилища <span class="accent">под ключ</span></h1>
         <p class="hero__sub lead u-max-62">
-          Проектируем, производим, комплектуем и отгружаем металлоконструкции любой
-          сложности. ЛСТК + чёрный металл: ангары, склады, цеха и зернохранилища —
-          с расчётом под север Казахстана.
+          Проектируем, производим и монтируем металлокаркас: ЛСТК и чёрный металл.
+          Расчёт под снеговые нагрузки вашего района, доставка собственным
+          транспортом — один договор от чертежа до готового контура.
         </p>
         <div class="btn-row hero__actions">
           <a class="btn btn--primary btn--lg" href="/zayavka/">Рассчитать стоимость <span class="btn__index mono">24 ч</span></a>
