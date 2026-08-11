@@ -345,6 +345,7 @@ export function renderProduct(d, p) {
     description: p.seoDescription,
     image: p.cover,
     imageAlt: p.coverAlt,
+    preloadImage: p.heroVideo ? `/assets/img/${p.heroVideo.poster}-1152.jpg` : undefined,
     pageType: 'ItemPage',
     crumbs,
     schema: [productNode(site, p), faqNode(site, p.url, p.faq || [])].filter(Boolean),

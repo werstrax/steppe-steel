@@ -89,6 +89,7 @@ ${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name=
 <meta name="geo.region" content="KZ-KUS">
 <meta name="geo.placename" content="${e(site.contacts.address.settlement)}">
 
+${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImage)}" fetchpriority="high">` : ''}
 <link rel="preload" href="/assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">
