@@ -2240,6 +2240,14 @@ html:not(.js) .line-in { transform: none; }
   font-size: 0.35em;
 }
 
+/* Каждое N-е слово — оранжевой плашкой с тёмными буквами среди контурных */
+.marquee__part .accent {
+  color: var(--accent-ink);
+  background: var(--accent);
+  -webkit-text-stroke: 0;
+  padding: 0.04em 0.3em 0.1em;
+}
+
 @keyframes marquee {
   to { transform: translateX(-50%); }
 }
