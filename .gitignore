@@ -1,10 +1,23 @@
-# служебное / приватное — не публикуем
-.claude/
-variant-dark/
-docs/
-_build_pages.py
-_page_template.html
-_*
-*.bak
-Thumbs.db
+# Сборка — генерируется node build.mjs
+dist/
+
+# Исходники изображений (полноразмерные) — в сборку идут оптимизированные
+src/assets/img/raw/
+
+# Системное
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# Редакторы
+.vscode/
+.idea/
+*.swp
+
+# Ключи и локальное
+*.key
+.env
+.env.*
+
+# Скриншоты для ревью
+screenshots/

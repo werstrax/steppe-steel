@@ -1,0 +1,103 @@
+{
+  "_readme": "Глобальные данные сайта Steppe Steel. Поля с префиксом _ игнорируются сборщиком. Контакты подтверждены заказчиком (июль 2026). Юрлицо/БИН не переданы — на сайте не выводятся.",
+
+  "brand": {
+    "name": "Steppe Steel",
+    "nameLatin": "STEPPE STEEL",
+    "descriptor": "завод ЛСТК и металлоконструкций",
+    "slogan": "Industrial Standard",
+    "_sloganNote": "Слоган из логотипа и ПЗ заказчика: INDUSTRIAL STANDARD.",
+    "tagline": "Металлоконструкции полного цикла — из степи, для степи",
+    "scope": "Завод полного цикла: ЛСТК и чёрный металл. Зернохранилища, ангары, склады, цеха. Проектирование → производство → комплектация → отгрузка.",
+    "_legalNote": "[УТОЧНИТЬ у заказчика] ТОО и БИН — не переданы, на сайте сознательно не выводятся."
+  },
+
+  "url": "https://werstrax.github.io/steppe-steel",
+  "basePath": "/steppe-steel",
+  "_urlNote": "Временный адрес на GitHub Pages. После покупки домена: заменить url, очистить basePath и пересобрать.",
+  "lang": "ru",
+  "locale": "ru_KZ",
+  "country": "KZ",
+  "currency": "KZT",
+
+  "contacts": {
+    "phone": "+7 776 603 17 66",
+    "phoneRaw": "+77766031766",
+    "phoneHref": "tel:+77766031766",
+    "whatsapp": "https://wa.me/77766031766",
+    "whatsappText": "Здравствуйте! Пишу с сайта Steppe Steel.",
+    "whatsappEngineer": "Здравствуйте! Нужна консультация инженера по проекту здания из ЛСТК.",
+    "whatsappKp": "Здравствуйте! Пришлите, пожалуйста, коммерческое предложение. Объект: ",
+    "whatsappVisit": "Здравствуйте! Хочу приехать на производство в с. Троебратское. Когда удобно?",
+    "email": "steppe.steel@gmail.com",
+    "instagram": "https://www.instagram.com/lstk.factory/",
+    "instagramHandle": "@lstk.factory",
+
+    "address": {
+      "settlement": "с. Троебратское",
+      "district": "Узункольский район",
+      "region": "Костанайская область",
+      "country": "Казахстан",
+      "countryCode": "KZ",
+      "note": "трасса Костанай — Петропавловск · ж/д ст. Пресногорьковская"
+    },
+    "geo": {
+      "verified": false,
+      "_note": "Координаты завода не подтверждены заказчиком — geo в Schema.org не выводится."
+    },
+    "hours": {
+      "text": "WhatsApp — круглосуточно, без выходных",
+      "allDay": true,
+      "_note": "Часы работы как таковые не публикуем: канал — WhatsApp 24/7, расчёт за 24 часа. Согласовано в v1."
+    }
+  },
+
+  "proof": {
+    "_note": "Только проверяемые технические цифры из ПЗ и презентации зерна. Никаких «N объектов сдано» — данных нет.",
+    "steelMax": "3,5 мм",
+    "span": "до 24 м",
+    "termDays": "30–45",
+    "serviceLife": "50+ лет",
+    "snowRegion": "III район",
+    "snowLoad": "~180 кгс/м²",
+    "frost": "−40 °C",
+    "grainPerMeter": "67 т",
+    "maxLength": "до 140 м",
+    "supplyDays": "10 дней",
+    "kostanayHarvest": "6,7 млн т",
+    "_harvestNote": "Костанайская область собрала 6,7 млн т зерна в 2025 — проверено исследованием 2026-07-14."
+  },
+
+  "nav": [
+    { "title": "Каталог", "url": "/katalog/" },
+    { "title": "Профили", "url": "/profili/" },
+    { "title": "Услуги", "url": "/uslugi/" },
+    { "title": "О заводе", "url": "/o-zavode/" },
+    { "title": "Журнал", "url": "/blog/" },
+    { "title": "Контакты", "url": "/kontakty/" }
+  ],
+
+  "navFooter": [
+    { "title": "Процесс работы", "url": "/process/", "menu": true },
+    { "title": "Вопросы и ответы", "url": "/faq/", "menu": true },
+    { "title": "Получить расчёт", "url": "/zayavka/" },
+    { "title": "Политика конфиденциальности", "url": "/privacy/" }
+  ],
+
+  "cta": {
+    "primary": { "title": "Рассчитать стоимость", "url": "/zayavka/" },
+    "secondary": { "title": "Каталог продукции", "url": "/katalog/" }
+  },
+
+  "analytics": {
+    "_note": "Вставьте ID счётчиков — код подключится автоматически. Пусто = ничего не грузится.",
+    "yandexMetrikaId": "",
+    "googleAnalyticsId": ""
+  },
+
+  "forms": {
+    "_note": "endpoint — URL обработчика. Пока пусто: квиз собирает заявку и открывает WhatsApp с готовым сообщением + mailto-фолбэк.",
+    "endpoint": "",
+    "successUrl": "/zayavka/spasibo/"
+  }
+}

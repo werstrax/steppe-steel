@@ -1,0 +1,987 @@
+/* ============================================================================
+   STEPPE STEEL — клиентский скрипт.
+   Без зависимостей. Всё работает и без него: меню откроется по якорю,
+   аккордеоны раскрыты для поисковиков, квиз шлёт заявку в WhatsApp.
+   ========================================================================= */
+
+(function () {
+  'use strict';
+
+  // скрипт загрузился — отменяем аварийный таймер из <head>, который
+  // снимает класс .js (иначе при сбое сети контент остался бы спрятанным)
+  if (window.__steppeJsReady) window.__steppeJsReady();
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+
+  /* открыть WhatsApp синхронно (Safari блокирует window.open из setTimeout) */
+  var openWa = function (url) {
+    var w = window.open(url, '_blank');
+    if (!w) window.location.href = url;
+  };
+
+  /* --- Шапка: фон при скролле, скрытие при прокрутке вниз ---------------- */
+
+  (function header() {
+    var el = $('[data-header]');
+    if (!el) return;
+
+    var last = window.scrollY;
+    var ticking = false;
+
+    function update() {
+      var y = window.scrollY;
+      el.classList.toggle('is-stuck', y > 24);
+
+      var menuOpen = document.body.classList.contains('is-locked');
+      var goingDown = y > last && y > 400;
+      el.classList.toggle('is-hidden', goingDown && !menuOpen);
+
+      last = y;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  })();
+
+  /* --- Мобильное меню ---------------------------------------------------- */
+
+  (function menu() {
+    var btn = $('.burger');
+    var panel = $('[data-menu]');
+    if (!btn || !panel) return;
+
+    panel.hidden = false;
+    var open = false;
+
+    function set(state) {
+      open = state;
+      btn.setAttribute('aria-expanded', String(state));
+      panel.classList.toggle('is-open', state);
+      document.body.classList.toggle('is-locked', state);
+      if (state) {
+        var first = panel.querySelector('a, button');
+        if (first) first.focus({ preventScroll: true });
+      }
+    }
+
+    btn.addEventListener('click', function () { set(!open); });
+
+    panel.addEventListener('click', function (ev) {
+      if (ev.target.closest('a')) set(false);
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && open) { set(false); btn.focus(); }
+    });
+
+    panel.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Tab' || !open) return;
+      var items = $$('a, button, input, select, textarea', panel).filter(function (n) {
+        return n.offsetParent !== null;
+      });
+      if (!items.length) return;
+      var first = items[0];
+      var last2 = items[items.length - 1];
+      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last2.focus(); }
+      else if (!ev.shiftKey && document.activeElement === last2) { ev.preventDefault(); first.focus(); }
+    });
+  })();
+
+  /* --- Появление блоков при скролле -------------------------------------- */
+
+  (function reveal() {
+    var items = $$('[data-reveal]');
+    if (!items.length) return;
+
+    if (reduced || !('IntersectionObserver' in window)) {
+      items.forEach(function (n) { n.classList.add('is-in'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    items.forEach(function (n) { io.observe(n); });
+
+    // страховка: observer молчит (скрытая вкладка, печать) — показать всё
+    setTimeout(function () {
+      if (!document.querySelector('[data-reveal].is-in')) {
+        items.forEach(function (n) { n.classList.add('is-in'); });
+      }
+    }, 3000);
+  })();
+
+  /* --- Плавное проявление картинок --------------------------------------- */
+
+  (function images() {
+    $$('img[data-fade]').forEach(function (img) {
+      if (img.complete && img.naturalWidth) { img.classList.add('is-loaded'); return; }
+      img.addEventListener('load', function () { img.classList.add('is-loaded'); }, { once: true });
+      img.addEventListener('error', function () { img.classList.add('is-loaded'); }, { once: true });
+    });
+  })();
+
+  /* --- Видео: пауза при reduced-motion + видимая кнопка пауза/пуск ------- */
+
+  (function videos() {
+    $$('video[data-autovideo]').forEach(function (v) {
+      if (reduced) {
+        v.removeAttribute('autoplay');
+        try { v.pause(); } catch (e) {}
+      }
+      // WCAG 2.2.2: у зацикленного авто-видео должна быть пауза
+      var host = v.closest('.media-video') || v.parentElement;
+      if (!host) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'video-toggle';
+      var setState = function (playing) {
+        btn.setAttribute('aria-pressed', String(!playing));
+        btn.setAttribute('aria-label', playing ? 'Остановить видео' : 'Запустить видео');
+        btn.innerHTML = playing
+          ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12"/><rect x="8.5" y="1" width="3.5" height="12"/></svg>'
+          : '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1l10 6-10 6z"/></svg>';
+      };
+      setState(!reduced);
+      btn.addEventListener('click', function () {
+        if (v.paused) { v.play(); setState(true); }
+        else { v.pause(); setState(false); }
+      });
+      host.appendChild(btn);
+    });
+  })();
+
+  /* --- Маркиза: пауза по тапу/клику (для тач-экранов) --------------------- */
+
+  (function marqueePause() {
+    $$('.marquee').forEach(function (m) {
+      m.addEventListener('click', function () { m.classList.toggle('is-paused'); });
+    });
+  })();
+
+  /* --- Таблицы: подсказка «листается», пока правый край не доскроллен ----- */
+
+  (function tableHints() {
+    $$('.table-wrap').forEach(function (wrap) {
+      var update = function () {
+        var more = wrap.scrollWidth > wrap.clientWidth + 2 &&
+          wrap.scrollLeft + wrap.clientWidth < wrap.scrollWidth - 8;
+        wrap.classList.toggle('has-more', more);
+      };
+      wrap.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    });
+  })();
+
+  /* --- Аккордеон FAQ ------------------------------------------------------ */
+
+  (function accordion() {
+    $$('.faq__q').forEach(function (btn) {
+      var item = btn.closest('.faq__item');
+      btn.addEventListener('click', function () {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        if (item) item.classList.toggle('is-open', !expanded);
+      });
+    });
+  })();
+
+  /* --- Плавающая кнопка WhatsApp ------------------------------------------ */
+
+  (function fab() {
+    var el = $('[data-fab]');
+    if (!el) return;
+
+    function update() {
+      var scrolled = window.scrollY > window.innerHeight * 0.5;
+      var atBottom = window.innerHeight + window.scrollY > document.body.offsetHeight - 320;
+      el.classList.toggle('is-visible', scrolled && !atBottom);
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+
+  /* --- Лайтбокс ------------------------------------------------------------ */
+
+  (function lightbox() {
+    var triggers = $$('[data-lightbox]');
+    if (!triggers.length) return;
+
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Просмотр изображения');
+    box.innerHTML =
+      '<img class="lightbox__img" alt="">' +
+      '<button class="lightbox__btn lightbox__close" type="button" aria-label="Закрыть">' +
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.4"/></svg></button>' +
+      '<button class="lightbox__btn lightbox__prev" type="button" aria-label="Предыдущее">' +
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 2L4 8l6 6" stroke="currentColor" stroke-width="1.4"/></svg></button>' +
+      '<button class="lightbox__btn lightbox__next" type="button" aria-label="Следующее">' +
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 2l6 6-6 6" stroke="currentColor" stroke-width="1.4"/></svg></button>' +
+      '<span class="lightbox__count" data-lb-count></span>';
+    document.body.appendChild(box);
+
+    var img = $('.lightbox__img', box);
+    var count = $('[data-lb-count]', box);
+    var cur = 0;
+    var lastFocus = null;
+
+    // клавиатурный доступ к триггерам-фигурам
+    triggers.forEach(function (t, i) {
+      t.setAttribute('tabindex', '0');
+      t.setAttribute('role', 'button');
+      if (!t.getAttribute('aria-label')) {
+        var im = t.querySelector('img');
+        t.setAttribute('aria-label', 'Открыть изображение: ' + (im ? im.alt : ''));
+      }
+      t.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          open(i);
+        }
+      });
+    });
+
+    // ловушка фокуса внутри открытого диалога
+    box.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Tab') return;
+      var items = $$('.lightbox__btn', box);
+      var first = items[0];
+      var last = items[items.length - 1];
+      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+      else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    });
+
+    function srcOf(t) {
+      var m = t.querySelector('img');
+      return m ? (m.currentSrc || m.src) : '';
+    }
+    function altOf(t) {
+      var m = t.querySelector('img');
+      return m ? m.alt : '';
+    }
+
+    function open(i) {
+      cur = i;
+      img.src = srcOf(triggers[cur]);
+      img.alt = altOf(triggers[cur]);
+      count.textContent = (cur + 1) + ' / ' + triggers.length;
+      box.classList.add('is-open');
+      document.body.classList.add('is-locked');
+      lastFocus = document.activeElement;
+      $('.lightbox__close', box).focus();
+    }
+    function close() {
+      box.classList.remove('is-open');
+      document.body.classList.remove('is-locked');
+      if (lastFocus) lastFocus.focus();
+    }
+    function step(d) { open((cur + d + triggers.length) % triggers.length); }
+
+    triggers.forEach(function (t, i) {
+      t.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        open(i);
+      });
+    });
+
+    $('.lightbox__close', box).addEventListener('click', close);
+    $('.lightbox__prev', box).addEventListener('click', function () { step(-1); });
+    $('.lightbox__next', box).addEventListener('click', function () { step(1); });
+    box.addEventListener('click', function (ev) { if (ev.target === box || ev.target === img) close(); });
+
+    document.addEventListener('keydown', function (ev) {
+      if (!box.classList.contains('is-open')) return;
+      if (ev.key === 'Escape') close();
+      if (ev.key === 'ArrowLeft') step(-1);
+      if (ev.key === 'ArrowRight') step(1);
+    });
+
+    var x0 = null;
+    box.addEventListener('touchstart', function (ev) { x0 = ev.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', function (ev) {
+      if (x0 === null) return;
+      var dx = ev.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 48) step(dx > 0 ? -1 : 1);
+      x0 = null;
+    }, { passive: true });
+  })();
+
+  /* --- Кастомный курсор ---------------------------------------------------- */
+
+  (function cursor() {
+    if (reduced) return;
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    var el = document.createElement('div');
+    el.className = 'cursor';
+    el.innerHTML = '<span class="cursor__label"></span>';
+    document.body.appendChild(el);
+    document.documentElement.classList.add('has-cursor');
+
+    var label = el.firstChild;
+    var x = -100, y = -100, tx = x, ty = y;
+
+    document.addEventListener('mousemove', function (ev) {
+      tx = ev.clientX; ty = ev.clientY;
+      el.classList.add('is-on');
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function () { el.classList.remove('is-on'); });
+    document.addEventListener('mousedown', function () { el.classList.add('is-press'); });
+    document.addEventListener('mouseup', function () { el.classList.remove('is-press'); });
+
+    document.addEventListener('mouseover', function (ev) {
+      var zone = ev.target.closest('[data-cursor]');
+      if (zone) {
+        label.textContent = zone.getAttribute('data-cursor') || 'Смотреть';
+        el.classList.add('is-view');
+      } else {
+        el.classList.remove('is-view');
+      }
+    }, { passive: true });
+
+    (function loop() {
+      x += (tx - x) * 0.22;
+      y += (ty - y) * 0.22;
+      el.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* --- Прогресс чтения статьи ---------------------------------------------- */
+
+  (function readProgress() {
+    var article = $('article[data-article]');
+    if (!article) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'read-progress';
+    wrap.innerHTML = '<div class="read-progress__bar"></div>';
+    document.body.appendChild(wrap);
+    var bar = wrap.firstChild;
+
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      var passed = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+      bar.style.width = (passed / Math.max(total, 1)) * 100 + '%';
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+
+  /* --- Оглавление статьи: подсветка текущего раздела ----------------------- */
+
+  (function scrollspy() {
+    var toc = $('[data-toc]');
+    if (!toc || !('IntersectionObserver' in window)) return;
+
+    var links = $$('.toc__link', toc);
+    var heads = links
+      .map(function (l) { return document.getElementById(l.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+    if (!heads.length) return;
+
+    function activate(id) {
+      links.forEach(function (l) {
+        l.classList.toggle('is-active', l.getAttribute('href') === '#' + id);
+      });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) activate(en.target.id);
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+    heads.forEach(function (h) { io.observe(h); });
+    activate(heads[0].id);
+  })();
+
+  /* --- Просмотренные разделы каталога -------------------------------------- */
+
+  (function seenProducts() {
+    var KEY = 'steppe-seen';
+    var read = function () {
+      try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+    };
+
+    // На странице продукта — запоминаем визит
+    var m = location.pathname.match(/\/katalog\/([a-z0-9-]+)\/$/);
+    if (m) {
+      var seen = read();
+      if (seen.indexOf(m[1]) === -1) {
+        seen.push(m[1]);
+        try { localStorage.setItem(KEY, JSON.stringify(seen.slice(-50))); } catch (e) {}
+      }
+      return;
+    }
+
+    // В каталоге — отмечаем просмотренное
+    var grid = $('[data-products]');
+    if (!grid) return;
+    var cards = $$('[data-slug]', grid);
+    if (!cards.length) return;
+
+    var list = read();
+    var count = 0;
+    cards.forEach(function (card) {
+      if (list.indexOf(card.getAttribute('data-slug')) === -1) return;
+      count++;
+      var meta = card.querySelector('.product-card__meta');
+      if (meta && !meta.querySelector('.product-card__seen')) {
+        var tag = document.createElement('span');
+        tag.className = 'product-card__seen';
+        tag.textContent = '● Просмотрено';
+        meta.appendChild(tag);
+      }
+    });
+
+    var note = $('[data-seen]');
+    if (note && count > 0 && count < cards.length) {
+      note.textContent = 'Вы посмотрели ' + count + ' из ' + cards.length + ' разделов — осталось ещё ' + (cards.length - count);
+      note.hidden = false;
+    } else if (note && count === cards.length && count > 0) {
+      note.textContent = 'Вы посмотрели все разделы каталога — обсудим ваш объект?';
+      note.hidden = false;
+    }
+  })();
+
+  /* --- Прелоадер-шторка ----------------------------------------------------- */
+
+  (function intro() {
+    var root = document.documentElement;
+    var loader = $('[data-loader]');
+    if (!loader || !root.classList.contains('intro')) {
+      requestAnimationFrame(function () { root.classList.add('lines-in'); });
+      return;
+    }
+
+    try { sessionStorage.setItem('steppe-intro', '1'); } catch (e) {}
+
+    setTimeout(function () {
+      loader.classList.add('is-done');
+      root.classList.add('lines-in');
+      setTimeout(function () {
+        root.classList.remove('intro');
+        loader.remove();
+      }, 950);
+    }, 1350);
+  })();
+
+  /* --- Разъезжающиеся строки крупных заголовков ----------------------------- */
+
+  (function splitLines() {
+    if (reduced) { document.documentElement.classList.add('lines-in'); return; }
+
+    $$('.hero__title, .page-hero__title').forEach(function (el) {
+      try {
+        var units = [];
+        Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+          if (node.nodeType === 3) {
+            node.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) { units.push(document.createTextNode(' ')); return; }
+              var w = document.createElement('span');
+              w.style.display = 'inline-block';
+              w.textContent = part;
+              units.push(w);
+            });
+          } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+            node.style.display = 'inline-block';
+            units.push(node);
+          }
+        });
+        el.textContent = '';
+        units.forEach(function (u) { el.appendChild(u); });
+
+        var lines = [];
+        var lastTop = null;
+        units.forEach(function (u) {
+          if (u.nodeType === 3) return;
+          var top = u.offsetTop;
+          if (lastTop === null || Math.abs(top - lastTop) > 4) { lines.push([]); lastTop = top; }
+          lines[lines.length - 1].push(u);
+        });
+        if (!lines.length) return;
+
+        el.textContent = '';
+        lines.forEach(function (words, i) {
+          var mask = document.createElement('span');
+          mask.className = 'line-mask';
+          var inner = document.createElement('span');
+          inner.className = 'line-in';
+          inner.style.setProperty('--line-i', String(i));
+          words.forEach(function (w, j) {
+            if (j) inner.appendChild(document.createTextNode(' '));
+            w.style.display = '';
+            inner.appendChild(w);
+          });
+          mask.appendChild(inner);
+          el.appendChild(mask);
+        });
+      } catch (e) {
+        /* при любой ошибке заголовок остаётся обычным текстом */
+      }
+    });
+  })();
+
+  /* --- Цифры, которые считают себя сами ------------------------------------- */
+
+  (function countUp() {
+    var els = $$('.stat__val, .hero__meta-val');
+    if (!els.length || reduced || !('IntersectionObserver' in window)) return;
+
+    function animate(el) {
+      var text = el.textContent.trim();
+      var m = text.replace(/[   ]/g, ' ').match(/^([\d\s]+)(,\d)?\s*(\+)?$/);
+      if (!m) return;
+      var target = parseInt(m[1].replace(/\s+/g, ''), 10);
+      var decimal = m[2] ? parseInt(m[2].slice(1), 10) : null;
+      var suffix = m[3] || '';
+      if (isNaN(target)) return;
+
+      var t0 = null;
+      var DUR = 1200;
+      function frame(t) {
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / DUR, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        var val = Math.round(target * ease);
+        var str = String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        if (decimal !== null) str += ',' + Math.round(decimal * ease);
+        el.textContent = str + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = text;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        animate(en.target);
+      });
+    }, { threshold: 0.6 });
+
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* --- Магнитные кнопки ------------------------------------------------------ */
+
+  (function magnetic() {
+    if (reduced || !window.matchMedia('(pointer: fine)').matches) return;
+
+    $$('.btn').forEach(function (el) {
+      var strength = 7;
+      el.addEventListener('mousemove', function (ev) {
+        var r = el.getBoundingClientRect();
+        var dx = (ev.clientX - r.left - r.width / 2) / (r.width / 2);
+        var dy = (ev.clientY - r.top - r.height / 2) / (r.height / 2);
+        el.style.transform = 'translate(' + dx * strength + 'px,' + dy * strength + 'px)';
+        el.style.transition = 'transform .12s ease-out';
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transition = 'transform .45s cubic-bezier(0.22, 1, 0.36, 1)';
+        el.style.transform = '';
+      });
+    });
+  })();
+
+  /* ==========================================================================
+     Фирменные интерактивы Steppe Steel (перенос из v1)
+     ======================================================================== */
+
+  /* --- Калькулятор зернохранилища -------------------------------------------
+     Реальные данные завода — вместимость на 1 м длины (т):
+     пшеница 67 · горох 70 · кукуруза 62 · ячмень 56 · подсолнечник 37.
+     В заявку данные попадают только после реального ввода (touched). */
+
+  var grainState = { tons: null, length: null, crop: null, touched: false };
+  var CROP_NAMES = { 67: 'пшеница', 70: 'горох', 62: 'кукуруза', 56: 'ячмень', 37: 'подсолнечник' };
+
+  (function grainCalc() {
+    var input = $('#grain-input');
+    var crop = $('#grain-crop');
+    var out = $('#grain-length');
+    if (!input || !crop || !out) return;
+
+    var compute = function () {
+      var tons = parseFloat(input.value);
+      var perMeter = parseFloat(crop.value) || 67;
+      grainState.crop = CROP_NAMES[perMeter] || null;
+      if (!tons || tons <= 0) {
+        out.textContent = '— м';
+        grainState.tons = null;
+        grainState.length = null;
+        return;
+      }
+      var length = Math.max(6, Math.round(tons / perMeter));
+      grainState.tons = Math.round(tons);
+      grainState.length = length;
+      out.textContent = '≈ ' + fmt(length) + ' м';
+    };
+    // расчёт уезжает вместе с клиентом на /zayavka/ через query-параметры;
+    // путь берём из готового href — сайт живёт в подпапке GitHub Pages
+    var cta = $('#grain-cta');
+    var ctaPath = cta ? cta.getAttribute('href').split('?')[0] : '';
+    var syncCta = function () {
+      if (!cta || !grainState.touched || !grainState.tons) return;
+      cta.href = ctaPath + '?type=grain&tons=' + grainState.tons +
+        '&crop=' + encodeURIComponent(grainState.crop || '') +
+        '&len=' + grainState.length;
+    };
+
+    input.addEventListener('input', function () { grainState.touched = true; compute(); syncCta(); });
+    crop.addEventListener('change', function () { grainState.touched = true; compute(); syncCta(); });
+    compute(); // пример для предзаполненного значения (в заявку не идёт)
+  })();
+
+  /* --- Живой лист КМД: профили Sigma / C / П -------------------------------- */
+
+  (function profiles() {
+    var board = $('.prof__board');
+    var contour = $('#prof-contour');
+    var tabs = $$('.prof__tab');
+    var cards = $$('.prof__card');
+    var markEl = $('#prof-mark');
+    var bar = $('#prof-bar');
+    var tLabel = $('#prof-tlabel');
+    var tStamp = $('#prof-tstamp');
+    var segBtns = $$('.prof__seg-btn');
+    if (!board || !contour || !tabs.length) return;
+
+    var PATHS = {
+      sigma: 'M300 132 L300 100 L180 100 L180 188 L212 204 L212 236 L180 252 L180 340 L300 340 L300 308',
+      c: 'M300 132 L300 100 L180 100 L180 340 L300 340 L300 308',
+      p: 'M300 100 L180 100 L180 340 L300 340'
+    };
+    var MARKS = { sigma: 'Σ', c: 'С', p: 'П' };
+    var T_STROKE = { '1.5': 6, '2.0': 7.5, '2.5': 9, '3.0': 10.5, '3.5': 12 };
+    var T_BAR = { '1.5': 45, '2.0': 58, '2.5': 70, '3.0': 84, '3.5': 100 };
+
+    var draw = function (animate) {
+      if (!animate || reduced) {
+        contour.style.transition = 'stroke-width .45s cubic-bezier(.2,.7,.3,1)';
+        contour.style.strokeDasharray = 'none';
+        contour.style.strokeDashoffset = '0';
+        return;
+      }
+      var len = contour.getTotalLength();
+      contour.style.transition = 'none';
+      contour.style.strokeDasharray = len;
+      contour.style.strokeDashoffset = len;
+      void contour.getBoundingClientRect();
+      requestAnimationFrame(function () {
+        contour.style.transition = 'stroke-width .45s cubic-bezier(.2,.7,.3,1), stroke-dashoffset .9s ease';
+        contour.style.strokeDashoffset = '0';
+      });
+      // страховка: контур станет видимым, даже если rAF придушен (фон-вкладка)
+      setTimeout(function () { contour.style.strokeDashoffset = '0'; }, 1000);
+    };
+
+    var applyThickness = function (t) {
+      contour.style.strokeWidth = T_STROKE[t] + 'px';
+      if (bar) bar.style.width = T_BAR[t] + '%';
+      var txt = 't ' + t.replace('.', ',');
+      if (tLabel) tLabel.textContent = txt;
+      if (tStamp) tStamp.textContent = txt;
+      segBtns.forEach(function (b) {
+        var on = b.getAttribute('data-t') === t;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+    };
+
+    var selectProfile = function (key, animate) {
+      contour.setAttribute('d', PATHS[key]);
+      board.setAttribute('data-prof', key);
+      board.classList.remove('is-drawn');
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-prof') === key;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', String(on));
+      });
+      cards.forEach(function (c) {
+        var on = c.getAttribute('data-prof') === key;
+        c.classList.toggle('is-active', on);
+        c.hidden = !on;
+      });
+      if (markEl) markEl.textContent = MARKS[key];
+      draw(animate);
+      if (reduced) { board.classList.add('is-drawn'); }
+      else { setTimeout(function () { board.classList.add('is-drawn'); }, 60); }
+    };
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { selectProfile(tab.getAttribute('data-prof'), true); });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        var dir = e.key === 'ArrowRight' ? 1 : -1;
+        var next = tabs[(i + dir + tabs.length) % tabs.length];
+        next.focus();
+        selectProfile(next.getAttribute('data-prof'), true);
+      });
+    });
+    segBtns.forEach(function (b) {
+      b.addEventListener('click', function () { applyThickness(b.getAttribute('data-t')); });
+    });
+
+    applyThickness('3.5');
+    selectProfile('sigma', false);
+
+    if (!reduced && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) {
+          if (e.isIntersecting) { draw(true); io.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(board);
+    }
+  })();
+
+  /* --- Квиз «Расчёт за 24 часа» ---------------------------------------------- */
+
+  (function calcForm() {
+    var form = $('#calc-form');
+    if (!form) return;
+
+    var wa = form.getAttribute('data-wa');
+    var email = form.getAttribute('data-email');
+    var siteName = form.getAttribute('data-site') || 'Steppe Steel';
+
+    var steps = $$('.calc__step', form);
+    var thumb = $('#calc-thumb');
+    var stepLabel = $('#calc-step-label');
+    var btnBack = $('#calc-back');
+    var btnNext = $('#calc-next');
+    var btnSubmit = $('#calc-submit');
+    var hint = $('#calc-hint');
+    var errorEl = $('#calc-error');
+    var sizesBlock = $('#calc-sizes');
+    var phoneInput = $('#calc-phone');
+    var stamp = $('#form-stamp');
+    var success = $('#calc-success');
+    var retryLink = $('#calc-retry');
+
+    var LABELS = {
+      1: 'ШАГ 1 ИЗ 3 · ТИП ЗДАНИЯ',
+      2: 'ШАГ 2 ИЗ 3 · РАЗМЕРЫ И МЕСТО',
+      3: 'ШАГ 3 ИЗ 3 · КОНТАКТЫ'
+    };
+    var step = 1;
+    var preset = null;
+    var cooldown = false;
+    var stampTimer = null;
+
+    var render = function () {
+      steps.forEach(function (s) {
+        s.classList.toggle('is-active', Number(s.getAttribute('data-step')) === step);
+      });
+      if (thumb) thumb.style.left = (step / 3) * 100 + '%';
+      if (stepLabel) stepLabel.textContent = LABELS[step];
+      btnBack.hidden = step === 1;
+      btnNext.hidden = step === 3;
+      btnSubmit.hidden = step !== 3;
+      if (hint) hint.hidden = step !== 3;
+      var idx = btnNext.querySelector('.btn__index');
+      if (idx) idx.textContent = (step + 1) + ' / 3';
+    };
+
+    var goToStep = function (n) {
+      step = Math.min(3, Math.max(1, n));
+      render();
+    };
+
+    btnNext.addEventListener('click', function () { goToStep(step + 1); });
+    btnBack.addEventListener('click', function () { goToStep(step - 1); });
+
+    var activatePreset = function (btn) {
+      $$('.calc__preset', form).forEach(function (b) {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      if (btn.hasAttribute('data-custom')) {
+        preset = { custom: true };
+        sizesBlock.hidden = false;
+      } else {
+        preset = { w: Number(btn.getAttribute('data-w')), l: Number(btn.getAttribute('data-l')), custom: false };
+        sizesBlock.hidden = true;
+      }
+    };
+    $$('.calc__preset', form).forEach(function (btn) {
+      btn.addEventListener('click', function () { activatePreset(btn); });
+    });
+
+    var clearPhoneError = function () {
+      errorEl.hidden = true;
+      phoneInput.removeAttribute('aria-invalid');
+    };
+
+    // маска: +7 (XXX) XXX-XX-XX; «8…» и «7…» нормализуются
+    phoneInput.addEventListener('input', function () {
+      var d = phoneInput.value.replace(/\D/g, '');
+      if (!d) { phoneInput.value = ''; clearPhoneError(); return; }
+      if (d[0] === '8') d = d.slice(1);
+      if (d.length >= 11 && d[0] === '7') d = d.slice(1);
+      d = d.slice(0, 10);
+      var out = '+7';
+      if (d.length) out += ' (' + d.slice(0, 3);
+      if (d.length >= 4) out += ') ' + d.slice(3, 6);
+      if (d.length >= 7) out += '-' + d.slice(6, 8);
+      if (d.length >= 9) out += '-' + d.slice(8, 10);
+      phoneInput.value = out;
+      if (d.length === 10) clearPhoneError();
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      // Enter на шагах 1–2 работает как «Далее»
+      if (step !== 3) { goToStep(step + 1); return; }
+      if (cooldown) return;
+
+      var data = new FormData(form);
+      // Honeypot: боты заполняют скрытое поле
+      if ((data.get('website') || '').toString().trim()) return;
+
+      var digits = phoneInput.value.replace(/\D/g, '');
+      if (digits.length < 11) {
+        errorEl.hidden = false;
+        phoneInput.setAttribute('aria-invalid', 'true');
+        phoneInput.focus();
+        return;
+      }
+      clearPhoneError();
+
+      var get = function (name) { return (data.get(name) || '').toString().trim(); };
+
+      var sizeText = '';
+      if (preset && preset.custom) {
+        var l = get('length'), w = get('width');
+        sizeText = (l && w) ? w + '×' + l + ' м' : 'свой размер (уточню с инженером)';
+      } else if (preset) {
+        sizeText = preset.w + '×' + preset.l + ' м';
+      }
+
+      var type = get('type');
+      var rows = ['Здравствуйте! Хочу рассчитать стоимость.'];
+      rows.push('Тип здания: ' + type);
+      if (sizeText) rows.push('Размеры: ' + sizeText);
+      if (get('location')) rows.push('Место строительства: ' + get('location'));
+      if (type === 'Зернохранилище' && grainState.touched && grainState.tons && grainState.length) {
+        rows.push('Зерно: ' + fmt(grainState.tons) + ' т' + (grainState.crop ? ' (' + grainState.crop + ')' : '') + ' → длина ангара ≈ ' + fmt(grainState.length) + ' м');
+      }
+      if (data.get('harvest')) rows.push('Срок: нужно к уборочной');
+      var name = get('name');
+      rows.push((name ? 'Меня зовут: ' + name + '. ' : '') + 'Телефон: ' + phoneInput.value);
+
+      var url = wa + '?text=' + encodeURIComponent(rows.join('\n'));
+
+      cooldown = true;
+      setTimeout(function () { cooldown = false; }, 1500);
+
+      openWa(url);
+      if (success) {
+        success.hidden = false;
+        if (retryLink) retryLink.href = url;
+        var mailLink = $('#calc-mail');
+        if (mailLink && email) {
+          mailLink.href = 'mailto:' + email
+            + '?subject=' + encodeURIComponent('Заявка на расчёт — ' + type)
+            + '&body=' + encodeURIComponent(rows.join('\n'));
+        }
+        // текст заявки виден и копируется — на случай, если WhatsApp не открылся
+        var msgEl = $('#calc-message');
+        if (msgEl) msgEl.textContent = rows.join('\n');
+        var copyBtn = $('#calc-copy');
+        if (copyBtn && !copyBtn.dataset.bound) {
+          copyBtn.dataset.bound = '1';
+          copyBtn.addEventListener('click', function () {
+            var text = msgEl ? msgEl.textContent : '';
+            var done = function () {
+              copyBtn.textContent = 'Скопировано ✓';
+              setTimeout(function () { copyBtn.textContent = 'Скопировать текст'; }, 2000);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(done, function () {});
+            } else if (msgEl) {
+              var range = document.createRange();
+              range.selectNodeContents(msgEl);
+              var sel = window.getSelection();
+              sel.removeAllRanges();
+              sel.addRange(range);
+              try { document.execCommand('copy'); done(); } catch (e) {}
+            }
+          });
+        }
+      }
+      if (!reduced && stamp) {
+        if (stampTimer) clearTimeout(stampTimer);
+        stamp.classList.remove('is-stamped');
+        void stamp.getBoundingClientRect();
+        stamp.classList.add('is-stamped');
+        stampTimer = setTimeout(function () { stamp.classList.remove('is-stamped'); }, 2000);
+      }
+
+      if (window.ym) try { window.ym(window.__ymId, 'reachGoal', 'calc_submit'); } catch (err) {}
+      if (window.gtag) try { window.gtag('event', 'generate_lead'); } catch (err) {}
+    });
+
+    // Предвыбор типа из ссылки /zayavka/?type=grain(&tons=&crop=&len=)
+    var params = new URLSearchParams(location.search);
+    var wanted = params.get('type');
+    if (wanted) {
+      var radio = form.querySelector('input[name="type"][data-key="' + wanted + '"]');
+      if (radio) radio.checked = true;
+      if (wanted === 'grain') {
+        // расчёт из калькулятора главной доезжает до заявки
+        var tons = parseInt(params.get('tons') || '', 10);
+        var len = parseInt(params.get('len') || '', 10);
+        var crop = params.get('crop') || '';
+        if (tons && len) {
+          grainState.tons = tons;
+          grainState.length = len;
+          grainState.crop = crop || null;
+          grainState.touched = true;
+          var note = $('#calc-grain-note');
+          if (note) {
+            note.hidden = false;
+            note.textContent = 'Ваш объём: ' + fmt(tons) + ' т' + (crop ? ' (' + crop + ')' : '') +
+              ' → длина ангара ≈ ' + fmt(len) + ' м';
+          }
+        }
+        // пресет по рассчитанной длине: до 75 м — 24×60, дальше — 24×90
+        var chip = len > 75
+          ? form.querySelector('.calc__preset[data-w="24"][data-l="90"]')
+          : form.querySelector('.calc__preset[data-w="24"][data-l="60"]');
+        if (chip) activatePreset(chip);
+      }
+    }
+
+    render();
+  })();
+})();

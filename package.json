@@ -1,0 +1,17 @@
+{
+  "name": "steppe-steel-site",
+  "version": "3.0.0",
+  "description": "Steppe Steel — завод ЛСТК и металлоконструкций (с. Троебратское, Костанайская обл.). Статический генератор без зависимостей.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch",
+    "serve": "node tools/serve.mjs",
+    "optimize": "python tools/optimize_images.py",
+    "check": "node tools/check.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
