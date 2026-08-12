@@ -1244,6 +1244,13 @@ img[data-fade].is-loaded { opacity: 1; }
   object-position: center bottom;
 }
 
+/* Зеркальный вариант: кадр слева, плашка справа */
+.duo--flip .duo__panel { order: 2; }
+.duo--flip .duo__figure { order: 1; }
+
+/* Горизонтальный кадр (портрет по грудь) занимает колонку пошире */
+.duo--flip { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+
 .duo__stamp {
   position: absolute;
   right: 1rem;
@@ -1263,6 +1270,9 @@ img[data-fade].is-loaded { opacity: 1; }
     aspect-ratio: 4 / 5;
     order: -1;
   }
+
+  /* Горизонтальному кадру высокий блок не нужен — сверху осталась бы пустая клетка */
+  .duo--flip .duo__figure { aspect-ratio: 4 / 3; }
 }
 
 /* ---- Полоса во всю ширину: кадр + текст на затемнённой половине -------- */

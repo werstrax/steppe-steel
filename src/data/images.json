@@ -251,5 +251,21 @@
   "fallback": 1005,
   "lqip": "",
   "alpha": true
+ },
+ "worker-inspect": {
+  "w": 1537,
+  "h": 1023,
+  "ratio": 1.5024,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1537
+  ],
+  "fallback": 1152,
+  "lqip": "",
+  "alpha": true
  }
 }

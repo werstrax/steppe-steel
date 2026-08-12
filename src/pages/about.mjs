@@ -86,6 +86,27 @@ export function renderAbout(d) {
       </div>
     </section>
 
+    <section class="duo duo--flip" aria-labelledby="duo-qc">
+      <div class="duo__figure duo__figure--wide">
+        ${raw(picture('worker-inspect', {
+          alt: 'Рабочий рассматривает оцинкованный профиль ПСУ: видны ребро жёсткости и отверстия — визуализация',
+          sizes: '(min-width: 900px) 55vw, 100vw',
+          className: 'duo__img',
+        }))}
+        <span class="duo__stamp mono" aria-hidden="true">Кадр-визуализация</span>
+      </div>
+      <div class="duo__panel" data-reveal>
+        <p class="duo__kicker mono">Контроль качества</p>
+        <h2 class="duo__title" id="duo-qc">Геометрию проверяем до отгрузки, а не на площадке</h2>
+        <ul class="duo__list">
+          <li>Сверяем сечения и размеры с разделом КМ</li>
+          <li>Проверяем соосность отверстий под болт</li>
+          <li>Принимаем отправочные марки перед комплектацией</li>
+        </ul>
+        <a class="btn btn--dark btn--lg" href="/profili/">Сортамент профилей</a>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
         ${raw(sectionHead({
