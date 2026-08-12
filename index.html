@@ -32,7 +32,7 @@
 <link rel="preload" as="image" href="/steppe-steel/assets/img/hero-poster-1152.jpg" fetchpriority="high">
 <link rel="preload" href="/steppe-steel/assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/steppe-steel/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/steppe-steel/assets/css/site.css?v=ca61a7bd">
+<link rel="stylesheet" href="/steppe-steel/assets/css/site.css?v=d94f4df4">
 <link rel="icon" href="/steppe-steel/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/steppe-steel/apple-touch-icon.png">
 <link rel="manifest" href="/steppe-steel/site.webmanifest">
@@ -351,7 +351,7 @@
         <div class="hero__meta" data-reveal>
           <div class="hero__meta-item">
             <span class="hero__meta-val">3,5 мм</span>
-            <span class="hero__meta-key">сталь · Sigma / C / П</span>
+            <span class="hero__meta-key">сталь · ПСУ / ПС</span>
           </div>
           <div class="hero__meta-item">
             <span class="hero__meta-val">30–45</span>
@@ -523,7 +523,7 @@
       </div>
       
             <div class="stack stack--sm">
-              <p class="lead u-max-52" style="margin:0">Не «поколение» — а чертёж. Переключайте Sigma, C и П — сечение отрисуется прямо на листе, с размерными выносками как в разделе КМ.</p>
+              <p class="lead u-max-52" style="margin:0">Не «поколение» — а чертёж. Переключайте ПСУ и ПС — сечение отрисуется прямо на листе, с толщиной стенки как в разделе КМ.</p>
               <div><a class="arrow-link" href="/steppe-steel/profili/">Подробнее о профилях <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M9 1l4 4-4 4M13 5H0" stroke="currentColor" stroke-width="1.2"/></svg></a></div>
             </div>
           
@@ -537,36 +537,24 @@
             <button class="prof__tab is-active" role="tab"
                     aria-selected="true" data-prof="sigma"
                     id="prof-tab-sigma" aria-controls="prof-panel-sigma">
-              Σ SIGMA
+              ПСУ
             </button>
           
             <button class="prof__tab " role="tab"
                     aria-selected="false" data-prof="c"
                     id="prof-tab-c" aria-controls="prof-panel-c">
-              С C-ПРОФИЛЬ
-            </button>
-          
-            <button class="prof__tab " role="tab"
-                    aria-selected="false" data-prof="p"
-                    id="prof-tab-p" aria-controls="prof-panel-p">
-              П П-ПРОФИЛЬ
+              ПС
             </button>
           
         </div>
         <div class="prof__board" data-prof="sigma" data-reveal>
-          <svg viewBox="0 0 560 440" fill="none" aria-hidden="true">
-            <defs>
-              <marker id="dimarr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
-                <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#e8781a" stroke-width="1.1"/>
-              </marker>
-            </defs>
+          <!-- Кадр подогнан под геометрию сечения: выноски B/H убраны (типоразмеры
+               разные, конструктор просил их не показывать), поэтому лист обрезан
+               плотнее — иначе сечение висело бы в левом углу. -->
+          <svg viewBox="150 56 360 300" fill="none" aria-hidden="true">
             <path id="prof-contour" class="prof-contour"
                   d="M300 132 L300 100 L180 100 L180 188 L212 204 L212 236 L180 252 L180 340 L300 340 L300 308"
                   stroke-linecap="round" stroke-linejoin="round"/>
-            <line class="prof-dim" x1="142" y1="100" x2="142" y2="340" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
-            <text x="120" y="226" class="dimtext" text-anchor="middle" transform="rotate(-90 120 226)">H</text>
-            <line class="prof-dim" x1="180" y1="66" x2="300" y2="66" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
-            <text x="240" y="54" class="dimtext" text-anchor="middle">B</text>
             <polyline class="prof-dim" points="304,116 348,72 366,72"/>
             <text x="372" y="76" class="dimtext" id="prof-tlabel">t 3,5</text>
             <g class="prof-dim--rib">
@@ -578,7 +566,7 @@
             <div class="prof__stamp-row">STEPPE STEEL · с. Троебратское</div>
             <div class="prof__stamp-row">РАЗДЕЛ КМ · СЕЧЕНИЕ</div>
             <div class="prof__stamp-row prof__stamp-row--split">
-              <span>МАРКА: <b id="prof-mark">Σ</b></span><span id="prof-tstamp">t 3,5</span>
+              <span>МАРКА: <b id="prof-mark">ПСУ</b></span><span id="prof-tstamp">t 3,5</span>
             </div>
             <div class="prof__stamp-row">СТАЛЬ ОЦ. · МАСШТАБ 1:2</div>
           </div>
@@ -588,32 +576,24 @@
         
     
       <div class="prof__card is-active" data-prof="sigma" role="tabpanel"
-           id="prof-panel-sigma" aria-labelledby="prof-tab-sigma"
-        <h3>Sigma — профиль жёсткости</h3>
+           id="prof-panel-sigma" aria-labelledby="prof-tab-sigma">
+        <h3>ПСУ — профиль С-образный усиленный</h3>
         <p>Несущие рамы и стойки, где нужна максимальная жёсткость при минимальном весе.</p>
         <div class="specs">
           <div class="specs__row"><span class="specs__key">Где работает</span><span>стропильные и стеновые рамы, колонны каркаса</span></div>
-          <div class="specs__row"><span class="specs__key">Ключевая роль</span><span>продольная гофра-ребро в стенке поднимает момент сопротивления без роста металла</span></div>
+          <div class="specs__row"><span class="specs__key">Ключевая роль</span><span>продольное ребро в стенке (сигма-образное сечение) поднимает момент сопротивления без роста металла</span></div>
+          <div class="specs__row"><span class="specs__key">Высота сечения</span><span>150 · 200 · 250 · 280 мм</span></div>
         </div>
       </div>
     
       <div class="prof__card " data-prof="c" role="tabpanel"
-           id="prof-panel-c" aria-labelledby="prof-tab-c"
-        <h3>C — несущие элементы</h3>
+           id="prof-panel-c" aria-labelledby="prof-tab-c">
+        <h3>ПС — профиль С-образный</h3>
         <p>Основной рабочий профиль каркаса — прогоны, пояса ферм, стойки.</p>
         <div class="specs">
           <div class="specs__row"><span class="specs__key">Где работает</span><span>прогоны кровли и стен, элементы ферм</span></div>
           <div class="specs__row"><span class="specs__key">Ключевая роль</span><span>отогнутые бортики держат геометрию, отверстия — с производства под болтовой монтаж</span></div>
-        </div>
-      </div>
-    
-      <div class="prof__card " data-prof="p" role="tabpanel"
-           id="prof-panel-p" aria-labelledby="prof-tab-p"
-        <h3>П — направляющие и усиления</h3>
-        <p>Обвязки, направляющие, усиление узлов и вкладыши в С-профиль.</p>
-        <div class="specs">
-          <div class="specs__row"><span class="specs__key">Где работает</span><span>базовые и верхние обвязки, обрамление проёмов, усиления</span></div>
-          <div class="specs__row"><span class="specs__key">Ключевая роль</span><span>открытый П-контур входит в С-профиль — узлы собираются точно в размер</span></div>
+          <div class="specs__row"><span class="specs__key">Высота сечения</span><span>подбирается расчётом под нагрузку</span></div>
         </div>
       </div>
     
@@ -654,7 +634,7 @@
       </div>
     </div>
   
-        <p class="sheet-note" style="margin-top:1.5rem">Оцинкованная сталь · толщина до 3,5 мм · собственная линия профилирования · одинаковая геометрия на всей партии · комбинируем с чёрным металлом (фермы, колонны)</p>
+        <p class="sheet-note" style="margin-top:1.5rem">Оцинкованная сталь · толщина до 3,5 мм · высота сечения 150–280 мм · собственная линия профилирования · одинаковая геометрия на всей партии · комбинируем с чёрным металлом (фермы, колонны)</p>
       </div>
     </section>
 
@@ -703,7 +683,7 @@
           
             <div data-reveal>
               <h3 class="factory__list-title mono">Линейка профилей</h3>
-              <ul class="factory__list"><li>Sigma — профили повышенной жёсткости</li><li>C — несущие элементы</li><li>П — направляющие и усиления</li><li>Толщина — под расчётную нагрузку</li></ul>
+              <ul class="factory__list"><li>ПСУ — С-образный усиленный, повышенная жёсткость</li><li>ПС — С-образный несущий</li><li>Высота сечения 150–280 мм</li><li>Толщина — под расчётную нагрузку</li></ul>
             </div>
           
             <div data-reveal>
@@ -1172,7 +1152,7 @@
             <h2 class="footer__title">Продукция</h2>
             <ul class="footer__list">
               <li><a href="/steppe-steel/katalog/zernohranilishcha/">Зернохранилища</a></li><li><a href="/steppe-steel/katalog/angary-sklady/">Ангары и склады</a></li><li><a href="/steppe-steel/katalog/tseha-zavody/">Цеха и заводы</a></li>
-              <li><a href="/steppe-steel/profili/">Профили Sigma / C / П</a></li>
+              <li><a href="/steppe-steel/profili/">Профили ПСУ и ПС</a></li>
             </ul>
           </div>
 
@@ -1212,6 +1192,6 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.44.13-.14.17-.25.25-.41.09-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span class="fab__label">Написать</span>
   </a>
 
-<script src="/steppe-steel/assets/js/site.js?v=ca61a7bd" defer></script>
+<script src="/steppe-steel/assets/js/site.js?v=d94f4df4" defer></script>
 </body>
 </html>

@@ -99,7 +99,12 @@ async function main() {
     for (const p of ALL_PAGES) {
       consoleErrors.length = 0;
       await goto(p);
-      const errs = consoleErrors.filter((e) => !/favicon/.test(e));
+      // Страница 404 обязана отдаваться со статусом 404 — её собственный
+      // «Failed to load resource: 404» это норма, а не ошибка сайта.
+      const own404 = p.endsWith('404.html');
+      const errs = consoleErrors.filter(
+        (e) => !/favicon/.test(e) && !(own404 && /status of 404/.test(e) && e.includes('404.html'))
+      );
       if (errs.length) fail(`консоль ${p}`, errs[0].slice(0, 140));
       else ok(`консоль ${p}`);
     }
@@ -189,7 +194,7 @@ async function main() {
     grain.wheat5000.includes('75') ? ok('калькулятор: 5000 т пшеницы → 75 м') : fail('калькулятор: 5000 пшеница', grain.wheat5000);
     grain.sunflower5000.includes('135') ? ok('калькулятор: 5000 т подсолнечника → 135 м') : fail('калькулятор: подсолнечник', grain.sunflower5000);
 
-    /* --- 4. Профили Sigma/C/П --- */
+    /* --- 4. Профили ПСУ / ПС --- */
     const prof = await evalJs(`(() => {
       const out = {};
       const contour = document.getElementById('prof-contour');
@@ -198,6 +203,8 @@ async function main() {
       out.cSelected = document.querySelector('.prof__board').getAttribute('data-prof') === 'c';
       out.cD = !contour.getAttribute('d').includes('212');
       out.cCardShown = !document.querySelector('.prof__card[data-prof="c"]').hidden;
+      out.cardTitle = (document.querySelector('.prof__card[data-prof="c"] h3') || {}).textContent || '';
+      out.tabs = [...document.querySelectorAll('.prof__tab')].map((t) => t.dataset.prof).join(',');
       out.mark = document.getElementById('prof-mark').textContent;
       document.querySelector('.prof__seg-btn[data-t="1.5"]').click();
       out.strokeThin = contour.style.strokeWidth === '6px';
@@ -205,7 +212,9 @@ async function main() {
       out.stamp = document.getElementById('prof-tstamp').textContent;
       return out;
     })()`);
-    (prof.initialD && prof.cSelected && prof.cD && prof.cCardShown && prof.mark === 'С') ? ok('профили: переключение Sigma → C') : fail('профили: переключение', JSON.stringify(prof));
+    (prof.initialD && prof.cSelected && prof.cD && prof.cCardShown && prof.mark === 'ПС') ? ok('профили: переключение ПСУ → ПС') : fail('профили: переключение', JSON.stringify(prof));
+    (prof.tabs === 'sigma,c') ? ok('профили: только ПСУ и ПС (П убран)') : fail('профили: состав табов', prof.tabs);
+    prof.cardTitle.includes('ПС —') ? ok('профили: заголовок карточки в <h3>') : fail('профили: h3 в карточке', prof.cardTitle);
     (prof.strokeThin && prof.bar === '45%' && prof.stamp.includes('1,5')) ? ok('профили: ползунок толщины 1,5 мм') : fail('профили: толщина', JSON.stringify(prof));
 
     /* --- 5. Аккордеон FAQ --- */

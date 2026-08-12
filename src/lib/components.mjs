@@ -160,7 +160,7 @@ export function footer(site) {
             <h2 class="footer__title">Продукция</h2>
             <ul class="footer__list">
               ${(site._products || []).map((p) => html`<li><a href="${p.url}">${p.short || p.title}</a></li>`)}
-              <li><a href="/profili/">Профили Sigma / C / П</a></li>
+              <li><a href="/profili/">Профили ПСУ и ПС</a></li>
             </ul>
           </div>
 

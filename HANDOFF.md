@@ -10,7 +10,7 @@
 | Навигация, CTA | `site.json` → `nav`, `navFooter`, `cta` |
 | Продукция (зернохранилища, ангары, цеха) | `products.json` |
 | Услуги завода | `services.json` |
-| Профили Sigma/C/П (тексты интерактива) | `profiles.json` |
+| Профили ПСУ и ПС (тексты интерактива) | `profiles.json` |
 | Шаги процесса и сроки | `process.json` |
 | Вопросы-ответы | `faq.json` |
 | Статьи журнала | `journal.json` |

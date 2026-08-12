@@ -9,7 +9,7 @@ import { webPageNode, breadcrumbNode, organizationRefNode, websiteRefNode, ids }
 /* Сквозной маршрут: с каждой узловой страницы есть очевидный следующий шаг. */
 const NEXT = {
   '/': { title: 'Каталог продукции', url: '/katalog/' },
-  '/katalog/': { title: 'Профили Sigma / C / П', url: '/profili/' },
+  '/katalog/': { title: 'Профили ПСУ и ПС', url: '/profili/' },
   '/profili/': { title: 'Услуги завода', url: '/uslugi/' },
   '/uslugi/': { title: 'Процесс работы', url: '/process/' },
   '/process/': { title: 'О заводе', url: '/o-zavode/' },

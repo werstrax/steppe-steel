@@ -20,24 +20,18 @@ export function profilesBoard(profiles) {
             <button class="prof__tab ${i === 0 ? 'is-active' : ''}" role="tab"
                     aria-selected="${i === 0 ? 'true' : 'false'}" data-prof="${p.key}"
                     id="prof-tab-${p.key}" aria-controls="prof-panel-${p.key}">
-              ${p.mark} ${p.tab}
+              ${p.tab}
             </button>
           `)}
         </div>
         <div class="prof__board" data-prof="sigma" data-reveal>
-          <svg viewBox="0 0 560 440" fill="none" aria-hidden="true">
-            <defs>
-              <marker id="dimarr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
-                <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#e8781a" stroke-width="1.1"/>
-              </marker>
-            </defs>
+          <!-- Кадр подогнан под геометрию сечения: выноски B/H убраны (типоразмеры
+               разные, конструктор просил их не показывать), поэтому лист обрезан
+               плотнее — иначе сечение висело бы в левом углу. -->
+          <svg viewBox="150 56 360 300" fill="none" aria-hidden="true">
             <path id="prof-contour" class="prof-contour"
-                  d="M300 132 L300 100 L180 100 L180 188 L212 204 L212 236 L180 252 L180 340 L300 340 L300 308"
+                  d="${profiles.items[0].path}"
                   stroke-linecap="round" stroke-linejoin="round"/>
-            <line class="prof-dim" x1="142" y1="100" x2="142" y2="340" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
-            <text x="120" y="226" class="dimtext" text-anchor="middle" transform="rotate(-90 120 226)">H</text>
-            <line class="prof-dim" x1="180" y1="66" x2="300" y2="66" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
-            <text x="240" y="54" class="dimtext" text-anchor="middle">B</text>
             <polyline class="prof-dim" points="304,116 348,72 366,72"/>
             <text x="372" y="76" class="dimtext" id="prof-tlabel">t 3,5</text>
             <g class="prof-dim--rib">
@@ -49,7 +43,7 @@ export function profilesBoard(profiles) {
             <div class="prof__stamp-row">${e(profiles.stampLines[0])}</div>
             <div class="prof__stamp-row">${e(profiles.stampLines[1])}</div>
             <div class="prof__stamp-row prof__stamp-row--split">
-              <span>МАРКА: <b id="prof-mark">Σ</b></span><span id="prof-tstamp">t 3,5</span>
+              <span>МАРКА: <b id="prof-mark">${e(profiles.items[0].code)}</b></span><span id="prof-tstamp">t 3,5</span>
             </div>
             <div class="prof__stamp-row">${e(profiles.stampLines[2])}</div>
           </div>
@@ -79,12 +73,13 @@ export function profilesCards(profiles) {
   return html`
     ${profiles.items.map((p, i) => html`
       <div class="prof__card ${i === 0 ? 'is-active' : ''}" data-prof="${p.key}" role="tabpanel"
-           id="prof-panel-${p.key}" aria-labelledby="prof-tab-${p.key}"
+           id="prof-panel-${p.key}" aria-labelledby="prof-tab-${p.key}">
         <h3>${p.name}</h3>
         <p>${p.purpose}</p>
         <div class="specs">
           <div class="specs__row"><span class="specs__key">Где работает</span><span>${p.where}</span></div>
           <div class="specs__row"><span class="specs__key">Ключевая роль</span><span>${p.role}</span></div>
+          ${p.heights ? html`<div class="specs__row"><span class="specs__key">Высота сечения</span><span>${p.heights}</span></div>` : ''}
         </div>
       </div>
     `)}
@@ -97,7 +92,7 @@ export function renderProfili(d) {
   const content = html`
     ${raw(pageHero({
       label: 'Собственная линия профилирования',
-      titleHtml: 'Профили Sigma&nbsp;/ C&nbsp;/ П',
+      titleHtml: 'Профили ПСУ&nbsp;и ПС',
       crumbList: [{ title: 'Главная', url: '/' }, { title: 'Профили', url: '/profili/' }],
       text: raw(e(profiles.intro)),
     }))}
@@ -106,6 +101,25 @@ export function renderProfili(d) {
       <div class="container">
         ${raw(profilesBoard(profiles))}
         <p class="sheet-note" style="margin-top:1.75rem">${e(profiles.footline)}</p>
+      </div>
+    </section>
+
+    <section class="section section--sheet">
+      <div class="container">
+        ${raw(sectionHead({
+          label: 'Обозначения завода',
+          title: raw(e(profiles.glossaryTitle)),
+          text: profiles.glossaryIntro,
+        }))}
+        <div class="grid grid--2">
+          ${profiles.glossary.map((g) => html`
+            <div class="term" data-reveal>
+              <p class="term__code mono">${g.code}</p>
+              <h3 class="term__full">${g.full}</h3>
+              <p class="term__text">${g.text}</p>
+            </div>
+          `)}
+        </div>
       </div>
     </section>
 
@@ -118,10 +132,10 @@ export function renderProfili(d) {
         }))}
         <div class="grid grid--4">
           ${[
-            ['Sigma', 'Профиль повышенной жёсткости — там, где элемент работает на изгиб'],
-            ['C', 'Несущий профиль — стойки, прогоны и основные элементы каркаса'],
-            ['П', 'Направляющие и усиления — там, где несущая способность не нужна'],
-            ['3,5 мм', 'Максимальная толщина — применяется под расчётную нагрузку, а не везде подряд'],
+            ['ПСУ', 'С-образный усиленный — там, где элемент работает на изгиб: рамы, стойки, колонны'],
+            ['ПС', 'С-образный несущий — прогоны кровли и стен, пояса и элементы ферм'],
+            ['150–280', 'Высота сечения, мм — типоразмер подбирается расчётом под нагрузку'],
+            ['3,5 мм', 'Максимальная толщина стенки — применяется под расчёт, а не везде подряд'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>

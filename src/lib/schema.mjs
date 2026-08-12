@@ -205,7 +205,7 @@ export function productNode(site, p) {
   };
 }
 
-/** Линейка профилей Sigma/C/П как товарная группа (страница /profili/). */
+/** Линейка профилей ПСУ / ПС как товарная группа (страница /profili/). */
 export function profilesListNode(site, profiles) {
   const id = ids(site.url);
   return {
@@ -223,10 +223,13 @@ export function profilesListNode(site, profiles) {
         brand: { '@type': 'Brand', name: site.brand.name },
         manufacturer: { '@id': id.org },
         material: 'оцинкованная сталь',
+        ...(p.code ? { sku: p.code, alternateName: p.code } : {}),
         additionalProperty: [
+          { '@type': 'PropertyValue', name: 'Обозначение завода', value: p.code },
           { '@type': 'PropertyValue', name: 'Толщина стенки', value: 'до 3,5 мм' },
+          ...(p.heights ? [{ '@type': 'PropertyValue', name: 'Высота сечения', value: p.heights }] : []),
           { '@type': 'PropertyValue', name: 'Применение', value: p.where },
-        ],
+        ].filter((x) => x.value),
       },
     })),
   };
