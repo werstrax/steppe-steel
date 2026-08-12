@@ -1157,7 +1157,8 @@ img[data-fade].is-loaded { opacity: 1; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: stretch;
-  background: var(--steel);
+  background: var(--sheet);
+  border-block: 1px solid var(--sheet-line);
 }
 
 .duo__panel {
@@ -1217,13 +1218,14 @@ img[data-fade].is-loaded { opacity: 1; }
 
 .duo__panel .btn { justify-self: start; margin-top: 0.5rem; }
 
-/* Фигура стоит на графитовом градиенте — фон у кадра вырезан */
+/* Фигура стоит прямо на листе в клетку — фон у кадра вырезан */
 .duo__figure {
   position: relative;
   min-height: clamp(360px, 46vw, 620px);
   background:
-    radial-gradient(120% 90% at 65% 100%, rgba(232, 120, 26, 0.16), transparent 60%),
-    linear-gradient(180deg, #101215 0%, #16191d 55%, #0b0c0e 100%);
+    repeating-linear-gradient(0deg, transparent 0 55px, var(--sheet-grid) 55px 56px),
+    repeating-linear-gradient(90deg, transparent 0 55px, var(--sheet-grid) 55px 56px),
+    var(--sheet);
   overflow: hidden;
 }
 
@@ -1249,7 +1251,7 @@ img[data-fade].is-loaded { opacity: 1; }
   font-size: 0.58rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--on-steel-faint);
+  color: var(--ink-muted);
   border-left: 2px solid var(--accent);
   padding-left: 0.5rem;
 }
