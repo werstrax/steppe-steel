@@ -130,6 +130,29 @@ export function renderHome(d) {
       </div>
     </section>
 
+    <!-- Диптих: фигура без фона на графите + оранжевая плашка -->
+    <section class="duo" aria-labelledby="duo-title">
+      <div class="duo__panel" data-reveal>
+        <p class="duo__kicker mono">Один завод — одна ответственность</p>
+        <h2 class="duo__title" id="duo-title">Контролируем каждый этап производства</h2>
+        <ul class="duo__list">
+          <li>Считаем каркас и выпускаем раздел КМ</li>
+          <li>Катаем профиль на собственной линии</li>
+          <li>Режем, сверлим и маркируем детали на заводе</li>
+          <li>Комплектуем, грузим и везём своим транспортом</li>
+        </ul>
+        <a class="btn btn--dark btn--lg" href="/uslugi/">Как устроен завод</a>
+      </div>
+      <div class="duo__figure">
+        ${raw(picture('worker-carry', {
+          alt: 'Рабочий несёт пакет оцинкованных профилей ПС на плече — визуализация',
+          sizes: '(min-width: 900px) 45vw, 100vw',
+          className: 'duo__img',
+        }))}
+        <span class="duo__stamp mono" aria-hidden="true">Кадр-визуализация</span>
+      </div>
+    </section>
+
     <!-- ЛИСТ 04 · ПРОИЗВОДСТВО -->
     <section class="section noise" id="factory">
       <div class="container">

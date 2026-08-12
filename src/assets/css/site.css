@@ -523,6 +523,15 @@ a {
 .btn--lg { padding: 1.25em 2.1em; }
 .btn--wide { width: 100%; }
 
+/* Кнопка на оранжевой плашке: инверсия — тёмная заливка на акценте */
+.btn--dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-steel);
+}
+
+.btn--dark:hover { background: transparent; color: var(--ink); }
+
 .btn__index {
   font-family: var(--font-mono);
   font-size: 0.85em;
@@ -1140,6 +1149,225 @@ img[data-fade].is-loaded { opacity: 1; }
 .stat__note {
   font-size: 0.62rem;
   color: var(--on-steel-faint);
+}
+
+/* ---- Диптих: оранжевая плашка + фигура без фона ------------------------- */
+
+.duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  background: var(--steel);
+}
+
+.duo__panel {
+  background: var(--accent);
+  color: var(--ink);
+  padding: clamp(1.5rem, 1rem + 3vw, 4.5rem);
+  display: grid;
+  /* minmax(0,1fr), иначе длинное слово заголовка («ПРОИЗВОДСТВА»)
+     раздвигает колонку по min-content и панель уезжает за экран */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  align-content: center;
+  min-width: 0;
+}
+
+.duo__kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(21, 23, 26, 0.72);
+}
+
+.duo__title {
+  margin: 0;
+  font-size: clamp(1.45rem, 1rem + 2.6vw, 3.2rem);
+  line-height: 1.02;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.duo__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: rgba(21, 23, 26, 0.88);
+}
+
+.duo__list li {
+  padding-left: 1.4rem;
+  position: relative;
+}
+
+.duo__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.7rem;
+  height: 1px;
+  background: var(--ink);
+}
+
+.duo__panel .btn { justify-self: start; margin-top: 0.5rem; }
+
+/* Фигура стоит на графитовом градиенте — фон у кадра вырезан */
+.duo__figure {
+  position: relative;
+  min-height: clamp(360px, 46vw, 620px);
+  background:
+    radial-gradient(120% 90% at 65% 100%, rgba(232, 120, 26, 0.16), transparent 60%),
+    linear-gradient(180deg, #101215 0%, #16191d 55%, #0b0c0e 100%);
+  overflow: hidden;
+}
+
+.duo__figure .duo__img {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.duo__figure .duo__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.duo__stamp {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-steel-faint);
+  border-left: 2px solid var(--accent);
+  padding-left: 0.5rem;
+}
+
+@media (max-width: 860px) {
+  .duo { grid-template-columns: minmax(0, 1fr); }
+  .duo__figure {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    order: -1;
+  }
+}
+
+/* ---- Полоса во всю ширину: кадр + текст на затемнённой половине -------- */
+
+.strip {
+  position: relative;
+  isolation: isolate;
+  background: var(--steel);
+  min-height: clamp(320px, 42vw, 560px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+}
+
+.strip__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.strip__bg .strip__img,
+.strip__bg .strip__img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+}
+
+/* Читаемость текста: гасим кадр слева, не трогая металл справа */
+.strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(8, 9, 11, 0.94) 0%, rgba(8, 9, 11, 0.82) 38%, rgba(8, 9, 11, 0.25) 68%, rgba(8, 9, 11, 0.1) 100%);
+}
+
+.strip__inner {
+  padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  display: grid;
+  gap: 1.1rem;
+  max-width: min(var(--container), 100%);
+}
+
+.strip__kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.strip__title {
+  margin: 0;
+  max-width: 16ch;
+  font-size: clamp(1.6rem, 1rem + 2.6vw, 3.1rem);
+  line-height: 1.03;
+  color: var(--on-steel);
+}
+
+.strip__facts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--on-steel-muted);
+}
+
+.strip__facts li { padding-left: 1.2rem; position: relative; }
+
+.strip__facts li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.6rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.strip__stamp {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-steel-faint);
+  border-left: 2px solid var(--accent);
+  padding-left: 0.5rem;
+}
+
+@media (max-width: 860px) {
+  .strip::before {
+    background: linear-gradient(180deg, rgba(8, 9, 11, 0.55) 0%, rgba(8, 9, 11, 0.88) 55%, rgba(8, 9, 11, 0.95) 100%);
+  }
+
+  .strip__bg .strip__img img { object-position: 60% 30%; }
+
+  .strip__inner { padding-block: 12rem 2.5rem; }
+
+  .strip__title { max-width: none; }
 }
 
 /* Определение марки профиля: код крупно, как на штампе, ниже — расшифровка */

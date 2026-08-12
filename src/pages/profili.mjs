@@ -5,7 +5,7 @@
  */
 
 import { layout } from '../lib/layout.mjs';
-import { html, raw, e } from '../lib/util.mjs';
+import { html, raw, e, picture } from '../lib/util.mjs';
 import { pageHero, ctaBand, sectionHead, serviceRow, stat } from '../lib/components.mjs';
 import { profilesListNode } from '../lib/schema.mjs';
 
@@ -152,6 +152,26 @@ export function renderProfili(d) {
         `)}
         <p class="sheet-note" style="margin-top:1.5rem">${e(profiles.sortamentNote)}</p>
       </div>
+    </section>
+
+    <section class="strip" aria-labelledby="strip-title">
+      <div class="strip__bg">
+        ${raw(picture('profile-hands', {
+          alt: 'Оцинкованные профили ПСУ и ПС в руках рабочего: видны отверстия и ребро жёсткости — визуализация',
+          sizes: '100vw',
+          className: 'strip__img',
+        }))}
+      </div>
+      <div class="container strip__inner">
+        <p class="strip__kicker mono">Наш металл</p>
+        <h2 class="strip__title" id="strip-title">Одна линия — одинаковая геометрия на всей партии</h2>
+        <ul class="strip__facts mono">
+          <li>Толщина стенки 1,5–3,5 мм</li>
+          <li>Высота сечения 100–280 мм</li>
+          <li>Отверстия — с производства, под болт</li>
+        </ul>
+      </div>
+      <span class="strip__stamp mono" aria-hidden="true">Кадр-визуализация</span>
     </section>
 
     <section class="section section--sheet">

@@ -181,6 +181,21 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoUAAsAPuleqE0pJSQiMAgBIB0JZwAAV8qDHLUfmrOVcfZ4AP6i15ClF+Gz5l6jpJtTyeP1kRFbHSnA5ptDM8+1znRKBi4IpDz4n65EnO8lzngHZlyurarLBQAAAA=="
  },
+ "profile-hands": {
+  "w": 1537,
+  "h": 1023,
+  "ratio": 1.5024,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1537
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAA0APuliqk2pJaQiMAgBIB0JZQDE2CHhTNRLUze9YE+AAP7u/zc+/jZzaDh7mH43exiDE3iZsue2y6xieXMF2ItexNFGOgZVviwAAAA="
+ },
  "steppe-frame": {
   "w": 1500,
   "h": 837,
@@ -222,5 +237,19 @@
   ],
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABwAwCdASoUAAsAPulgqE0pJaQiMAgBIB0JZQCw7AroVfiGOgAA8oMQz4BnAvTck2lhGx1B68aWMM72BM/mg3beVUsJUasZ97bjkWP1QAA="
+ },
+ "worker-carry": {
+  "w": 1005,
+  "h": 1311,
+  "ratio": 0.7666,
+  "widths": [
+   384,
+   576,
+   864,
+   1005
+  ],
+  "fallback": 1005,
+  "lqip": "",
+  "alpha": true
  }
 }

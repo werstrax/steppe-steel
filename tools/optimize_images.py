@@ -66,7 +66,11 @@ def main():
             print("skip", name)
             continue
 
-        im = Image.open(src).convert("RGB")
+        raw_im = Image.open(src)
+        # Вырезанные объекты (фигуры без фона) должны сохранить прозрачность:
+        # для них фолбэк — PNG, а не JPEG, иначе альфа зальётся чёрным.
+        has_alpha = raw_im.mode in ("RGBA", "LA") or "transparency" in raw_im.info
+        im = raw_im.convert("RGBA") if has_alpha else raw_im.convert("RGB")
         w, h = im.size
         total_in += os.path.getsize(src)
 
@@ -83,12 +87,16 @@ def main():
             total_out += os.path.getsize(wp)
             srcset.append(tw)
 
-        # JPEG-фолбэк на средней ширине
+        # Фолбэк на средней ширине: PNG для прозрачных, иначе JPEG
         fw = 1152 if 1152 in widths else widths[0]
         fh = round(h * fw / w)
-        jp = os.path.join(OUT, f"{name}-{fw}.jpg")
-        im.resize((fw, fh), Image.LANCZOS).save(jp, "JPEG", quality=JPEG_Q, optimize=True, progressive=True)
-        total_out += os.path.getsize(jp)
+        if has_alpha:
+            fb = os.path.join(OUT, f"{name}-{fw}.png")
+            im.resize((fw, fh), Image.LANCZOS).save(fb, "PNG", optimize=True)
+        else:
+            fb = os.path.join(OUT, f"{name}-{fw}.jpg")
+            im.resize((fw, fh), Image.LANCZOS).save(fb, "JPEG", quality=JPEG_Q, optimize=True, progressive=True)
+        total_out += os.path.getsize(fb)
 
         manifest[name] = {
             "w": w,
@@ -96,7 +104,10 @@ def main():
             "ratio": round(w / h, 4),
             "widths": sorted(srcset),
             "fallback": fw,
-            "lqip": lqip(im),
+            # У вырезанных фигур LQIP-подложки нет: размытый прямоугольник
+            # проступил бы за прозрачными краями.
+            "lqip": "" if has_alpha else lqip(im),
+            **({"alpha": True} if has_alpha else {}),
         }
         print("ok  %-18s %dx%d  -> %s" % (name, w, h, ", ".join(str(x) for x in sorted(srcset))))
 

@@ -144,19 +144,24 @@ export function picture(name, opts = {}) {
   const widths = meta.widths;
   const sizes = opts.sizes || '100vw';
   const webp = widths.map((w) => `/assets/img/${name}-${w}.webp ${w}w`).join(', ');
-  const jpg = `/assets/img/${name}-${meta.fallback}.jpg`;
+  // У вырезанных фигур фолбэк — PNG (JPEG залил бы прозрачность чёрным).
+  const fallback = `/assets/img/${name}-${meta.fallback}.${meta.alpha ? 'png' : 'jpg'}`;
 
   const loading = opts.priority ? 'eager' : 'lazy';
   const fetchPriority = opts.priority ? ' fetchpriority="high"' : '';
   const decoding = opts.priority ? 'sync' : 'async';
   const fade = opts.priority ? '' : ' data-fade';
 
-  const style = `background-image:url('${meta.lqip}');background-size:cover;background-position:center;`;
+  // LQIP-подложка только для непрозрачных кадров — за фигурой без фона
+  // размытый прямоугольник был бы виден.
+  const style = meta.lqip
+    ? `background-image:url('${meta.lqip}');background-size:cover;background-position:center;`
+    : '';
 
   return [
     `<picture class="${e(opts.className || '')}" style="${style}">`,
     `<source type="image/webp" srcset="${webp}" sizes="${e(sizes)}">`,
-    `<img src="${jpg}" alt="${e(alt)}" width="${meta.w}" height="${meta.h}"`,
+    `<img src="${fallback}" alt="${e(alt)}" width="${meta.w}" height="${meta.h}"`,
     ` loading="${loading}" decoding="${decoding}"${fetchPriority}${fade}>`,
     `</picture>`,
   ].join('');
