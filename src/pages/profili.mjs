@@ -25,18 +25,36 @@ export function profilesBoard(profiles) {
           `)}
         </div>
         <div class="prof__board" data-prof="sigma" data-reveal>
-          <!-- Кадр подогнан под геометрию сечения: выноски B/H убраны (типоразмеры
-               разные, конструктор просил их не показывать), поэтому лист обрезан
-               плотнее — иначе сечение висело бы в левом углу. -->
-          <svg viewBox="150 56 360 300" fill="none" aria-hidden="true">
+          <!-- Обозначения — как в заводских таблицах А1/А2: H, B, h₁, h₂, b₁, t.
+               Конкретные числа не подписываем: типоразмеров девять, они идут
+               таблицей сортамента ниже. -->
+          <svg viewBox="120 40 400 330" fill="none" aria-hidden="true">
+            <defs>
+              <marker id="dimarr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
+                <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#e8781a" stroke-width="1.1"/>
+              </marker>
+            </defs>
             <path id="prof-contour" class="prof-contour"
                   d="${profiles.items[0].path}"
                   stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline class="prof-dim" points="304,116 348,72 366,72"/>
-            <text x="372" y="76" class="dimtext" id="prof-tlabel">t 3,5</text>
+
+            <line class="prof-dim" x1="156" y1="100" x2="156" y2="340" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
+            <text x="142" y="220" class="dimtext" text-anchor="middle" transform="rotate(-90 142 220)">H</text>
+
+            <line class="prof-dim" x1="180" y1="78" x2="300" y2="78" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
+            <text x="240" y="66" class="dimtext" text-anchor="middle">B</text>
+
+            <polyline class="prof-dim" points="304,116 348,74 368,74"/>
+            <text x="374" y="78" class="dimtext" id="prof-tlabel">t 3,5</text>
+
+            <polyline class="prof-dim" points="306,344 340,356 358,356"/>
+            <text x="364" y="360" class="dimtext">h₁</text>
+
             <g class="prof-dim--rib">
-              <polyline class="prof-dim" points="216,220 268,220 282,206"/>
-              <text x="288" y="202" class="dimtext">ребро</text>
+              <line class="prof-dim" x1="228" y1="204" x2="228" y2="236" marker-start="url(#dimarr)" marker-end="url(#dimarr)"/>
+              <text x="240" y="226" class="dimtext">h₂</text>
+              <polyline class="prof-dim" points="212,192 268,180 286,180"/>
+              <text x="292" y="184" class="dimtext">b₁</text>
             </g>
           </svg>
           <div class="prof__stamp" aria-hidden="true">
@@ -104,6 +122,38 @@ export function renderProfili(d) {
       </div>
     </section>
 
+    <section class="section">
+      <div class="container">
+        ${raw(sectionHead({
+          label: profiles.sortamentKicker,
+          title: raw(e(profiles.sortamentTitle)),
+          text: profiles.sortamentIntro,
+        }))}
+        ${profiles.sortament.map((t) => html`
+          <div class="sortament" data-reveal>
+            <p class="sortament__caption mono">${t.caption}</p>
+            <div class="table-wrap">
+              <table class="table table--sortament">
+                <caption class="visually-hidden">${t.caption}</caption>
+                <thead>
+                  <tr>${t.cols.map((c, i) => html`<th scope="col" ${raw(i === 0 ? '' : 'class="table__num"')}>${raw(c)}</th>`)}</tr>
+                </thead>
+                <tbody>
+                  ${t.rows.map((r) => html`
+                    <tr>
+                      <th scope="row" class="sortament__code mono">${r[0]}</th>
+                      ${r.slice(1).map((v) => html`<td class="table__num">${v}</td>`)}
+                    </tr>
+                  `)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `)}
+        <p class="sheet-note" style="margin-top:1.5rem">${e(profiles.sortamentNote)}</p>
+      </div>
+    </section>
+
     <section class="section section--sheet">
       <div class="container">
         ${raw(sectionHead({
@@ -134,8 +184,8 @@ export function renderProfili(d) {
           ${[
             ['ПСУ', 'С-образный усиленный — там, где элемент работает на изгиб: рамы, стойки, колонны'],
             ['ПС', 'С-образный несущий — прогоны кровли и стен, пояса и элементы ферм'],
-            ['150–280', 'Высота сечения, мм — типоразмер подбирается расчётом под нагрузку'],
-            ['3,5 мм', 'Максимальная толщина стенки — применяется под расчёт, а не везде подряд'],
+            ['9', 'Типоразмеров в сортаменте: ПСУ150–280 и ПС100–280'],
+            ['1,5–3,5', 'Толщина стенки, мм — по сортаменту, под расчётную нагрузку'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>
