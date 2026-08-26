@@ -809,6 +809,122 @@
     }
   })();
 
+  /* --- Хроника объекта (ЛИСТ 04-М): скролл-таймлапс стройки ------------------
+     Нативный sticky + rAF-гейт; скролл меняет только opacity кадров.
+     Кроссфейд на последних 35% сегмента маскирует дрейф ИИ-деталей. */
+
+  (function cycleStory() {
+    var sec = $('#cycle');
+    if (!sec) return;
+    var frames = $$('[data-cycle-frame]', sec);
+    var dots = $$('[data-cycle-dot]', sec);
+    var num = $('#cycle-num');
+    var label = $('#cycle-label');
+    var fill = $('#cycle-fill');
+    var N = frames.length;
+    if (N < 2) return;
+    var labels = dots.map(function (d) {
+      return d.getAttribute('aria-label').replace(/^[^:]*:\s*/, '');
+    });
+    var current = 0;
+
+    var setStage = function (i) {
+      if (i === current) return;
+      current = i;
+      dots.forEach(function (d, k) {
+        d.classList.toggle('is-active', k === i);
+        d.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+      });
+      if (num) num.textContent = '0' + (i + 1);
+      if (label) label.textContent = labels[i] || '';
+    };
+
+    var show = function (i) {
+      frames.forEach(function (f, k) { f.style.opacity = k === i ? 1 : 0; });
+      setStage(i);
+      if (fill) fill.style.height = (i / (N - 1)) * 100 + '%';
+    };
+
+    if (reduced) {
+      // без анимаций: кнопки-стадии работают степпером
+      dots.forEach(function (d, k) {
+        d.addEventListener('click', function () { show(k); });
+      });
+      return;
+    }
+
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      var rect = sec.getBoundingClientRect();
+      var span = rect.height - window.innerHeight;
+      if (span <= 0) return;
+      var progress = Math.min(1, Math.max(0, -rect.top / span));
+      var pos = progress * (N - 1);
+      var i = Math.min(N - 2, Math.floor(pos));
+      var t = pos - i;
+      for (var k = 0; k < N; k++) {
+        var o = 0;
+        if (k === i) o = 1;
+        else if (k === i + 1) o = t > 0.65 ? (t - 0.65) / 0.35 : 0;
+        frames[k].style.opacity = o;
+      }
+      setStage(t > 0.825 ? i + 1 : i);
+      if (fill) fill.style.height = progress * 100 + '%';
+    };
+    var onScroll = function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+
+    // клик по риске — плавный проброс к нужной стадии
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function () {
+        var top = sec.getBoundingClientRect().top + window.pageYOffset;
+        var span = sec.offsetHeight - window.innerHeight;
+        window.scrollTo({ top: top + (k / (N - 1)) * span + 1, behavior: 'smooth' });
+      });
+    });
+  })();
+
+  /* --- Атлас стали (ЛИСТ 03-Д): табы образцов -------------------------------- */
+
+  (function atlasTabs() {
+    var tabs = $$('[data-atlas-tab]');
+    if (!tabs.length) return;
+    var panels = tabs.map(function (t) {
+      return document.getElementById(t.getAttribute('aria-controls'));
+    });
+    var activate = function (i, focus) {
+      tabs.forEach(function (t, k) {
+        var on = k === i;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p, k) {
+        if (!p) return;
+        p.classList.toggle('is-active', k === i);
+        if (k === i) p.removeAttribute('aria-hidden');
+        else p.setAttribute('aria-hidden', 'true');
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { activate(i); });
+      t.addEventListener('keydown', function (ev) {
+        var j = null;
+        if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') j = (i + 1) % tabs.length;
+        else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') j = (i - 1 + tabs.length) % tabs.length;
+        else if (ev.key === 'Home') j = 0;
+        else if (ev.key === 'End') j = tabs.length - 1;
+        if (j !== null) { ev.preventDefault(); activate(j, true); }
+      });
+    });
+  })();
+
   /* --- Живой лист КМД: профили ПСУ / ПС ------------------------------------- */
 
   (function profiles() {

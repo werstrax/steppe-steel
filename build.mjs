@@ -45,6 +45,8 @@ function loadData() {
   const process = loadJSON(join(SRC, 'data', 'process.json'));
   const faq = loadJSON(join(SRC, 'data', 'faq.json'));
   const journal = loadJSON(join(SRC, 'data', 'journal.json'));
+  const cycle = loadJSON(join(SRC, 'data', 'cycle.json'));
+  const material = loadJSON(join(SRC, 'data', 'material.json'));
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
   site.buildId = assetHash([
@@ -57,7 +59,7 @@ function loadData() {
   site._products = products.items;
   site._services = services.items;
 
-  return { site, images, products, services, profiles, process, faq, journal };
+  return { site, images, products, services, profiles, process, faq, journal, cycle, material };
 }
 
 function assetHash(paths) {

@@ -3163,6 +3163,294 @@ html:not(.js) .line-in { transform: none; }
 .contact-media { max-width: 900px; }
 
 
+/* Хроника объекта (ЛИСТ 04-М): скролл-таймлапс стройки ---------------------
+   Родитель задаёт «длину плёнки», липкий кадр 100vh, скролл кроссфейдит
+   5 стадий одной площадки. Нативный скролл, opacity-only — без скролл-джекинга. */
+
+.cycle {
+  position: relative;
+  height: 460vh;
+  background: var(--steel);
+}
+
+.cycle__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.cycle__frames,
+.cycle__frame {
+  position: absolute;
+  inset: 0;
+}
+
+.cycle__frame { opacity: 0; }
+.cycle__frame.is-active { opacity: 1; }
+
+.cycle__pic,
+.cycle__pic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cycle__pic img { object-fit: cover; }
+
+.cycle__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 12, 14, 0.38), transparent 32%, transparent 52%, rgba(11, 12, 14, 0.85));
+  pointer-events: none;
+}
+
+/* плашка «Визуализация» в хронике — в правом верхнем углу, поверх кадров */
+.cycle > .cycle__stage ~ .viz-tag,
+.cycle .viz-tag {
+  left: auto;
+  right: 0;
+  bottom: auto;
+  top: 0;
+}
+
+.cycle__hud {
+  position: absolute;
+  left: clamp(1.1rem, 4vw, 3.5rem);
+  right: clamp(3.2rem, 8vw, 6rem);
+  bottom: clamp(1.4rem, 4vh, 3rem);
+  z-index: 2;
+  color: var(--on-steel);
+  max-width: 640px;
+}
+
+.cycle__kicker {
+  color: var(--accent);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 0.6em;
+}
+
+.cycle__count {
+  margin: 0;
+  color: var(--on-steel-muted);
+  font-size: var(--fs-small);
+}
+
+.cycle__count span {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 1.2rem + 3vw, 3.2rem);
+  font-weight: 500;
+  color: var(--on-steel);
+  line-height: 1;
+  margin-right: 0.15em;
+}
+
+.cycle__title {
+  font-size: var(--fs-h2);
+  margin: 0.25em 0 0.45em;
+}
+
+.cycle__sub {
+  margin: 0;
+  color: var(--on-steel-muted);
+  font-size: var(--fs-small);
+  max-width: 52ch;
+}
+
+.cycle__rail {
+  position: absolute;
+  right: clamp(0.9rem, 2.5vw, 2.2rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cycle__rail-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(242, 241, 236, 0.22);
+  z-index: -1;
+}
+
+.cycle__rail-fill {
+  display: block;
+  width: 100%;
+  height: 0%;
+  background: var(--accent);
+}
+
+.cycle__dot {
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  border: 1px solid var(--on-steel-muted);
+  background: var(--steel);
+  cursor: pointer;
+}
+
+.cycle__dot.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.cycle__dot:hover { border-color: var(--on-steel); }
+
+/* без JS хроника не скрабится: обычная высота, финальный кадр, без рейки */
+html:not(.js) .cycle { height: auto; }
+html:not(.js) .cycle__stage { position: static; }
+html:not(.js) .cycle__frame { opacity: 0; }
+html:not(.js) .cycle__frame:last-child { opacity: 1; }
+html:not(.js) .cycle__rail { display: none; }
+
+@media (max-width: 719px) {
+  .cycle { height: 340vh; }
+  .cycle__hud { right: 3rem; }
+  .cycle__title { font-size: var(--fs-h3); }
+  .cycle__sub { display: none; }
+  .cycle__dot { width: 11px; height: 11px; }
+}
+
+/* Атлас стали (ЛИСТ 03-Д): макро-деталировка материала --------------------- */
+
+.atlas { display: grid; gap: calc(var(--gap) / 2); }
+
+.atlas__viewer {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--steel-2);
+  border: 1px solid var(--steel-line);
+}
+
+.atlas__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.atlas__slide.is-active { opacity: 1; }
+
+.atlas__img,
+.atlas__img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.atlas__img img { object-fit: cover; }
+
+/* очень медленный дрейф активного макро-кадра */
+.atlas__slide.is-active .atlas__img img { animation: atlasDrift 14s ease-out both; }
+
+@keyframes atlasDrift {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+
+.atlas__callouts {
+  position: absolute;
+  left: 1.1rem;
+  top: 1rem;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+}
+
+.atlas__callout {
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--on-steel);
+  background: rgba(11, 12, 14, 0.68);
+  border-left: 2px solid var(--accent);
+  padding: 0.4em 0.8em;
+  max-width: min(70vw, 34ch);
+}
+
+.atlas__stamp { max-width: min(60%, 300px); }
+
+.atlas__ruler {
+  position: absolute;
+  left: 1.1rem;
+  bottom: 2.6rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--zinc);
+  background: rgba(11, 12, 14, 0.55);
+  padding: 0.35em 0.7em;
+}
+
+.atlas__ruler-bar {
+  display: inline-block;
+  width: 90px;
+  height: 7px;
+  border-bottom: 1px solid currentColor;
+  background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 9px);
+}
+
+.atlas__tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.atlas__tab {
+  display: grid;
+  gap: 0.3rem;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  background: var(--steel-2);
+  border: 1px solid var(--steel-line);
+  color: var(--on-steel-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.atlas__tab-num {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-steel-faint);
+}
+
+.atlas__tab-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--on-steel);
+}
+
+.atlas__tab:hover { border-color: var(--on-steel-muted); }
+
+.atlas__tab.is-active {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+  background: var(--steel-3);
+}
+
+@media (max-width: 719px) {
+  .atlas__viewer { aspect-ratio: 3 / 2; }
+  .atlas__tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .atlas__callout { font-size: 0.6rem; }
+  .atlas__stamp { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -3182,6 +3470,10 @@ html:not(.js) .line-in { transform: none; }
   .prof-dim, .dimtext { opacity: 1; }
   .gs-dim, .gs-dimtext { opacity: 1; }
   .gs-frame { stroke-dashoffset: 0; }
+
+  /* хроника: вместо скраба — компактный степпер по кнопкам-стадиям */
+  .cycle { height: auto; }
+  .cycle__stage { position: static; }
 }
 
 @media print {
@@ -3208,4 +3500,12 @@ html:not(.js) .line-in { transform: none; }
   .gs-printing .gs-dim, .gs-printing .gs-dimtext { opacity: 1 !important; }
   .gs-printing .gs-stamp { position: absolute; border-top: 1px solid #000; border-left: 1px solid #000; }
   .gs-printing .gs-view { display: none; }
+
+  /* хроника на печати — один финальный кадр вместо 460vh скраба */
+  .cycle { height: auto; }
+  .cycle__stage { position: static; height: auto; }
+  .cycle__frames { position: static; }
+  .cycle__frame { display: none; }
+  .cycle__frame:last-child { display: block; position: static; opacity: 1 !important; }
+  .cycle__rail, .cycle__scrim { display: none; }
 }

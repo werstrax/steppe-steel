@@ -14,7 +14,7 @@ import { organizationNode, websiteNode } from '../lib/schema.mjs';
 import { profilesBoard, profilesCards } from './profili.mjs';
 
 export function renderHome(d) {
-  const { site, products, services, profiles, process, faq: faqData, journal } = d;
+  const { site, products, services, profiles, process, faq: faqData, journal, cycle, material } = d;
   const c = site.contacts;
   const waEng = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappEngineer)}`;
   const waKp = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappKp)}`;
@@ -130,6 +130,47 @@ export function renderHome(d) {
       </div>
     </section>
 
+    <!-- ЛИСТ 03-Д · АТЛАС СТАЛИ: макро-деталировка материала -->
+    <section class="section noise" id="material">
+      <div class="container">
+        ${raw(sectionHead({
+          sheet: '03-Д', label: 'Деталировка',
+          title: material.title,
+          text: material.subtitle,
+          action: material.action,
+        }))}
+        <div class="atlas" data-reveal>
+          <div class="atlas__viewer">
+            ${material.samples.map((s, i) => html`
+              <div class="atlas__slide ${i === 0 ? 'is-active' : ''}" id="atlas-panel-${i}"
+                   role="tabpanel" aria-labelledby="atlas-tab-${i}"${i > 0 ? raw(' aria-hidden="true"') : ''}>
+                ${raw(picture(s.img, { alt: s.alt, sizes: '(min-width: 720px) 66vw, 100vw', className: 'atlas__img' }))}
+                <div class="atlas__callouts" aria-hidden="true">
+                  ${s.callouts.map((c2) => html`<span class="atlas__callout mono">${c2}</span>`)}
+                </div>
+                <div class="prof__stamp atlas__stamp" aria-hidden="true">
+                  <div class="prof__stamp-row">Steppe Steel · с. Троебратское</div>
+                  <div class="prof__stamp-row prof__stamp-row--split"><span>${s.marka}</span><span>М 5:1</span></div>
+                </div>
+              </div>
+            `)}
+            <span class="atlas__ruler mono" aria-hidden="true">0 <span class="atlas__ruler-bar"></span> 10 мм</span>
+            ${vizTag()}
+          </div>
+          <div class="atlas__tabs" role="tablist" aria-label="Образцы стали">
+            ${material.samples.map((s, i) => html`
+              <button type="button" class="atlas__tab ${i === 0 ? 'is-active' : ''}" id="atlas-tab-${i}"
+                      role="tab" aria-selected="${i === 0 ? 'true' : 'false'}" aria-controls="atlas-panel-${i}"
+                      data-atlas-tab="${i}"${i > 0 ? raw(' tabindex="-1"') : ''}>
+                <span class="atlas__tab-num mono">Образец ${s.num}</span>
+                <span class="atlas__tab-title">${s.title}</span>
+              </button>
+            `)}
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Диптих: фигура без фона на графите + оранжевая плашка -->
     <section class="duo" aria-labelledby="duo-title">
       <div class="duo__panel" data-reveal>
@@ -199,6 +240,34 @@ export function renderHome(d) {
           `)}
         </div>
         <p class="sheet-note">Изображения — фирменные визуализации. Реальные снимки цеха и объектов — в Instagram <a class="link" href="${c.instagram}" target="_blank" rel="noopener">${c.instagramHandle}</a> и по запросу.</p>
+      </div>
+    </section>
+
+    <!-- ЛИСТ 04-М · ХРОНИКА ОБЪЕКТА: скролл-таймлапс стройки -->
+    <section class="cycle" id="cycle" aria-label="${cycle.title} — ${cycle.stages.length} стадий">
+      <div class="cycle__stage">
+        <div class="cycle__frames">
+          ${cycle.stages.map((s, i) => html`
+            <div class="cycle__frame ${i === 0 ? 'is-active' : ''}" data-cycle-frame>
+              ${raw(picture(s.img, { alt: s.alt, sizes: '100vw', className: 'cycle__pic' }))}
+            </div>
+          `)}
+        </div>
+        <div class="cycle__scrim" aria-hidden="true"></div>
+        ${vizTag()}
+        <div class="cycle__hud">
+          <p class="cycle__kicker mono">${cycle.label}</p>
+          <p class="cycle__count mono" aria-hidden="true"><span id="cycle-num">01</span> / 0${cycle.stages.length}</p>
+          <h2 class="cycle__title" id="cycle-label" aria-live="polite">${cycle.stages[0].label}</h2>
+          <p class="cycle__sub">${cycle.subtitle} <a class="link" href="${cycle.processLink.url}">${cycle.processLink.title}</a></p>
+        </div>
+        <div class="cycle__rail" role="group" aria-label="Стадии монтажа">
+          <span class="cycle__rail-bar" aria-hidden="true"><span class="cycle__rail-fill" id="cycle-fill"></span></span>
+          ${cycle.stages.map((s, i) => html`
+            <button type="button" class="cycle__dot ${i === 0 ? 'is-active' : ''}" data-cycle-dot="${i}"
+                    aria-label="Стадия ${i + 1}: ${s.label}" aria-pressed="${i === 0 ? 'true' : 'false'}"></button>
+          `)}
+        </div>
       </div>
     </section>
 

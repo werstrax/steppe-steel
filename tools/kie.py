@@ -72,6 +72,7 @@ def download(urls, name):
     os.makedirs(RAW, exist_ok=True)
     out = []
     for i, u in enumerate(urls):
+        print("  url: %s" % u)
         ext = os.path.splitext(u.split("?")[0])[1] or ".jpg"
         fname = name + (("-%d" % (i + 1)) if len(urls) > 1 else "") + ext
         path = os.path.join(RAW, fname)
