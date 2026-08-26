@@ -2849,7 +2849,195 @@ html:not(.js) .line-in { transform: none; }
   .agro { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
 }
 
-.agro__stats { align-content: start; }
+.agro__stats { align-content: start; margin-top: var(--gap); }
+
+/* Эскизный лист 06-А: живой чертёж зернохранилища ---------------------------
+   Светлая чертёжная доска на тёмной секции; фасад тянется за калькулятором,
+   штамп заполняется данными посетителя, лист печатается в A4 landscape. */
+
+.grain-sheet { display: grid; gap: 1.1rem; align-content: start; }
+
+.gs-board {
+  position: relative;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(21, 23, 26, 0.045) 27px 28px),
+    repeating-linear-gradient(90deg, transparent 0 27px, rgba(21, 23, 26, 0.045) 27px 28px),
+    #fbfaf6;
+  border: 1px solid var(--ink);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+.gs-board svg { width: 100%; height: auto; display: block; }
+
+.gs-caption {
+  position: absolute;
+  top: 14px;
+  left: 22px;
+  margin: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(21, 23, 26, 0.6);
+}
+
+.gs-caption--sect { left: auto; right: 22px; }
+
+/* Рамка листа: прочерчивается при входе секции во вьюпорт */
+.gs-frame {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 2290;
+  stroke-dashoffset: 2290;
+}
+
+.grain-sheet.is-drawn .gs-frame {
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  stroke-dashoffset: 0;
+}
+
+/* Земля */
+.gs-ground { stroke: var(--ink); stroke-width: 1.2; }
+
+.gs-hatch {
+  stroke: rgba(21, 23, 26, 0.4);
+  stroke-width: 5;
+  stroke-dasharray: 1 9;
+  transform: translateY(4px);
+}
+
+/* Фасад: обшивка-«шатёр» и пояса тянутся плавно (style.width из JS) */
+.gs-clad {
+  fill: #44659c;
+  stroke: rgba(21, 23, 26, 0.75);
+  stroke-width: 1;
+}
+
+.gs-eave { fill: rgba(15, 17, 20, 0.35); }
+.gs-grill-r { fill: var(--ink); }
+.gs-endcap { fill: var(--ink); }
+.gs-seam { stroke: rgba(251, 250, 246, 0.32); stroke-width: 1; }
+
+.gs-clad, .gs-eave, .gs-grill-r, .gs-endcap {
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    x 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    y 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Стойки открытого низа, подкосы, сваи */
+.gs-post { stroke: var(--ink); stroke-width: 1.6; }
+.gs-brace { stroke: rgba(21, 23, 26, 0.5); stroke-width: 1; }
+.gs-pile { stroke: var(--ink); stroke-width: 2.6; }
+
+/* Перерисованный слой мягко проявляется */
+#gs-dyn.gs-fresh { animation: gsFade 0.45s ease; }
+
+@keyframes gsFade {
+  from { opacity: 0.15; }
+  to { opacity: 1; }
+}
+
+/* Размерная линия — как на листе профилей */
+.gs-dim {
+  stroke: var(--accent);
+  stroke-width: 1.1;
+  opacity: 0;
+  transition: opacity 0.4s 0.55s;
+}
+
+.gs-dimtext {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  fill: var(--accent-press);
+  opacity: 0;
+  transition: opacity 0.4s 0.65s;
+}
+
+.grain-sheet.is-drawn .gs-dim,
+.grain-sheet.is-drawn .gs-dimtext { opacity: 1; }
+
+/* Разрез 1-1 — фирменный силуэт, статика */
+.gs-sect-clad { fill: rgba(68, 101, 156, 0.85); stroke: rgba(21, 23, 26, 0.7); stroke-width: 0.8; }
+.gs-sect-line { stroke: rgba(21, 23, 26, 0.65); stroke-width: 1; }
+.gs-sect-grill { stroke: var(--ink); stroke-width: 1.6; }
+.gs-sect-pile { stroke: var(--ink); stroke-width: 2.2; }
+
+/* Врезка «Внешний вид»: аэрокадр растёт вместе с ползунком (4 бакета длины) */
+.gs-view {
+  position: absolute;
+  top: 40px;
+  left: 3%;
+  width: 32%;
+  margin: 0;
+  z-index: 2;
+  border: 1px solid var(--ink);
+  background: #fbfaf6;
+  box-shadow: 3px 3px 0 rgba(21, 23, 26, 0.15);
+}
+
+.gs-view__label {
+  display: block;
+  padding: 0.3em 0.7em;
+  border-bottom: 1px solid rgba(21, 23, 26, 0.35);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(21, 23, 26, 0.65);
+}
+
+.gs-view__stack {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.gs-view__stack picture {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gs-view__stack picture.is-active { opacity: 1; }
+
+.gs-view__stack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Штамп листа наследует стиль штампа профилей (.prof__stamp) */
+.gs-stamp { max-width: min(58%, 330px); }
+
+.gs-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+.gs-note { margin: 0; }
+
+@media (max-width: 719px) {
+  /* на узком экране штамп и врезка не накрывают чертёж, а встают в поток */
+  .gs-stamp {
+    position: static;
+    max-width: none;
+    border-left: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .gs-view {
+    position: static;
+    width: auto;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    box-shadow: none;
+  }
+
+  /* легенды зон наезжали бы на врезку — на узком листе они не нужны */
+  .gs-caption { display: none; }
+}
 
 /* Галерея */
 .gallery {
@@ -2992,10 +3180,32 @@ html:not(.js) .line-in { transform: none; }
   .loader { display: none !important; }
   .cursor { display: none !important; }
   .prof-dim, .dimtext { opacity: 1; }
+  .gs-dim, .gs-dimtext { opacity: 1; }
+  .gs-frame { stroke-dashoffset: 0; }
 }
 
 @media print {
   .header, .footer, .fab, .menu, .loader, .cursor, .next-page, .cta-band, .marquee { display: none !important; }
 
   body { background: #fff; color: #000; }
+
+  /* Печать эскизного листа 06-А: кнопка на листе включает html.gs-printing —
+     печатается только чертёжная доска, чёрным по белому */
+  .gs-printing body * { visibility: hidden; }
+  .gs-printing #gs-board, .gs-printing #gs-board * { visibility: visible; }
+
+  .gs-printing #gs-board {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: 1.5px solid #000;
+    box-shadow: none;
+    background: #fff;
+  }
+
+  .gs-printing .gs-frame { stroke-dashoffset: 0 !important; }
+  .gs-printing .gs-dim, .gs-printing .gs-dimtext { opacity: 1 !important; }
+  .gs-printing .gs-stamp { position: absolute; border-top: 1px solid #000; border-left: 1px solid #000; }
+  .gs-printing .gs-view { display: none; }
 }

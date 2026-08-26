@@ -660,6 +660,155 @@
     compute(); // пример для предзаполненного значения (в заявку не идёт)
   })();
 
+  /* --- Эскизный лист 06-А: живой чертёж зернохранилища ----------------------
+     Фасад на листе тянется за калькулятором, штамп заполняется данными
+     посетителя. Геометрия — КОПИЯ функции gsDynamic из src/lib/components.mjs
+     (там рисуется статичный дефолт для no-JS) — менять синхронно. */
+
+  (function grainSheet() {
+    var sheet = $('#grain-sheet');
+    var input = $('#grain-input');
+    var crop = $('#grain-crop');
+    if (!sheet || !input || !crop) return;
+
+    var GS = {
+      x0: 50, drawW: 620, ground: 330,
+      lvl: { grill: 0.6, hem: 1.8, eave: 5.6, ridge: 8 },
+      scales: [
+        { ppm: 16, label: 'М 1:250' },
+        { ppm: 8, label: 'М 1:500' },
+        { ppm: 16 / 3, label: 'М 1:750' },
+        { ppm: 4, label: 'М 1:1000' },
+      ],
+    };
+    var nnum = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+
+    var els = {
+      svg: $('#gs-svg'), dyn: $('#gs-dyn'), clad: $('#gs-clad'), eave: $('#gs-eave'),
+      grill: $('#gs-grill'), endL: $('#gs-end-l'), endR: $('#gs-end-r'),
+      crop: $('#gs-crop'), tons: $('#gs-tons'), len: $('#gs-len'), scale: $('#gs-scale'),
+      send: $('#gs-send'), print: $('#gs-print'), code: $('#gs-code'),
+    };
+
+    var redraw = function () {
+      var tons = parseFloat(input.value);
+      var perMeter = parseFloat(crop.value) || 67;
+      if (!tons || tons <= 0) return; // пустой ввод — оставляем последний эскиз
+      var total = Math.max(6, Math.round(tons / perMeter));
+      var corp = Math.ceil(total / 140);
+      var each = Math.max(6, Math.ceil(total / corp));
+
+      var s = GS.scales[GS.scales.length - 1];
+      for (var i = 0; i < GS.scales.length; i++) {
+        if (each * GS.scales[i].ppm <= GS.drawW) { s = GS.scales[i]; break; }
+      }
+      var ppm = s.ppm;
+      var W = each * ppm;
+      var g = GS.ground;
+      var yG = g - GS.lvl.grill * ppm;
+      var yH = g - GS.lvl.hem * ppm;
+      var yE = g - GS.lvl.eave * ppm;
+      var yR = g - GS.lvl.ridge * ppm;
+
+      // сплошные элементы тянутся CSS-переходом (геометрия как CSS-свойства)
+      var st = function (el, props) { for (var k in props) el.style[k] = props[k] + 'px'; };
+      st(els.clad, { x: GS.x0, y: yR, width: W, height: yH - yR });
+      st(els.eave, { x: GS.x0, y: yE, width: W, height: 1.2 });
+      st(els.grill, { x: GS.x0, y: yG, width: W, height: 2 });
+      st(els.endL, { x: GS.x0 - 1, y: yR, width: 2, height: yG - yR });
+      st(els.endR, { x: GS.x0 + W - 1, y: yR, width: 2, height: yG - yR });
+
+      // стойки, подкосы, сваи и размерная линия — перерисовка целиком
+      var bays = Math.max(1, Math.round(each / 6));
+      var step = W / bays;
+      var p = '';
+      for (var b = 0; b <= bays; b++) {
+        var x = +(GS.x0 + b * step).toFixed(1);
+        p += '<line class="gs-post" x1="' + x + '" y1="' + yH + '" x2="' + x + '" y2="' + yG + '"/>';
+        if (ppm >= 8 && b < bays)
+          p += '<line class="gs-brace" x1="' + x + '" y1="' + yG + '" x2="' + (+(x + step).toFixed(1)) + '" y2="' + yH + '"/>';
+        if (ppm >= 8 && b > 0 && b < bays)
+          p += '<line class="gs-seam" x1="' + x + '" y1="' + (+(yR + 2).toFixed(1)) + '" x2="' + x + '" y2="' + (+(yH - 2).toFixed(1)) + '"/>';
+        p += '<line class="gs-pile" x1="' + x + '" y1="' + yG + '" x2="' + x + '" y2="' + g + '"/>';
+      }
+      var dy = yR - 24;
+      var xr = +(GS.x0 + W).toFixed(1);
+      p += '<line class="gs-dim" x1="' + GS.x0 + '" y1="' + dy + '" x2="' + xr + '" y2="' + dy + '" marker-start="url(#gs-arr)" marker-end="url(#gs-arr)"/>';
+      p += '<line class="gs-dim" x1="' + GS.x0 + '" y1="' + (dy - 8) + '" x2="' + GS.x0 + '" y2="' + (yR - 6) + '"/>';
+      p += '<line class="gs-dim" x1="' + xr + '" y1="' + (dy - 8) + '" x2="' + xr + '" y2="' + (yR - 6) + '"/>';
+      var dimText = '≈ ' + nnum(each * 1000) + (corp > 1 ? ' · КОРПУСОВ: ' + corp : '');
+      p += '<text class="gs-dimtext" x="' + (+(GS.x0 + W / 2).toFixed(1)) + '" y="' + (dy - 8) + '" text-anchor="middle">' + dimText + '</text>';
+      els.dyn.innerHTML = p;
+      els.dyn.classList.remove('gs-fresh');
+      void els.dyn.getBoundingClientRect();
+      els.dyn.classList.add('gs-fresh');
+
+      // врезка «Внешний вид»: бакет по длине корпуса
+      var stack = $('.gs-view__stack', sheet);
+      if (stack) {
+        var bucket = each <= 45 ? 0 : each <= 80 ? 1 : each <= 115 ? 2 : 3;
+        var pics = stack.querySelectorAll('picture');
+        for (var pi = 0; pi < pics.length; pi++)
+          pics[pi].classList.toggle('is-active', pi === bucket);
+      }
+
+      // штамп и подписи
+      var cropName = CROP_NAMES[perMeter] || 'культура';
+      var lenText = (corp > 1 ? corp + ' × ' : '') + '≈ ' + fmt(each) + ' м';
+      els.crop.textContent = cropName;
+      els.tons.textContent = fmt(tons) + ' т';
+      els.len.textContent = lenText;
+      els.scale.textContent = s.label;
+      els.svg.setAttribute('aria-label',
+        'Эскиз фасада зернохранилища: ' + (corp > 1 ? corp + ' корпуса по ' : '') + fmt(each) + ' м');
+
+      // WhatsApp-ссылка с параметрами листа
+      if (els.send) {
+        var msg = 'Здравствуйте! Эскизный лист 06-А с сайта Steppe Steel: ' + cropName + ', ' +
+          fmt(tons) + ' т → ' + (corp > 1 ? corp + ' корпуса × ' : 'длина ') + '≈ ' + fmt(each) +
+          ' м. ' + (els.code ? 'Шифр ' + els.code.textContent + '. ' : '') + 'Прошу расчёт инженера.';
+        els.send.href = els.send.href.split('?')[0] + '?text=' + encodeURIComponent(msg);
+      }
+    };
+
+    // дата и шифр листа — по часам посетителя (SSR печёт дату сборки)
+    var now = new Date();
+    var d2 = function (n) { return (n < 10 ? '0' : '') + n; };
+    var dateEl = $('#gs-date');
+    if (dateEl) dateEl.textContent = d2(now.getDate()) + '.' + d2(now.getMonth() + 1) + '.' + now.getFullYear();
+    if (els.code) els.code.textContent = 'СС-06А-' + d2(now.getDate()) + d2(now.getMonth() + 1) + String(now.getFullYear()).slice(2);
+
+    var t = null;
+    var onChange = function () { clearTimeout(t); t = setTimeout(redraw, 150); };
+    input.addEventListener('input', onChange);
+    crop.addEventListener('change', onChange);
+
+    // прочерчивание рамки при входе во вьюпорт (с фолбэком)
+    if ('IntersectionObserver' in window && !reduced) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { sheet.classList.add('is-drawn'); io.disconnect(); }
+        });
+      }, { threshold: 0.2 });
+      io.observe(sheet);
+      setTimeout(function () { sheet.classList.add('is-drawn'); }, 4000);
+    } else {
+      sheet.classList.add('is-drawn');
+    }
+
+    // печать листа: только доска, чёрным по белому
+    if (els.print && typeof window.print === 'function') {
+      els.print.hidden = false;
+      els.print.addEventListener('click', function () {
+        document.documentElement.classList.add('gs-printing');
+        var done = function () { document.documentElement.classList.remove('gs-printing'); };
+        if ('onafterprint' in window) window.addEventListener('afterprint', done, { once: true });
+        else setTimeout(done, 1000);
+        window.print();
+      });
+    }
+  })();
+
   /* --- Живой лист КМД: профили ПСУ / ПС ------------------------------------- */
 
   (function profiles() {

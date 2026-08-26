@@ -8,7 +8,7 @@ import { layout } from '../lib/layout.mjs';
 import { html, raw, e, picture } from '../lib/util.mjs';
 import {
   sectionHead, productCard, marquee, ctaBand, stat, faq, step, video,
-  iconWhatsApp, iconArrow, vizTag, photoTag,
+  iconWhatsApp, iconArrow, vizTag, photoTag, grainSheet,
 } from '../lib/components.mjs';
 import { organizationNode, websiteNode } from '../lib/schema.mjs';
 import { profilesBoard, profilesCards } from './profili.mjs';
@@ -261,18 +261,19 @@ export function renderHome(d) {
               <span class="agro-calc__result" id="grain-length">≈ 45 м</span>
             </div>
             <p class="agro-calc__note">по вместимости на 1 м длины · наращивается секциями до 140 м; точный расчёт сделает инженер</p>
-            <a href="/zayavka/?type=grain" class="btn btn--primary" id="grain-cta">Получить расчёт под мой объём</a>
+            <a href="/zayavka/?type=grain" class="btn btn--ghost" id="grain-cta">Получить расчёт под мой объём</a>
           </div>
-          <div class="grid grid--2 agro__stats">
-            ${[
-              ['без бетона', 'Винтовые сваи и металлический ростверк — никаких мокрых процессов'],
-              ['до 140 м', 'Длина наращивается секциями под ваш объём урожая'],
-              ['боковое давление', 'Наклонные стены и подкосная система — спроектированы под нагрузку зерна'],
-              ['30+ лет', 'Даже в агрессивной среде зерна — без усталостных трещин (обычная эксплуатация — 50+)'],
-              ['разборная', '100 % болтовые соединения — ликвидный актив, можно демонтировать и перевезти'],
-              ['10 дней', 'Быстрая поставка — конструкции в наличии, быстрый старт проекта'],
-            ].map(([v, k]) => stat({ val: v, key: k }))}
-          </div>
+          ${raw(grainSheet(site))}
+        </div>
+        <div class="grid grid--3 agro__stats">
+          ${[
+            ['без бетона', 'Винтовые сваи и металлический ростверк — никаких мокрых процессов'],
+            ['до 140 м', 'Длина наращивается секциями под ваш объём урожая'],
+            ['боковое давление', 'Наклонные стены и подкосная система — спроектированы под нагрузку зерна'],
+            ['30+ лет', 'Даже в агрессивной среде зерна — без усталостных трещин (обычная эксплуатация — 50+)'],
+            ['разборная', '100 % болтовые соединения — ликвидный актив, можно демонтировать и перевезти'],
+            ['10 дней', 'Быстрая поставка — конструкции в наличии, быстрый старт проекта'],
+          ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>
     </section>

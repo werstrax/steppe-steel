@@ -458,4 +458,159 @@ export const specs = (rows) => html`
   </div>
 `;
 
+/* --- Эскизный лист 06-А: живой чертёж зернохранилища --------------------- */
+
+/* Геометрия фасада. КОПИЯ ЛОГИКИ живёт в site.js (grainSheet) — менять
+   синхронно. Высотных отметок с числами на листе нет сознательно: реальных
+   данных по высоте от завода нет, а выдуманных цифр на сайте не бывает. */
+const GS = {
+  x0: 50,          // левый край фасада на листе
+  drawW: 620,      // рабочая ширина под фасад
+  ground: 330,     // линия земли
+  // уровни, м над землёй: ростверк · низ обшивки · перелом ската · конёк
+  lvl: { grill: 0.6, hem: 1.8, eave: 5.6, ridge: 8 },
+  // шаги масштаба: px на метр → подпись в штампе (как «МАСШТАБ 1:2» у профилей)
+  scales: [
+    { ppm: 16, label: 'М 1:250' },
+    { ppm: 8, label: 'М 1:500' },
+    { ppm: 16 / 3, label: 'М 1:750' },
+    { ppm: 4, label: 'М 1:1000' },
+  ],
+};
+
+function gsScale(len) {
+  for (const s of GS.scales) if (len * s.ppm <= GS.drawW) return s;
+  return GS.scales[GS.scales.length - 1];
+}
+
+/** Динамическая часть фасада (стойки, подкосы, сваи, размерная линия). */
+function gsDynamic(len, corpuses) {
+  const s = gsScale(len);
+  const ppm = s.ppm;
+  const W = len * ppm;
+  const x0 = GS.x0;
+  const g = GS.ground;
+  const y = (m) => +(g - m * ppm).toFixed(1);
+  const yG = y(GS.lvl.grill);
+  const yH = y(GS.lvl.hem);
+  const yR = y(GS.lvl.ridge);
+  let p = '';
+  const bays = Math.max(1, Math.round(len / 6));
+  const step = W / bays;
+  for (let i = 0; i <= bays; i++) {
+    const x = +(x0 + i * step).toFixed(1);
+    p += `<line class="gs-post" x1="${x}" y1="${yH}" x2="${x}" y2="${yG}"/>`;
+    if (ppm >= 8 && i < bays)
+      p += `<line class="gs-brace" x1="${x}" y1="${yG}" x2="${+(x + step).toFixed(1)}" y2="${yH}"/>`;
+    if (ppm >= 8 && i > 0 && i < bays)
+      p += `<line class="gs-seam" x1="${x}" y1="${+(yR + 2).toFixed(1)}" x2="${x}" y2="${+(yH - 2).toFixed(1)}"/>`;
+    p += `<line class="gs-pile" x1="${x}" y1="${yG}" x2="${x}" y2="${g}"/>`;
+  }
+  // размерная линия над коньком (низ листа занят штампом)
+  const dy = yR - 24;
+  p += `<line class="gs-dim" x1="${x0}" y1="${dy}" x2="${+(x0 + W).toFixed(1)}" y2="${dy}" marker-start="url(#gs-arr)" marker-end="url(#gs-arr)"/>`;
+  p += `<line class="gs-dim" x1="${x0}" y1="${dy - 8}" x2="${x0}" y2="${yR - 6}"/>`;
+  p += `<line class="gs-dim" x1="${+(x0 + W).toFixed(1)}" y1="${dy - 8}" x2="${+(x0 + W).toFixed(1)}" y2="${yR - 6}"/>`;
+  const dimText = `≈ ${num(len * 1000)}` + (corpuses > 1 ? ` · КОРПУСОВ: ${corpuses}` : '');
+  p += `<text class="gs-dimtext" x="${+(x0 + W / 2).toFixed(1)}" y="${dy - 8}" text-anchor="middle">${dimText}</text>`;
+  return { svg: p, W, yR, yH, yG, scaleLabel: s.label };
+}
+
+/**
+ * Лист 06-А: интерактивный эскизный фасад зернохранилища под калькулятором.
+ * SSR рисует статичный дефолт (3 000 т пшеницы → 45 м); живую перерисовку,
+ * печать и WhatsApp-отправку включает site.js (IIFE grainSheet).
+ */
+export function grainSheet(site) {
+  const len = 45; // дефолт калькулятора: 3 000 т пшеницы по 67 т/м
+  const d = gsDynamic(len, 1);
+  const g = GS.ground;
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dateStr = `${dd}.${mm}.${today.getFullYear()}`;
+  const code = `СС-06А-${dd}${mm}${String(today.getFullYear()).slice(2)}`;
+  const wa = `${site.contacts.whatsapp}?text=${encodeURIComponent(
+    'Здравствуйте! Эскизный лист 06-А с сайта Steppe Steel: пшеница, 3 000 т → длина ≈ 45 м. Прошу расчёт инженера.'
+  )}`;
+  return html`
+    <div class="grain-sheet" id="grain-sheet" data-reveal>
+      <div class="gs-board" id="gs-board">
+        <p class="gs-caption mono" aria-hidden="true">Фасад · вид сбоку</p>
+        <p class="gs-caption gs-caption--sect mono" aria-hidden="true">Разрез 1-1</p>
+        <figure class="gs-view" id="gs-view">
+          <figcaption class="gs-view__label mono">Внешний вид</figcaption>
+          <span class="gs-view__stack">
+            ${raw(picture('grain-view-1', { alt: 'Визуализация: короткое зернохранилище Steppe Steel в степи', sizes: '(min-width: 720px) 240px, 100vw', className: 'is-active' }))}
+            ${raw(picture('grain-ext', { alt: 'Визуализация: зернохранилище Steppe Steel средней длины в степи', sizes: '(min-width: 720px) 240px, 100vw' }))}
+            ${raw(picture('grain-view-3', { alt: 'Визуализация: длинное зернохранилище Steppe Steel около 100 метров', sizes: '(min-width: 720px) 240px, 100vw' }))}
+            ${raw(picture('grain-view-4', { alt: 'Визуализация: зернохранилище Steppe Steel максимальной длины 140 метров', sizes: '(min-width: 720px) 240px, 100vw' }))}
+            ${vizTag()}
+          </span>
+        </figure>
+        <svg viewBox="0 0 760 430" fill="none" id="gs-svg" role="img"
+             aria-label="Эскиз фасада зернохранилища длиной 45 метров">
+          <defs>
+            <marker id="gs-arr" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto">
+              <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#e8781a" stroke-width="1.1"/>
+            </marker>
+          </defs>
+          <!-- рамка листа: прочерчивается при появлении -->
+          <rect class="gs-frame" x="12" y="12" width="736" height="406"/>
+          <!-- линия земли со штриховкой -->
+          <line class="gs-ground" x1="26" y1="${g}" x2="734" y2="${g}"/>
+          <line class="gs-hatch" x1="26" y1="${g}" x2="734" y2="${g}"/>
+          <!-- разрез 1-1: фирменный силуэт — синий «шатёр» нависает над
+               открытым оцинкованным низом, короткие сваи (статика) -->
+          <g class="gs-sect" aria-hidden="true">
+            <path class="gs-sect-clad" d="M546 136 L563 100 L618 68 L673 100 L690 136 Z"/>
+            <line class="gs-sect-line" x1="570" y1="138" x2="570" y2="146"/>
+            <line class="gs-sect-line" x1="618" y1="138" x2="618" y2="146"/>
+            <line class="gs-sect-line" x1="666" y1="138" x2="666" y2="146"/>
+            <line class="gs-sect-line" x1="594" y1="146" x2="586" y2="138"/>
+            <line class="gs-sect-line" x1="642" y1="146" x2="650" y2="138"/>
+            <line class="gs-sect-grill" x1="552" y1="146" x2="684" y2="146"/>
+            <line class="gs-sect-pile" x1="570" y1="146" x2="570" y2="153"/>
+            <line class="gs-sect-pile" x1="618" y1="146" x2="618" y2="153"/>
+            <line class="gs-sect-pile" x1="666" y1="146" x2="666" y2="153"/>
+          </g>
+          <!-- фасад: обшивка и пояса тянутся плавно (style.width из JS) -->
+          <rect class="gs-clad" id="gs-clad" x="${GS.x0}" y="${d.yR}" width="${d.W}" height="${+(d.yH - d.yR).toFixed(1)}"/>
+          <rect class="gs-eave" id="gs-eave" x="${GS.x0}" y="${+(g - GS.lvl.eave * 8).toFixed(1)}" width="${d.W}" height="1.2"/>
+          <rect class="gs-grill-r" id="gs-grill" x="${GS.x0}" y="${d.yG}" width="${d.W}" height="2"/>
+          <rect class="gs-endcap" id="gs-end-l" x="${GS.x0 - 1}" y="${d.yR}" width="2" height="${+(d.yG - d.yR).toFixed(1)}"/>
+          <rect class="gs-endcap" id="gs-end-r" x="${+(GS.x0 + d.W - 1).toFixed(1)}" y="${d.yR}" width="2" height="${+(d.yG - d.yR).toFixed(1)}"/>
+          <!-- стойки, подкосы, сваи, размеры — перерисовываются целиком -->
+          <g id="gs-dyn">${raw(d.svg)}</g>
+        </svg>
+        <div class="prof__stamp gs-stamp" aria-hidden="true">
+          <div class="prof__stamp-row">Steppe Steel · с. Троебратское</div>
+          <div class="prof__stamp-row">Эскизный лист 06-А · не для производства</div>
+          <div class="prof__stamp-row prof__stamp-row--split">
+            <span>Культура: <b id="gs-crop">пшеница</b></span><span id="gs-tons">3 000 т</span>
+          </div>
+          <div class="prof__stamp-row prof__stamp-row--split">
+            <span>Длина: <b id="gs-len">≈ 45 м</b></span><span id="gs-scale">${e(d.scaleLabel)}</span>
+          </div>
+          <div class="prof__stamp-row prof__stamp-row--split">
+            <span id="gs-code">${e(code)}</span><span id="gs-date">${e(dateStr)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="gs-actions">
+        <a class="btn btn--primary" id="gs-send" href="${wa}" target="_blank" rel="noopener">
+          Отправить лист инженеру
+        </a>
+        <button type="button" class="btn btn--ghost gs-print" id="gs-print" hidden>
+          Распечатать лист
+        </button>
+      </div>
+      <p class="agro-calc__note gs-note">
+        Эскиз строится по вместимости на 1 м длины · снеговые нагрузки, фундамент
+        и раздел КМ рассчитает инженер завода
+      </p>
+    </div>
+  `;
+}
+
 export { num, plural, dateRu };
