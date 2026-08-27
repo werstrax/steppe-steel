@@ -7,7 +7,7 @@
  */
 
 import { layout } from '../lib/layout.mjs';
-import { html, raw, e, picture } from '../lib/util.mjs';
+import { html, raw, e, picture, imageUrl } from '../lib/util.mjs';
 import { pageHero, ctaBand, sectionHead, faq, stat, vizTag } from '../lib/components.mjs';
 
 /* --- Геометрия рамы -------------------------------------------------------
@@ -376,6 +376,27 @@ export function renderPartners(d) {
                download target="_blank" rel="noopener">Скачать сертификат (PDF)</a>
             <a class="arrow-link" href="/profili/">Сортамент профилей</a>
           </div>
+        </div>
+
+        <!-- Листы документа: бумага на столе, клик — лайтбокс -->
+        <div class="sheets" data-reveal>
+          <p class="sheets__head mono">${partners.cert.pagesTitle}</p>
+          <div class="sheets__row">
+            ${partners.cert.pages.map((pg, i) => html`
+              <figure class="sheets__item" data-lightbox
+                      data-full="${imageUrl(pg.img, site.basePath || '')}"
+                      aria-label="Открыть ${pg.label}: ${pg.cap}">
+                <span class="sheets__paper">
+                  ${raw(picture(pg.img, { alt: pg.alt, sizes: '(min-width: 900px) 22vw, 45vw' }))}
+                  <span class="sheets__zoom mono" aria-hidden="true">Открыть</span>
+                </span>
+                <figcaption class="sheets__cap mono">
+                  <b>${pg.label}</b> · ${pg.cap}
+                </figcaption>
+              </figure>
+            `)}
+          </div>
+          <p class="sheets__note">${partners.cert.pagesNote}</p>
         </div>
       </div>
     </section>

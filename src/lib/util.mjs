@@ -168,11 +168,16 @@ export function picture(name, opts = {}) {
 }
 
 /** Абсолютный URL картинки для og:image / schema.org. */
-export function imageUrl(name, base, width = 1152) {
+/**
+ * Растровый фолбэк-кадр (og:image, Schema.org, лайтбокс документов).
+ * Оптимизатор пишет НЕ-webp только в одной ширине (meta.fallback) и только
+ * в одном формате: PNG для кадров с прозрачностью, иначе JPEG. Просить другую
+ * ширину бессмысленно — такого файла нет, поэтому ширина здесь игнорируется.
+ */
+export function imageUrl(name, base) {
   const meta = IMAGES[name];
   if (!meta) return `${base}/assets/img/og-default-1152.jpg`;
-  const w = meta.widths.includes(width) ? width : meta.fallback;
-  return `${base}/assets/img/${name}-${w}.jpg`;
+  return `${base}/assets/img/${name}-${meta.fallback}.${meta.alpha ? 'png' : 'jpg'}`;
 }
 
 export function imageWebpUrl(name, base, width = 1152) {

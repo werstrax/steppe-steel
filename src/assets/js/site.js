@@ -273,6 +273,10 @@
     });
 
     function srcOf(t) {
+      // data-full — когда в лайтбоксе нужен крупный файл, а не тот размер,
+      // который браузер выбрал под маленькое превью (листы документов)
+      var full = t.getAttribute('data-full');
+      if (full) return full;
       var m = t.querySelector('img');
       return m ? (m.currentSrc || m.src) : '';
     }

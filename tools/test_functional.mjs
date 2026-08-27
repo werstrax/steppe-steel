@@ -256,6 +256,53 @@ async function main() {
       return { opened, closed };
     })()`);
     (lb.opened && lb.closed) ? ok('лайтбокс галереи') : fail('лайтбокс', JSON.stringify(lb));
+
+    /* --- 8. Партнёрская: шторка «чертёж → металл» и листы сертификата --- */
+    await goto('/partnyoram/');
+
+    const rama = await evalJs(`(() => {
+      const r = document.querySelector('#rama-range');
+      const clip = document.querySelector('#rama-clip-rect');
+      if (!r || !clip) return { skip: true };
+      r.value = 20; r.dispatchEvent(new Event('input', { bubbles: true }));
+      const at20 = clip.getAttribute('x');
+      r.value = 80; r.dispatchEvent(new Event('input', { bubbles: true }));
+      return { at20: +at20, at80: +clip.getAttribute('x') };
+    })()`);
+    (rama.at20 === 200 && rama.at80 === 800)
+      ? ok('шторка «чертёж → металл»')
+      : fail('шторка рамы', JSON.stringify(rama));
+
+    const tabs = await evalJs(`(() => {
+      const t = document.querySelectorAll('[data-split-tab]');
+      if (!t.length) return { skip: true };
+      t[2].click();
+      const panel = document.getElementById(t[2].getAttribute('aria-controls'));
+      return { всего: t.length, выбран: t[2].getAttribute('aria-selected'), виден: !panel.hasAttribute('hidden') };
+    })()`);
+    (tabs.всего === 5 && tabs.выбран === 'true' && tabs.виден)
+      ? ok(`форматы сотрудничества (${tabs.всего} вкладки)`)
+      : fail('форматы сотрудничества', JSON.stringify(tabs));
+
+    // листы документа открываются в лайтбоксе крупным файлом, который реально существует
+    const sheets = await evalJs(`(() => {
+      const items = [...document.querySelectorAll('.sheets__item')];
+      if (!items.length) return { skip: true };
+      items[1].click();
+      const box = document.querySelector('.lightbox');
+      const src = box.querySelector('img').getAttribute('src');
+      const full = items[1].getAttribute('data-full');
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      return { листов: items.length, src, совпал: src === full };
+    })()`);
+    let sheetOk = sheets.листов === 4 && sheets.совпал;
+    if (sheetOk) {
+      // файл должен отдаваться, а не 404 — иначе в лайтбоксе будет «битая» картинка
+      const res = await fetch(`${BASE.replace(/\/steppe-steel$/, '')}${sheets.src}`);
+      sheetOk = res.ok;
+      if (!res.ok) sheets.http = res.status;
+    }
+    sheetOk ? ok(`листы сертификата (${sheets.листов} шт.)`) : fail('листы сертификата', JSON.stringify(sheets));
   } finally {
     chrome.kill();
     await sleep(300);
