@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const PORT = Number(process.argv[2]) || 4321;
 // Сайт живёт в подпапке (GitHub project pages) — локально имитируем тот же префикс.
-const BASE = '';
+const BASE = '/steppe-steel';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

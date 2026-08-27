@@ -10,7 +10,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const BASE = process.env.SHOT_BASE || 'http://localhost:4321';
+const BASE = process.env.SHOT_BASE || 'http://localhost:4321/steppe-steel';
 const PORT = 9925;
 
 const CHROME = [
