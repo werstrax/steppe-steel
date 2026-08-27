@@ -8,7 +8,7 @@
 
 import { layout } from '../lib/layout.mjs';
 import { html, raw, e, picture, imageUrl } from '../lib/util.mjs';
-import { pageHero, ctaBand, sectionHead, faq, stat, vizTag } from '../lib/components.mjs';
+import { pageHero, ctaBand, sectionHead, faq, stat, vizTag, audienceSwitch } from '../lib/components.mjs';
 
 /* --- Геометрия рамы -------------------------------------------------------
    Пролёт 15,0 м и высота до конька 8,5 м — габариты реального объекта из
@@ -73,6 +73,8 @@ export function renderPartners(d) {
       crumbList: [{ title: 'Главная', url: '/' }, { title: 'Проектным организациям', url: '/partnyoram/' }],
       text: partners.heroText,
     }))}
+
+    ${raw(audienceSwitch('/partnyoram/'))}
 
     <!-- ЛИСТ 01 · «Чертёж → металл»: шторка по общей геометрии -->
     <section class="section section--tight" id="rama">
@@ -443,7 +445,7 @@ export function renderPartners(d) {
       title: raw(partners.ctaTitle),
       text: partners.ctaText,
       primary: { title: 'Отправить объект на проработку', url: '/zayavka/' },
-      secondary: { title: 'Сортамент профилей', url: '/profili/' },
+      secondary: { title: 'Строительным компаниям', url: '/predstavitelyam/' },
     }))}
   `;
 

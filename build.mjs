@@ -18,6 +18,7 @@ import { loadJSON, setImageManifest, outPath, copyDir, plural } from './src/lib/
 
 import { renderHome } from './src/pages/home.mjs';
 import { renderPartners } from './src/pages/partners.mjs';
+import { renderDealers } from './src/pages/dealers.mjs';
 import { renderKatalogIndex, renderProduct } from './src/pages/katalog.mjs';
 import { renderUslugiIndex, renderService } from './src/pages/uslugi.mjs';
 import { renderProfili } from './src/pages/profili.mjs';
@@ -48,6 +49,7 @@ function loadData() {
   const journal = loadJSON(join(SRC, 'data', 'journal.json'));
   const cycle = loadJSON(join(SRC, 'data', 'cycle.json'));
   const partners = loadJSON(join(SRC, 'data', 'partners.json'));
+  const dealers = loadJSON(join(SRC, 'data', 'dealers.json'));
   const material = loadJSON(join(SRC, 'data', 'material.json'));
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
@@ -61,7 +63,7 @@ function loadData() {
   site._products = products.items;
   site._services = services.items;
 
-  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners };
+  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners, dealers };
 }
 
 function assetHash(paths) {
@@ -116,6 +118,7 @@ function buildPages(d) {
   add('/profili/', renderProfili(d));
   add('/process/', renderProcess(d));
   add('/partnyoram/', renderPartners(d));
+  add('/predstavitelyam/', renderDealers(d));
   add('/o-zavode/', renderAbout(d));
 
   add('/blog/', renderJournalIndex(d));
@@ -277,6 +280,8 @@ function llmsTxt(d) {
 - Профили сертифицированы: сертификат соответствия РК № KZ.3510317.01.01.67913 (до 01.06.2027) на холодногнутые профили из оцинкованной стали, 43 позиции сортамента ПСУ 150–280 и ПС 100–280
 - Конструкторский отдел завода выполняет расчёты в ЛИРА-САПР и разделы КМ/КМД (Tekla Structures) по нормам СП РК EN (Еврокоды), сопровождает экспертизу
 - Партнёрская программа для проектных организаций: завод берёт конструктивную часть, заказчик и авторство проекта остаются за проектировщиком, предусмотрено агентское вознаграждение по договору
+- Партнёрская сеть для строительных компаний: региональный представитель получает запросы и клиентскую базу по закреплённой территории, партнёрские условия на металлоконструкции, обучение бригад и шеф-монтаж; доход партнёра складывается из поставки комплекта, монтажа и сопутствующих работ
+- Флагманские направления: навесы для сельхозтехники и модульные зернохранилища
 
 ## Продукция
 
@@ -298,6 +303,7 @@ ${journal.items.map((x) => `- [${x.title}](${site.url}${x.url}) — ${x.summary}
 - [Услуги](${site.url}/uslugi/)
 - [Процесс работы](${site.url}/process/)
 - [Проектным организациям](${site.url}/partnyoram/)
+- [Строительным компаниям](${site.url}/predstavitelyam/)
 - [О заводе](${site.url}/o-zavode/)
 - [Вопросы и ответы](${site.url}/faq/)
 - [Контакты](${site.url}/kontakty/)

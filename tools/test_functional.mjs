@@ -303,6 +303,40 @@ async function main() {
       if (!res.ok) sheets.http = res.status;
     }
     sheetOk ? ok(`листы сертификата (${sheets.листов} шт.)`) : fail('листы сертификата', JSON.stringify(sheets));
+
+    // переключатель аудиторий ведёт на смежную страницу
+    const aud = await evalJs(`(() => {
+      const items = [...document.querySelectorAll('.aud__item')];
+      const active = items.filter(i => i.classList.contains('is-active'));
+      const link = items.find(i => i.tagName === 'A');
+      return { всего: items.length, активных: active.length, ссылка: link && link.getAttribute('href') };
+    })()`);
+    (aud.всего === 2 && aud.активных === 1 && /predstavitelyam/.test(aud.ссылка || ''))
+      ? ok('переключатель аудиторий')
+      : fail('переключатель аудиторий', JSON.stringify(aud));
+
+    /* --- 9. Строительным компаниям: полоса ответственности --- */
+    await goto('/predstavitelyam/');
+
+    const lane = await evalJs(`(() => {
+      const lane = document.querySelector('.lane');
+      if (!lane) return { skip: true };
+      const steps = lane.querySelectorAll('.lane__step').length;
+      const income = lane.querySelectorAll('.lane__coin').length;
+      const partnerBtn = lane.querySelector('[data-lane-key="partner"]');
+      partnerBtn.click();
+      const filtered = lane.classList.contains('is-partner') && partnerBtn.getAttribute('aria-pressed') === 'true';
+      lane.querySelector('[data-lane-key="all"]').click();
+      const reset = !lane.classList.contains('is-partner') && !lane.classList.contains('is-factory');
+      // лента обязана прокручиваться внутри себя, а не растягивать страницу
+      const sc = lane.querySelector('.lane__scroll');
+      const contained = sc.scrollWidth > sc.clientWidth
+        && document.documentElement.scrollWidth <= window.innerWidth + 1;
+      return { steps, income, filtered, reset, contained };
+    })()`);
+    (lane.steps === 12 && lane.income === 4 && lane.filtered && lane.reset && lane.contained)
+      ? ok(`полоса ответственности (${lane.steps} этапов, ${lane.income} с доходом)`)
+      : fail('полоса ответственности', JSON.stringify(lane));
   } finally {
     chrome.kill();
     await sleep(300);

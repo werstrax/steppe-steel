@@ -3704,6 +3704,246 @@ html:not(.js) .cycle__rail { display: none; }
 
 .doc__text { margin: 0; font-size: var(--fs-small); color: var(--on-steel-muted); line-height: 1.55; }
 
+/* Переключатель аудиторий партнёрской программы ---------------------------- */
+
+.aud { border-bottom: 1px solid var(--steel-line); background: var(--steel-2); }
+
+.aud__inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+
+.aud__item {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1.1rem 1.2rem;
+  text-decoration: none;
+  color: var(--on-steel-muted);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.aud__item + .aud__item { border-left: 1px solid var(--steel-line); }
+
+.aud__item:hover { color: var(--on-steel); background: var(--steel-3); }
+
+.aud__item.is-active {
+  color: var(--on-steel);
+  border-bottom-color: var(--accent);
+  background: var(--steel);
+}
+
+.aud__title { font-family: var(--font-display); font-weight: 500; font-size: 0.98rem; }
+
+.aud__note { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-steel-faint); }
+
+.aud__item.is-active .aud__note { color: var(--accent); }
+
+/* Полоса ответственности: путь объекта двумя дорожками -------------------- */
+
+/* min-width:0 обязателен: иначе грид-элемент растягивается под ленту
+   и она вылезает за контейнер вместо горизонтальной прокрутки */
+.lane { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+
+.lane__legend { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.lane__key {
+  border: 1px solid var(--steel-line);
+  background: transparent;
+  color: var(--on-steel-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.lane__key:hover { color: var(--on-steel); border-color: var(--on-steel-muted); }
+
+.lane__key.is-active { background: var(--on-steel); border-color: var(--on-steel); color: var(--steel); }
+.lane__key--factory.is-active { background: var(--zinc); border-color: var(--zinc); color: var(--steel); }
+.lane__key--partner.is-active { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+
+/* лента прокручивается по горизонтали: этапов много, сжимать их нельзя */
+.lane__viewport { position: relative; min-width: 0; }
+
+/* подсказка, что лента листается: правый край гаснет, пока есть продолжение */
+.lane__viewport::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4.5rem;
+  background: linear-gradient(90deg, rgba(11, 12, 14, 0), var(--steel));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.lane__viewport.has-more::after { opacity: 1; }
+
+.lane__scroll {
+  position: relative;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.6rem;
+}
+
+.lane__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(215px, 1fr);
+  grid-template-rows: 1fr 2.6rem 1fr;
+  gap: 0 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 100%;
+}
+
+.lane__cell { display: grid; }
+/* карточки тянутся на всю дорожку: низ заводских и верх партнёрских
+   упираются в ось, поэтому лента читается как две ровные полосы */
+.lane__cell--factory { grid-row: 1; align-items: stretch; }
+.lane__cell--partner { grid-row: 3; align-items: stretch; }
+
+.lane__step {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--steel-line);
+  background: var(--steel-2);
+  transition: border-color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+
+.lane__cell--factory .lane__step { border-top: 2px solid var(--zinc); }
+.lane__cell--partner .lane__step { border-bottom: 2px solid var(--accent); }
+
+.lane__step:hover,
+.lane__step:focus-visible {
+  border-color: var(--on-steel-muted);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.lane__num { margin: 0; font-size: 0.66rem; letter-spacing: 0.14em; color: var(--on-steel-faint); }
+
+.lane__coin {
+  display: inline-block;
+  margin-left: 0.4em;
+  padding: 0.05em 0.45em;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 0.72rem;
+}
+
+.lane__title { margin: 0; font-size: 0.98rem; }
+
+.lane__text { margin: 0; font-size: var(--fs-small); color: var(--on-steel-muted); line-height: 1.5; }
+
+/* ось между дорожками */
+.lane__axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  border-top: 1px dashed rgba(242, 241, 236, 0.28);
+  pointer-events: none;
+}
+
+.lane__axis-label {
+  position: absolute;
+  left: 0;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--steel);
+  padding: 0 0.5em;
+}
+
+.lane__axis-label--top { top: -1.5rem; color: var(--zinc); }
+.lane__axis-label--bot { top: 0.4rem; color: var(--accent); }
+
+/* подсветка одной зоны */
+.lane.is-factory .lane__cell--partner .lane__step,
+.lane.is-partner .lane__cell--factory .lane__step { opacity: 0.28; }
+
+.lane__hint { margin: 0; }
+
+/* Экономика партнёра */
+.money {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1.4rem;
+  border: 1px solid var(--sheet-line);
+  background: #fbfaf6;
+}
+
+.money__num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.money__title { margin: 0; font-size: 1.05rem; }
+
+.money__text { margin: 0; font-size: var(--fs-small); color: var(--ink-muted); line-height: 1.55; }
+
+/* Флагманские направления */
+.flag {
+  display: grid;
+  gap: 0.9rem;
+  text-decoration: none;
+  color: var(--on-steel);
+}
+
+.flag__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--steel-line);
+}
+
+.flag__media picture,
+.flag__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.flag__media img { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+
+.flag:hover .flag__media img { transform: scale(1.03); }
+
+.flag__body { display: grid; gap: 0.35rem; }
+
+.flag__title { font-family: var(--font-display); font-weight: 500; font-size: var(--fs-h3); }
+
+.flag__text { font-size: var(--fs-small); color: var(--on-steel-muted); line-height: 1.55; max-width: 52ch; }
+
+/* блок скачивания на светлом листе */
+.dl--sheet { margin-top: clamp(2rem, 1.4rem + 2vw, 3.2rem); }
+.dl--sheet .dl__item { background: #fbfaf6; border-color: var(--sheet-line); color: var(--ink); }
+.dl--sheet .dl__text { color: var(--ink-muted); }
+.dl--sheet .dl__meta { color: var(--ink-muted); }
+
+@media (max-width: 899px) {
+  .aud__inner { grid-template-columns: minmax(0, 1fr); }
+  .aud__item + .aud__item { border-left: 0; border-top: 1px solid var(--steel-line); }
+}
+
+@media (max-width: 719px) {
+  .lane__track { grid-auto-columns: minmax(74vw, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag:hover .flag__media img { transform: none; }
+  .lane__step:hover { transform: none; }
+}
+
 /* Материалы для скачивания */
 .dl { margin-top: clamp(2rem, 1.4rem + 2vw, 3.2rem); }
 

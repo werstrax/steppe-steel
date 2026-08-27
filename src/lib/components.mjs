@@ -338,6 +338,33 @@ export function faq(items, { idPrefix = 'faq' } = {}) {
   `;
 }
 
+
+/* --- Переключатель аудиторий партнёрской программы ------------------------ */
+
+const AUDIENCES = [
+  { url: '/partnyoram/', title: 'Проектным организациям', note: 'Конструктив, КМ и КМД' },
+  { url: '/predstavitelyam/', title: 'Строительным компаниям', note: 'Регион, монтаж, доход' },
+];
+
+/** Две ссылки-вкладки: текущая подсвечена, вторая ведёт на смежную страницу. */
+export function audienceSwitch(current) {
+  return html`
+    <nav class="aud" aria-label="Кому адресована программа">
+      <div class="container aud__inner">
+        ${AUDIENCES.map((a) => (a.url === current
+          ? html`<span class="aud__item is-active" aria-current="page">
+                   <span class="aud__title">${a.title}</span>
+                   <span class="aud__note mono">${a.note}</span>
+                 </span>`
+          : html`<a class="aud__item" href="${a.url}">
+                   <span class="aud__title">${a.title}</span>
+                   <span class="aud__note mono">${a.note}</span>
+                 </a>`))}
+      </div>
+    </nav>
+  `;
+}
+
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
 /**

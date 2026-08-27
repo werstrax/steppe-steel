@@ -104,6 +104,16 @@
       "menu": true
     },
     {
+      "title": "Проектным организациям",
+      "url": "/partnyoram/",
+      "menu": true
+    },
+    {
+      "title": "Строительным компаниям",
+      "url": "/predstavitelyam/",
+      "menu": true
+    },
+    {
       "title": "Получить расчёт",
       "url": "/zayavka/"
     },

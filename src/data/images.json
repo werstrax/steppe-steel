@@ -60,6 +60,21 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JZwAASZWlOGmEDQO/FAAA/gTOBjQqdtzSulLfpTwqDXVHCAaIg1v1jre4zv1SlYKh8oEVhWYUyAAA"
  },
+ "canopy-brand": {
+  "w": 2752,
+  "h": 1536,
+  "ratio": 1.7917,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2752
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAwBACdASoUAAsAPulgqE0pJaOiMAgBIB0JagCdMoR2WCnAxnAWks/rPgAA/sXP+lSPZdNUdGfb9KM3Cfx89ZerQaYXEDa+VTVrhr1J2f3iJ53qZraKjHxo7Qw1axgFZEV3GTgwAAA="
+ },
  "cert-p1": {
   "w": 1654,
   "h": 2339,

@@ -1035,6 +1035,38 @@
     });
   })();
 
+  /* --- Полоса ответственности: подсветка зоны завода или партнёра ---------- */
+
+  (function laneKeys() {
+    var keys = $$('[data-lane-key]');
+    if (!keys.length) return;
+    var lane = keys[0].closest('.lane');
+    keys.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var mode = b.getAttribute('data-lane-key');
+        keys.forEach(function (k) {
+          var on = k === b;
+          k.classList.toggle('is-active', on);
+          k.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        lane.classList.toggle('is-factory', mode === 'factory');
+        lane.classList.toggle('is-partner', mode === 'partner');
+      });
+    });
+
+    var view = $('.lane__viewport', lane);
+    var scroll = $('.lane__scroll', lane);
+    if (!view || !scroll) return;
+    var sync = function () {
+      var more = scroll.scrollWidth > scroll.clientWidth + 2 &&
+        scroll.scrollLeft + scroll.clientWidth < scroll.scrollWidth - 8;
+      view.classList.toggle('has-more', more);
+    };
+    scroll.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    sync();
+  })();
+
   /* --- Живой лист КМД: профили ПСУ / ПС ------------------------------------- */
 
   (function profiles() {
