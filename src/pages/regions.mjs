@@ -17,7 +17,7 @@ export function renderRegion(d, r) {
 
   const content = html`
     ${raw(pageHero({
-      label: `${r.region} · доставка своим транспортом`,
+      label: `${r.region} · доставка по Казахстану`,
       titleHtml: raw(r.h1),
       crumbList: crumbs,
       text: r.lead,
