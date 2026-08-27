@@ -2309,6 +2309,10 @@ html:not(.js) #calc-back { display: none; }
 .prof__board.is-drawn .prof-dim,
 .prof__board.is-drawn .dimtext { opacity: 1; }
 
+/* Выноски ребра (h₂, b₁) есть только у ПСУ: у С-образного ПС ребра нет,
+   и на его сечении они указывали в пустоту. */
+.prof__board[data-prof="c"] .prof-dim--rib { display: none; }
+
 .prof__stamp {
   position: absolute;
   right: 0;
