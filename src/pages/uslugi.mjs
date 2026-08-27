@@ -57,6 +57,20 @@ export function renderUslugiIndex(d) {
       </div>
     </section>
 
+    <!-- Проектным организациям: отдельный сценарий работы -->
+    <section class="section section--sheet section--tight">
+      <div class="container">
+        <div class="lead-band">
+          <div>
+            <p class="eyebrow mono">Проектным организациям</p>
+            <h2 class="lead-band__title">Считаете объект под ЛСТК?</h2>
+            <p class="lead-band__text">Завод берёт конструктивную часть на себя: расчёт, разделы КМ и КМД, сопровождение экспертизы. Заказчик и авторство проекта остаются вашими, по объектам с договором на поставку предусмотрено агентское вознаграждение.</p>
+          </div>
+          <a class="btn btn--dark btn--lg" href="/partnyoram/">Условия сотрудничества</a>
+        </div>
+      </div>
+    </section>
+
     ${raw(ctaBand(site))}
   `;
 

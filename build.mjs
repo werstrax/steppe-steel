@@ -17,6 +17,7 @@ import { createHash } from 'node:crypto';
 import { loadJSON, setImageManifest, outPath, copyDir, plural } from './src/lib/util.mjs';
 
 import { renderHome } from './src/pages/home.mjs';
+import { renderPartners } from './src/pages/partners.mjs';
 import { renderKatalogIndex, renderProduct } from './src/pages/katalog.mjs';
 import { renderUslugiIndex, renderService } from './src/pages/uslugi.mjs';
 import { renderProfili } from './src/pages/profili.mjs';
@@ -46,6 +47,7 @@ function loadData() {
   const faq = loadJSON(join(SRC, 'data', 'faq.json'));
   const journal = loadJSON(join(SRC, 'data', 'journal.json'));
   const cycle = loadJSON(join(SRC, 'data', 'cycle.json'));
+  const partners = loadJSON(join(SRC, 'data', 'partners.json'));
   const material = loadJSON(join(SRC, 'data', 'material.json'));
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
@@ -59,7 +61,7 @@ function loadData() {
   site._products = products.items;
   site._services = services.items;
 
-  return { site, images, products, services, profiles, process, faq, journal, cycle, material };
+  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners };
 }
 
 function assetHash(paths) {
@@ -113,6 +115,7 @@ function buildPages(d) {
 
   add('/profili/', renderProfili(d));
   add('/process/', renderProcess(d));
+  add('/partnyoram/', renderPartners(d));
   add('/o-zavode/', renderAbout(d));
 
   add('/blog/', renderJournalIndex(d));
@@ -271,6 +274,9 @@ function llmsTxt(d) {
 - Вместимость зернохранилища на 1 м длины: пшеница 67 т, горох 70 т, кукуруза 62 т, ячмень 56 т, подсолнечник 37 т
 - Конструктив зернохранилищ: винтовые сваи и металлический ростверк без бетона, наклонные стены с подкосной системой, секции до 140 м, 100 % болтовая сборка
 - Расчётные условия: снеговые и ветровые нагрузки по СП РК, эксплуатация при морозах до −40 °C
+- Профили сертифицированы: сертификат соответствия РК № KZ.3510317.01.01.67913 (до 01.06.2027) на холодногнутые профили из оцинкованной стали, 43 позиции сортамента ПСУ 150–280 и ПС 100–280
+- Конструкторский отдел завода выполняет расчёты в ЛИРА-САПР и разделы КМ/КМД (Tekla Structures) по нормам СП РК EN (Еврокоды), сопровождает экспертизу
+- Партнёрская программа для проектных организаций: завод берёт конструктивную часть, заказчик и авторство проекта остаются за проектировщиком, предусмотрено агентское вознаграждение по договору
 
 ## Продукция
 
@@ -291,6 +297,7 @@ ${journal.items.map((x) => `- [${x.title}](${site.url}${x.url}) — ${x.summary}
 - [Профили ПСУ и ПС](${site.url}/profili/)
 - [Услуги](${site.url}/uslugi/)
 - [Процесс работы](${site.url}/process/)
+- [Проектным организациям](${site.url}/partnyoram/)
 - [О заводе](${site.url}/o-zavode/)
 - [Вопросы и ответы](${site.url}/faq/)
 - [Контакты](${site.url}/kontakty/)

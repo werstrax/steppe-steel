@@ -925,6 +925,112 @@
     });
   })();
 
+  /* --- Шторка «чертёж → металл» (партнёрская страница) ----------------------
+     Ползунок двигает clipPath правой половины: обе половины — одна геометрия,
+     поэтому стык всегда идеальный. Клавиатура работает штатно: это input. */
+
+  (function ramaWipe() {
+    var range = $('#rama-range');
+    var clip = $('#rama-clip-rect');
+    var seam = $('#rama-seam');
+    var grip = $('#rama-grip');
+    var stage = range && range.closest('.rama__stage');
+    if (!range || !clip || !stage) return;
+
+    var W = 1000;
+    var apply = function (pct) {
+      var x = (pct / 100) * W;
+      clip.setAttribute('x', x);
+      clip.setAttribute('width', W - x);
+      if (seam) { seam.setAttribute('x1', x); seam.setAttribute('x2', x); }
+      if (grip) grip.style.left = pct + '%';
+    };
+
+    range.addEventListener('input', function () { apply(+range.value); });
+
+    // перетаскивание и тап по сцене: ползунок растянут на всю сцену,
+    // поэтому достаточно пересчитать позицию курсора в проценты
+    var setFromEvent = function (clientX) {
+      var r = stage.getBoundingClientRect();
+      var pct = Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100));
+      range.value = Math.round(pct);
+      apply(pct);
+    };
+    var dragging = false;
+    stage.addEventListener('pointerdown', function (ev) {
+      dragging = true;
+      stage.setPointerCapture && stage.setPointerCapture(ev.pointerId);
+      setFromEvent(ev.clientX);
+    });
+    stage.addEventListener('pointermove', function (ev) { if (dragging) setFromEvent(ev.clientX); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) {
+      stage.addEventListener(t, function () { dragging = false; });
+    });
+
+    apply(+range.value);
+
+    // первый показ: короткий проезд шторки, чтобы приём был очевиден
+    if (!reduced && 'IntersectionObserver' in window) {
+      var shown = false;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting || shown) return;
+          shown = true;
+          io.disconnect();
+          var t0 = null;
+          var from = 88, to = 50, DUR = 1100;
+          var frame = function (t) {
+            if (!t0) t0 = t;
+            var p = Math.min((t - t0) / DUR, 1);
+            var ease = 1 - Math.pow(1 - p, 3);
+            var v = from + (to - from) * ease;
+            range.value = Math.round(v);
+            apply(v);
+            if (p < 1) requestAnimationFrame(frame);
+          };
+          requestAnimationFrame(frame);
+        });
+      }, { threshold: 0.35 });
+      io.observe(stage);
+    }
+  })();
+
+  /* --- Форматы сотрудничества: табы «кто что делает» ------------------------ */
+
+  (function splitTabs() {
+    var tabs = $$('[data-split-tab]');
+    if (!tabs.length) return;
+    var panels = tabs.map(function (t) {
+      return document.getElementById(t.getAttribute('aria-controls'));
+    });
+    var activate = function (i, focus) {
+      tabs.forEach(function (t, k) {
+        var on = k === i;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p, k) {
+        if (!p) return;
+        p.classList.toggle('is-active', k === i);
+        if (k === i) p.removeAttribute('hidden');
+        else p.setAttribute('hidden', '');
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { activate(i); });
+      t.addEventListener('keydown', function (ev) {
+        var j = null;
+        if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') j = (i + 1) % tabs.length;
+        else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') j = (i - 1 + tabs.length) % tabs.length;
+        else if (ev.key === 'Home') j = 0;
+        else if (ev.key === 'End') j = tabs.length - 1;
+        if (j !== null) { ev.preventDefault(); activate(j, true); }
+      });
+    });
+  })();
+
   /* --- Живой лист КМД: профили ПСУ / ПС ------------------------------------- */
 
   (function profiles() {

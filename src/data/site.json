@@ -1,6 +1,5 @@
 {
   "_readme": "Глобальные данные сайта Steppe Steel. Поля с префиксом _ игнорируются сборщиком. Контакты подтверждены заказчиком (июль 2026). Юрлицо/БИН не переданы — на сайте не выводятся.",
-
   "brand": {
     "name": "Steppe Steel",
     "nameLatin": "STEPPE STEEL",
@@ -11,7 +10,6 @@
     "scope": "Завод полного цикла: ЛСТК и чёрный металл. Зернохранилища, ангары, склады, цеха. Проектирование → производство → комплектация → отгрузка.",
     "_legalNote": "[УТОЧНИТЬ у заказчика] ТОО и БИН — не переданы, на сайте сознательно не выводятся."
   },
-
   "url": "https://werstrax.github.io/steppe-steel",
   "basePath": "/steppe-steel",
   "_urlNote": "Временный адрес на GitHub Pages. После покупки домена: заменить url, очистить basePath и пересобрать.",
@@ -19,7 +17,6 @@
   "locale": "ru_KZ",
   "country": "KZ",
   "currency": "KZT",
-
   "contacts": {
     "phone": "+7 776 603 17 66",
     "phoneRaw": "+77766031766",
@@ -32,7 +29,6 @@
     "email": "steppe.steel@gmail.com",
     "instagram": "https://www.instagram.com/lstk.factory/",
     "instagramHandle": "@lstk.factory",
-
     "address": {
       "settlement": "с. Троебратское",
       "district": "Узункольский район",
@@ -51,7 +47,6 @@
       "_note": "Часы работы как таковые не публикуем: канал — WhatsApp 24/7, расчёт за 24 часа. Согласовано в v1."
     }
   },
-
   "proof": {
     "_note": "Только проверяемые технические цифры из ПЗ и презентации зерна. Никаких «N объектов сдано» — данных нет.",
     "steelMax": "3,5 мм",
@@ -67,34 +62,71 @@
     "kostanayHarvest": "6,7 млн т",
     "_harvestNote": "Костанайская область собрала 6,7 млн т зерна в 2025 — проверено исследованием 2026-07-14."
   },
-
   "nav": [
-    { "title": "Каталог", "url": "/katalog/" },
-    { "title": "Профили", "url": "/profili/" },
-    { "title": "Услуги", "url": "/uslugi/" },
-    { "title": "О заводе", "url": "/o-zavode/" },
-    { "title": "Журнал", "url": "/blog/" },
-    { "title": "Контакты", "url": "/kontakty/" }
+    {
+      "title": "Каталог",
+      "url": "/katalog/"
+    },
+    {
+      "title": "Профили",
+      "url": "/profili/"
+    },
+    {
+      "title": "Услуги",
+      "url": "/uslugi/"
+    },
+    {
+      "title": "О заводе",
+      "url": "/o-zavode/"
+    },
+    {
+      "title": "Партнёрам",
+      "url": "/partnyoram/"
+    },
+    {
+      "title": "Журнал",
+      "url": "/blog/"
+    },
+    {
+      "title": "Контакты",
+      "url": "/kontakty/"
+    }
   ],
-
   "navFooter": [
-    { "title": "Процесс работы", "url": "/process/", "menu": true },
-    { "title": "Вопросы и ответы", "url": "/faq/", "menu": true },
-    { "title": "Получить расчёт", "url": "/zayavka/" },
-    { "title": "Политика конфиденциальности", "url": "/privacy/" }
+    {
+      "title": "Процесс работы",
+      "url": "/process/",
+      "menu": true
+    },
+    {
+      "title": "Вопросы и ответы",
+      "url": "/faq/",
+      "menu": true
+    },
+    {
+      "title": "Получить расчёт",
+      "url": "/zayavka/"
+    },
+    {
+      "title": "Политика конфиденциальности",
+      "url": "/privacy/"
+    }
   ],
-
   "cta": {
-    "primary": { "title": "Рассчитать стоимость", "url": "/zayavka/" },
-    "secondary": { "title": "Каталог продукции", "url": "/katalog/" }
+    "primary": {
+      "title": "Рассчитать стоимость",
+      "url": "/zayavka/"
+    },
+    "secondary": {
+      "title": "Каталог продукции",
+      "url": "/katalog/"
+    }
   },
-
   "analytics": {
     "_note": "Вставьте ID счётчиков — код подключится автоматически. Пусто = ничего не грузится.",
     "yandexMetrikaId": "",
     "googleAnalyticsId": ""
   },
-
   "forms": {
     "_note": "endpoint — URL обработчика. Пока пусто: квиз собирает заявку и открывает WhatsApp с готовым сообщением + mailto-фолбэк.",
     "endpoint": "",
