@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'screenshots');
-const BASE = process.env.SHOT_BASE || 'http://localhost:4321/steppe-steel';
+const BASE = process.env.SHOT_BASE || 'http://localhost:4321';
 const PORT = 9924;
 
 const CHROME = [

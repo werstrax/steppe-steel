@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const PORT = Number(process.argv[2]) || 4321;
 // Сайт живёт в подпапке (GitHub project pages) — локально имитируем тот же префикс.
-const BASE = '/steppe-steel';
+const BASE = '';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -44,7 +44,9 @@ async function resolveFile(urlPath) {
 
 createServer(async (req, res) => {
   let url = req.url;
-  if (url === '/' || url === '') {
+  // редирект на префикс нужен, только пока сайт живёт в подпапке;
+  // со своим доменом BASE пуст — корень отдаём сразу, без петли
+  if (BASE && (url === '/' || url === '')) {
     res.writeHead(302, { Location: BASE + '/' });
     res.end();
     return;

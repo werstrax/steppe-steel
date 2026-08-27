@@ -1,4 +1,4 @@
-# robots.txt — Steppe Steel, https://werstrax.github.io/steppe-steel
+# robots.txt — Steppe Steel, https://steppesteel.kz
 
 User-agent: *
 Allow: /
@@ -37,4 +37,4 @@ Allow: /
 User-agent: YandexAdditional
 Allow: /
 
-Sitemap: https://werstrax.github.io/steppe-steel/sitemap.xml
+Sitemap: https://steppesteel.kz/sitemap.xml
