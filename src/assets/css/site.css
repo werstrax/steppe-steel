@@ -3704,6 +3704,54 @@ html:not(.js) .cycle__rail { display: none; }
 
 .doc__text { margin: 0; font-size: var(--fs-small); color: var(--on-steel-muted); line-height: 1.55; }
 
+/* Материалы для скачивания */
+.dl { margin-top: clamp(2rem, 1.4rem + 2vw, 3.2rem); }
+
+.dl__head {
+  margin: 0 0 1rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.dl__row { display: grid; gap: 0.8rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.dl__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--steel-line);
+  background: var(--steel-2);
+  color: var(--on-steel);
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dl__item:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.dl__icon {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  background: var(--accent);
+  padding: 0.5em 0.6em;
+}
+
+.dl__body { display: grid; gap: 0.3rem; }
+
+.dl__title { font-family: var(--font-display); font-weight: 500; font-size: 1rem; }
+
+.dl__text { font-size: var(--fs-small); color: var(--on-steel-muted); line-height: 1.5; }
+
+.dl__meta { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--on-steel-faint); }
+
+@media (max-width: 719px) {
+  .dl__row { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* Нормативная база */
 .norms { display: grid; gap: 0.7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 

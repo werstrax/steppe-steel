@@ -304,6 +304,22 @@ export function renderPartners(d) {
           `)}
         </div>
         <p class="sheet-note" style="margin-top:1.75rem">${e(partners.docsNote)}</p>
+
+        <div class="dl" data-reveal>
+          <p class="dl__head mono">${partners.downloadsTitle}</p>
+          <div class="dl__row">
+            ${partners.downloads.map((f) => html`
+              <a class="dl__item" href="${f.url}" download target="_blank" rel="noopener">
+                <span class="dl__icon mono" aria-hidden="true">PDF</span>
+                <span class="dl__body">
+                  <span class="dl__title">${f.title}</span>
+                  <span class="dl__text">${f.text}</span>
+                  <span class="dl__meta mono">${f.meta}</span>
+                </span>
+              </a>
+            `)}
+          </div>
+        </div>
       </div>
     </section>
 
