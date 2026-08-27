@@ -32,7 +32,7 @@
 <link rel="preload" as="image" href="/steppe-steel/assets/img/hero-poster-1152.jpg" fetchpriority="high">
 <link rel="preload" href="/steppe-steel/assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/steppe-steel/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/steppe-steel/assets/css/site.css?v=a9edf279">
+<link rel="stylesheet" href="/steppe-steel/assets/css/site.css?v=36c36763">
 <link rel="icon" href="/steppe-steel/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/steppe-steel/apple-touch-icon.png">
 <link rel="manifest" href="/steppe-steel/site.webmanifest">
@@ -960,7 +960,7 @@
       </div>
       
             <div class="stack stack--sm">
-              <p class="lead u-max-52" style="margin:0">Костанайская область собрала 6,7 млн тонн зерна в 2025 году, а лицензированные элеваторы Казахстана вмещают около половины урожая страны. Своё зернохранилище Steppe Steel — на винтовых сваях без бетона, с наклонными стенами под боковое давление зерна.</p>
+              <p class="lead u-max-52" style="margin:0">Больше половины ёмкостей хранения зерна в стране — 17,4 из 30,6 млн тонн — уже принадлежат самим хозяйствам, а не элеваторам: на все 189 лицензированных ХПП приходится 13,2 млн тонн. Свой склад давно норма. Зернохранилище Steppe Steel — на винтовых сваях без бетона, с наклонными стенами под боковое давление зерна.</p>
               <div><a class="arrow-link" href="/steppe-steel/katalog/zernohranilishcha/">Всё о зернохранилищах <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M9 1l4 4-4 4M13 5H0" stroke="currentColor" stroke-width="1.2"/></svg></a></div>
             </div>
           
@@ -1107,6 +1107,137 @@
     
   </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ЛИСТ 06-Б · Окупаемость: свой склад против элеватора -->
+    <section class="section section--sheet" id="okupaemost">
+      <div class="container">
+        
+    <div class="section-head section-head--split" data-reveal>
+      <div>
+        <p class="eyebrow mono">ЛИСТ 06-Б · Экономика хранения</p>
+        <h2 class="section-head__title">Свой склад или элеватор: за сколько сезонов окупится</h2>
+      </div>
+      
+            <div class="stack stack--sm">
+              <p class="lead u-max-52" style="margin:0">Спор «дорого или недорого» бессмысленен, пока не посчитан сезон на элеваторе. Подставьте свои цифры — из счёта элеватора и из собственной продажи — и посмотрите, за сколько сезонов склад вернёт вложенное.</p>
+              
+            </div>
+          
+    </div>
+  
+
+        <div class="pay" data-reveal>
+          <form class="pay__form" id="pay-form" novalidate>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-tons">Объём хранения<span class="pay__unit mono">тонн</span></label>
+                <input type="number" id="pay-tons" data-pay="tons" inputmode="numeric"
+                       min="100" max="60000" step="100" value="3000">
+                <p class="pay__hint">Сколько зерна кладёте на хранение за сезон</p>
+              </div>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-rate">Тариф хранения<span class="pay__unit mono">₸ за тонну в месяц</span></label>
+                <input type="number" id="pay-rate" data-pay="rate" inputmode="numeric"
+                       min="0" max="5000" step="10" value="350">
+                <p class="pay__hint">Из договора с элеватором. Ориентир по рынку — 230–500 ₸</p>
+              </div>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-months">Срок хранения<span class="pay__unit mono">месяцев</span></label>
+                <input type="number" id="pay-months" data-pay="months" inputmode="numeric"
+                       min="1" max="12" step="1" value="6">
+                <p class="pay__hint">От сдачи после уборки до продажи</p>
+              </div>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-intake">Приёмка, сушка, подработка<span class="pay__unit mono">₸ за тонну</span></label>
+                <input type="number" id="pay-intake" data-pay="intake" inputmode="numeric"
+                       min="0" max="20000" step="100" value="0">
+                <p class="pay__hint">Всё, что элеватор берёт разово при приёмке. Возьмите из счёта</p>
+              </div>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-delta">Разница цены весна и осень<span class="pay__unit mono">₸ за тонну</span></label>
+                <input type="number" id="pay-delta" data-pay="delta" inputmode="numeric"
+                       min="0" max="60000" step="500" value="0">
+                <p class="pay__hint">На сколько дороже вы продали бы, если бы не нужно было сдавать сразу</p>
+              </div>
+            
+              <div class="pay__field">
+                <label class="field__label" for="pay-price">Стоимость своего склада<span class="pay__unit mono">₸, если смета уже есть</span></label>
+                <input type="number" id="pay-price" data-pay="price" inputmode="numeric"
+                       min="0" max="2000000000" step="100000" value="0">
+                <p class="pay__hint">Нет сметы — оставьте ноль, посчитаем только сезон на элеваторе</p>
+              </div>
+            
+          </form>
+
+          <div class="pay__out">
+            <div class="pay__total" aria-live="polite">
+              <p class="pay__total-label mono">Сезон на элеваторе</p>
+              <p class="pay__total-val" id="pay-total">—</p>
+              <p class="pay__total-sub" id="pay-payback">Окупаемость своего склада: укажите стоимость склада</p>
+            </div>
+
+            <ul class="pay__rows">
+              
+                <li class="pay__row">
+                  <span class="pay__row-title">Хранение</span>
+                  <span class="pay__row-val mono" id="pay-row-storage">0 ₸</span>
+                  <span class="pay__bar" aria-hidden="true"><span class="pay__bar-fill" id="pay-bar-storage"></span></span>
+                </li>
+              
+                <li class="pay__row">
+                  <span class="pay__row-title">Приёмка, сушка, подработка</span>
+                  <span class="pay__row-val mono" id="pay-row-intake">0 ₸</span>
+                  <span class="pay__bar" aria-hidden="true"><span class="pay__bar-fill" id="pay-bar-intake"></span></span>
+                </li>
+              
+                <li class="pay__row">
+                  <span class="pay__row-title">Недополучено на осенней цене</span>
+                  <span class="pay__row-val mono" id="pay-row-delta">0 ₸</span>
+                  <span class="pay__bar" aria-hidden="true"><span class="pay__bar-fill" id="pay-bar-delta"></span></span>
+                </li>
+              
+            </ul>
+
+            <a class="btn btn--primary btn--lg" id="pay-cta" href="https://wa.me/77766031766?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A1%D1%87%D0%B8%D1%82%D0%B0%D0%BB%20%D0%BE%D0%BA%D1%83%D0%BF%D0%B0%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D1%8C%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B5."
+               target="_blank" rel="noopener">Посчитать склад под мой объём</a>
+            <p class="pay__cta-text">Пришлём смету и раскладку по срокам под ваш тоннаж и площадку</p>
+          </div>
+        </div>
+
+        <p class="sheet-note" style="margin-top:1.75rem">Единого прейскуранта услуг у элеваторов Казахстана нет — тарифы каждое хлебоприёмное предприятие устанавливает само, поэтому цифры в полях замените своими из договора и счёта. Расчёт предварительный и не учитывает субсидию: её размер уточняйте в облуправлении сельского хозяйства.</p>
+
+        <div class="beyond">
+          <p class="beyond__head mono">Что не попадает в этот расчёт</p>
+          <div class="grid grid--4">
+            
+              <div class="beyond__item" data-reveal>
+                <h3 class="beyond__title">Класс определяете не вы</h3>
+                <p class="beyond__text">Качество и класс зерна на приёмке оценивает лаборатория элеватора, а цена привязана к классу: у Продкорпорации в сезоне-2025 разница между 3 классом с клейковиной 23–24 % и 27 % составляла 23 000 ₸ на тонне</p>
+              </div>
+            
+              <div class="beyond__item" data-reveal>
+                <h3 class="beyond__title">Зерно становится распиской</h3>
+                <p class="beyond__text">После сдачи на руках у вас электронная зерновая расписка в Qoldau, а не зерно: продать, перевезти или заложить его можно только через оператора</p>
+              </div>
+            
+              <div class="beyond__item" data-reveal>
+                <h3 class="beyond__title">Очередь в разгар уборки</h3>
+                <p class="beyond__text">Пик сдачи совпадает у всех хозяйств района одновременно — техника стоит в очереди вместо поля</p>
+              </div>
+            
+              <div class="beyond__item" data-reveal>
+                <h3 class="beyond__title">Склад остаётся активом</h3>
+                <p class="beyond__text">Каркас на болтах — ликвидное имущество: его можно демонтировать и перевезти, а платёж элеватору уходит безвозвратно каждый сезон</p>
+              </div>
+            
+          </div>
         </div>
       </div>
     </section>
@@ -1462,6 +1593,12 @@
               <li><a href="/steppe-steel/katalog/">Каталог</a></li><li><a href="/steppe-steel/profili/">Профили</a></li><li><a href="/steppe-steel/uslugi/">Услуги</a></li><li><a href="/steppe-steel/o-zavode/">О заводе</a></li><li><a href="/steppe-steel/partnyoram/">Партнёрам</a></li><li><a href="/steppe-steel/blog/">Журнал</a></li><li><a href="/steppe-steel/kontakty/">Контакты</a></li>
               <li><a href="/steppe-steel/process/">Процесс работы</a></li><li><a href="/steppe-steel/faq/">Вопросы и ответы</a></li><li><a href="/steppe-steel/partnyoram/">Проектным организациям</a></li><li><a href="/steppe-steel/predstavitelyam/">Строительным компаниям</a></li>
             </ul>
+            
+              <h2 class="footer__title footer__title--sub">Регионы</h2>
+              <ul class="footer__list">
+                <li><a href="/steppe-steel/kostanay/">Костанай</a></li><li><a href="/steppe-steel/petropavlovsk/">Петропавловск</a></li><li><a href="/steppe-steel/kokshetau/">Кокшетау</a></li>
+              </ul>
+            
           </div>
 
           <div>
@@ -1492,6 +1629,6 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.44.13-.14.17-.25.25-.41.09-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span class="fab__label">Написать</span>
   </a>
 
-<script src="/steppe-steel/assets/js/site.js?v=a9edf279" defer></script>
+<script src="/steppe-steel/assets/js/site.js?v=36c36763" defer></script>
 </body>
 </html>

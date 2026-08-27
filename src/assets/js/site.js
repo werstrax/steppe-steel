@@ -1067,6 +1067,100 @@
     sync();
   })();
 
+  /* --- Окупаемость: свой склад против элеватора ----------------------------
+     Все деньги считаются по цифрам, которые вводит сам фермер: тарифы у каждого
+     ХПП свои, поэтому «средних по рынку» здесь нет. Расчёт за сезон:
+     хранение + разовые услуги приёмки + недополученное на осенней цене. */
+
+  (function payback() {
+    var form = $('#pay-form');
+    var out = $('#pay-total');
+    if (!form || !out) return;
+
+    var get = function (id) {
+      var el = $('[data-pay="' + id + '"]', form);
+      var v = el ? parseFloat(el.value) : 0;
+      return isNaN(v) || v < 0 ? 0 : v;
+    };
+    var money = function (n) { return fmt(n) + ' ₸'; };
+
+    var cta = $('#pay-cta');
+    var ctaBase = cta ? cta.getAttribute('href').split('?')[0] : '';
+    var ctaText = cta ? decodeURIComponent((cta.getAttribute('href').split('text=')[1] || '')) : '';
+
+    var plural = function (n, one, few, many) {
+      var m10 = n % 10, m100 = n % 100;
+      if (m10 === 1 && m100 !== 11) return one;
+      if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+      return many;
+    };
+
+    var compute = function () {
+      var tons = get('tons');
+      var storage = tons * get('rate') * get('months');
+      var intake = tons * get('intake');
+      var delta = tons * get('delta');
+      var total = storage + intake + delta;
+
+      out.textContent = total > 0 ? money(total) : '—';
+
+      var parts = { storage: storage, intake: intake, delta: delta };
+      var max = Math.max(storage, intake, delta, 1);
+      Object.keys(parts).forEach(function (k) {
+        var row = $('#pay-row-' + k);
+        var bar = $('#pay-bar-' + k);
+        if (row) row.textContent = money(parts[k]);
+        if (bar) bar.style.width = (parts[k] / max) * 100 + '%';
+      });
+
+      // окупаемость: во сколько сезонов склад вернёт то, что уходит элеватору
+      var price = get('price');
+      var pb = $('#pay-payback');
+      if (pb) {
+        if (price > 0 && total > 0) {
+          var years = price / total;
+          var shown = years < 10 ? Math.round(years * 10) / 10 : Math.round(years);
+          // у дробных в русском всегда родительный падеж: «1,3 сезона», не «1,3 сезон»
+          var word = shown % 1 ? 'сезона' : plural(shown, 'сезон', 'сезона', 'сезонов');
+          pb.textContent = 'Окупаемость своего склада: ' + String(shown).replace('.', ',') + ' ' + word;
+          pb.classList.add('is-strong');
+        } else if (price > 0) {
+          pb.textContent = 'Заполните тарифы элеватора — посчитаем окупаемость';
+          pb.classList.remove('is-strong');
+        } else {
+          pb.textContent = 'Укажите стоимость склада — посчитаем окупаемость';
+          pb.classList.remove('is-strong');
+        }
+      }
+
+      // цифры уезжают в WhatsApp: менеджер видит, с чем пришёл клиент
+      if (cta && total > 0) {
+        var rows = [ctaText,
+          'Объём: ' + fmt(tons) + ' т',
+          'Сезон на элеваторе: ' + money(total),
+        ];
+        if (price > 0) rows.push('Смета склада: ' + money(price) +
+          ' → окупаемость ' + (Math.round((price / total) * 10) / 10).toString().replace('.', ',') + ' сезона');
+        rows.push('Прошу смету под мой объём.');
+        cta.href = ctaBase + '?text=' + encodeURIComponent(rows.join('\n'));
+      }
+    };
+
+    form.addEventListener('input', compute);
+    // тоннаж из калькулятора длины выше по странице — чтобы не вводить дважды
+    var tonsField = $('[data-pay="tons"]', form);
+    var grainInput = $('#grain-input');
+    if (tonsField && grainInput) {
+      grainInput.addEventListener('input', function () {
+        if (tonsField.dataset.touched) return;
+        var v = parseFloat(grainInput.value);
+        if (v > 0) { tonsField.value = Math.round(v); compute(); }
+      });
+      tonsField.addEventListener('input', function () { tonsField.dataset.touched = '1'; });
+    }
+    compute();
+  })();
+
   /* --- Живой лист КМД: профили ПСУ / ПС ------------------------------------- */
 
   (function profiles() {

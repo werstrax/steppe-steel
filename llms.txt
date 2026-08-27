@@ -53,6 +53,12 @@
 - [Процесс работы](https://werstrax.github.io/steppe-steel/process/)
 - [Проектным организациям](https://werstrax.github.io/steppe-steel/partnyoram/)
 - [Строительным компаниям](https://werstrax.github.io/steppe-steel/predstavitelyam/)
+
+## Регионы работы
+
+- [Костанай — Костанайская область](https://werstrax.github.io/steppe-steel/kostanay/) — Завод металлоконструкций в Костанайской области: зернохранилища, ангары, склады и цеха под ключ. 232 км до Костаная по трассе, доставка собственным транспортом, расчёт под III снеговой район.
+- [Петропавловск — Северо-Казахстанская область](https://werstrax.github.io/steppe-steel/petropavlovsk/) — Металлоконструкции для СКО: зернохранилища, ангары для техники, склады и цеха. Завод на трассе Костанай — Петропавловск, доставка собственным транспортом, расчёт под III снеговой район.
+- [Кокшетау — Акмолинская область](https://werstrax.github.io/steppe-steel/kokshetau/) — Металлоконструкции для Акмолинской области: зернохранилища, навесы для сельхозтехники, склады и цеха под ключ. Расчёт под снеговые нагрузки севера, доставка своим транспортом.
 - [О заводе](https://werstrax.github.io/steppe-steel/o-zavode/)
 - [Вопросы и ответы](https://werstrax.github.io/steppe-steel/faq/)
 - [Контакты](https://werstrax.github.io/steppe-steel/kontakty/)

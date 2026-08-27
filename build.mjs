@@ -19,6 +19,7 @@ import { loadJSON, setImageManifest, outPath, copyDir, plural } from './src/lib/
 import { renderHome } from './src/pages/home.mjs';
 import { renderPartners } from './src/pages/partners.mjs';
 import { renderDealers } from './src/pages/dealers.mjs';
+import { renderRegion } from './src/pages/regions.mjs';
 import { renderKatalogIndex, renderProduct } from './src/pages/katalog.mjs';
 import { renderUslugiIndex, renderService } from './src/pages/uslugi.mjs';
 import { renderProfili } from './src/pages/profili.mjs';
@@ -50,6 +51,8 @@ function loadData() {
   const cycle = loadJSON(join(SRC, 'data', 'cycle.json'));
   const partners = loadJSON(join(SRC, 'data', 'partners.json'));
   const dealers = loadJSON(join(SRC, 'data', 'dealers.json'));
+  const payback = loadJSON(join(SRC, 'data', 'payback.json'));
+  const regions = loadJSON(join(SRC, 'data', 'regions.json'));
   const material = loadJSON(join(SRC, 'data', 'material.json'));
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
@@ -63,7 +66,7 @@ function loadData() {
   site._products = products.items;
   site._services = services.items;
 
-  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners, dealers };
+  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners, dealers, payback, regions };
 }
 
 function assetHash(paths) {
@@ -119,6 +122,7 @@ function buildPages(d) {
   add('/process/', renderProcess(d));
   add('/partnyoram/', renderPartners(d));
   add('/predstavitelyam/', renderDealers(d));
+  for (const r of d.regions.items) add(`/${r.slug}/`, renderRegion(d, r));
   add('/o-zavode/', renderAbout(d));
 
   add('/blog/', renderJournalIndex(d));
@@ -254,7 +258,7 @@ Sitemap: ${site.url}/sitemap.xml
  * llms.txt — выжимка о заводе для языковых моделей.
  */
 function llmsTxt(d) {
-  const { site, products, services, journal } = d;
+  const { site, products, services, journal, regions } = d;
   const a = site.contacts.address;
   return `# ${site.brand.name} — ${site.brand.descriptor}
 
@@ -304,6 +308,10 @@ ${journal.items.map((x) => `- [${x.title}](${site.url}${x.url}) — ${x.summary}
 - [Процесс работы](${site.url}/process/)
 - [Проектным организациям](${site.url}/partnyoram/)
 - [Строительным компаниям](${site.url}/predstavitelyam/)
+
+## Регионы работы
+
+${regions.items.map((r) => `- [${r.city} — ${r.region}](${site.url}/${r.slug}/) — ${r.seoDescription}`).join('\n')}
 - [О заводе](${site.url}/o-zavode/)
 - [Вопросы и ответы](${site.url}/faq/)
 - [Контакты](${site.url}/kontakty/)

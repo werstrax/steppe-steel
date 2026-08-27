@@ -14,7 +14,7 @@ import { organizationNode, websiteNode } from '../lib/schema.mjs';
 import { profilesBoard, profilesCards } from './profili.mjs';
 
 export function renderHome(d) {
-  const { site, products, services, profiles, process, faq: faqData, journal, cycle, material } = d;
+  const { site, products, services, profiles, process, faq: faqData, journal, cycle, material, payback } = d;
   const c = site.contacts;
   const waEng = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappEngineer)}`;
   const waKp = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappKp)}`;
@@ -305,7 +305,7 @@ export function renderHome(d) {
         ${raw(sectionHead({
           sheet: '06', label: 'Зернохранилища',
           title: 'Ангар для хранения зерна нового поколения',
-          text: 'Костанайская область собрала 6,7 млн тонн зерна в 2025 году, а лицензированные элеваторы Казахстана вмещают около половины урожая страны. Своё зернохранилище Steppe Steel — на винтовых сваях без бетона, с наклонными стенами под боковое давление зерна.',
+          text: 'Больше половины ёмкостей хранения зерна в стране — 17,4 из 30,6 млн тонн — уже принадлежат самим хозяйствам, а не элеваторам: на все 189 лицензированных ХПП приходится 13,2 млн тонн. Свой склад давно норма. Зернохранилище Steppe Steel — на винтовых сваях без бетона, с наклонными стенами под боковое давление зерна.',
           action: { title: 'Всё о зернохранилищах', url: '/katalog/zernohranilishcha/' },
         }))}
         <div class="agro">
@@ -343,6 +343,66 @@ export function renderHome(d) {
             ['разборная', '100 % болтовые соединения — ликвидный актив, можно демонтировать и перевезти'],
             ['10 дней', 'Быстрая поставка — конструкции в наличии, быстрый старт проекта'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ЛИСТ 06-Б · Окупаемость: свой склад против элеватора -->
+    <section class="section section--sheet" id="okupaemost">
+      <div class="container">
+        ${raw(sectionHead({
+          sheet: '06-Б', label: payback.kicker,
+          title: payback.title,
+          text: payback.text,
+        }))}
+
+        <div class="pay" data-reveal>
+          <form class="pay__form" id="pay-form" novalidate>
+            ${payback.fields.map((f) => html`
+              <div class="pay__field">
+                <label class="field__label" for="pay-${f.id}">${f.label}<span class="pay__unit mono">${f.unit}</span></label>
+                <input type="number" id="pay-${f.id}" data-pay="${f.id}" inputmode="numeric"
+                       min="${f.min}" max="${f.max}" step="${f.step}" value="${f.value}">
+                <p class="pay__hint">${f.hint}</p>
+              </div>
+            `)}
+          </form>
+
+          <div class="pay__out">
+            <div class="pay__total" aria-live="polite">
+              <p class="pay__total-label mono">${payback.resultLabel}</p>
+              <p class="pay__total-val" id="pay-total">—</p>
+              <p class="pay__total-sub" id="pay-payback">${payback.paybackLabel}: укажите стоимость склада</p>
+            </div>
+
+            <ul class="pay__rows">
+              ${payback.breakdown.map((b) => html`
+                <li class="pay__row">
+                  <span class="pay__row-title">${b.title}</span>
+                  <span class="pay__row-val mono" id="pay-row-${b.id}">0 ₸</span>
+                  <span class="pay__bar" aria-hidden="true"><span class="pay__bar-fill" id="pay-bar-${b.id}"></span></span>
+                </li>
+              `)}
+            </ul>
+
+            <a class="btn btn--primary btn--lg" id="pay-cta" href="${c.whatsapp}?text=${encodeURIComponent(payback.waText)}"
+               target="_blank" rel="noopener">${payback.ctaTitle}</a>
+            <p class="pay__cta-text">${payback.ctaText}</p>
+          </div>
+        </div>
+
+        <p class="sheet-note" style="margin-top:1.75rem">${e(payback.note)}</p>
+
+        <div class="beyond">
+          <p class="beyond__head mono">${payback.beyondTitle}</p>
+          <div class="grid grid--4">
+            ${payback.beyond.map((b) => html`
+              <div class="beyond__item" data-reveal>
+                <h3 class="beyond__title">${b.title}</h3>
+                <p class="beyond__text">${b.text}</p>
+              </div>
+            `)}
+          </div>
         </div>
       </div>
     </section>

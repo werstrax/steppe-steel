@@ -170,6 +170,12 @@ export function footer(site) {
               ${site.nav.map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
               ${site.navFooter.slice(0, 4).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
             </ul>
+            ${site.regionsNav ? html`
+              <h2 class="footer__title footer__title--sub">Регионы</h2>
+              <ul class="footer__list">
+                ${site.regionsNav.map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
+              </ul>
+            ` : ''}
           </div>
 
           <div>

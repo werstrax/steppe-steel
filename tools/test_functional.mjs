@@ -315,6 +315,26 @@ async function main() {
       ? ok('переключатель аудиторий')
       : fail('переключатель аудиторий', JSON.stringify(aud));
 
+    /* --- 8.5 Калькулятор окупаемости --- */
+    await goto('/');
+    const pay = await evalJs(`(() => {
+      const set = (id, v) => { const el = document.querySelector('[data-pay="' + id + '"]');
+        el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); };
+      if (!document.querySelector('#pay-total')) return { skip: true };
+      set('tons', 1000); set('rate', 500); set('months', 6); set('intake', 0); set('delta', 0);
+      const num = (s) => parseInt(String(s).replace(/[^0-9]/g, ''), 10);
+      const storage = num(document.querySelector('#pay-total').textContent);
+      set('price', 9000000);
+      const payback = document.querySelector('#pay-payback').textContent;
+      const cta = decodeURIComponent(document.querySelector('#pay-cta').getAttribute('href'));
+      // в сумме неразрывные пробелы-разделители — сравниваем по одним цифрам
+      return { storage, payback, ctaHasSum: cta.replace(/[^0-9]/g, '').indexOf('3000000') > -1 };
+    })()`);
+    // 1000 т × 500 ₸ × 6 мес = 3 000 000 ₸; смета 9 млн → ровно 3 сезона
+    (pay.storage === 3000000 && /3 сезона/.test(pay.payback) && pay.ctaHasSum)
+      ? ok('калькулятор окупаемости')
+      : fail('калькулятор окупаемости', JSON.stringify(pay));
+
     /* --- 9. Строительным компаниям: полоса ответственности --- */
     await goto('/predstavitelyam/');
 
