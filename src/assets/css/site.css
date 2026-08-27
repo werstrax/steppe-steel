@@ -1179,7 +1179,7 @@ img[data-fade].is-loaded { opacity: 1; }
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(21, 23, 26, 0.72);
+  color: rgba(21, 23, 26, 0.92);
 }
 
 .duo__title {
@@ -3656,7 +3656,7 @@ html:not(.js) .cycle__rail { display: none; }
   margin: 0;
   font-size: 0.68rem;
   letter-spacing: 0.04em;
-  color: rgba(21, 23, 26, 0.66);
+  color: var(--ink);
   border-left: 2px solid var(--ink);
   padding-left: 0.8em;
 }
