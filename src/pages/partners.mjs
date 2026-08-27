@@ -7,8 +7,8 @@
  */
 
 import { layout } from '../lib/layout.mjs';
-import { html, raw, e } from '../lib/util.mjs';
-import { pageHero, ctaBand, sectionHead, faq, stat } from '../lib/components.mjs';
+import { html, raw, e, picture } from '../lib/util.mjs';
+import { pageHero, ctaBand, sectionHead, faq, stat, vizTag } from '../lib/components.mjs';
 
 /* --- Геометрия рамы -------------------------------------------------------
    Пролёт 15,0 м и высота до конька 8,5 м — габариты реального объекта из
@@ -158,6 +158,28 @@ export function renderPartners(d) {
       </div>
     </section>
 
+
+    <!-- Реальный объект: чертёж становится каркасом -->
+    <section class="strip" aria-labelledby="pstrip-title">
+      <div class="strip__bg">
+        ${raw(picture('ig-frame', {
+          alt: 'Двухэтажный каркас из оцинкованных профилей ЛСТК на объекте — реальное фото',
+          sizes: '100vw',
+          className: 'strip__img',
+        }))}
+      </div>
+      <div class="container strip__inner">
+        <p class="strip__kicker mono">От разреза — к объекту</p>
+        <h2 class="strip__title" id="pstrip-title">Так рама выглядит в металле</h2>
+        <ul class="strip__facts mono">
+          <li>Рамы и стойки — ПСУ, прогоны и элементы ферм — ПС</li>
+          <li>Соединения болтовые, отверстия с производства</li>
+          <li>Оцинковка без покраски и антикоррозийного обслуживания</li>
+        </ul>
+      </div>
+      <span class="strip__stamp mono" aria-hidden="true">Фото с объекта · @lstk.factory</span>
+    </section>
+
     <!-- ЛИСТ 02 · Что это даёт проектировщику -->
     <section class="section section--sheet">
       <div class="container">
@@ -180,6 +202,14 @@ export function renderPartners(d) {
           title: partners.scopeTitle,
           text: partners.scopeText,
         }))}
+        <figure class="media media--16x9 pmedia" data-reveal>
+          ${raw(picture('desk-eng', {
+            alt: 'Образец оцинкованного профиля с ребром жёсткости, штангенциркуль, свёрнутые чертежи и линейка на столе конструктора — визуализация',
+            sizes: '(min-width: 1100px) 1100px, 100vw',
+          }))}
+          ${vizTag()}
+          <figcaption class="media-caption mono">Конструкторский отдел завода · расчёт, КМ, КМД</figcaption>
+        </figure>
         <div class="grid grid--3">
           ${partners.scope.map((s) => html`
             <div class="scope" data-reveal>
@@ -318,9 +348,16 @@ export function renderPartners(d) {
             <span class="cert__seal mono" aria-hidden="true">Серийное<br>производство</span>
           </div>
           <div class="cert__aside">
+            <figure class="media media--3x2" data-reveal>
+              ${raw(picture('profile-hands', {
+                alt: 'Оцинкованные профили ПСУ и ПС: видны отверстия под болт и ребро жёсткости — визуализация',
+                sizes: '(min-width: 900px) 40vw, 100vw',
+              }))}
+              ${vizTag()}
+            </figure>
             <p class="cert__note">${partners.certNote}</p>
-            <a class="btn btn--primary" href="${wa('Здравствуйте! Пришлите, пожалуйста, копию сертификата на профили и сортамент.')}"
-               target="_blank" rel="noopener">Запросить сертификат</a>
+            <a class="btn btn--primary" href="/assets/docs/steppe-steel-sertifikat-profili.pdf"
+               download target="_blank" rel="noopener">Скачать сертификат (PDF)</a>
             <a class="arrow-link" href="/profili/">Сортамент профилей</a>
           </div>
         </div>

@@ -134,6 +134,21 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQBACdASoUAAsAPulgqE2pJaOiMAgBIB0JYgCdMoRwH1b2VXc/wHj4D2N9zptAAAD+1RRJFqQJXUgSfByNMOofyhU7rDlA33UzWYuVSbmbX9ODjn0NAMFOMAA="
  },
+ "desk-eng": {
+  "w": 2752,
+  "h": 1536,
+  "ratio": 1.7917,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2752
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAwBACdASoUAAsAPulgqE0pJaOiMAgBIB0JYwCdGuAATXwmrNL9yB6NtgAA/kjLHQEfgxCmSjRWHkso1W7gHzJYjWRtBS/m9rkhuXwRb4MV06EwmP8j4BjM9/JzdI8WtZFK9CAAAAA="
+ },
  "frame-detail": {
   "w": 1200,
   "h": 801,
