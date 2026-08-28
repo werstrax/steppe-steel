@@ -10,9 +10,9 @@
     "scope": "Завод полного цикла: ЛСТК и чёрный металл. Зернохранилища, ангары, склады, цеха. Проектирование → производство → комплектация → отгрузка.",
     "_legalNote": "[УТОЧНИТЬ у заказчика] ТОО и БИН — не переданы, на сайте сознательно не выводятся."
   },
-  "url": "https://werstrax.github.io/steppe-steel",
-  "basePath": "/steppe-steel",
-  "_urlNote": "Пока сайт на project pages GitHub. Домен steppesteel.kz куплен, но DNS не настроен. Переключение обратно: url=\"https://steppesteel.kz\", basePath=\"\", создать src/assets/static/CNAME со строкой steppesteel.kz, в tools/*.mjs BASE без префикса (serve.mjs, screenshot.mjs, audit_mobile.mjs, test_functional.mjs). Порядок важен: СНАЧАЛА DNS, ПОТОМ CNAME — иначе старый адрес начнёт редиректить в никуда.",
+  "url": "https://steppesteel.kz",
+  "basePath": "",
+  "_urlNote": "Свой домен steppesteel.kz. url без слэша на конце, basePath пустой. CNAME лежит в src/assets/static/ и сборкой кладётся в корень. DNS на hoster.kz: 4 A-записи GitHub Pages в корне + CNAME www на werstrax.github.io. Откат на github-адрес: url=https://werstrax.github.io/steppe-steel, basePath=/steppe-steel, удалить CNAME.",
   "lang": "ru",
   "locale": "ru_KZ",
   "country": "KZ",
