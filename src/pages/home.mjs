@@ -6,7 +6,7 @@
 import { layout, html, raw } from '../lib/layout.mjs';
 import {
   sectionHead, solutionRow, stat, step, ctaBand, articleCard,
-  photoSlot, iconArrow, iconWhatsApp, docRow,
+  heroFrame, iconArrow, iconWhatsApp, docRow,
 } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, faqNode, howToNode } from '../lib/schema.mjs';
 
@@ -75,12 +75,10 @@ export function renderHome(d) {
             <a class="btn btn--ghost btn--lg" href="${site.cta.secondary.url}">${site.cta.secondary.title}</a>
           </div>
         </div>
-        <div class="hero__media hero__media--slot" data-reveal>
-          ${raw(photoSlot('hero-photo', {
-            label: 'Фото с производства готовится',
-            alt: 'Место под фотографию производства Steppe Steel',
-            className: 'photo-slot--hero',
-          }))}
+        <!-- Тёмная панель — родная среда знака (он белый на чёрном).
+             Придёт фото производства — панель станет кадром (гейт согласован). -->
+        <div class="hero__media hero__media--dark" data-reveal>
+          ${raw(heroFrame())}
         </div>
       </div>
       <div class="container">

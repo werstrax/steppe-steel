@@ -63,10 +63,10 @@ export function renderKontakty(d) {
           ${specs([
             { key: 'Адрес', val: `${c.address.settlement}, ${c.address.district}` },
             { key: 'Область', val: `${c.address.region}, ${c.address.country}` },
+            { key: 'Юрлицо', val: `${site.brand.legalName} · БИН ${site.brand.bin}` },
             { key: 'Дорога', val: 'трасса Костанай — Петропавловск' },
             { key: 'Ж/д', val: 'станция Пресногорьковская' },
             { key: 'Режим', val: c.hours.text },
-            { key: 'Реквизиты', val: 'карточку предприятия вышлем по запросу' },
           ])}
           <p class="note">Хотите приехать на производство — напишите в WhatsApp
           (<a href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">согласуем день визита</a>).

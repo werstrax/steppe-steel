@@ -424,7 +424,7 @@ li { margin-bottom: 0.35em; }
 .logo__steppe {
   font-family: var(--f-d);
   font-weight: 800;
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.42em;
   margin-right: -0.42em; /* компенсация разрядки: край ровный по STEEL */
   color: var(--ink);
@@ -432,7 +432,7 @@ li { margin-bottom: 0.35em; }
 .logo__steel {
   font-family: var(--f-d);
   font-weight: 800;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   letter-spacing: 0.06em;
   margin-right: -0.06em;
   color: var(--ink);
@@ -969,6 +969,21 @@ html:not(.js) .mbar { transform: none; }
 
 /* Хиро-слот: честное пространство под фото клиента, во всю панель */
 .hero__media--slot { display: flex; }
+
+/* Тёмная панель хиро: чертёж белым на графите — родная среда знака */
+.hero__media--dark {
+  background: var(--dark);
+  border-color: var(--dark-line);
+  display: flex;
+  align-items: center;
+}
+.hero__media--dark .hero-frame .hf-grid line { stroke: rgba(238, 240, 242, 0.07); }
+.hero__media--dark .hero-frame .hf-ground line { stroke: var(--dark-text); }
+.hero__media--dark .hero-frame .hf-main line { stroke: #ffffff; }
+.hero__media--dark .hero-frame .hf-web line { stroke: rgba(238, 240, 242, 0.65); }
+.hero__media--dark .hero-frame .hf-base rect { fill: var(--dark-text); }
+.hero__media--dark .hero-frame .hf-mark text { fill: var(--dark-mut); }
+.hero__media--dark .hero-frame .hf-note { fill: var(--dark-mut); }
 .photo-slot--hero { flex: 1; min-height: clamp(280px, 34vw, 430px); aspect-ratio: auto; }
 .photo-slot__label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
 /* номера реестра решений подкрашиваются в ответ на курсор */

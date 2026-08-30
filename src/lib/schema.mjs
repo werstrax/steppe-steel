@@ -27,6 +27,10 @@ export function organizationNode(site, opts = {}) {
     '@type': ['Organization', 'LocalBusiness'],
     '@id': id.org,
     name: site.brand.name,
+    legalName: site.brand.legalName || undefined,
+    identifier: site.brand.bin
+      ? { '@type': 'PropertyValue', propertyID: 'BIN', value: site.brand.bin }
+      : undefined,
     alternateName: ['Steppe Steel', 'STEPPE STEEL', 'STEPSTEEL', 'Степп-стил', c.instagramHandle],
     url: `${site.url}/`,
     description: opts.description ||
