@@ -12,10 +12,14 @@ import { html, raw, e, cx, picture, dateRu, num, plural } from './util.mjs';
  * Файл нового логотипа заказчик не передал — как передаст, заменить
  * разметку на <img> (см. CONTENT-TODO).
  */
+// Вордмарк повторяет фирменный знак (файл от заказчика, 30.08.2026):
+// STEPPE вразрядку над крупным STEEL, оранжевая линия, INDUSTRIAL STANDARD.
+// Оба слова одним цветом — в знаке они белые, оранжевая только линия.
 export const logo = (site, { href = '/', footer = false } = {}) => html`
   <a href="${href}" class="${cx('logo', footer && 'logo--footer')}" aria-label="STEPPESTEEL — на главную">
-    <span class="logo__word">STEPPE<span class="logo__accent">STEEL</span></span>
-    <span class="logo__sub">завод металлоконструкций</span>
+    <span class="logo__steppe">STEPPE</span>
+    <span class="logo__steel">STEEL</span>
+    <span class="logo__tag">Industrial Standard</span>
   </a>
 `;
 

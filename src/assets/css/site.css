@@ -421,23 +421,36 @@ li { margin-bottom: 0.35em; }
   line-height: 1;
   flex-shrink: 0;
 }
-.logo__word {
+.logo__steppe {
   font-family: var(--f-d);
   font-weight: 800;
-  font-size: 1.18rem;
-  letter-spacing: 0.02em;
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  margin-right: -0.42em; /* компенсация разрядки: край ровный по STEEL */
   color: var(--ink);
 }
-.logo__accent { color: var(--accent); }
-.logo__sub {
+.logo__steel {
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  margin-right: -0.06em;
+  color: var(--ink);
+  margin-top: 0.06rem;
+}
+.logo__tag {
   font-family: var(--f-m);
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mut);
+  border-top: 2px solid var(--accent);
+  padding-top: 0.22rem;
+  margin-top: 0.18rem;
 }
-.logo--footer .logo__word { color: #fff; font-size: 1.5rem; }
-.logo--footer .logo__sub { color: var(--dark-mut); }
+.logo--footer .logo__steppe, .logo--footer .logo__steel { color: #fff; }
+.logo--footer .logo__steel { font-size: 1.6rem; }
+.logo--footer .logo__tag { color: var(--dark-mut); }
 
 .nav {
   display: flex;
