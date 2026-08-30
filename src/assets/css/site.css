@@ -1979,6 +1979,35 @@ select.field__input { appearance: auto; }
   }
   html.js [data-reveal].is-in { opacity: 1; transform: none; }
 
+  /* Первый экран входит каскадом: строка за строкой сверху вниз */
+  html.js .hero__text > [data-reveal]:nth-child(2) { transition-delay: 0.07s; }
+  html.js .hero__text > [data-reveal]:nth-child(3) { transition-delay: 0.14s; }
+  html.js .hero__text > [data-reveal]:nth-child(4) { transition-delay: 0.21s; }
+  html.js .hero__text > [data-reveal]:nth-child(5) { transition-delay: 0.28s; }
+  html.js .hero__media { transition-delay: 0.2s; }
+
+  /* Уголки чертёжного слота прочерчиваются после появления блока,
+     штамп проявляется следом. Вне reveal-контейнера — статичны. */
+  html.js [data-reveal] .photo-slot::before,
+  html.js [data-reveal] .photo-slot::after {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: width 0.45s var(--ease) 0.35s, height 0.45s var(--ease) 0.5s,
+                opacity 0.2s linear 0.35s;
+  }
+  html.js [data-reveal].is-in .photo-slot::before,
+  html.js [data-reveal].is-in .photo-slot::after {
+    width: 22px;
+    height: 22px;
+    opacity: 1;
+  }
+  html.js [data-reveal] .photo-slot__stamp {
+    opacity: 0;
+    transition: opacity 0.4s var(--ease) 0.65s;
+  }
+  html.js [data-reveal].is-in .photo-slot__stamp { opacity: 1; }
+
   html.js [data-fade] { opacity: 0; transition: opacity 0.5s var(--ease); }
   html.js [data-fade].is-loaded { opacity: 1; }
 
