@@ -471,8 +471,9 @@ export function ctaBand(site, { title, text, primary, secondary } = {}) {
 export const articleCard = (a) => html`
   <a class="article-card" href="${a.url}" data-reveal>
     <div class="media media--3x2">
-      ${raw(picture(a.cover, { alt: '', sizes: '(min-width: 900px) 33vw, 100vw' }))}
-      ${a.coverViz ? vizTag() : ''}
+      ${a.cover
+        ? html`${raw(picture(a.cover, { alt: '', sizes: '(min-width: 900px) 33vw, 100vw' }))}${a.coverViz ? vizTag() : ''}`
+        : raw(photoSlot(a.slug, { label: 'Фото готовится', alt: '' }))}
     </div>
     <div class="stack stack--sm">
       <p class="article-card__meta mono"><span>${dateRu(a.date)}</span><span>${a.readingTime} мин</span></p>

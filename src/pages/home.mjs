@@ -6,9 +6,8 @@
 import { layout, html, raw } from '../lib/layout.mjs';
 import {
   sectionHead, solutionRow, stat, step, ctaBand, articleCard,
-  vizTag, iconArrow, iconWhatsApp, docRow,
+  photoSlot, iconArrow, iconWhatsApp, docRow,
 } from '../lib/components.mjs';
-import { picture } from '../lib/util.mjs';
 import { organizationNode, websiteNode, itemListNode, faqNode, howToNode } from '../lib/schema.mjs';
 
 export function renderHome(d) {
@@ -76,13 +75,12 @@ export function renderHome(d) {
             <a class="btn btn--ghost btn--lg" href="${site.cta.secondary.url}">${site.cta.secondary.title}</a>
           </div>
         </div>
-        <div class="hero__media hero__media--photo" data-reveal>
-          ${raw(picture('montage-drone', {
-            alt: 'Монтаж металлокаркаса ангара в степи: смонтированные фермы, штабеля профиля на площадке — аэросъёмка',
-            sizes: '(min-width: 1100px) 620px, 100vw',
-            priority: true,
+        <div class="hero__media hero__media--slot" data-reveal>
+          ${raw(photoSlot('hero-photo', {
+            label: 'Фото с производства готовится',
+            alt: 'Место под фотографию производства Steppe Steel',
+            className: 'photo-slot--hero',
           }))}
-          ${vizTag()}
         </div>
       </div>
       <div class="container">

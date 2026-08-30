@@ -178,7 +178,7 @@ export function renderArticle(d, a) {
 
     ${next ? html`
       <a class="next-project" href="${next.url}" data-cursor="Читать">
-        <div class="next-project__bg">${raw(picture(next.cover, { alt: '', sizes: '100vw' }))}${next.coverViz ? vizTag() : ''}</div>
+        ${next.cover ? html`<div class="next-project__bg">${raw(picture(next.cover, { alt: '', sizes: '100vw' }))}${next.coverViz ? vizTag() : ''}</div>` : ''}
         <div class="next-project__inner container">
           <span class="eyebrow mono next-project__label">Следующая статья · ${next.index}</span>
           <p class="next-project__title">${next.title}</p>
@@ -191,7 +191,7 @@ export function renderArticle(d, a) {
     url: a.url,
     title: a.seoTitle,
     description: a.seoDescription,
-    image: a.cover,
+    image: a.cover || undefined,
     ogType: 'article',
     pageType: 'ItemPage',
     datePublished: a.date,

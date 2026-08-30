@@ -918,6 +918,10 @@ html:not(.js) .mbar { transform: none; }
 
 /* Хиро с фотографией: кадр на всю панель, плашке нужен позиционный контекст */
 .hero__media--photo { padding: 0; overflow: hidden; position: relative; background: var(--ink); }
+
+/* Хиро-слот: честное пространство под фото клиента, во всю панель */
+.hero__media--slot { display: flex; }
+.photo-slot--hero { flex: 1; min-height: clamp(280px, 34vw, 430px); }
 .hero__media--photo picture, .hero__media--photo img {
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
