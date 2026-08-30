@@ -858,8 +858,16 @@ html:not(.js) .mbar { transform: none; }
 .btn--dark { background: var(--ink); color: #fff; }
 .btn--dark:hover { background: var(--dark-2); color: #fff; }
 
-.btn--wa { background: var(--wa); color: #073c1e; }
-.btn--wa:hover { background: #2ee277; color: #073c1e; }
+.btn--wa {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--line-2);
+}
+.btn--wa svg { color: var(--wa); }
+.btn--wa:hover { border-color: var(--wa); background: transparent; color: inherit; }
+/* на тёмных секциях кнопка наследует светлый текст, бордер приглушён */
+.section--dark .btn--wa, .cta-band .btn--wa { border-color: var(--dark-line); color: var(--dark-text); }
+.section--dark .btn--wa:hover, .cta-band .btn--wa:hover { border-color: var(--wa); }
 
 .btn--outline-light { border-color: var(--dark-line); color: var(--dark-text); }
 .btn--outline-light:hover { border-color: var(--dark-mut); color: #fff; }
