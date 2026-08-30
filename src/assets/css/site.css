@@ -758,20 +758,55 @@ html:not(.js) .mbar { transform: none; }
 }
 
 .photo-slot {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
   aspect-ratio: 3 / 2;
   width: 100%;
-  border: 1px dashed var(--line-2);
+  border: 1px solid var(--line-2);
   border-radius: var(--radius);
-  background:
-    repeating-linear-gradient(-45deg, transparent 0 14px, rgba(22, 24, 27, 0.025) 14px 15px),
-    var(--tint);
-  color: var(--line-2);
+  /* лист-миллиметровка: мелкая клетка 8px + крупная 40px */
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(22, 24, 27, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 24, 27, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(22, 24, 27, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 24, 27, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  color: var(--mut);
+  overflow: hidden;
 }
+/* уголки видоискателя: здесь будет кадр */
+.photo-slot::before,
+.photo-slot::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--line-2);
+}
+.photo-slot::before { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+.photo-slot::after { right: 12px; bottom: 12px; border-left: 0; border-top: 0; }
+.photo-slot__center { display: flex; align-items: center; }
+/* штамп листа: подпись + имя файла, который сюда ляжет */
+.photo-slot__stamp {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line-2);
+  background: var(--paper);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mut);
+  text-align: right;
+}
+.photo-slot__stamp b { font-weight: 500; letter-spacing: 0.04em; text-transform: none; color: var(--ink-2); }
 .photo-slot svg { width: 56px; height: 40px; }
 .photo-slot__label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); }
 
@@ -921,7 +956,10 @@ html:not(.js) .mbar { transform: none; }
 
 /* Хиро-слот: честное пространство под фото клиента, во всю панель */
 .hero__media--slot { display: flex; }
-.photo-slot--hero { flex: 1; min-height: clamp(280px, 34vw, 430px); }
+.photo-slot--hero { flex: 1; min-height: clamp(280px, 34vw, 430px); aspect-ratio: auto; }
+.photo-slot__label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+/* номера реестра решений подкрашиваются в ответ на курсор */
+.sol-row:hover .sol-row__num { color: var(--accent-deep); }
 .hero__media--photo picture, .hero__media--photo img {
   display: block; width: 100%; height: 100%; object-fit: cover;
 }

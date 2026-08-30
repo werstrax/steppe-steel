@@ -100,11 +100,12 @@ export const photoTag = (label = 'Фото с объекта') =>
 
 /** Слот под реальное фото: пока кадра нет в манифесте — нейтральная плашка. */
 export function photoSlot(name, { alt = '', label = 'Фото готовится', sizes = '(min-width: 900px) 50vw, 100vw', className = '' } = {}) {
+  // Слот оформлен как лист чертежа: миллиметровка, уголки кадра и штамп
+  // с именем файла — клиент сразу видит, какой снимок куда ляжет.
   return raw(
     `<span class="${cx('photo-slot', className)}" role="img" aria-label="${e(alt || label)}">` +
-      `<svg viewBox="0 0 64 44" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">` +
-      `<rect x="6" y="6" width="52" height="32" rx="1"/><path d="M6 30l14-11 10 8 9-6 19 13"/><circle cx="22" cy="15" r="3"/></svg>` +
-      `<span class="photo-slot__label mono">${e(label)}</span>` +
+      `<span class="photo-slot__center"><span class="photo-slot__label mono">${e(label)}</span></span>` +
+      `<span class="photo-slot__stamp mono" aria-hidden="true">лист · фото<b>${e(name)}.jpg</b></span>` +
       `</span>`
   );
 }
