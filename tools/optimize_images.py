@@ -55,6 +55,15 @@ def main():
         if ext.lower() in EXT:
             sources.setdefault(base, f)
     names = sorted(sources)
+    # Позиционные аргументы = обработать только эти имена (без расширения):
+    #   python tools/optimize_images.py montage-drone prod-line
+    pick = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if pick:
+        missing = [n for n in pick if n not in sources]
+        if missing:
+            print("Нет в raw/:", ", ".join(missing))
+            return
+        names = [n for n in names if n in pick]
     if not names:
         print("Нет исходников в", RAW)
         return

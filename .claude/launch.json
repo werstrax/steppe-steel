@@ -2,39 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "steppe-v3",
+      "name": "stepsteel",
       "runtimeExecutable": "node",
-      "runtimeArgs": [
-        "tools/serve.mjs",
-        "4321"
-      ],
+      "runtimeArgs": ["tools/serve.mjs", "4321"],
       "port": 4321
-    },
-    {
-      "name": "steppe-steel",
-      "runtimeExecutable": "python",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8734",
-        "--bind",
-        "127.0.0.1"
-      ],
-      "port": 8734
-    },
-    {
-      "name": "steppe-v2",
-      "runtimeExecutable": "python",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8765",
-        "--bind",
-        "127.0.0.1",
-        "--directory",
-        "C:/Users/Flockyman/Desktop/steppe-steel-v2"
-      ],
-      "port": 8765
     }
   ]
 }

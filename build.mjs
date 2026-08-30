@@ -1,12 +1,11 @@
 /**
- * Сборщик сайта Steppe Steel v3 («Заводской стандарт»).
+ * Сборщик сайта Steppe Steel v4 («Белый завод»).
  *
  *   node build.mjs            собрать в dist/
  *   node build.mjs --watch    пересобирать при изменениях
  *
- * Зависимостей нет. На выходе — статика, готовая для GitHub Pages
- * (project pages: сайт живёт в подпапке /steppe-steel/, поэтому все
- * корневые пути после рендера переписываются с префиксом BASE).
+ * Зависимостей нет. На выходе — статика для GitHub Pages (домен steppesteel.kz,
+ * basePath пустой; механизм rebase оставлен для отката на project pages).
  */
 
 import { mkdirSync, writeFileSync, rmSync, existsSync, watch, readFileSync } from 'node:fs';
@@ -14,18 +13,23 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
-import { loadJSON, setImageManifest, outPath, copyDir, plural } from './src/lib/util.mjs';
+import { loadJSON, setImageManifest, outPath, copyDir } from './src/lib/util.mjs';
 
 import { renderHome } from './src/pages/home.mjs';
-import { renderPartners } from './src/pages/partners.mjs';
-import { renderDealers } from './src/pages/dealers.mjs';
-import { renderRegion } from './src/pages/regions.mjs';
-import { renderKatalogIndex, renderProduct } from './src/pages/katalog.mjs';
-import { renderUslugiIndex, renderService } from './src/pages/uslugi.mjs';
+import { renderSolutionsIndex, renderSolution } from './src/pages/solutions.mjs';
+import { renderAgro } from './src/pages/agro.mjs';
+import { renderBuilders } from './src/pages/builders.mjs';
+import { renderDesigners } from './src/pages/designers.mjs';
+import { renderNetwork } from './src/pages/network.mjs';
+import { renderPortfolio } from './src/pages/portfolio.mjs';
+import { renderProduction } from './src/pages/production.mjs';
+import { renderTechIndex, renderTech } from './src/pages/tech.mjs';
+import { renderDocuments } from './src/pages/documents.mjs';
 import { renderProfili } from './src/pages/profili.mjs';
-import { renderAbout, renderProcess } from './src/pages/about.mjs';
+import { renderAbout } from './src/pages/about.mjs';
+import { renderRegion } from './src/pages/regions.mjs';
 import { renderJournalIndex, renderArticle } from './src/pages/journal.mjs';
-import { renderKontakty, renderZayavka, renderThanks, renderFaq, renderPrivacy, renderNotFound } from './src/pages/contact.mjs';
+import { renderKontakty, renderRaschet, renderThanks, renderFaq, renderPrivacy, renderNotFound } from './src/pages/contact.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, 'src');
@@ -36,24 +40,47 @@ const warn = (msg) => warnings.push(msg);
 
 /* --- Данные -------------------------------------------------------------- */
 
-function loadData() {
-  const site = loadJSON(join(SRC, 'data', 'site.json'));
-  const images = JSON.parse(readFileSync(join(SRC, 'data', 'images.json'), 'utf8'));
+/**
+ * Языковая архитектура (ТЗ §25). Казахская версия включается созданием
+ * папки src/data/kk/ с переведёнными копиями JSON (можно переводить
+ * по одному файлу — остальные возьмутся из русской версии). Сборка сама
+ * соберёт зеркало под /kk/ и расставит hreflang на обеих версиях.
+ * Английская добавляется тем же способом: src/data/en/ + код в LANGS.
+ */
+const LANGS = ['kk'];
+
+function dataPath(name, lang) {
+  if (lang) {
+    const override = join(SRC, 'data', lang, name);
+    if (existsSync(override)) return override;
+  }
+  return join(SRC, 'data', name);
+}
+
+function loadData(lang) {
+  const site = loadJSON(dataPath('site.json', lang));
+  const images = JSON.parse(readFileSync(dataPath('images.json', lang), 'utf8'));
   delete images._readme;
   setImageManifest(images);
 
-  const products = loadJSON(join(SRC, 'data', 'products.json'));
-  const services = loadJSON(join(SRC, 'data', 'services.json'));
-  const profiles = loadJSON(join(SRC, 'data', 'profiles.json'));
-  const process = loadJSON(join(SRC, 'data', 'process.json'));
-  const faq = loadJSON(join(SRC, 'data', 'faq.json'));
-  const journal = loadJSON(join(SRC, 'data', 'journal.json'));
-  const cycle = loadJSON(join(SRC, 'data', 'cycle.json'));
-  const partners = loadJSON(join(SRC, 'data', 'partners.json'));
-  const dealers = loadJSON(join(SRC, 'data', 'dealers.json'));
-  const payback = loadJSON(join(SRC, 'data', 'payback.json'));
-  const regions = loadJSON(join(SRC, 'data', 'regions.json'));
-  const material = loadJSON(join(SRC, 'data', 'material.json'));
+  const d = {
+    site,
+    images,
+    solutions: loadJSON(dataPath('solutions.json', lang)),
+    tech: loadJSON(dataPath('tech.json', lang)),
+    production: loadJSON(dataPath('production.json', lang)),
+    portfolio: loadJSON(dataPath('portfolio.json', lang)),
+    documents: loadJSON(dataPath('documents.json', lang)),
+    agrarians: loadJSON(dataPath('agrarians.json', lang)),
+    builders: loadJSON(dataPath('builders.json', lang)),
+    designers: loadJSON(dataPath('designers.json', lang)),
+    network: loadJSON(dataPath('network.json', lang)),
+    profiles: loadJSON(dataPath('profiles.json', lang)),
+    faq: loadJSON(dataPath('faq.json', lang)),
+    journal: loadJSON(dataPath('journal.json', lang)),
+    regions: loadJSON(dataPath('regions.json', lang)),
+    payback: loadJSON(dataPath('payback.json', lang)),
+  };
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
   site.buildId = assetHash([
@@ -63,10 +90,9 @@ function loadData() {
   site.buildDate = new Date().toISOString().slice(0, 10);
 
   // Для футера и перелинковки
-  site._products = products.items;
-  site._services = services.items;
+  site._solutions = d.solutions.items;
 
-  return { site, images, products, services, profiles, process, faq, journal, cycle, material, partners, dealers, payback, regions };
+  return d;
 }
 
 function assetHash(paths) {
@@ -78,25 +104,17 @@ function assetHash(paths) {
 /* --- Проверки целостности ------------------------------------------------ */
 
 function validate(d) {
-  const pslugs = new Set(d.products.items.map((p) => p.slug));
-  const sslugs = new Set(d.services.items.map((s) => s.slug));
+  const slugs = new Set(d.solutions.items.map((p) => p.slug));
 
-  for (const p of d.products.items) {
-    if (!d.images[p.cover]) warn(`products: нет обложки «${p.cover}» для «${p.title}»`);
-    for (const g of p.gallery || []) if (!g.video && !d.images[g.img]) warn(`products: нет картинки «${g.img}» в галерее «${p.title}»`);
-    for (const r of p.related || []) if (!pslugs.has(r)) warn(`products: у «${p.title}» ссылка на несуществующий продукт «${r}»`);
-    if ((p.seoTitle || '').length > 65) warn(`SEO: длинный title у /katalog/${p.slug}/ (${p.seoTitle.length})`);
-    if ((p.seoDescription || '').length > 170) warn(`SEO: длинный description у /katalog/${p.slug}/ (${p.seoDescription.length})`);
-  }
-
-  for (const s of d.services.items) {
-    if (!d.images[s.image]) warn(`services: нет картинки «${s.image}» для «${s.title}»`);
-    for (const r of s.related || []) if (!sslugs.has(r)) warn(`services: у «${s.title}» ссылка на несуществующую услугу «${r}»`);
+  for (const p of d.solutions.items) {
+    for (const r of p.related || []) if (!slugs.has(r)) warn(`solutions: у «${p.title}» ссылка на несуществующее решение «${r}»`);
+    if ((p.seoTitle || '').length > 65) warn(`SEO: длинный title у ${p.url} (${p.seoTitle.length})`);
+    if ((p.seoDescription || '').length > 170) warn(`SEO: длинный description у ${p.url} (${p.seoDescription.length})`);
+    if (!p.icon) warn(`solutions: у «${p.title}» нет иконки`);
   }
 
   for (const a of d.journal.items) {
     if (!d.images[a.cover]) warn(`journal: нет обложки «${a.cover}» для «${a.title}»`);
-    for (const rel of a.products || []) if (!pslugs.has(rel)) warn(`journal: у «${a.title}» ссылка на несуществующий продукт «${rel}»`);
   }
 
   if (!d.site.contacts.geo?.verified) warn('site: координаты завода не подтверждены — geo не выводится в Schema.org');
@@ -112,16 +130,21 @@ function buildPages(d) {
 
   add('/', renderHome(d));
 
-  add('/katalog/', renderKatalogIndex(d));
-  for (const p of d.products.items) add(p.url, renderProduct(d, p));
+  add('/resheniya/', renderSolutionsIndex(d));
+  for (const s of d.solutions.items) add(s.url, renderSolution(d, s));
 
-  add('/uslugi/', renderUslugiIndex(d));
-  for (const s of d.services.items) add(s.url, renderService(d, s));
+  add('/agrariyam/', renderAgro(d));
+  add('/stroitelnym-kompaniyam/', renderBuilders(d));
+  add('/proektirovshchikam/', renderDesigners(d));
+  add('/partneram/', renderNetwork(d));
+  add('/obekty/', renderPortfolio(d));
 
+  add('/proizvodstvo/', renderProduction(d));
+  add('/tekhnologii/', renderTechIndex(d));
+  for (const t of d.tech.items) add(t.url, renderTech(d, t));
   add('/profili/', renderProfili(d));
-  add('/process/', renderProcess(d));
-  add('/partnyoram/', renderPartners(d));
-  add('/predstavitelyam/', renderDealers(d));
+  add('/dokumentaciya/', renderDocuments(d));
+
   for (const r of d.regions.items) add(`/${r.slug}/`, renderRegion(d, r));
   add('/o-zavode/', renderAbout(d));
 
@@ -130,21 +153,22 @@ function buildPages(d) {
 
   add('/faq/', renderFaq(d));
   add('/kontakty/', renderKontakty(d));
-  add('/zayavka/', renderZayavka(d));
-  add('/zayavka/spasibo/', renderThanks(d), { noindex: true });
+  add('/raschet/', renderRaschet(d));
+  add('/raschet/spasibo/', renderThanks(d), { noindex: true });
   add('/privacy/', renderPrivacy(d), { noindex: true });
   add('/404.html', renderNotFound(d), { raw: true, noindex: true });
 
   return pages;
 }
 
-/* --- Переезд со старых плоских URL (v1) ---------------------------------- */
+/* --- Редиректы со старых URL (v1 плоские + v3 каталожные) ------------------ */
 
-const LEGACY = {
-  'katalog.html': '/katalog/',
-  'zernohranilishcha.html': '/katalog/zernohranilishcha/',
-  'angary-sklady.html': '/katalog/angary-sklady/',
-  'tseha-zavody.html': '/katalog/tseha-zavody/',
+/** Плоские файлы v1 (пишутся как <имя>.html в корень). */
+const LEGACY_FLAT = {
+  'katalog.html': '/resheniya/',
+  'zernohranilishcha.html': '/resheniya/zernohranilishcha/',
+  'angary-sklady.html': '/resheniya/angary/',
+  'tseha-zavody.html': '/resheniya/proizvodstvennye-zdaniya/',
   'o-kompanii.html': '/o-zavode/',
   'kontakty.html': '/kontakty/',
   'blog.html': '/blog/',
@@ -154,15 +178,33 @@ const LEGACY = {
   'blog-lstk-lmk.html': '/blog/lstk-lmk/',
 };
 
+/** Каталожные URL v3 (пишутся как <путь>/index.html). */
+const LEGACY_DIRS = {
+  '/katalog/': '/resheniya/',
+  '/katalog/zernohranilishcha/': '/resheniya/zernohranilishcha/',
+  '/katalog/angary-sklady/': '/resheniya/angary/',
+  '/katalog/tseha-zavody/': '/resheniya/proizvodstvennye-zdaniya/',
+  '/uslugi/': '/proizvodstvo/',
+  '/uslugi/proektirovanie/': '/tekhnologii/proektirovanie/',
+  '/uslugi/proizvodstvo/': '/proizvodstvo/',
+  '/uslugi/komplektaciya-dostavka/': '/proizvodstvo/',
+  '/process/': '/proizvodstvo/',
+  '/partnyoram/': '/proektirovshchikam/',
+  '/predstavitelyam/': '/partneram/',
+  '/zayavka/': '/raschet/',
+  '/zayavka/spasibo/': '/raschet/spasibo/',
+};
+
 function redirectStub(site, to) {
   const url = `${site.url}${to}`;
   return `<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Страница переехала — Steppe Steel</title>
+<title>Страница переехала — ${site.brand.name}</title>
 <meta http-equiv="refresh" content="0;url=${url}">
 <link rel="canonical" href="${url}">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body style="font-family:system-ui;padding:2rem">
@@ -193,7 +235,7 @@ function sitemap(site, pages) {
     .filter((p) => !p.noindex && !p.raw)
     .map((p) => {
       const priority = p.url === '/' ? '1.0' : p.url.split('/').filter(Boolean).length === 1 ? '0.8' : '0.6';
-      const changefreq = p.url === '/' || p.url === '/katalog/' ? 'weekly' : 'monthly';
+      const changefreq = p.url === '/' || p.url === '/resheniya/' || p.url === '/obekty/' ? 'weekly' : 'monthly';
       return `  <url>
     <loc>${site.url}${p.url}</loc>
     <lastmod>${p.lastmod || site.buildDate}</lastmod>
@@ -215,7 +257,7 @@ function robots(site) {
 
 User-agent: *
 Allow: /
-Disallow: /zayavka/spasibo/
+Disallow: /raschet/spasibo/
 Disallow: /privacy/
 
 # AI-поисковики и ассистенты: доступ открыт сознательно — мы хотим,
@@ -258,42 +300,40 @@ Sitemap: ${site.url}/sitemap.xml
  * llms.txt — выжимка о заводе для языковых моделей.
  */
 function llmsTxt(d) {
-  const { site, products, services, journal, regions } = d;
+  const { site, solutions, tech, journal, regions } = d;
   const a = site.contacts.address;
   return `# ${site.brand.name} — ${site.brand.descriptor}
 
-> Завод лёгких стальных тонкостенных конструкций (ЛСТК) и металлоконструкций
-> полного цикла в селе Троебратское Костанайской области, Казахстан.
-> Проектирование (эскиз, расчёт, раздел КМ) → производство (линия профилирования,
-> плазменная и лазерная резка, сварочные участки) → комплектация → отгрузка
-> и доставка по Казахстану. Комбинирует ЛСТК и чёрный металл
-> (фермы, колонны, опорные узлы) для промышленных зданий: зернохранилища,
-> склады, ангары, цеха. Слоган: ${site.brand.slogan}.
+> Завод строительных металлоконструкций в селе Троебратское Костанайской
+> области, Казахстан. Полный цикл: проектирование (эскиз, расчёт, разделы
+> КМ/КМД) → производство (линия профилирования, плазменная и лазерная резка,
+> сварочные участки) → комплектация → отгрузка по Казахстану. Производит
+> металлокаркасы из ЛСТК и ЛМК для промышленных, сельскохозяйственных,
+> складских и коммерческих зданий. ${site.brand.slogan}
 
 ## Факты
 
 - Телефон / WhatsApp: ${site.contacts.phone}
 - E-mail: ${site.contacts.email}
-- Адрес производства: ${a.street ? a.street + ', ' : ''}${a.settlement}, ${a.district}, ${a.region}, ${a.country}
+- Адрес производства: ${a.settlement}, ${a.district}, ${a.region}, ${a.country}
 - Instagram: ${site.contacts.instagramHandle}
-- Продукция: зернохранилища напольного хранения, ангары и склады, цеха и заводские здания, спортивные залы
-- Профили собственного производства (заводские обозначения): ПСУ — профиль С-образный усиленный, сигма-образное сечение с продольным ребром, для рам и стоек; ПС — профиль С-образный, для прогонов и элементов ферм. Оцинкованная сталь толщиной до 3,5 мм, высота сечения 150–280 мм. П-профиль (направляющий) завод не производит
-- Вместимость зернохранилища на 1 м длины: пшеница 67 т, горох 70 т, кукуруза 62 т, ячмень 56 т, подсолнечник 37 т
-- Конструктив зернохранилищ: винтовые сваи и металлический ростверк без бетона, наклонные стены с подкосной системой, секции до 140 м, 100 % болтовая сборка
-- Расчётные условия: снеговые и ветровые нагрузки по СП РК, эксплуатация при морозах до −40 °C
-- Профили сертифицированы: сертификат соответствия РК № KZ.3510317.01.01.67913 (до 01.06.2027) на холодногнутые профили из оцинкованной стали, 43 позиции сортамента ПСУ 150–280 и ПС 100–280
-- Конструкторский отдел завода выполняет расчёты в ЛИРА-САПР и разделы КМ/КМД (Tekla Structures) по нормам СП РК EN (Еврокоды), сопровождает экспертизу
-- Партнёрская программа для проектных организаций: завод берёт конструктивную часть, заказчик и авторство проекта остаются за проектировщиком, предусмотрено агентское вознаграждение по договору
-- Партнёрская сеть для строительных компаний: региональный представитель получает запросы и клиентскую базу по закреплённой территории, партнёрские условия на металлоконструкции, обучение бригад и шеф-монтаж; доход партнёра складывается из поставки комплекта, монтажа и сопутствующих работ
-- Флагманские направления: навесы для сельхозтехники и модульные зернохранилища
+- Решения: зернохранилища, склады, производственные здания, ангары, овощехранилища, здания для сельхозтехники, СТО и автопарки, спортивные объекты, модульные здания
+- Профили собственного производства (заводские обозначения): ПСУ — профиль С-образный усиленный (сигма-образное сечение с продольным ребром) для рам и стоек; ПС — профиль С-образный для прогонов и элементов ферм. Оцинкованная сталь толщиной до 3,5 мм, высота сечения 100–280 мм
+- Профили сертифицированы: сертификат соответствия РК № KZ.3510317.01.01.67913 (до 01.06.2027), 43 позиции сортамента ПСУ 150–280 и ПС 100–280
+- Пролёт до 24 м без внутренних колонн; расчёт на III снеговой район (~180 кгс/м²), эксплуатация до −40 °C
+- Зернохранилища: напольное хранение навалом, винтовые сваи и металлический ростверк без бетона, наклонные стены, секции до 140 м, 100 % болтовая сборка; вместимость на 1 м длины: пшеница 67 т, горох 70 т, кукуруза 62 т, ячмень 56 т, подсолнечник 37 т
+- Проектный отдел: расчёты в ЛИРА-САПР, разделы КМ/КМД в Tekla Structures по нормам СП РК EN (Еврокоды), сопровождение экспертизы
+- Для строительных компаний: изготовление металлокаркасов по проекту заказчика или с нуля, комплектная поставка, шеф-монтаж
+- Для проектных организаций: конструктив (КМ, КМД, РПЗ, нагрузки на фундамент) силами завода, агентское вознаграждение по договору
+- Региональная партнёрская сеть: запросы по закреплённой территории, обучение, шеф-монтаж первого объекта
 
-## Продукция
+## Решения
 
-${products.items.map((p) => `- [${p.title}](${site.url}${p.url}) — ${p.summary}`).join('\n')}
+${solutions.items.map((p) => `- [${p.title}](${site.url}${p.url}) — ${p.summary || p.lead}`).join('\n')}
 
-## Услуги завода
+## Технологии
 
-${services.items.map((s) => `- [${s.title}](${site.url}${s.url}) — ${s.summary}`).join('\n')}
+${tech.items.map((t) => `- [${t.title}](${site.url}${t.url}) — ${t.lead}`).join('\n')}
 
 ## Материалы
 
@@ -302,19 +342,21 @@ ${journal.items.map((x) => `- [${x.title}](${site.url}${x.url}) — ${x.summary}
 ## Основные разделы
 
 - [Главная](${site.url}/)
-- [Каталог](${site.url}/katalog/)
+- [Решения](${site.url}/resheniya/)
+- [Аграриям](${site.url}/agrariyam/)
+- [Строительным компаниям](${site.url}/stroitelnym-kompaniyam/)
+- [Проектировщикам](${site.url}/proektirovshchikam/)
+- [Партнёрам](${site.url}/partneram/)
+- [Реализованные объекты](${site.url}/obekty/)
+- [Производство](${site.url}/proizvodstvo/)
 - [Профили ПСУ и ПС](${site.url}/profili/)
-- [Услуги](${site.url}/uslugi/)
-- [Процесс работы](${site.url}/process/)
-- [Проектным организациям](${site.url}/partnyoram/)
-- [Строительным компаниям](${site.url}/predstavitelyam/)
+- [Документация](${site.url}/dokumentaciya/)
+- [О заводе](${site.url}/o-zavode/)
+- [Контакты](${site.url}/kontakty/)
 
 ## Регионы работы
 
 ${regions.items.map((r) => `- [${r.city} — ${r.region}](${site.url}/${r.slug}/) — ${r.seoDescription}`).join('\n')}
-- [О заводе](${site.url}/o-zavode/)
-- [Вопросы и ответы](${site.url}/faq/)
-- [Контакты](${site.url}/kontakty/)
 `;
 }
 
@@ -324,11 +366,11 @@ function webmanifest(site) {
     {
       name: `${site.brand.name} — ${site.brand.descriptor}`,
       short_name: site.brand.name,
-      description: `Завод ЛСТК и металлоконструкций полного цикла. Костанайская область, Казахстан.`,
+      description: 'Завод строительных металлоконструкций. Костанайская область, Казахстан.',
       start_url: `${b}/`,
       display: 'standalone',
-      background_color: '#0b0c0e',
-      theme_color: '#0b0c0e',
+      background_color: '#ffffff',
+      theme_color: '#16181b',
       lang: 'ru',
       icons: [
         { src: `${b}/favicon.svg`, sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
@@ -342,13 +384,13 @@ function webmanifest(site) {
   );
 }
 
-/** Фавикон — знак завода: тёмный квадрат, оранжевая полоса, буква S. */
+/** Фавикон — знак завода: графитовый квадрат, оранжевая полоса, буква S. */
 function favicon() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#0b0c0e"/>
+  <rect width="64" height="64" fill="#16181b"/>
   <rect x="0" y="50" width="64" height="6" fill="#e8781a"/>
   <text x="32" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="34" font-weight="700" fill="#f2f1ec" letter-spacing="1">S</text>
+        font-size="34" font-weight="700" fill="#f5f6f7" letter-spacing="1">S</text>
 </svg>
 `;
 }
@@ -365,6 +407,12 @@ function build() {
   if (existsSync(DIST)) rmSync(DIST, { recursive: true, force: true });
   mkdirSync(DIST, { recursive: true });
 
+  const activeLangs = LANGS.filter((l) => existsSync(join(SRC, 'data', l)));
+  if (activeLangs.length) {
+    d.site._hreflang = { ru: d.site.url };
+    for (const l of activeLangs) d.site._hreflang[l] = `${d.site.url}/${l}`;
+  }
+
   const pages = buildPages(d);
   const base = d.site.basePath || '';
 
@@ -375,9 +423,35 @@ function build() {
     writeFileSync(file, rebase(String(p.html), base), 'utf8');
   }
 
-  // Заглушки со старых плоских URL v1
-  for (const [from, to] of Object.entries(LEGACY)) {
+  // Языковые зеркала: /kk/… с теми же слагами, hreflang и общими ассетами
+  for (const l of activeLangs) {
+    const dl = loadData(l);
+    dl.site.lang = l;
+    dl.site.locale = l === 'kk' ? 'kk_KZ' : dl.site.locale;
+    dl.site.url = `${d.site.url}/${l}`;
+    dl.site._hreflang = d.site._hreflang;
+    for (const p of buildPages(dl)) {
+      if (p.raw) continue; // 404 остаётся один, русский
+      const file = join(DIST, l, outPath(p.url));
+      mkdirSync(dirname(file), { recursive: true });
+      let html = rebase(String(p.html), `${base}/${l}`);
+      // ассеты и служебные файлы общие — префикс языка с них снимается
+      html = html
+        .replace(new RegExp(`"/${l}/(assets/|favicon|icon-|apple-touch-icon|site\.webmanifest|sitemap\.xml)`, 'g'), '"/$1')
+        .replace(new RegExp(`url\('/${l}/assets/`, 'g'), "url('/assets/")
+        .replace(new RegExp(`${d.site.url}/${l}/assets/`, 'g'), `${d.site.url}/assets/`);
+      writeFileSync(file, html, 'utf8');
+    }
+  }
+
+  // Заглушки со старых URL: плоские v1 и каталожные v3
+  for (const [from, to] of Object.entries(LEGACY_FLAT)) {
     writeFileSync(join(DIST, from), redirectStub(d.site, to), 'utf8');
+  }
+  for (const [from, to] of Object.entries(LEGACY_DIRS)) {
+    const file = join(DIST, outPath(from));
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, redirectStub(d.site, to), 'utf8');
   }
 
   // Статика. static/ уходит в корень, raw/ — исходники, не копируем.
@@ -392,8 +466,8 @@ function build() {
   writeFileSync(join(DIST, '.nojekyll'), '', 'utf8');
 
   const ms = Date.now() - t0;
-  console.log(`\n  STEPPE STEEL — сборка завершена за ${ms} мс`);
-  console.log(`  Страниц: ${pages.length} (+${Object.keys(LEGACY).length} редиректов)   →   ${resolve(DIST)}\n`);
+  console.log(`\n  Steppe Steel — сборка завершена за ${ms} мс`);
+  console.log(`  Страниц: ${pages.length} (+${Object.keys(LEGACY_FLAT).length + Object.keys(LEGACY_DIRS).length} редиректов)   →   ${resolve(DIST)}\n`);
 
   if (warnings.length) {
     console.log(`  Предупреждения (${warnings.length}):`);

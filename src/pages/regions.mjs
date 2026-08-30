@@ -1,19 +1,17 @@
 /**
  * Регио-страницы севера Казахстана: /kostanay/, /petropavlovsk/, /kokshetau/.
- *
- * Приём подсмотрен у конкурента (регио-лендинги), но содержание другое:
- * у него в регионе представительство, у нас — сам завод. Поэтому вся страница
- * строится вокруг локальных фактов, а не вокруг подстановки названия города.
+ * Страница строится вокруг локальных фактов, а не подстановки названия города.
  */
 
 import { layout } from '../lib/layout.mjs';
 import { html, raw, e } from '../lib/util.mjs';
-import { pageHero, ctaBand, sectionHead, stat, productCard } from '../lib/components.mjs';
+import { pageHero, ctaBand, sectionHead, stat, solutionRow } from '../lib/components.mjs';
 
 export function renderRegion(d, r) {
-  const { site, products, regions } = d;
+  const { site, solutions, regions } = d;
   const url = `/${r.slug}/`;
   const crumbs = [{ title: 'Главная', url: '/' }, { title: r.city, url }];
+  const featured = solutions.items.slice(0, 6);
 
   const content = html`
     ${raw(pageHero({
@@ -23,67 +21,62 @@ export function renderRegion(d, r) {
       text: r.lead,
     }))}
 
-    <!-- ЛИСТ 01 · Локальные цифры -->
-    <section class="section section--sheet section--tight">
+    <section class="section section--flush-top">
       <div class="container">
-        <div class="grid grid--4">
+        <div class="hero__stats hero__stats--flat">
           ${r.facts.map((f) => stat({ val: f.val, key: f.key }))}
         </div>
       </div>
     </section>
 
-    <!-- ЛИСТ 02 · Почему это важно здесь -->
-    <section class="section">
+    <section class="section section--tint">
       <div class="container">
         ${raw(sectionHead({
-          sheet: '02', label: 'Ситуация в регионе',
+          label: 'Ситуация в регионе',
           title: r.localTitle,
           text: r.localText,
-          action: { title: 'Посчитать окупаемость склада', url: '/#okupaemost' },
+          action: { title: 'Посчитать окупаемость склада', url: '/agrariyam/#okupaemost' },
         }))}
       </div>
     </section>
 
-    <!-- ЛИСТ 03 · Каталог -->
-    <section class="section section--sheet">
+    <section class="section">
       <div class="container">
         ${raw(sectionHead({
-          sheet: '03', label: `Что строим в регионе — ${r.city}`,
+          label: `Что строим в регионе — ${r.city}`,
           title: regions.commonTitle,
           text: regions.commonText,
-          action: { title: 'Весь каталог', url: '/katalog/' },
+          action: { title: 'Все решения', url: '/resheniya/' },
         }))}
-        <div class="grid grid--3">
-          ${products.items.map((p) => productCard(p))}
+        <div class="sol-list">
+          ${featured.map((p) => solutionRow(p))}
         </div>
       </div>
     </section>
 
-    <!-- ЛИСТ 04 · Логистика -->
-    <section class="section noise">
+    <section class="section section--tint">
       <div class="container">
         ${raw(sectionHead({
-          sheet: '04', label: 'Логистика',
+          label: 'Логистика',
           title: r.logisticsTitle,
           text: r.logisticsText,
-          action: { title: 'Как устроен процесс', url: '/process/' },
+          action: { title: 'Как устроен процесс', url: '/proizvodstvo/#process' },
         }))}
       </div>
     </section>
 
-    <!-- ЛИСТ 05 · Завод в регионе -->
-    <section class="section section--sheet">
+    <section class="section">
       <div class="container">
         ${raw(sectionHead({
-          sheet: '05', label: 'Отличие',
+          label: 'Отличие',
           title: regions.whyTitle,
           split: false,
         }))}
-        <div class="grid grid--4">
+        <div class="grid-4">
           ${regions.why.map((w) => html`
-            <div class="scope" data-reveal>
-              <h3 class="scope__title">${w.title}</h3>
-              <p class="scope__text">${w.text}</p>
+            <div class="pick-card" data-reveal>
+              <h3 class="pick-card__title">${w.title}</h3>
+              <p class="pick-card__text">${w.text}</p>
             </div>
           `)}
         </div>
@@ -101,13 +94,12 @@ export function renderRegion(d, r) {
     url,
     title: r.seoTitle,
     description: r.seoDescription,
-    image: 'grain-ext',
     crumbs,
     schema: [{
       '@type': 'Service',
       '@id': `${site.url}${url}#service`,
       name: `Металлоконструкции и зернохранилища — ${r.city}`,
-      serviceType: 'Изготовление и монтаж металлоконструкций',
+      serviceType: 'Изготовление и поставка металлоконструкций',
       provider: { '@id': `${site.url}/#organization` },
       areaServed: {
         '@type': 'AdministrativeArea',

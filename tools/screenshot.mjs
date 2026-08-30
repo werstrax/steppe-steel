@@ -38,7 +38,7 @@ const suffix = mobile ? '-mobile' : '';
 const pageArgs = process.argv.slice(2).filter((a) => a.startsWith('/'));
 const pages = pageArgs.length
   ? pageArgs
-  : ['/', '/katalog/', '/katalog/zernohranilishcha/', '/katalog/angary-sklady/', '/profili/', '/uslugi/', '/uslugi/proizvodstvo/', '/o-zavode/', '/blog/', '/blog/zerno-raschet/', '/zayavka/', '/kontakty/', '/faq/', '/process/'];
+  : ['/', '/resheniya/', '/resheniya/zernohranilishcha/', '/resheniya/sklady/', '/resheniya/angary/', '/agrariyam/', '/stroitelnym-kompaniyam/', '/proektirovshchikam/', '/partneram/', '/obekty/', '/proizvodstvo/', '/tekhnologii/', '/tekhnologii/lstk/', '/profili/', '/dokumentaciya/', '/o-zavode/', '/blog/', '/blog/zerno-raschet/', '/raschet/', '/kontakty/', '/faq/', '/kostanay/'];
 
 /* --- CDP-клиент ---------------------------------------------------------- */
 

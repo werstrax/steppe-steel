@@ -27,17 +27,17 @@ export function organizationNode(site, opts = {}) {
     '@type': ['Organization', 'LocalBusiness'],
     '@id': id.org,
     name: site.brand.name,
-    alternateName: [site.brand.nameLatin, 'Степпе Стил', 'ЛСТК завод Steppe Steel', c.instagramHandle],
+    alternateName: ['Steppe Steel', 'STEPPE STEEL', 'STEPSTEEL', 'Степп-стил', c.instagramHandle],
     url: `${site.url}/`,
     description: opts.description ||
-      'Завод лёгких стальных тонкостенных конструкций (ЛСТК) и металлоконструкций полного цикла: проектирование, производство, комплектация, отгрузка. Зернохранилища, ангары, склады, цеха. Костанайская область, Казахстан.',
+      'Завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары, производственные здания. Костанайская область, Казахстан.',
     slogan: site.brand.slogan,
     logo: {
       '@type': 'ImageObject',
       '@id': `${site.url}/#logo`,
-      url: `${site.url}/assets/img/ui/logo-band.jpg`,
-      contentUrl: `${site.url}/assets/img/ui/logo-band.jpg`,
-      caption: 'Steppe Steel — Metal Structures · Industrial Systems',
+      url: `${site.url}/icon-512.png`,
+      contentUrl: `${site.url}/icon-512.png`,
+      caption: 'Steppe Steel — завод строительных металлоконструкций',
     },
     image: imageUrl('og-default', site.url),
     telephone: c.phoneRaw,
@@ -157,7 +157,7 @@ export function organizationRefNode(site) {
     '@id': id.org,
     name: site.brand.name,
     url: `${site.url}/`,
-    logo: `${site.url}/assets/img/ui/logo-band.jpg`,
+    logo: `${site.url}/icon-512.png`,
     telephone: c.phoneRaw,
     email: c.email,
   };
@@ -188,14 +188,14 @@ export function productNode(site, p) {
     category: 'Металлоконструкции / ЛСТК',
     provider: { '@id': id.org },
     areaServed: [{ '@type': 'Country', name: 'Казахстан' }],
-    image: imageUrl(p.cover, site.url),
+    ...(p.cover ? { image: imageUrl(p.cover, site.url) } : {}),
     ...(p.keywords?.length ? { keywords: p.keywords.join(', ') } : {}),
-    ...(p.specsSchema?.length
+    ...(p.specs?.length
       ? {
           hasOfferCatalog: {
             '@type': 'OfferCatalog',
             name: `Характеристики: ${p.title}`,
-            itemListElement: p.specsSchema.map((s) => ({
+            itemListElement: p.specs.map((s) => ({
               '@type': 'Offer',
               itemOffered: { '@type': 'Service', name: `${s.key}: ${s.val}` },
             })),

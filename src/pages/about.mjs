@@ -1,146 +1,93 @@
 /**
- * О заводе + процесс работы.
+ * /o-zavode/ (ТЗ §14): коротко и фактами — предприятие, площадка,
+ * направления, проектный отдел, качество, география.
  */
 
 import { layout } from '../lib/layout.mjs';
-import { html, raw, e, picture } from '../lib/util.mjs';
-import {
-  pageHero, sectionHead, ctaBand, stat, step, vizTag, iconWhatsApp,
-} from '../lib/components.mjs';
-import { organizationNode, howToNode } from '../lib/schema.mjs';
+import { html, raw } from '../lib/util.mjs';
+import { pageHero, sectionHead, ctaBand, stat, iconArrow } from '../lib/components.mjs';
+import { organizationNode } from '../lib/schema.mjs';
 
 export function renderAbout(d) {
-  const { site, products } = d;
-  const c = site.contacts;
-  const waEng = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappEngineer)}`;
+  const { site, solutions } = d;
   const crumbs = [{ title: 'Главная', url: '/' }, { title: 'О заводе', url: '/o-zavode/' }];
 
   const content = html`
     ${raw(pageHero({
-      label: 'О заводе · Industrial Standard',
-      titleHtml: 'Steppe Steel — современный завод метал&shy;локонструкций',
+      label: 'О заводе',
+      titleHtml: 'Steppe Steel — завод строительных метал&shy;локонструкций',
       crumbList: crumbs,
-      text: raw('Полный цикл в одних руках: проектирование → производство → комплектация → отгрузка. Работаем с ЛСТК и чёрным металлом, комбинируем технологии под объекты любой сложности. Завод расположен в с.&nbsp;Троебратское, Костанайская область.'),
+      text: raw('Проектирование, производство ЛСТК и ЛМК, комплектная поставка — на одной площадке в с.&nbsp;Троебратское Костанайской области. Работаем по всему Казахстану.'),
     }))}
 
-    <section class="section--tight">
-      <div class="container">
-        <figure data-reveal style="margin:0">
-          <div class="media media--16x9 drift">
-            ${raw(picture('steppe-frame', { alt: 'Визуализация: оцинкованный каркас промышленного корпуса в степи', sizes: '100vw', priority: true }))}
-            ${vizTag()}
-          </div>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section">
+    <section class="section section--flush-top">
       <div class="container">
         ${raw(sectionHead({
-          label: 'Завод в цифрах',
+          label: 'Факты',
           title: 'Что стоит за словом «завод»',
-          text: 'Не сборочная площадка и не перепродажа профиля — производство с собственным проектированием, участками резки и сварки, комплектацией и транспортом.',
+          text: 'Не сборочная площадка и не перепродажа профиля — производство с собственным проектным отделом, участками резки и сварки и комплектацией.',
         }))}
-        <div class="grid grid--3">
+        <div class="grid-3">
           ${[
-            ['Полный цикл', 'Эскиз, расчёт, раздел КМ, производство, комплектация и отгрузка — на одном заводе, без посредников и потери ответственности между подрядчиками.'],
-            ['ЛСТК + чёрный металл', 'Комбинируем лёгкие стальные тонкостенные и чёрные металлоконструкции — берём объекты любой сложности, а не только «типовые ангары».'],
-            ['до 3,5 мм', 'Толщина профилей ПСУ и ПС подбирается под расчётную нагрузку — под III снеговой район севера Казахстана, ~180 кгс/м².'],
-            ['пролёт 24 м', 'Свободные пролёты без промежуточных колонн — чистая рабочая площадь для техники, стеллажей и производственных линий.'],
-            ['50+ лет', 'Оцинкованный профиль не требует покраски и антикоррозийного обслуживания — каркас переживает не одно поколение кровли.'],
-            ['крупные проекты', 'Мощности позволяют вести несколько объектов параллельно и держать сроки — от одиночного склада до серии зданий.'],
+            ['Полный цикл', 'Эскиз, расчёт, раздел КМ, производство, комплектация и отгрузка — на одном заводе, без потери ответственности между подрядчиками.'],
+            ['ЛСТК + ЛМК', 'Комбинируем лёгкие стальные тонкостенные и чёрные металлоконструкции — объекты любой сложности, а не только «типовые ангары».'],
+            ['до 3,5 мм', 'Толщина профилей ПСУ и ПС подбирается под расчётную нагрузку — III снеговой район севера Казахстана, ~180 кгс/м².'],
+            ['пролёт 24 м', 'Свободные пролёты без промежуточных колонн — чистая площадь для техники, стеллажей и производственных линий.'],
+            ['50+ лет', 'Оцинкованный профиль не требует покраски и антикоррозийного обслуживания весь срок службы каркаса.'],
+            ['43 позиции', 'Сортамент профилей сертифицирован: сертификат соответствия РК № KZ.3510317.01.01.67913.'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>
     </section>
 
-    <section class="section section--sheet">
-      <div class="container">
-        ${raw(sectionHead({
-          label: 'Производство',
-          title: 'Производственные участки',
-          text: 'Каждая деталь проходит цепочку: раскрой → обработка → сборка узла → контроль. Всё оборудование работает по программам из раздела КМ — без ручной разметки «на глаз».',
-          action: { title: 'Услуга «Производство»', url: '/uslugi/proizvodstvo/' },
-        }))}
-        <ol class="num-list" data-reveal>
-          <li>Плазменная резка — раскрой листа и фасонных деталей по картам раскроя, минимальный отход металла.</li>
-          <li>Лазерная резка — точные детали узлов и отверстия под болтовые соединения: элементы сходятся на монтаже без подгонки.</li>
-          <li>Резьбонарезные станки — резьбовые элементы и крепёж для 100 % болтовой сборки каркасов.</li>
-          <li>Сварочные участки — фермы, колонны, опорные узлы из чёрного металла; сварка в кондукторах с контролем геометрии.</li>
-        </ol>
-        <div class="gallery gallery--flat" style="margin-top:2.5rem">
-          ${[
-            ['weld-brand', 'Сварочный участок', 'Сварка узла стальной фермы — визуализация'],
-            ['cut-brand', 'Участок резки', 'Резка оцинкованного профиля — визуализация'],
-          ].map(([img, cap, alt]) => html`
-            <figure class="gallery__item" data-reveal data-lightbox style="margin:0">
-              <div class="media media--3x2">
-                ${raw(picture(img, { alt, sizes: '(min-width: 960px) 50vw, 100vw' }))}
-                ${vizTag()}
-              </div>
-              <figcaption class="media-caption">${cap}</figcaption>
-            </figure>
-          `)}
+    <section class="section section--tint">
+      <div class="container split split--even">
+        <div class="stack" data-reveal>
+          <p class="eyebrow mono">Проектный отдел</p>
+          <h2 class="section-head__title">Инженерия — своя</h2>
+          <p>Конструкторский отдел завода считает несущие схемы в лицензионном
+          ЛИРА-САПР (пространственная КЭ-модель, РСН, проверка сечений), выпускает
+          разделы КМ и деталировку КМД в Tekla Structures по нормам СП РК EN и
+          сопровождает экспертизу.</p>
+          <p><a class="arrow-link" href="/tekhnologii/proektirovanie/">Как устроено проектирование ${iconArrow}</a></p>
         </div>
-        <p class="sheet-note" style="margin-top:1.5rem">Фотографии участков иллюстративные. Реальные съёмки производства, отгрузок и монтажа — в Instagram <a class="link" href="${c.instagram}" target="_blank" rel="noopener">${c.instagramHandle}</a>.</p>
-      </div>
-    </section>
-
-    <section class="duo duo--flip" aria-labelledby="duo-qc">
-      <div class="duo__figure duo__figure--wide">
-        ${raw(picture('worker-inspect', {
-          alt: 'Рабочий рассматривает оцинкованный профиль ПСУ: видны ребро жёсткости и отверстия — визуализация',
-          sizes: '(min-width: 900px) 55vw, 100vw',
-          className: 'duo__img',
-        }))}
-        <span class="duo__stamp mono" aria-hidden="true">Кадр-визуализация</span>
-      </div>
-      <div class="duo__panel" data-reveal>
-        <p class="duo__kicker mono">Контроль качества</p>
-        <h2 class="duo__title" id="duo-qc">Геометрию проверяем до отгрузки, а не на площадке</h2>
-        <ul class="duo__list">
-          <li>Сверяем сечения и размеры с разделом КМ</li>
-          <li>Проверяем соосность отверстий под болт</li>
-          <li>Принимаем отправочные марки перед комплектацией</li>
-        </ul>
-        <a class="btn btn--dark btn--lg" href="/profili/">Сортамент профилей</a>
+        <div class="stack" data-reveal>
+          <p class="eyebrow mono">Производственная база</p>
+          <h2 class="section-head__title">Свои переделы</h2>
+          <p>Линия профилирования ПСУ и ПС до 3,5 мм, плазменная и лазерная резка,
+          резьбонарезные станки, сварочные участки для ферм и колонн из чёрного
+          металла. Контроль встроен в каждый передел, а не вынесен «на финальную
+          приёмку».</p>
+          <p><a class="arrow-link" href="/proizvodstvo/">Смотреть производство ${iconArrow}</a></p>
+        </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
         ${raw(sectionHead({
-          label: 'Контроль качества',
-          title: 'Контроль встроен в каждый передел',
-          text: 'Ошибка в цехе стоит дней простоя на монтаже. Поэтому контроль встроен в каждый передел, а не вынесен «на финальную приёмку».',
+          label: 'Направления',
+          title: 'Что производит завод',
+          action: { title: 'Все решения', url: '/resheniya/' },
         }))}
-        <div class="grid grid--2">
-          ${[
-            ['КК.01', 'Контроль на каждом этапе — от входной проверки металла до приёмки готовых отправочных марок перед комплектацией.'],
-            ['КК.02', 'Соответствие разделу КМ — размеры, сечения и маркировка элементов сверяются с проектной документацией.'],
-            ['КК.03', 'Визуальный и измерительный контроль — сварные швы, геометрия ферм и колонн, соосность отверстий под болты.'],
-            ['КК.04', 'Гарантия точности — конструкции собираются на болтах без подгонки и «болгарки» на площадке: каждый узел встаёт на своё место.'],
-          ].map(([v, k]) => stat({ val: v, key: k }))}
-        </div>
+        <ul class="link-list link-list--cols" data-reveal>
+          ${solutions.items.map((s) => html`<li><a class="arrow-link" href="${s.url}">${s.short || s.title} ${iconArrow}</a></li>`)}
+        </ul>
       </div>
     </section>
 
-    <section class="section section--sheet">
+    <section class="section section--tint">
       <div class="container">
         ${raw(sectionHead({
-          label: 'Логистика',
+          label: 'География',
           title: 'Точка на карте выбрана не случайно',
-          text: 'Завод стоит в с. Троебратское на трассе Костанай — Петропавловск, рядом — железнодорожная станция Пресногорьковская. Машина с комплектом каркаса уходит с площадки сразу на магистраль — без перегрузок и «плеча» до терминала.',
-          action: { title: 'Комплектация и доставка', url: '/uslugi/komplektaciya-dostavka/' },
+          text: 'Завод стоит на трассе Костанай — Петропавловск, рядом — железнодорожная станция Пресногорьковская. Комплект каркаса уходит с площадки сразу на магистраль.',
         }))}
-        <div class="grid grid--3">
+        <div class="grid-3">
           ${[
             ['трасса', 'Костанай — Петропавловск: прямой выход на магистраль в обе стороны — на север и юг Казахстана.'],
-            ['ж/д', 'Станция Пресногорьковская рядом с производством — запасное плечо для тяжёлых и дальних поставок.'],
+            ['ж/д', 'Станция Пресногорьковская рядом с производством — плечо для тяжёлых и дальних поставок.'],
             ['зерновой пояс', 'Костанайская, Северо-Казахстанская и Акмолинская области — главные зерновые регионы страны — рядом.'],
-            ['города', 'Костанай, Рудный, Лисаковск, Петропавловск, Кокшетау, Атбасар, Астана — в зоне уверенной автодоставки.'],
-            ['логистика', 'Сроки отгрузки фиксируем в договоре вместе со сроком изготовления.'],
-            ['по РК', 'Доставка по всему Казахстану — география поставок под проект заказчика.'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>
@@ -148,64 +95,16 @@ export function renderAbout(d) {
 
     ${raw(ctaBand(site, {
       title: 'Обсудим ваш проект',
-      text: 'Пришлите параметры здания — назначение, размеры, место строительства. Инженер посчитает каркас, подготовит раздел КМ и коммерческое предложение в течение 24 часов.',
+      text: 'Пришлите назначение, размеры и место строительства — инженер посчитает каркас и подготовит коммерческое предложение.',
     }))}
   `;
 
   return layout(site, {
     url: '/o-zavode/',
-    title: 'О заводе Steppe Steel — металлоконструкции полного цикла',
-    description: 'Steppe Steel — завод металлоконструкций полного цикла в Костанайской области: ЛСТК и чёрный металл, проектирование, производство, доставка по Казахстану.',
-    image: 'steppe-frame',
+    title: 'О заводе Steppe Steel — металлоконструкции, Казахстан',
+    description: 'Steppe Steel — завод строительных металлоконструкций в Костанайской области: собственное проектирование, производство ЛСТК и ЛМК, комплектная поставка по Казахстану.',
     pageType: 'AboutPage',
     crumbs,
-    schema: [organizationNode(site, { products: products.items })],
-  }, content);
-}
-
-export function renderProcess(d) {
-  const { site, process } = d;
-  const crumbs = [{ title: 'Главная', url: '/' }, { title: 'Процесс', url: '/process/' }];
-
-  const content = html`
-    ${raw(pageHero({
-      label: process.kicker,
-      titleHtml: 'Шесть шагов — один договор',
-      crumbList: crumbs,
-      text: raw(e(process.intro)),
-    }))}
-
-    <section class="section--tight section">
-      <div class="container">
-        <div>
-          ${process.steps.map((s, i) => step(s, i))}
-        </div>
-        ${process.note ? html`<p class="sheet-note" style="margin-top:1.75rem">${process.note}</p>` : ''}
-      </div>
-    </section>
-
-    <section class="section section--sheet">
-      <div class="container">
-        ${raw(sectionHead({
-          label: 'После заявки',
-          title: 'Что будет дальше',
-          text: 'Отвечает инженер, а не колл-центр.',
-        }))}
-        <div class="grid grid--3">
-          ${process.after.items.map((x, i) => stat({ val: `0${i + 1}`, key: x }))}
-        </div>
-      </div>
-    </section>
-
-    ${raw(ctaBand(site))}
-  `;
-
-  return layout(site, {
-    url: '/process/',
-    title: process.seoTitle,
-    description: process.seoDescription,
-    image: 'montage-drone',
-    crumbs,
-    schema: [howToNode(site, '/process/', process.steps, 'Как заказать здание на заводе Steppe Steel')],
+    schema: [organizationNode(site, { products: solutions.items })],
   }, content);
 }

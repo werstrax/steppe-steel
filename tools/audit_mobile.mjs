@@ -18,10 +18,13 @@ const CHROME = [
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
 ].find(existsSync);
 
-const PAGES = ['/', '/katalog/', '/katalog/zernohranilishcha/', '/katalog/angary-sklady/', '/katalog/tseha-zavody/',
-  '/profili/', '/uslugi/', '/uslugi/proektirovanie/', '/uslugi/proizvodstvo/', '/uslugi/komplektaciya-dostavka/',
-  '/process/', '/o-zavode/', '/blog/', '/blog/zerno-raschet/', '/blog/km-kmd/', '/blog/fundament/', '/blog/lstk-lmk/',
-  '/faq/', '/kontakty/', '/zayavka/', '/privacy/'];
+const PAGES = ['/', '/resheniya/', '/resheniya/zernohranilishcha/', '/resheniya/sklady/',
+  '/resheniya/proizvodstvennye-zdaniya/', '/resheniya/angary/', '/resheniya/ovoshchehranilishcha/',
+  '/resheniya/zdaniya-dlya-tekhniki/', '/resheniya/sto-avtoparki/', '/resheniya/sportivnye-obekty/',
+  '/resheniya/modulnye-zdaniya/', '/agrariyam/', '/stroitelnym-kompaniyam/', '/proektirovshchikam/',
+  '/partneram/', '/obekty/', '/proizvodstvo/', '/tekhnologii/', '/tekhnologii/lstk/', '/tekhnologii/proektirovanie/',
+  '/profili/', '/dokumentaciya/', '/kostanay/', '/o-zavode/', '/blog/', '/blog/zerno-raschet/',
+  '/faq/', '/kontakty/', '/raschet/', '/privacy/'];
 const WIDTHS = [375, 360, 320];
 
 let msgId = 0;
@@ -50,6 +53,7 @@ const AUDIT = `(() => {
   for (const el of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(el);
     if (cs.display === 'none' || fixedOk(el)) continue;
+    if (el.classList && el.classList.contains('u-visually-hidden')) continue;
     const r = el.getBoundingClientRect();
     if (r.width === 0) continue;
     // коробка вылезает за вьюпорт и не внутри overflow-х прокрутки

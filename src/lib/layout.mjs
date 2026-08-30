@@ -1,22 +1,25 @@
 /**
  * Оболочка страницы: <head>, шапка, подвал, микроразметка, счётчики.
+ * v4 «Белый завод»: светлая тема, двухъярусная шапка, мобильная панель действий.
  */
 
 import { html, raw, e, jsonld, imageUrl } from './util.mjs';
-import { header, footer, fab } from './components.mjs';
+import { header, footer, mobileBar } from './components.mjs';
 import { webPageNode, breadcrumbNode, organizationRefNode, websiteRefNode, ids } from './schema.mjs';
 
 /* Сквозной маршрут: с каждой узловой страницы есть очевидный следующий шаг. */
 const NEXT = {
-  '/': { title: 'Каталог продукции', url: '/katalog/' },
-  '/katalog/': { title: 'Профили ПСУ и ПС', url: '/profili/' },
-  '/profili/': { title: 'Услуги завода', url: '/uslugi/' },
-  '/uslugi/': { title: 'Процесс работы', url: '/process/' },
-  '/process/': { title: 'О заводе', url: '/o-zavode/' },
-  '/o-zavode/': { title: 'Журнал', url: '/blog/' },
+  '/': { title: 'Решения', url: '/resheniya/' },
+  '/resheniya/': { title: 'Производство', url: '/proizvodstvo/' },
+  '/proizvodstvo/': { title: 'Технологии', url: '/tekhnologii/' },
+  '/tekhnologii/': { title: 'Реализованные объекты', url: '/obekty/' },
+  '/obekty/': { title: 'О заводе', url: '/o-zavode/' },
+  '/o-zavode/': { title: 'Документация', url: '/dokumentaciya/' },
+  '/dokumentaciya/': { title: 'Контакты', url: '/kontakty/' },
+  '/agrariyam/': { title: 'Зернохранилища', url: '/resheniya/zernohranilishcha/' },
   '/blog/': { title: 'Вопросы и ответы', url: '/faq/' },
-  '/faq/': { title: 'Получить расчёт', url: '/zayavka/' },
-  '/kontakty/': { title: 'Получить расчёт', url: '/zayavka/' },
+  '/faq/': { title: 'Получить расчёт', url: '/raschet/' },
+  '/kontakty/': { title: 'Получить расчёт', url: '/raschet/' },
 };
 
 function nextBand(next) {
@@ -24,7 +27,7 @@ function nextBand(next) {
 <a class="next-page" href="${next.url}" aria-label="Следующий раздел: ${e(next.title)}">
   <div class="container">
     <div class="next-page__inner">
-      <span class="next-page__label">Дальше</span>
+      <span class="next-page__label mono">Дальше</span>
       <span class="next-page__title">${e(next.title)}</span>
       <span class="next-page__arrow" aria-hidden="true">&#8594;</span>
     </div>
@@ -35,7 +38,7 @@ function nextBand(next) {
 /**
  * @param {object} site   данные из site.json
  * @param {object} page   url, title, description, image, crumbs, schema,
- *                        pageType, noindex, overHero, bodyClass, next
+ *                        pageType, noindex, bodyClass, next
  * @param {string} content  разметка внутри <main>
  */
 export function layout(site, page, content) {
@@ -62,13 +65,14 @@ export function layout(site, page, content) {
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.classList.add('js');var __steppeT=setTimeout(function(){document.documentElement.classList.remove('js')},3000);window.__steppeJsReady=function(){clearTimeout(__steppeT)};try{if(!sessionStorage.getItem('steppe-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro')}catch(e){}</script>
+<script>document.documentElement.classList.add('js');var __ssT=setTimeout(function(){document.documentElement.classList.remove('js')},3000);window.__ssJsReady=function(){clearTimeout(__ssT)};</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${e(page.title)}</title>
 <meta name="description" content="${e(page.description)}">
 <link rel="canonical" href="${e(url)}">
+${site._hreflang ? Object.entries(site._hreflang).map(([l, b]) => `<link rel="alternate" hreflang="${l}" href="${e(b + page.url)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${e(site._hreflang.ru + page.url)}">` : ''}
 ${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'}
-<meta name="theme-color" content="#0b0c0e">
+<meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
 
 <meta property="og:type" content="${page.ogType || 'website'}">
@@ -90,7 +94,7 @@ ${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name=
 <meta name="geo.placename" content="${e(site.contacts.address.settlement)}">
 
 ${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImage)}" fetchpriority="high">` : ''}
-<link rel="preload" href="/assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/golos-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -99,27 +103,18 @@ ${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImag
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
 <script type="application/ld+json">${jsonld({ '@context': 'https://schema.org', '@graph': graph })}</script>
-<noscript><style>.menu[hidden]{display:flex}.menu{position:static;opacity:1;visibility:visible;padding-top:1.5rem}.burger{display:none}</style></noscript>
+<noscript><style>.menu[hidden]{display:flex}.menu{position:static;opacity:1;visibility:visible;padding-top:1.5rem}.burger{display:none}.nav__sub{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none}</style></noscript>
 ${metrika ? metrikaSnippet(metrika) : ''}${ga ? gaSnippet(ga) : ''}
 </head>
 <body class="${e(page.bodyClass || '')}">
-<div class="loader" data-loader aria-hidden="true">
-  <div class="loader__panel loader__panel--top"></div>
-  <div class="loader__panel loader__panel--bottom"></div>
-  <div class="loader__center">
-    <span class="loader__brand">STEPPE STEEL</span>
-    <span class="loader__line"></span>
-    <span class="loader__sub">industrial standard</span>
-  </div>
-</div>
 <a class="skip-link" href="#main">Перейти к содержимому</a>
-${header(site, { current: page.url, overHero: page.overHero })}
+${header(site, { current: page.url })}
 <main id="main">
 ${content}
 </main>
 ${page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand(NEXT[page.url]) : ''}
 ${footer(site)}
-${fab(site)}
+${mobileBar(site)}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
 </body>
 </html>

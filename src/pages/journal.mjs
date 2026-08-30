@@ -19,7 +19,7 @@ export function renderJournalIndex(d) {
   const content = html`
     ${raw(pageHero({
       label: journal.kicker,
-      titleHtml: 'Журнал Steppe&nbsp;Steel',
+      titleHtml: 'Журнал Steppe Steel',
       crumbList: crumbsBase,
       count: String(journal.items.length).padStart(2, '0'),
       text: raw(e(journal.intro)),
@@ -41,7 +41,7 @@ export function renderJournalIndex(d) {
           text: 'Темы статей рождаются из вопросов заказчиков. Напишите, что вы считаете и строите, — инженер завода ответит по делу и подготовит предварительный расчёт за 24 часа.',
         }))}
         <div class="btn-row" data-reveal>
-          <a class="btn btn--primary" href="/zayavka/">Рассчитать стоимость</a>
+          <a class="btn btn--primary" href="/raschet/">Рассчитать стоимость</a>
           <a class="btn btn--ghost" href="${waEng}" target="_blank" rel="noopener">Задать вопрос в WhatsApp</a>
         </div>
       </div>
@@ -113,7 +113,7 @@ function articleSection(s) {
 }
 
 export function renderArticle(d, a) {
-  const { site, journal, products, services } = d;
+  const { site, journal, solutions } = d;
   const c = site.contacts;
   const waEng = `${c.whatsapp}?text=${encodeURIComponent(c.whatsappEngineer)}`;
   const crumbs = [...crumbsBase, { title: a.title, url: a.url }];
@@ -121,8 +121,9 @@ export function renderArticle(d, a) {
   const idx = journal.items.findIndex((x) => x.slug === a.slug);
   const next = journal.items[(idx + 1) % journal.items.length];
 
+  const SLUG_MAP = { 'angary-sklady': 'angary', 'tseha-zavody': 'proizvodstvennye-zdaniya' };
   const relatedProducts = (a.products || [])
-    .map((slug) => products.items.find((x) => x.slug === slug))
+    .map((slug) => solutions.items.find((x) => x.slug === (SLUG_MAP[slug] || slug)))
     .filter(Boolean);
 
   const content = html`
@@ -158,12 +159,12 @@ export function renderArticle(d, a) {
           ${raw(sectionHead({
             label: 'Вам может пригодиться',
             title: 'Продукция по теме статьи',
-            action: { title: 'Весь каталог', url: '/katalog/' },
+            action: { title: 'Все решения', url: '/resheniya/' },
           }))}
           <div class="grid grid--2">
             ${relatedProducts.map((p) => html`
               <a class="pager__link" href="${p.url}" data-reveal>
-                <span class="mono text-muted">${p.code} · Каталог</span>
+                <span class="mono text-muted">Решение</span>
                 <span class="pager__title">${p.title}</span>
                 <span class="text-muted text-small">${p.summary}</span>
               </a>
