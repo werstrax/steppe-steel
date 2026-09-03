@@ -93,7 +93,7 @@ function loadData(lang) {
   // Превью-сборка (SITE_URL, BASE_PATH, PREVIEW=1): для показа заказчику на
   // github.io — свой адрес, префикс подпапки, noindex и без CNAME.
   if (process.env.SITE_URL) site.url = process.env.SITE_URL;
-  if (process.env.BASE_PATH !== undefined) site.basePath = process.env.BASE_PATH;
+  if (process.env.BASE_PATH !== undefined) site.basePath = normalizeBase(process.env.BASE_PATH);
   site._preview = process.env.PREVIEW === '1';
 
   // Для футера и перелинковки
@@ -102,6 +102,19 @@ function loadData(lang) {
   site.presentation = d.documents.categories.find((c) => c.id === 'prezentacii')?.items[0]?.file || '';
 
   return d;
+}
+
+/**
+ * Приводит BASE_PATH к виду «/подпапка».
+ * Git Bash на Windows подменяет значение вида «/preview» на путь установки
+ * (C:/Program Files/Git/preview) — берём только последний сегмент, поэтому
+ * работает и «preview», и «/preview», и подменённый вариант.
+ */
+function normalizeBase(value) {
+  const raw = String(value).trim().replace(/\\/g, '/').replace(/\/+$/, '');
+  if (!raw) return '';
+  const name = raw.split('/').filter(Boolean).pop();
+  return name ? `/${name}` : '';
 }
 
 function assetHash(paths) {
