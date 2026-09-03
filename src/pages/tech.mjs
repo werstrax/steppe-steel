@@ -4,7 +4,8 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, specs, ctaBand, iconArrow, heroFrame } from '../lib/components.mjs';
+import { pageHero, sectionHead, specs, ctaBand, iconArrow, heroFrame, photoSlot } from '../lib/components.mjs';
+import { hasImage, picture } from '../lib/util.mjs';
 import { serviceNode, itemListNode } from '../lib/schema.mjs';
 
 export function renderTechIndex(d) {
@@ -91,6 +92,14 @@ export function renderTech(d, t) {
               </div>
             `
           )}
+          ${(t.media || []).length
+            ? html`<div class="tech-media" data-lightbox>
+                ${t.media.map((m) => html`<figure class="tech-media__item" data-reveal>
+                  ${hasImage(m.slot) ? raw(picture(m.slot, { alt: m.caption || t.title, sizes: '(min-width: 900px) 50vw, 100vw' })) : raw(photoSlot(m.slot, { label: m.caption || 'Схема готовится', alt: m.caption || t.title }))}
+                  ${m.caption ? html`<figcaption class="media-caption">${m.caption}</figcaption>` : ''}
+                </figure>`)}
+              </div>`
+            : ''}
           ${t.slug === 'lstk'
             ? html`<p data-reveal><a class="arrow-link" href="/profili/">Сортамент профилей ПСУ и ПС ${iconArrow}</a></p>`
             : ''}

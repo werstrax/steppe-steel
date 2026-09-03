@@ -30,7 +30,15 @@ export function renderDocuments(d) {
               ${cat.items.length
                 ? html`<div class="docs">${cat.items.map((doc) => docRow(doc))}</div>`
                 : ''}
-              ${cat.note ? html`<p class="note" data-reveal>${cat.note}</p>` : ''}
+              ${cat.id === 'rekvizity' && site.brand.legalName
+                ? html`<div class="specs" data-reveal>
+                    <div class="specs__row"><span class="specs__key">Юрлицо</span><span class="specs__val">${site.brand.legalName}</span></div>
+                    <div class="specs__row"><span class="specs__key">БИН</span><span class="specs__val mono">${site.brand.bin}</span></div>
+                    <div class="specs__row"><span class="specs__key">Юридический адрес</span><span class="specs__val">${site.brand.legalAddress}</span></div>
+                    <div class="specs__row"><span class="specs__key">Производство</span><span class="specs__val">${site.contacts.address.settlement}, ${site.contacts.address.district}, ${site.contacts.address.region}</span></div>
+                  </div>
+                  <p class="note" data-reveal>Банковские реквизиты и карточку предприятия в PDF вышлем по запросу.</p>`
+                : cat.note ? html`<p class="note" data-reveal>${cat.note}</p>` : ''}
             </div>
           `
         )}

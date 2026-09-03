@@ -5,11 +5,12 @@
 
 import { layout } from '../lib/layout.mjs';
 import { html, raw } from '../lib/util.mjs';
-import { pageHero, sectionHead, ctaBand, stat, iconArrow } from '../lib/components.mjs';
+import { pageHero, sectionHead, ctaBand, stat, iconArrow, photoSlot } from '../lib/components.mjs';
+import { hasImage, picture } from '../lib/util.mjs';
 import { organizationNode } from '../lib/schema.mjs';
 
 export function renderAbout(d) {
-  const { site, solutions } = d;
+  const { site, solutions, team } = d;
   const crumbs = [{ title: 'Главная', url: '/' }, { title: 'О заводе', url: '/o-zavode/' }];
 
   const content = html`
@@ -75,6 +76,48 @@ export function renderAbout(d) {
         </ul>
       </div>
     </section>
+
+    <section class="section">
+      <div class="container">
+        ${raw(sectionHead({
+          label: 'Подход к качеству',
+          title: 'Контроль встроен в каждый передел',
+          text: 'Ошибка в цехе стоит дней простоя на монтаже — поэтому контроль не вынесен «на финальную приёмку».',
+        }))}
+        <div class="grid-4">
+          ${[
+            ['Входной контроль', 'Металл проверяется при поступлении: марка, толщина, оцинковка по сертификатам поставщика.'],
+            ['По разделу КМ', 'Размеры, сечения и маркировка элементов сверяются с проектной документацией.'],
+            ['Швы и геометрия', 'Визуальный и измерительный контроль сварных швов, ферм и колонн, соосности отверстий под болты.'],
+            ['Приёмка марок', 'Отправочные марки принимаются перед комплектацией — на площадке ничего не подгоняется.'],
+          ].map(([t, x]) => html`<div class="pick-card" data-reveal><h3 class="pick-card__title">${t}</h3><p class="pick-card__text">${x}</p></div>`)}
+        </div>
+        <div class="about-band__photos" style="margin-top:var(--space-l)">
+          ${['prod-baza', 'prod-oborudovanie', 'prod-profil', 'prod-kontrol'].map((slot) => html`
+            <div class="about-band__photo" data-reveal>
+              ${hasImage(slot)
+                ? raw(picture(slot, { alt: 'Производственная база Steppe Steel', sizes: '(min-width: 900px) 25vw, 50vw' }))
+                : raw(photoSlot(slot, { label: 'Фото производства в обработке', alt: 'Производственная база' }))}
+            </div>`)}
+        </div>
+      </div>
+    </section>
+
+    ${team?.items?.length
+      ? html`
+          <section class="section section--tint">
+            <div class="container">
+              ${raw(sectionHead({ label: 'Команда', title: team.title }))}
+              <div class="card-grid card-grid--4">
+                ${team.items.map((m) => html`<div class="card" data-reveal>
+                  ${m.photo ? html`<span class="card__media">${hasImage(m.photo) ? raw(picture(m.photo, { alt: m.name, sizes: '25vw' })) : raw(photoSlot(m.photo, { label: 'Фото в обработке', alt: m.name }))}</span>` : ''}
+                  <span class="card__body"><span class="card__title">${m.name}</span><span class="card__meta">${m.role}</span></span>
+                </div>`)}
+              </div>
+            </div>
+          </section>
+        `
+      : ''}
 
     <section class="section section--tint">
       <div class="container">

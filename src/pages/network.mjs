@@ -4,7 +4,7 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, stat, faq, ctaBand, docRow, iconArrow, iconWhatsApp } from '../lib/components.mjs';
+import { pageHero, sectionHead, stat, faq, ctaBand, docRow, iconArrow, iconWhatsApp, kzMap } from '../lib/components.mjs';
 import { faqNode, serviceNode } from '../lib/schema.mjs';
 
 export function renderNetwork(d) {
@@ -115,6 +115,17 @@ export function renderNetwork(d) {
         <div class="hero__stats hero__stats--flat">
           ${n.support.map((s) => stat(s))}
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="geografiya">
+      <div class="container">
+        ${sectionHead({
+          label: 'География',
+          title: 'Представители по Казахстану',
+          text: 'Завод — в Троебратском Костанайской области, зона самой быстрой доставки — Костанайская, Северо-Казахстанская и Акмолинская области. Территория партнёра закрепляется договором; подключённые регионы появятся на карте.',
+        })}
+        <div data-reveal>${kzMap()}</div>
       </div>
     </section>
 

@@ -1,5 +1,33 @@
 {
   "_readme": "Генерируется автоматически: python tools/optimize_images.py. Руками не править.",
+  "aud-designers": {
+    "w": 1264,
+    "h": 848,
+    "ratio": 1.4906,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1264
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwC+SB4ME0q+dv/U7QAA/NoyWP4O/jDLRzEqBMAXLj8rCcQFmGA+I0qlUS619WXqBK+BNInXazabzDTz5d/jyEsdK58rVqm3Q0EXNCvKz2J9qp12UZQA"
+  },
+  "aud-partners": {
+    "w": 1264,
+    "h": 848,
+    "ratio": 1.4906,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1264
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoUAA0APuleqE0pJSQiMAgBIB0JQBOgBDvkSvxYtMcFAAD+rOpRKrUK0dcNk1h2M9b0EORc2b+eSbUkyqgpzl2ehufSLeAro9RwGktx6huWy4I312Yn4AAA"
+  },
   "cert-p1": {
     "w": 1654,
     "h": 2339,
@@ -73,5 +101,6 @@
     ],
     "fallback": 1152,
     "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
-  }
+  },
+  "_vizNote": "Визуализации (hero-photo, sol-*, typ-*) сняты 02.09.2026 по решению Рамазана: слоты ждут реальных фото, файлы в src/assets/img/raw/viz-archive/. aud-* (блок партнёров) оставлены."
 }

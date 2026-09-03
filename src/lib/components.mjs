@@ -3,7 +3,7 @@
  * Каждая функция возвращает строку HTML (обёртку raw/html из util).
  */
 
-import { html, raw, e, cx, picture, dateRu, num, plural } from './util.mjs';
+import { html, raw, e, cx, picture, hasImage, dateRu, num, plural } from './util.mjs';
 
 /* --- Логотип ------------------------------------------------------------ */
 
@@ -93,6 +93,24 @@ export function heroFrame() {
   </svg>`);
 }
 
+/* --- Иконка-галочка для чек-листов ------------------------------------------ */
+
+export const iconCheck = raw(
+  `<svg class="check" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 9.2l2.3 2.3 4.7-4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+);
+
+/* --- Иконки показателей (тонкая линия, как чертёж в hero) -------------------- */
+
+const ICON = (body) =>
+  raw(`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`);
+
+export const statIcons = {
+  span: ICON('<path d="M4 22V12l12-6 12 6v10"/><path d="M4 22h24"/><path d="M7 26h18M7 26l2-2m-2 2l2 2m16-2l-2-2m2 2l-2 2"/>'),
+  steel: ICON('<path d="M5 9h22v5H5zM5 14v9h22v-9"/><path d="M10 14v9m6-9v9m6-9v9"/>'),
+  cert: ICON('<rect x="6" y="4" width="20" height="24" rx="1.5"/><path d="M10 10h12M10 15h12M10 20h7"/><circle cx="21" cy="22" r="3"/><path d="M19.5 24.5L18 28l3-1 3 1-1.5-3.5"/>'),
+  clock: ICON('<circle cx="16" cy="17" r="10"/><path d="M16 11v6l4 3"/><path d="M12 4h8"/>'),
+};
+
 /* --- Бейджи медиа --------------------------------------------------------- */
 
 /** Честная пометка на визуализациях — политика фактов сайта. */
@@ -103,7 +121,7 @@ export const photoTag = (label = 'Фото с объекта') =>
   raw(`<span class="viz-tag viz-tag--photo">${e(label)}</span>`);
 
 /** Слот под реальное фото: пока кадра нет в манифесте — нейтральная плашка. */
-export function photoSlot(name, { alt = '', label = 'Фото готовится', sizes = '(min-width: 900px) 50vw, 100vw', className = '' } = {}) {
+export function photoSlot(name, { alt = '', label = 'Фото в обработке', sizes = '(min-width: 900px) 50vw, 100vw', className = '' } = {}) {
   // Слот оформлен как лист чертежа: миллиметровка, уголки кадра и штамп
   // с именем файла — клиент сразу видит, какой снимок куда ляжет.
   return raw(
@@ -164,6 +182,7 @@ export function header(site, { current = '' } = {}) {
         ${raw(logo(site))}
         <nav class="nav" aria-label="Основная навигация">${raw(navItems)}</nav>
         <div class="header__actions">
+          ${site.presentation ? html`<a class="btn btn--ghost header__pres" href="${site.presentation}" target="_blank" rel="noopener">Скачать презентацию</a>` : ''}
           <a class="btn btn--primary header__cta" href="${site.cta.primary.url}">${site.cta.primary.title}</a>
           <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Меню">
             <span></span><span></span><span></span>
@@ -214,7 +233,7 @@ function mobileMenu(site, current) {
 
 /* --- Мобильная панель действий (ТЗ §18) ----------------------------------- */
 
-export const mobileBar = (site) => html`
+export const mobileBar = (site, current = '') => html`
   <div class="mbar" data-mbar>
     <a class="mbar__btn" href="${site.contacts.phoneHref}" data-goal="tel_click">
       ${iconPhone}<span>Позвонить</span>
@@ -223,13 +242,13 @@ export const mobileBar = (site) => html`
        target="_blank" rel="noopener" data-goal="wa_click">
       ${iconWhatsApp}<span>WhatsApp</span>
     </a>
-    <a class="mbar__btn mbar__btn--cta" href="${site.cta.primary.url}">
-      <span>Получить расчёт</span>
+    <a class="mbar__btn mbar__btn--cta" href="${current === '/raschet/' ? '#calc-form' : site.cta.primary.url}">
+      <span>${current === '/raschet/' ? 'К форме заявки' : 'Получить расчёт'}</span>
     </a>
   </div>
 `;
 
-/* --- Подвал ------------------------------------------------------------- */
+/* --- Подвал (по макету заказчика: контакты · представители · презентация) --- */
 
 export function footer(site) {
   const year = new Date().getFullYear();
@@ -245,6 +264,20 @@ export function footer(site) {
               Завод строительных металлоконструкций. Проектирование, производство
               ЛСТК и ЛМК, комплектная поставка — с. Троебратское, Костанайская область.
             </p>
+            <ul class="footer__list footer__list--nav">
+              ${site.nav.filter((n) => !n.children).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
+              ${site.navFooter.slice(0, 6).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="footer__title">Контакты</h2>
+            <ul class="footer__contacts">
+              <li>${iconPhone}<a href="${c.phoneHref}" class="mono" data-goal="tel_click">${c.phone}</a></li>
+              <li><span class="footer__at" aria-hidden="true">@</span><a href="mailto:${c.email}">${c.email}</a></li>
+              <li><span class="footer__pin" aria-hidden="true">●</span><span>${c.address.country}, ${c.address.region},<br>${c.address.district}, ${c.address.settlement}</span></li>
+              <li><span class="footer__pin" aria-hidden="true">○</span><span>${c.hours.text}</span></li>
+            </ul>
             <div class="btn-row footer__social">
               <a class="btn btn--wa" href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
                 ${iconWhatsApp}<span>WhatsApp</span>
@@ -256,40 +289,27 @@ export function footer(site) {
           </div>
 
           <div>
-            <h2 class="footer__title">Решения</h2>
-            <ul class="footer__list">
-              ${(site._solutions || []).map((p) => html`<li><a href="${p.url}">${p.short || p.title}</a></li>`)}
+            <h2 class="footer__title">Представители по Казахстану</h2>
+            <p class="footer__text">Сеть формируется — на карте завод и регионы с отдельными страницами; подключённые партнёры появятся метками.</p>
+            ${kzMap({ compact: true })}
+            <ul class="footer__list footer__list--row">
+              ${(site.regionsNav || []).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
             </ul>
+            <a class="arrow-link footer__link" href="/partneram/">Стать партнёром ${iconArrow}</a>
           </div>
 
           <div>
-            <h2 class="footer__title">Разделы</h2>
-            <ul class="footer__list">
-              ${site.nav.filter((n) => !n.children).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
-              ${site.navFooter.slice(0, 6).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
-            </ul>
-            ${site.regionsNav ? html`
-              <h2 class="footer__title footer__title--sub">Регионы</h2>
-              <ul class="footer__list footer__list--row">
-                ${site.regionsNav.map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
-              </ul>
-            ` : ''}
-          </div>
-
-          <div>
-            <h2 class="footer__title">Контакты</h2>
-            <ul class="footer__list">
-              <li><a href="${c.phoneHref}" class="mono" data-goal="tel_click">${c.phone}</a></li>
-              <li><a href="mailto:${c.email}">${c.email}</a></li>
-              <li>${c.address.settlement}, ${c.address.district}</li>
-              <li>${c.address.region}, ${c.address.country}</li>
-              <li>${c.hours.text}</li>
-              <li><a href="${c.instagram}" target="_blank" rel="noopener">Instagram ${c.instagramHandle}</a></li>
+            <h2 class="footer__title">Скачать презентацию</h2>
+            <p class="footer__text">Производство, линейка профилей, направления работы завода — в одном PDF.</p>
+            ${site.presentation
+              ? html`<a class="btn btn--primary" href="${site.presentation}" target="_blank" rel="noopener">${iconDownload}<span>Скачать PDF</span></a>`
+              : ''}
+            <ul class="footer__list" style="margin-top:1rem">
+              <li><a href="/dokumentaciya/">Вся документация</a></li>
+              <li><a href="/raschet/">Получить расчёт</a></li>
             </ul>
           </div>
         </div>
-
-        <span class="footer__wordmark" aria-hidden="true">STEPPESTEEL</span>
 
         <div class="footer__bottom">
           <span>© ${year} STEPPESTEEL. Казахстан.</span>
@@ -366,6 +386,69 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
   `;
 }
 
+/* --- Карта Казахстана (дизайн-элемент по макету заказчика) ---------------- */
+
+/**
+ * Контур страны — из открытого GeoJSON (johan/world.geo.json), спроецирован
+ * в SVG-координаты. Метки: завод (Троебратское), регио-страницы, крупные
+ * города для ориентации. Представители появятся здесь по мере подключения
+ * регионов — данные в site.json → regionsNav.
+ */
+const KZ_PATH = "M357.4 288.1 L349.3 292.0 L330.6 306.8 L324.4 321.9 L319.1 322.1 L315.2 312.0 L297.2 311.3 L294.3 294.0 L287.4 293.8 L288.4 272.6 L271.5 257.1 L247.1 258.7 L230.5 261.8 L217.0 242.7 L205.4 234.7 L183.4 219.5 L180.7 217.7 L144.2 230.2 L144.8 308.4 L137.5 309.4 L127.6 292.8 L118.0 286.8 L101.9 291.3 L95.6 298.3 L94.8 293.1 L98.3 284.3 L95.6 276.9 L79.2 269.7 L72.8 250.7 L64.9 245.3 L64.5 238.4 L78.3 240.4 L78.8 224.9 L90.9 221.5 L103.2 224.6 L105.8 204.0 L103.3 190.9 L89.1 191.9 L77.0 186.7 L60.6 196.0 L47.4 200.5 L40.2 197.0 L41.6 186.1 L32.6 172.0 L22.0 172.6 L10.0 158.2 L18.2 142.1 L14.0 137.8 L25.4 114.5 L39.9 126.8 L41.7 111.3 L71.0 88.3 L93.1 87.7 L124.4 102.4 L141.2 111.0 L156.3 102.0 L178.7 101.6 L196.9 112.6 L201.0 106.3 L220.9 107.2 L224.5 97.2 L201.5 82.6 L215.1 72.3 L212.4 66.5 L226.1 61.0 L215.8 46.5 L222.3 39.2 L275.4 31.9 L282.3 26.6 L317.8 18.8 L330.6 10.0 L356.1 14.6 L360.5 36.5 L375.3 31.4 L393.5 38.6 L392.4 50.2 L406.0 49.0 L441.5 29.0 L436.3 35.6 L454.4 52.0 L486.1 105.8 L493.7 94.7 L513.2 106.9 L533.6 101.5 L541.4 105.3 L548.3 117.5 L558.2 121.7 L564.2 130.7 L582.5 127.8 L590.0 140.8 L579.2 154.9 L567.4 156.9 L566.7 178.1 L558.9 187.7 L530.7 180.7 L520.5 218.7 L513.2 223.4 L485.1 231.9 L497.9 268.7 L488.2 274.2 L489.3 286.3 L480.6 283.2 L473.4 275.6 L452.4 273.4 L428.9 272.8 L423.7 275.1 L403.5 266.2 L395.5 270.6 L393.3 283.1 L369.9 275.8 L360.6 278.8 L357.4 288.1 Z";
+const KZ_PINS = [[271.4, 41.5, "Троебратское · завод", "kz-map__pin--plant"], [253.4, 56.1, "Костанай", "kz-map__pin--page"], [331.7, 20.9, "Петропавловск", "kz-map__pin--page"], [335.1, 54.6, "Кокшетау", "kz-map__pin--page"]];
+const KZ_DOTS = [[364.1, 99.3, "Астана", "kz-map__dot"], [387.7, 128.4, "Караганда", "kz-map__dot"], [442.4, 75.4, "Павлодар", "kz-map__dot"], [161.8, 118.2, "Актобе", "kz-map__dot"], [87.3, 185.6, "Атырау", "kz-map__dot"], [441.6, 267.4, "Алматы", "kz-map__dot"], [338.1, 286.9, "Шымкент", "kz-map__dot"]];
+
+export function kzMap({ compact = false } = {}) {
+  const pinsSvg = KZ_PINS.map(([x, y, label, cls]) => `
+    <g class="kz-map__pin ${cls}">
+      <circle cx="${x}" cy="${y}" r="${cls.includes('plant') ? 7 : 5}"/>
+      <circle class="kz-map__pulse" cx="${x}" cy="${y}" r="${cls.includes('plant') ? 14 : 10}"/>
+      <text x="${x + 10}" y="${y + 4}">${e(label)}</text>
+    </g>`).join('');
+  const dotsSvg = KZ_DOTS.map(([x, y, label]) => `
+    <g class="kz-map__dot"><circle cx="${x}" cy="${y}" r="3"/><text x="${x + 7}" y="${y + 4}">${e(label)}</text></g>`).join('');
+  return raw(`
+  <figure class="${cx('kz-map', compact && 'kz-map--compact')}">
+    <svg viewBox="0 0 600 340" role="img" aria-label="Карта Казахстана: завод в Троебратском Костанайской области, доставка по всей стране">
+      <path class="kz-map__land" d="${KZ_PATH}"/>
+      ${dotsSvg}
+      ${pinsSvg}
+    </svg>
+    <figcaption class="kz-map__legend mono">
+      <span><i class="kz-map__key kz-map__key--plant"></i>завод</span>
+      <span><i class="kz-map__key kz-map__key--page"></i>регионы с отдельной страницей</span>
+      <span><i class="kz-map__key kz-map__key--dot"></i>доставка по всему Казахстану</span>
+    </figcaption>
+  </figure>`);
+}
+
+/* --- Карточка решения с фото (макет заказчика 30.08.2026) -------------------- */
+
+/**
+ * Фото-карточка: кадр (или слот «Фото готовится»), название, описание,
+ * «Подробнее». Реальный кадр подхватится по имени `sol-<slug>` в манифесте.
+ */
+export function solutionCard(s, { level = 3 } = {}) {
+  const H = `h${level}`;
+  const img = s.cover || `sol-${s.slug}`;
+  return html`
+    <a class="${cx('card sol-card', s.flag && 'sol-card--flag')}" href="${s.url}" data-reveal>
+      <span class="card__media">
+        ${hasImage(img)
+          ? raw(picture(img, { alt: `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
+          : raw(photoSlot(img, { label: 'Фото в обработке', alt: s.title }))}
+        ${hasImage(img) && s.coverViz ? vizTag() : ''}
+        ${s.flag ? html`<span class="card__flag mono">${s.flag}</span>` : ''}
+      </span>
+      <span class="card__body">
+        <${raw(H)} class="card__title">${s.short || s.title}</${raw(H)}>
+        <span class="card__text">${s.summary}</span>
+        <span class="card__more">Подробнее ${iconArrow}</span>
+      </span>
+    </a>
+  `;
+}
+
 /* --- Строка реестра решений ------------------------------------------------ */
 
 /**
@@ -376,7 +459,7 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
 export function solutionRow(s, { num, summary = false, level = 3 } = {}) {
   const H = `h${level}`;
   return html`
-    <a class="${cx('sol-row', s.flag && 'sol-row--flag')}" href="${s.url}" data-reveal>
+    <a class="${cx('sol-row', s.flag && 'sol-row--flag', !num && 'sol-row--nonum')}" href="${s.url}" data-reveal>
       ${num ? html`<span class="sol-row__num mono">${String(num).padStart(2, '0')}</span>` : ''}
       <span class="sol-row__body">
         ${s.flag ? html`<span class="sol-row__flag mono">${s.flag}</span>` : ''}
@@ -478,7 +561,7 @@ export const articleCard = (a) => html`
     <div class="media media--3x2">
       ${a.cover
         ? html`${raw(picture(a.cover, { alt: '', sizes: '(min-width: 900px) 33vw, 100vw' }))}${a.coverViz ? vizTag() : ''}`
-        : raw(photoSlot(a.slug, { label: 'Фото готовится', alt: '' }))}
+        : raw(photoSlot(a.slug, { label: 'Фото в обработке', alt: '' }))}
     </div>
     <div class="stack stack--sm">
       <p class="article-card__meta mono"><span>${dateRu(a.date)}</span><span>${a.readingTime} мин</span></p>
@@ -536,7 +619,7 @@ export function portfolioCard(o) {
       <div class="obj-card__media">
         ${o.photos?.length
           ? raw(picture(o.photos[0].img, { alt: o.photos[0].alt || o.title, sizes: '(min-width: 900px) 50vw, 100vw' }))
-          : raw(photoSlot('', { label: 'Фото объекта готовится', alt: o.title }))}
+          : raw(photoSlot(`obj-${o.slug}`, { label: 'Фото объекта в обработке', alt: o.title }))}
       </div>
       <div class="obj-card__body">
         <p class="obj-card__top mono">
@@ -546,9 +629,35 @@ export function portfolioCard(o) {
         <h3 class="obj-card__title">${o.title}</h3>
         ${raw(specs(rows))}
         ${o.text ? html`<p class="obj-card__text">${o.text}</p>` : ''}
+        ${(o.photos || []).length > 1 || (o.montage || []).length
+          ? html`<div class="obj-card__gallery" data-lightbox>
+              ${(o.photos || []).slice(1).map((ph) => html`<figure class="obj-card__thumb">${raw(picture(ph.img, { alt: ph.alt || o.title, sizes: '160px' }))}</figure>`)}
+              ${(o.montage || []).map((ph) => html`<figure class="obj-card__thumb obj-card__thumb--montage">${raw(picture(ph.img, { alt: ph.alt || `${o.title} — монтаж`, sizes: '160px' }))}<figcaption class="mono">монтаж</figcaption></figure>`)}
+            </div>`
+          : ''}
       </div>
     </article>
   `;
+}
+
+/* Схема модульного расширения: секции + пунктирная следующая. Настоящий
+ * конструктивный принцип (длина до 140 м секциями) — не декорация. */
+export function modularScheme() {
+  const section = (x, dashed = false) => `
+    <g class="${dashed ? 'ms-next' : 'ms-sec'}">
+      <path d="M${x} 84V44l28-18 28 18v40Z"/>
+      <line x1="${x}" y1="44" x2="${x + 56}" y2="44"/>
+    </g>`;
+  return raw(`
+  <svg class="modular-scheme" viewBox="0 0 320 100" fill="none" role="img"
+       aria-label="Схема модульного расширения: здание наращивается одинаковыми секциями в длину">
+    ${section(10)}${section(66)}${section(122)}${section(178, true)}
+    <g class="ms-arrow"><line x1="250" y1="60" x2="300" y2="60" marker-end="url(#ms-arr)"/></g>
+    <defs><marker id="ms-arr" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+    </marker></defs>
+    <text class="ms-label" x="10" y="98">СЕКЦИИ ПО СУЩЕСТВУЮЩЕМУ ПРОЕКТУ · ДЛИНА ДО 140 М</text>
+  </svg>`);
 }
 
 /* --- Калькулятор длины зернохранилища ------------------------------------- */

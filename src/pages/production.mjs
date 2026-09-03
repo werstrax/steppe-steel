@@ -43,7 +43,7 @@ export function renderProduction(d) {
                 <div class="prod-card__media">
                   ${hasImage(s.photoSlot)
                     ? raw(picture(s.photoSlot, { alt: `${s.title} — производство Steppe Steel`, sizes: '(min-width: 900px) 50vw, 100vw' }))
-                    : raw(photoSlot(s.photoSlot, { label: 'Фото с производства готовится', alt: s.title }))}
+                    : raw(photoSlot(s.photoSlot, { label: 'Фото производства в обработке', alt: s.title }))}
                   ${s.photoViz && hasImage(s.photoSlot) ? vizTag() : ''}
                 </div>
                 <div class="prod-card__body">

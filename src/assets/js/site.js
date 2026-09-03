@@ -362,9 +362,28 @@
     if (!w) location.href = url;
   }
 
+  /* Откуда пришла заявка — для менеджера и аналитики (ТЗ §24) */
+  function sourceLine() {
+    try {
+      var utm = ['utm_source', 'utm_medium', 'utm_campaign'].map(function (k) { return sessionStorage.getItem('ss-' + k); }).filter(Boolean).join(' / ');
+      var from = sessionStorage.getItem('ss-from') || '';
+      var page = location.pathname + location.search;
+      return (utm ? utm + ' · ' : '') + (from ? 'с ' + from.replace(/^https?:\/\//, '') + ' · ' : '') + 'страница ' + page;
+    } catch (e) { return location.pathname; }
+  }
+
   (function calcForm() {
     var form = $('[data-calc-form]');
     if (!form) return;
+
+    // Источник заявки (ТЗ §24): utm первого визита + страница, с которой пришли
+    try {
+      var q = new URLSearchParams(location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) {
+        if (q.get(k)) sessionStorage.setItem('ss-' + k, q.get(k));
+      });
+      if (document.referrer && !sessionStorage.getItem('ss-from')) sessionStorage.setItem('ss-from', document.referrer);
+    } catch (e) { /* без хранилища — без источника */ }
 
     // Предзаполнение из ?type= и ?tons=
     try {
@@ -377,6 +396,10 @@
       if (type === 'project') {
         var radio = form.querySelector('input[name="mode"][value="project"]');
         if (radio) radio.checked = true;
+      }
+      if (type === 'builder' && form.elements.comment && !form.elements.comment.value) {
+        form.elements.comment.value = 'Строительная компания: прошу условия сотрудничества по изготовлению металлокаркаса.';
+        if (sel) sel.value = 'other';
       }
       var tons = params.get('tons');
       if (tons && form.elements.comment && !form.elements.comment.value) {
@@ -423,10 +446,12 @@
         fieldVal(form, 'whatsapp') && 'WhatsApp: ' + fieldVal(form, 'whatsapp'),
         fieldVal(form, 'email') && 'E-mail: ' + fieldVal(form, 'email'),
         hasFile && 'Проект: прикреплю файлом в чате (' + fileInput.files[0].name + ')',
+        '',
+        'Источник: ' + sourceLine(),
       ].filter(Boolean);
 
       var endpoint = form.getAttribute('data-endpoint');
-      goal('calc_submit', { purpose: purposeSel.value || 'other' });
+      goal('calc_submit', { purpose: purposeSel.value || 'other', source: sourceLine() });
 
       if (endpoint) {
         var fd = new FormData(form);
@@ -470,9 +495,11 @@
         fieldVal(form, 'whatsapp') && 'WhatsApp: ' + fieldVal(form, 'whatsapp'),
         fieldVal(form, 'email') && 'E-mail: ' + fieldVal(form, 'email'),
         fieldVal(form, 'comment') && 'О компании: ' + fieldVal(form, 'comment'),
+        '',
+        'Источник: ' + sourceLine(),
       ].filter(Boolean);
 
-      goal('partner_submit');
+      goal('partner_submit', { source: sourceLine() });
       openWa(lines.join('\n'));
       showStatus(form, 'Открыли WhatsApp с текстом заявки — остаётся нажать «Отправить».');
     });

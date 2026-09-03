@@ -186,7 +186,7 @@ export function productNode(site, p) {
     '@type': 'Service',
     '@id': `${site.url}${p.url}#product`,
     name: p.title,
-    serviceType: `${p.title} под ключ`,
+    serviceType: `${p.short || p.title}: проектирование, производство и поставка`,
     description: p.summary,
     url: `${site.url}${p.url}`,
     category: 'Металлоконструкции / ЛСТК',

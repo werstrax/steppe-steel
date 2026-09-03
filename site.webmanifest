@@ -1,11 +1,11 @@
 {
-  "name": "Steppe Steel — завод ЛСТК и металлоконструкций",
-  "short_name": "Steppe Steel",
-  "description": "Завод ЛСТК и металлоконструкций полного цикла. Костанайская область, Казахстан.",
+  "name": "STEPPESTEEL — завод строительных металлоконструкций",
+  "short_name": "STEPPESTEEL",
+  "description": "Завод строительных металлоконструкций. Костанайская область, Казахстан.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b0c0e",
-  "theme_color": "#0b0c0e",
+  "background_color": "#ffffff",
+  "theme_color": "#16181b",
   "lang": "ru",
   "icons": [
     {

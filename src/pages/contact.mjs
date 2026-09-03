@@ -5,7 +5,7 @@
 import { layout } from '../lib/layout.mjs';
 import { html, raw, e } from '../lib/util.mjs';
 import {
-  pageHero, sectionHead, ctaBand, faq, iconWhatsApp, iconInstagram, iconPhone, specs,
+  pageHero, sectionHead, ctaBand, faq, iconWhatsApp, iconInstagram, iconPhone, specs, kzMap,
 } from '../lib/components.mjs';
 import { faqNode, organizationNode } from '../lib/schema.mjs';
 
@@ -49,9 +49,9 @@ export function renderKontakty(d) {
           <h2 class="h3" style="margin-top:1rem">Отделы</h2>
           <div class="contact-rows">
             ${site.contacts.departments.map(
-              (dep) => html`
+              (dep, i) => html`
                 <a class="contact-row" href="${c.whatsapp}?text=${encodeURIComponent(c[dep.channel] || c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
-                  <span class="contact-row__icon">${iconWhatsApp}</span>
+                  <span class="contact-row__icon mono">${String(i + 1).padStart(2, '0')}</span>
                   <span><span class="contact-row__label mono">${dep.title}</span><span class="contact-row__val">${dep.text}</span></span>
                 </a>
               `
@@ -71,6 +71,7 @@ export function renderKontakty(d) {
           <p class="note">Хотите приехать на производство — напишите в WhatsApp
           (<a href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">согласуем день визита</a>).
           Дорога из Костаная — около 230 км по трассе на Петропавловск.</p>
+          ${kzMap()}
         </div>
       </div>
     </section>
@@ -105,7 +106,7 @@ export function renderRaschet(d) {
 
     <section class="section section--flush-top">
       <div class="container container--narrow">
-        <form class="form" data-calc-form data-endpoint="${e(site.forms.endpoint || '')}" novalidate>
+        <form class="form" id="calc-form" data-calc-form data-endpoint="${e(site.forms.endpoint || '')}" novalidate>
           <fieldset class="form__fieldset">
             <legend class="form__legend mono">01 · Что считаем</legend>
             <div class="seg" role="radiogroup" aria-label="Тип заявки">

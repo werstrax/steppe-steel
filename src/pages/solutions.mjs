@@ -5,9 +5,10 @@
 import { layout, html, raw } from '../lib/layout.mjs';
 import {
   pageHero, sectionHead, specs, faq, ctaBand,
-  solutionRow, iconArrow, grainCalcBlock,
+  solutionRow, solutionCard, iconArrow, grainCalcBlock, modularScheme,
 } from '../lib/components.mjs';
 import { productNode, faqNode, itemListNode } from '../lib/schema.mjs';
+import { hasImage } from '../lib/util.mjs';
 
 /* --- Хаб ------------------------------------------------------------------ */
 
@@ -29,8 +30,8 @@ export function renderSolutionsIndex(d) {
 
     <section class="section section--flush-top">
       <div class="container">
-        <div class="sol-list sol-list--hub">
-          ${solutions.items.map((s, i) => solutionRow(s, { num: i + 1, summary: true, level: 2 }))}
+        <div class="card-grid card-grid--3">
+          ${solutions.items.map((s) => solutionCard(s, { level: 2 }))}
         </div>
         <p class="note" data-reveal>${hub.note}</p>
       </div>
@@ -185,6 +186,21 @@ export function renderSolution(d, s) {
         `
       : ''}
 
+    ${s.slug === 'zernohranilishcha' || s.slug === 'modulnye-zdaniya'
+      ? html`
+          <section class="section" id="modulnost">
+            <div class="container split split--even">
+              <div class="stack" data-reveal>
+                <p class="eyebrow mono">Модульность</p>
+                <h2 class="section-head__title">Здание растёт секциями</h2>
+                <p>Длина наращивается по существующему проекту: разбирается торцевая стена, добавляется секция каркаса, торец переносится. Без демонтажа и остановки хранения — до 140 м.</p>
+              </div>
+              <div class="modular-wrap" data-reveal>${modularScheme()}</div>
+            </div>
+          </section>
+        `
+      : ''}
+
     ${s.calc && s.slug === 'zernohranilishcha' ? raw(grainCalcBlock()) : ''}
 
     ${s.economy
@@ -271,6 +287,7 @@ export function renderSolution(d, s) {
       title: s.seoTitle,
       description: s.seoDescription,
       crumbs: crumbList,
+      image: hasImage(s.cover || `sol-${s.slug}`) ? (s.cover || `sol-${s.slug}`) : undefined,
       schema: [productNode(site, s), faqNode(site, s.url, s.faq)],
     },
     content

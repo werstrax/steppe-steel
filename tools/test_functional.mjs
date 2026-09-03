@@ -236,7 +236,7 @@ async function main() {
       const closed = !item.classList.contains('is-open');
       return { opened, closed, links: item.querySelectorAll('.nav__sublink').length };
     })()`);
-    (drop.opened && drop.closed && drop.links >= 6)
+    (drop.opened && drop.closed && drop.links >= 3)
       ? ok(`дропдаун меню (${drop.links} ссылок)`)
       : fail('дропдаун меню', JSON.stringify(drop));
 

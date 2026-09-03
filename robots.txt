@@ -1,8 +1,8 @@
-# robots.txt — Steppe Steel, https://steppesteel.kz
+# robots.txt — STEPPESTEEL, https://steppesteel.kz
 
 User-agent: *
 Allow: /
-Disallow: /zayavka/spasibo/
+Disallow: /raschet/spasibo/
 Disallow: /privacy/
 
 # AI-поисковики и ассистенты: доступ открыт сознательно — мы хотим,

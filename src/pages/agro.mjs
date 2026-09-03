@@ -4,28 +4,8 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, faq, ctaBand, iconArrow, grainCalcBlock } from '../lib/components.mjs';
+import { pageHero, sectionHead, faq, ctaBand, iconArrow, grainCalcBlock, modularScheme } from '../lib/components.mjs';
 import { faqNode } from '../lib/schema.mjs';
-
-/* Схема модульного расширения: секции + пунктирная следующая. Настоящий
- * конструктивный принцип (длина до 140 м секциями) — не декорация. */
-function modularScheme() {
-  const section = (x, dashed = false) => `
-    <g class="${dashed ? 'ms-next' : 'ms-sec'}">
-      <path d="M${x} 84V44l28-18 28 18v40Z"/>
-      <line x1="${x}" y1="44" x2="${x + 56}" y2="44"/>
-    </g>`;
-  return raw(`
-  <svg class="modular-scheme" viewBox="0 0 320 100" fill="none" role="img"
-       aria-label="Схема модульного расширения: здание наращивается одинаковыми секциями в длину">
-    ${section(10)}${section(66)}${section(122)}${section(178, true)}
-    <g class="ms-arrow"><line x1="250" y1="60" x2="300" y2="60" marker-end="url(#ms-arr)"/></g>
-    <defs><marker id="ms-arr" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
-      <path d="M1.5 1.5 L8.5 5 L1.5 8.5" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
-    </marker></defs>
-    <text class="ms-label" x="10" y="98">СЕКЦИИ ПО СУЩЕСТВУЮЩЕМУ ПРОЕКТУ · ДЛИНА ДО 140 М</text>
-  </svg>`);
-}
 
 export function renderAgro(d) {
   const { site, agrarians, payback } = d;

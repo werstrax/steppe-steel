@@ -2077,3 +2077,355 @@ select.field__input { appearance: auto; }
   body { padding: 0; }
   a { text-decoration: none; }
 }
+
+/* ============================================================================
+   16 Лендинг-слой по макету заказчика (Шамиль, 30.08.2026)
+   Карточки с фото-слотами, показатели с иконками, шаги в ряд, подвал
+   с презентацией. Цифры — только проверенные, фото — слотами.
+   ========================================================================= */
+
+:root {
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --shadow-card: 0 6px 20px rgba(22, 24, 27, 0.06);
+  --shadow-card-hover: 0 14px 32px rgba(22, 24, 27, 0.12);
+}
+
+.btn { border-radius: var(--radius-btn); }
+.hero__media, .photo-slot, .side, .calc, .payback, .form, .obj-card, .prod-card,
+.pick-card, .feat, .sub-card, .money-card, .vol-card, .norm, .tech-card, .tabs__panel,
+.empty-note, .flag-band, .sol-list { border-radius: var(--radius-card); }
+
+/* Первый экран: светлая подложка, крупное фото справа */
+.hero { background: linear-gradient(180deg, var(--tint) 0%, var(--paper) 100%); }
+.hero__slogan {
+  font-family: var(--f-d);
+  font-weight: 600;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  margin-bottom: var(--space-s);
+}
+.hero__media--photo { border: 0; }
+.hero__photo, .hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Шапка: презентация рядом с CTA */
+.header__pres { white-space: nowrap; padding: 0.62rem 1rem; font-size: 0.85rem; }
+@media (max-width: 1240px) { .header .header__pres { display: none; } }
+
+/* Показатели с иконками в кружках */
+.kpi {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-m);
+  padding: var(--space-m) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.kpi__item { display: flex; gap: var(--space-s); align-items: flex-start; padding-right: var(--space-m); border-right: 1px solid var(--line); }
+.kpi__item:last-child { border-right: 0; }
+.kpi__icon {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--accent-deep);
+  display: grid;
+  place-items: center;
+}
+.kpi__icon svg { width: 30px; height: 30px; }
+.kpi__body { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.kpi__val { font-family: var(--f-d); font-weight: 800; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.9rem); letter-spacing: -0.02em; line-height: 1.05; }
+.kpi__key { font-size: 0.9rem; color: var(--mut); line-height: 1.4; }
+@media (max-width: 900px) {
+  .kpi { grid-template-columns: repeat(2, 1fr); }
+  .kpi__item:nth-child(2n) { border-right: 0; }
+}
+@media (max-width: 520px) {
+  .kpi { grid-template-columns: 1fr; }
+  .kpi__item { border-right: 0; padding-right: 0; }
+}
+
+/* Карточки с фото */
+.card-grid { display: grid; gap: var(--space-m); }
+.card-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1020px) { .card-grid--3, .card-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .card-grid--2, .card-grid--3, .card-grid--4 { grid-template-columns: minmax(0, 1fr); } }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+a.card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); color: inherit; }
+.card__media { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--tint); }
+.card__media picture, .card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card__media .photo-slot { position: absolute; inset: 0; aspect-ratio: auto; border: 0; border-radius: 0; }
+.card__flag {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+.card__body { display: flex; flex-direction: column; gap: 0.5rem; padding: var(--space-m); flex: 1; }
+.card__title { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+.card__text, .card__meta { font-size: 0.92rem; color: var(--mut); line-height: 1.5; }
+.card__badge { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-deep); }
+.card__more {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent-deep);
+}
+.card--note { background: var(--tint); box-shadow: none; border-style: dashed; }
+.card--note .card__text { color: var(--ink-2); }
+
+/* Типовые решения: параметры */
+.typ-card__params { margin: 0; display: grid; gap: 0.35rem; }
+.typ-card__params div { display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.9rem; border-top: 1px dashed var(--line); padding-top: 0.35rem; }
+.typ-card__params dt { color: var(--mut); }
+.typ-card__params dd { margin: 0; font-family: var(--f-m); font-size: 0.8rem; text-align: right; }
+
+/* Аудитории: чек-лист + фото */
+.aud { flex-direction: row; align-items: stretch; }
+.aud__body { flex: 1 1 60%; padding: var(--space-m) var(--space-l); display: flex; flex-direction: column; gap: var(--space-s); }
+.aud__title { font-size: var(--fs-h3); margin: 0; }
+.aud__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.aud__list li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.95rem; line-height: 1.45; }
+.aud__list .check { flex-shrink: 0; margin-top: 0.15rem; color: var(--accent-deep); }
+.aud__body .btn { align-self: flex-start; margin-top: auto; }
+.aud__media { flex: 1 1 40%; position: relative; min-height: 220px; background: var(--tint); }
+.aud__media picture, .aud__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.aud__media .photo-slot { position: absolute; inset: 0; aspect-ratio: auto; border: 0; border-radius: 0; }
+@media (max-width: 720px) {
+  .aud { flex-direction: column-reverse; }
+  .aud__media { min-height: 180px; }
+}
+
+/* Как мы работаем: шаги в ряд */
+.flow-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-s); }
+.flow-row__step { position: relative; display: flex; flex-direction: column; gap: 0.35rem; padding-top: 0.5rem; }
+.flow-row__num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.flow-row__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(0.5rem + 28px);
+  left: 64px;
+  right: -8px;
+  height: 1px;
+  background: var(--line-2);
+}
+.flow-row__title { font-weight: 700; font-size: 0.98rem; }
+.flow-row__text { font-size: 0.85rem; color: var(--mut); line-height: 1.45; }
+.flow-row__dur { font-size: 0.72rem; color: var(--accent-deep); }
+@media (max-width: 1020px) { .flow-row { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-l); } .flow-row__step:nth-child(3n)::after { display: none; } }
+@media (max-width: 600px) { .flow-row { grid-template-columns: minmax(0, 1fr); } .flow-row__step::after { display: none; } .flow-row__step { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.3rem 1rem; } .flow-row__num { margin: 0; } .flow-row__text { flex-basis: 100%; } }
+
+/* О заводе кратко: текст + 4 фото */
+.about-band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--space-xl); align-items: center; }
+.about-band__text { display: flex; flex-direction: column; gap: var(--space-s); }
+.about-band__photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-s); }
+.about-band__photo { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-card); overflow: hidden; background: var(--tint); }
+.about-band__photo picture, .about-band__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-band__photo .photo-slot { position: absolute; inset: 0; aspect-ratio: auto; border: 0; border-radius: 0; }
+@media (max-width: 900px) { .about-band { grid-template-columns: minmax(0, 1fr); } }
+
+/* Подвал по макету */
+.footer__grid { grid-template-columns: 1.3fr 1.1fr 1.1fr 1fr; }
+.footer__contacts { list-style: none; margin: 0 0 var(--space-s); padding: 0; display: grid; gap: 0.6rem; }
+.footer__contacts li { display: flex; gap: 0.6rem; align-items: flex-start; color: var(--dark-text); font-size: 0.92rem; line-height: 1.45; }
+.footer__contacts svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--dark-mut); }
+.footer__at, .footer__pin { flex: 0 0 18px; text-align: center; color: var(--dark-mut); font-size: 0.8rem; margin-top: 0.15rem; }
+.footer__contacts a { color: var(--dark-text); }
+.footer__text { font-size: 0.9rem; color: var(--dark-mut); line-height: 1.5; margin: 0 0 var(--space-s); }
+.footer__link { margin-top: var(--space-xs); }
+.footer__list--nav { columns: 2; column-gap: var(--space-s); }
+.footer__list--nav li { break-inside: avoid; }
+@media (max-width: 960px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .footer__grid { grid-template-columns: 1fr; } .footer__list--nav { columns: 1; } }
+
+/* Карта Казахстана: контур, метки завода и регионов */
+.kz-map { margin: 0; }
+.kz-map svg { width: 100%; height: auto; display: block; }
+.kz-map__land { fill: var(--tint-2); stroke: var(--line-2); stroke-width: 1; stroke-linejoin: round; }
+.kz-map__dot circle { fill: var(--mut); opacity: 0.6; }
+.kz-map__dot text, .kz-map__pin text { font-family: var(--f-m); font-size: 11px; fill: var(--ink-2); }
+.kz-map__dot text { fill: var(--mut); font-size: 10px; }
+.kz-map__pin circle { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
+.kz-map__pin--page circle { fill: var(--ink); }
+.kz-map__pin text { font-weight: 500; }
+.kz-map__pin--plant text { fill: var(--ink); font-weight: 700; }
+.kz-map__pulse { fill: var(--accent); opacity: 0.18; stroke: none !important; }
+.kz-map__pin--page .kz-map__pulse { fill: var(--ink); opacity: 0.1; }
+.kz-map__legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin-top: 0.8rem; font-size: 0.68rem; color: var(--mut); }
+.kz-map__key { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 0.4rem; vertical-align: -1px; }
+.kz-map__key--plant { background: var(--accent); }
+.kz-map__key--page { background: var(--ink); }
+.kz-map__key--dot { background: var(--mut); opacity: 0.6; }
+/* компактная версия в подвале — на тёмном */
+.kz-map--compact .kz-map__land { fill: var(--dark-2); stroke: var(--dark-line); }
+.kz-map--compact .kz-map__dot circle { fill: var(--dark-mut); }
+.kz-map--compact .kz-map__dot text { fill: var(--dark-mut); }
+.kz-map--compact .kz-map__pin text { fill: var(--dark-text); }
+.kz-map--compact .kz-map__pin--plant text { fill: #fff; }
+.kz-map--compact .kz-map__pin--page circle { fill: var(--dark-text); }
+.kz-map--compact .kz-map__pin--page .kz-map__pulse { fill: var(--dark-text); }
+.kz-map--compact .kz-map__pin circle { stroke: var(--dark); }
+.kz-map--compact .kz-map__legend { color: var(--dark-mut); }
+.kz-map--compact .kz-map__key--page { background: var(--dark-text); }
+.kz-map--compact .kz-map__dot text { display: none; }
+@media (max-width: 600px) { .kz-map__dot text { display: none; } .kz-map__pin text { font-size: 13px; } }
+/* Тег «Визуализация» на карточках и hero */
+.card__media .viz-tag, .hero__media--photo .viz-tag { position: absolute; left: auto; right: 0.6rem; bottom: 0.6rem; }
+
+/* Чертёж рамы в тёмной производственной полосе (ТЗ §3: чертежи как часть языка) */
+.prod-band__draw { grid-column: 1 / -1; margin-top: var(--space-m); padding: var(--space-s); }
+/* Галерея объекта: остальные фото + монтаж */
+.obj-card__gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; margin-top: var(--space-s); }
+.obj-card__thumb { margin: 0; position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; background: var(--tint); }
+.obj-card__thumb picture, .obj-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.obj-card__thumb figcaption { position: absolute; left: 0.4rem; bottom: 0.3rem; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(22,24,27,0.75); color: #fff; padding: 0.15rem 0.4rem; border-radius: 3px; }
+/* Медиа на страницах технологий: схемы, чертежи, фото профилей */
+.tech-media { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-s); }
+.tech-media__item { margin: 0; }
+.tech-media__item .photo-slot { aspect-ratio: 16 / 10; }
+
+
+/* Мобильные: пустые фото-слоты не должны занимать экран — плашки ниже,
+   карточки читаются подряд, а не «сетка-сетка-сетка» */
+@media (max-width: 720px) {
+  .card__media { aspect-ratio: 2 / 1; }
+  .photo-slot { aspect-ratio: 16 / 9; }
+  .prod-card__media .photo-slot, .obj-card__media .photo-slot { aspect-ratio: 16 / 9; }
+  .photo-slot--hero { min-height: 200px; }
+  .photo-slot svg { width: 44px; height: 32px; }
+  .about-band__photo { aspect-ratio: 16 / 10; }
+}
+
+/* --- Мобильное ревью 02.09.2026 --------------------------------------------- */
+
+/* Строки реестра без номера (смежные решения, регио): тело не должно падать
+   в колонку номера — иначе заголовок ломается по буквам */
+.sol-row--nonum { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) 40px; }
+@media (max-width: 860px) {
+  .sol-row--nonum { grid-template-columns: minmax(0, 1fr) 32px; }
+  .sol-row--nonum .sol-row__meta { grid-column: 1; }
+  .sol-row--nonum .sol-row__arrow { grid-row: 1; grid-column: 2; }
+}
+@media (max-width: 480px) {
+  .sol-row--nonum { grid-template-columns: minmax(0, 1fr) 26px; }
+}
+
+@media (max-width: 720px) {
+  /* Читаемость: мета и мелкий моно не ниже 13px */
+  .sol-row__meta { font-size: 0.8rem; }
+  .note.mono, .field__hint, .card__meta { font-size: 0.82rem; }
+  .mbar__btn { font-size: 0.85rem; }
+  .burger { width: 44px; height: 44px; }
+  /* Тап-зоны в подвале */
+  .footer__list li { margin: 0; }
+  .footer__list a { display: inline-block; padding: 0.45rem 0; }
+  /* Ритм: секции на мобильном плотнее, провалов между блоками нет */
+  .section { padding-block: var(--space-xl-2xl); }
+  .section-head { margin-bottom: var(--space-l); }
+  /* Крошки: длинный текущий пункт не тянет вторую строку */
+  .crumbs { white-space: nowrap; overflow: hidden; }
+  .crumbs [aria-current] { overflow: hidden; text-overflow: ellipsis; max-width: 60vw; display: inline-block; vertical-align: bottom; }
+  /* Карточка документа: иконка и текст в одну строку, размер — строкой ниже */
+  .doc-row { flex-wrap: wrap; }
+  .doc-row__body { flex: 1 1 0; min-width: 0; }
+  .doc-row__meta { flex-basis: 100%; }
+  /* Таблицы: подпись не под бейджем «листается» */
+  .table__caption { padding-right: 6.5rem; }
+  /* Карта в подвале: подписи пинов не наезжают друг на друга */
+  .kz-map__pin text { font-size: 10px; }
+  /* Схема модульности: подпись читаемая */
+  .ms-label { font-size: 11px; }
+  /* Стрелки в списках технологий/реестра — видимая афорданс-подсказка */
+  .tech-row__arrow, .tech-card__arrow, .sol-row__arrow { color: var(--mut); }
+  /* Сетка 2×2 фото-слотов: короткая подпись без переноса */
+  .about-band__photo .photo-slot__label { font-size: 0.6rem; letter-spacing: 0.06em; }
+}
+@media (max-width: 480px) {
+  .about-band__photos { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Мобильное ревью 02.09.2026, часть 2 ------------------------------------ */
+@media (max-width: 640px) {
+  /* Пустые фото-слоты не показываем: 9 карточек × 300px клетчатой пустоты —
+     это 5 экранов без содержания. Появится кадр — вернётся сам (это picture,
+     а не .photo-slot). Чертёж в hero и схемы — не слоты, остаются. */
+  .card__media:has(.photo-slot), .media:has(> .photo-slot), .prod-card__media:has(.photo-slot),
+  .obj-card__media:has(.photo-slot), .about-band__photos:has(.photo-slot), .aud__media:has(.photo-slot) { display: none; }
+  .media__missing { display: none; }
+  /* Таблицы: короткие не скроллятся зря, подсказка не ложится на шапку */
+  #vmestimost .table, .table--compact { min-width: 0; }
+  .table-hint { top: auto; bottom: 8px; }
+  .table tbody th { position: sticky; left: 0; background: var(--paper); z-index: 1; }
+  .table thead th { font-size: 0.8rem; }
+  /* Кнопки в ряд → на всю ширину столбиком */
+  .btn-row { flex-direction: column; align-items: stretch; }
+  .btn-row .btn { width: 100%; }
+  .page-hero__count { display: none; }
+}
+@media (max-width: 600px) {
+  .kz-map__pin:not(.kz-map__pin--plant) text { display: none; }
+  .kz-map__legend { font-size: 0.8rem; gap: 0.5rem 1rem; }
+  .flow-row__text { font-size: 0.95rem; }
+  .flow-row__step .mono { font-size: 0.8rem; }
+  .note.mono { font-size: 0.9rem; }
+  .flow__side { font-size: 0.78rem; }
+  .flow__income { display: inline-flex; min-width: 1.5em; height: 1.5em; margin-left: 0.35em; border-radius: 50%; background: var(--accent); color: #fff; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+  .tabs__btn { font-size: 0.88rem; padding: 0.8rem 1rem; min-height: 44px; }
+  .cert-page figcaption { font-size: 0.8rem; }
+  .flag-link svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-2); }
+  .card-grid--2 { align-items: start; }
+  .aud__body .btn { margin-top: 0.4rem; }
+}
+@media (max-width: 560px) {
+  .topbar__link.mono { display: none; }
+  .topbar { font-size: 0.86rem; }
+}
+@media (max-width: 480px) {
+  .hero__title, .hero h1 { font-size: clamp(1.9rem, 8.4vw, 2.2rem); hyphens: manual; }
+}
+@media (max-width: 640px) {
+  .doc-row__meta { flex-basis: 100%; margin-left: 0; white-space: normal; text-align: left; }
+  .mbar { grid-template-columns: auto auto minmax(0, 1fr); }
+  .mbar__btn { font-size: 0.8rem; padding-inline: 0.55rem; min-width: 0; }
+  .mbar__btn span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}

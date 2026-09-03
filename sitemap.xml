@@ -2,109 +2,193 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://steppesteel.kz/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/katalog/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/resheniya/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/katalog/zernohranilishcha/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/resheniya/zernohranilishcha/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/katalog/angary-sklady/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/resheniya/sklady/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/katalog/tseha-zavody/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/resheniya/proizvodstvennye-zdaniya/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/uslugi/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/resheniya/angary/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/resheniya/ovoshchehranilishcha/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/resheniya/zdaniya-dlya-tekhniki/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/resheniya/sto-avtoparki/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/resheniya/sportivnye-obekty/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/resheniya/modulnye-zdaniya/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/agrariyam/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/uslugi/proektirovanie/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/stroitelnym-kompaniyam/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/proektirovshchikam/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/partneram/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/obekty/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/proizvodstvo/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/lstk/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/uslugi/proizvodstvo/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/tekhnologii/lmk/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/uslugi/komplektaciya-dostavka/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/tekhnologii/boltovye-soedineniya/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/zavodskaya-gotovnost/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/modulnost/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/antikorroziynaya-zashchita/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://steppesteel.kz/tekhnologii/proektirovanie/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/profili/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/process/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://steppesteel.kz/partnyoram/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://steppesteel.kz/predstavitelyam/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/dokumentaciya/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/kostanay/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/petropavlovsk/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/kokshetau/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/o-zavode/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/blog/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -134,19 +218,19 @@
   </url>
   <url>
     <loc>https://steppesteel.kz/faq/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://steppesteel.kz/kontakty/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://steppesteel.kz/zayavka/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <loc>https://steppesteel.kz/raschet/</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

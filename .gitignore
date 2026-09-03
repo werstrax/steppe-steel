@@ -21,3 +21,6 @@ desktop.ini
 
 # Скриншоты для ревью
 screenshots/
+
+# Python
+__pycache__/

@@ -80,6 +80,7 @@ function loadData(lang) {
     journal: loadJSON(dataPath('journal.json', lang)),
     regions: loadJSON(dataPath('regions.json', lang)),
     payback: loadJSON(dataPath('payback.json', lang)),
+    team: loadJSON(dataPath('team.json', lang)),
   };
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
@@ -91,6 +92,8 @@ function loadData(lang) {
 
   // Для футера и перелинковки
   site._solutions = d.solutions.items;
+  // Презентация завода — кнопка в шапке и подвале (первый PDF категории «Презентации»)
+  site.presentation = d.documents.categories.find((c) => c.id === 'prezentacii')?.items[0]?.file || '';
 
   return d;
 }

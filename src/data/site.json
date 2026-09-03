@@ -45,7 +45,12 @@
       {
         "title": "Отдел продаж",
         "text": "Расчёты, коммерческие предложения, договоры",
-        "channel": "whatsapp"
+        "channel": "whatsappSales"
+      },
+      {
+        "title": "Партнёрская программа",
+        "text": "Региональные партнёры, строительные компании",
+        "channel": "whatsappPartner"
       },
       {
         "title": "Проектный отдел",
@@ -53,9 +58,14 @@
         "channel": "whatsappEngineer"
       },
       {
-        "title": "Партнёрская программа",
-        "text": "Региональные партнёры, строительные компании",
-        "channel": "whatsapp"
+        "title": "Снабжение",
+        "text": "Поставщики металла и комплектующих",
+        "channel": "whatsappSupply"
+      },
+      {
+        "title": "Производство",
+        "text": "Сроки изготовления, отгрузка, приёмка",
+        "channel": "whatsappProduction"
       }
     ],
     "_departmentsNote": "Отдельных телефонов по отделам заказчик не передал — все каналы ведут на общий WhatsApp с разным предзаполненным текстом (ТЗ §16 допускает «при необходимости»).",
@@ -66,7 +76,11 @@
     "hours": {
       "text": "WhatsApp — круглосуточно, без выходных",
       "allDay": true
-    }
+    },
+    "whatsappSupply": "Здравствуйте! Вопрос по снабжению / поставщикам.",
+    "whatsappProduction": "Здравствуйте! Вопрос по производству / отгрузке.",
+    "whatsappSales": "Здравствуйте! Нужен расчёт / коммерческое предложение.",
+    "whatsappPartner": "Здравствуйте! Интересует региональное партнёрство Steppe Steel."
   },
   "proof": {
     "_note": "Только проверяемые технические цифры из ПЗ и документов заказчика. Никаких «N объектов сдано» — данных нет.",
@@ -207,7 +221,9 @@
   "analytics": {
     "_note": "Вставьте ID счётчиков — код подключится автоматически. Пусто = ничего не грузится. Клики по телефону и WhatsApp отправляются событиями tel_click / wa_click, отправка формы — calc_submit.",
     "yandexMetrikaId": "",
-    "googleAnalyticsId": ""
+    "googleAnalyticsId": "",
+    "googleSiteVerification": "",
+    "_verificationNote": "Код подтверждения Google Search Console (content= из мета-тега) — вписать, layout выведет <meta name=\"google-site-verification\">."
   },
   "forms": {
     "_note": "endpoint — URL обработчика (POST multipart/form-data, поддерживает файл проекта). Пока пусто: форма собирает заявку и открывает WhatsApp с готовым сообщением + mailto-фолбэк; файл посетитель прикрепляет в чате WhatsApp.",

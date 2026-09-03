@@ -22,7 +22,7 @@ export function renderBuilders(d) {
       text: b.heroLead,
       crumbList,
       actions: html`
-        <a class="btn btn--primary btn--lg" href="/raschet/">Получить условия сотрудничества</a>
+        <a class="btn btn--primary btn--lg" href="/raschet/?type=builder">Получить условия сотрудничества</a>
         <a class="btn btn--ghost btn--lg" href="/proizvodstvo/">Смотреть производство</a>
       `,
     })}
@@ -93,8 +93,9 @@ export function renderBuilders(d) {
       : ''}
 
     ${ctaBand(site, {
-      title: 'Стать партнёром Steppe Steel',
+      title: 'Пришлите проект на расчёт',
       text: 'Пришлите проект или исходные данные объекта — вернём расчёт каркаса, сроки производства и условия для подрядчика.',
+      primary: { title: 'Стать партнёром Steppe Steel', url: '/raschet/?type=builder' },
     })}
   `;
 

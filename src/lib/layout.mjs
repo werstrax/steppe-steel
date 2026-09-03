@@ -62,7 +62,7 @@ export function layout(site, page, content) {
   const ga = site.analytics?.googleAnalyticsId;
 
   return `<!doctype html>
-<html lang="ru">
+<html lang="${e(site.lang || 'ru')}">
 <head>
 <meta charset="utf-8">
 <script>document.documentElement.classList.add('js');var __ssT=setTimeout(function(){document.documentElement.classList.remove('js')},3000);window.__ssJsReady=function(){clearTimeout(__ssT)};</script>
@@ -73,6 +73,7 @@ export function layout(site, page, content) {
 ${site._hreflang ? Object.entries(site._hreflang).map(([l, b]) => `<link rel="alternate" hreflang="${l}" href="${e(b + page.url)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${e(site._hreflang.ru + page.url)}">` : ''}
 ${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'}
 <meta name="theme-color" content="#ffffff">
+${site.analytics?.googleSiteVerification ? `<meta name="google-site-verification" content="${e(site.analytics.googleSiteVerification)}">` : ''}
 <meta name="format-detection" content="telephone=no">
 
 <meta property="og:type" content="${page.ogType || 'website'}">
@@ -114,7 +115,7 @@ ${content}
 </main>
 ${page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand(NEXT[page.url]) : ''}
 ${footer(site)}
-${mobileBar(site)}
+${mobileBar(site, page.url)}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
 </body>
 </html>

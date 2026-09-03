@@ -4,7 +4,7 @@
  *
  *   node tools/screenshot.mjs                      # набор ключевых страниц
  *   node tools/screenshot.mjs / /projects/bayaan/  # конкретные страницы
- *   node tools/screenshot.mjs --mobile             # ширина 390
+ *   node tools/screenshot.mjs --mobile             # ширина 375
  *   node tools/screenshot.mjs --viewport           # только первый экран
  *
  * PNG кладутся в screenshots/ в корне проекта (папка в .gitignore).
@@ -31,7 +31,7 @@ if (!CHROME) {
 
 const mobile = process.argv.includes('--mobile');
 const viewportOnly = process.argv.includes('--viewport');
-const width = mobile ? 390 : 1440;
+const width = mobile ? 375 : 1440;
 const height = 900;
 const suffix = mobile ? '-mobile' : '';
 
@@ -73,6 +73,7 @@ async function main() {
     `--user-data-dir=${profile}`,
     '--no-first-run', '--disable-gpu', '--hide-scrollbars', '--mute-audio',
     `--window-size=${width},${height}`,
+    '--force-device-scale-factor=1',
   ], { stdio: 'ignore' });
 
   try {
