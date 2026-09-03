@@ -4,7 +4,7 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, specs, ctaBand, iconArrow, heroFrame, photoSlot } from '../lib/components.mjs';
+import { pageHero, sectionHead, specs, ctaBand, iconArrow, photoSlot } from '../lib/components.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
 import { serviceNode, itemListNode } from '../lib/schema.mjs';
 
@@ -25,12 +25,13 @@ export function renderTechIndex(d) {
 
     <section class="section section--flush-top">
       <div class="container">
-        <figure class="tech-blueprint" data-reveal>
-          ${raw(heroFrame())}
-          <figcaption class="tech-blueprint__cap mono">
-            Поперечная рама ЛСТК + ЛМК: пролёт до 24 м без внутренних колонн, сборка на болтах
-          </figcaption>
-        </figure>
+        ${hasImage('tech-hub') ? html`
+          <figure class="tech-blueprint" data-reveal>
+            ${raw(picture('tech-hub', { alt: 'Конструктивная схема каркаса Steppe Steel', sizes: '100vw', priority: true }))}
+            <figcaption class="tech-blueprint__cap mono">
+              Поперечная рама ЛСТК + ЛМК: пролёт до 24 м без внутренних колонн, сборка на болтах
+            </figcaption>
+          </figure>` : ''}
         <div class="tech-grid">
           ${tech.items.map(
             (t, i) => html`

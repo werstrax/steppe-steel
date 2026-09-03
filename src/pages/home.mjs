@@ -7,7 +7,7 @@
 import { layout, html, raw } from '../lib/layout.mjs';
 import {
   sectionHead, stat, ctaBand, solutionCard, photoSlot, vizTag,
-  heroFrame, iconArrow, iconCheck, statIcons, iconDownload,
+  iconArrow, iconCheck, statIcons, iconDownload,
 } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
@@ -291,7 +291,6 @@ export function renderHome(d) {
           </ul>
           <div class="prod-band__stats">
             ${production.stats.map((s) => stat(s))}
-            <div class="hero__media hero__media--dark prod-band__draw" data-reveal>${raw(heroFrame())}</div>
           </div>
         </div>
       </div>
