@@ -90,6 +90,12 @@ function loadData(lang) {
   ]);
   site.buildDate = new Date().toISOString().slice(0, 10);
 
+  // Превью-сборка (SITE_URL, BASE_PATH, PREVIEW=1): для показа заказчику на
+  // github.io — свой адрес, префикс подпапки, noindex и без CNAME.
+  if (process.env.SITE_URL) site.url = process.env.SITE_URL;
+  if (process.env.BASE_PATH !== undefined) site.basePath = process.env.BASE_PATH;
+  site._preview = process.env.PREVIEW === '1';
+
   // Для футера и перелинковки
   site._solutions = d.solutions.items;
   // Презентация завода — кнопка в шапке и подвале (первый PDF категории «Презентации»)
@@ -256,6 +262,7 @@ ${rows}
 }
 
 function robots(site) {
+  if (site._preview) return `# Превью для заказчика — не индексировать\nUser-agent: *\nDisallow: /\n`;
   return `# robots.txt — ${site.brand.name}, ${site.url}
 
 User-agent: *
@@ -459,7 +466,7 @@ function build() {
 
   // Статика. static/ уходит в корень, raw/ — исходники, не копируем.
   copyDir(join(SRC, 'assets'), join(DIST, 'assets'), (_src, name) => name === 'raw' || name === 'static');
-  copyDir(join(SRC, 'assets', 'static'), DIST);
+  copyDir(join(SRC, 'assets', 'static'), DIST, (_src, name) => d.site._preview && name === 'CNAME');
 
   writeFileSync(join(DIST, 'sitemap.xml'), sitemap(d.site, pages), 'utf8');
   writeFileSync(join(DIST, 'robots.txt'), robots(d.site), 'utf8');

@@ -75,10 +75,10 @@ export function renderHome(d) {
             <a class="btn btn--ghost btn--lg" href="/resheniya/">Посмотреть решения</a>
           </div>
         </div>
-        <div class="${hasImage('hero-photo') ? 'hero__media hero__media--photo' : 'hero__media'}" data-reveal>
+        <div class="hero__media hero__media--photo" data-reveal>
           ${hasImage('hero-photo')
-            ? html`${raw(picture('hero-photo', { alt: 'Визуализация: металлокаркас здания в степи', sizes: '(min-width: 900px) 50vw, 100vw', priority: true, className: 'hero__photo' }))}${vizTag()}`
-            : raw(heroFrame())}
+            ? raw(picture('hero-photo', { alt: 'Производство Steppe Steel: металлокаркас здания', sizes: '(min-width: 900px) 50vw, 100vw', priority: true, className: 'hero__photo' }))
+            : raw(photoSlot('hero-photo', { label: 'Фото в обработке', alt: 'Фото производства готовится', className: 'photo-slot--hero' }))}
         </div>
       </div>
     </section>

@@ -71,7 +71,7 @@ export function layout(site, page, content) {
 <meta name="description" content="${e(page.description)}">
 <link rel="canonical" href="${e(url)}">
 ${site._hreflang ? Object.entries(site._hreflang).map(([l, b]) => `<link rel="alternate" hreflang="${l}" href="${e(b + page.url)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${e(site._hreflang.ru + page.url)}">` : ''}
-${page.noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'}
+${page.noindex || site._preview ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'}
 <meta name="theme-color" content="#ffffff">
 ${site.analytics?.googleSiteVerification ? `<meta name="google-site-verification" content="${e(site.analytics.googleSiteVerification)}">` : ''}
 <meta name="format-detection" content="telephone=no">
