@@ -121,6 +121,26 @@ CNAME `www` → werstrax.github.io. Sitemap: https://steppesteel.kz/sitemap.xml.
 регистратора придёт предупреждение — на переезд 10 дней: залить `dist/`
 на казахстанский хостинг и перевести A-записи. Код менять не нужно.
 
+## Превью для заказчика и заглушка на домене (02.09.2026)
+
+Пока сайт не наполнен фото, на домене steppesteel.kz стоит фирменная
+заглушка «Сайт временно недоступен» (`src/holding/index.html`, скопирована
+в корень как index.html и 404.html + CNAME + favicon + .nojekyll). Рабочая
+версия v4 показывается заказчику на превью-адресе (noindex, без CNAME):
+
+**https://werstrax.github.io/steppesteel-preview/**
+
+Обновить превью:
+
+```bash
+PREVIEW=1 SITE_URL=https://werstrax.github.io/steppesteel-preview BASE_PATH=/steppesteel-preview node build.mjs
+# содержимое dist/ → репозиторий werstrax/steppesteel-preview (ветка main, корень) → push
+```
+
+Вернуть сайт на домен (когда фото добавлены и Шамиль одобрил): обычный
+деплой ниже — корень репо steppe-steel заменяется содержимым обычной
+сборки `node build.mjs` (без переменных окружения).
+
 ## Деплой на GitHub Pages (текущий)
 
 ```bash
