@@ -133,8 +133,10 @@ CNAME `www` → werstrax.github.io. Sitemap: https://steppesteel.kz/sitemap.xml.
 Обновить превью:
 
 ```bash
-PREVIEW=1 SITE_URL=https://werstrax.github.io/steppesteel-preview BASE_PATH=/steppesteel-preview node build.mjs
+PREVIEW=1 SITE_URL=https://werstrax.github.io/steppesteel-preview BASE_PATH=steppesteel-preview node build.mjs
 # содержимое dist/ → репозиторий werstrax/steppesteel-preview (ветка main, корень) → push
+# BASE_PATH пишем БЕЗ ведущего слэша: Git Bash на Windows подменяет «/preview»
+# на путь установки (C:/Program Files/Git/preview). Сборщик нормализует значение сам.
 ```
 
 Вернуть сайт на домен (когда фото добавлены и Шамиль одобрил): обычный
