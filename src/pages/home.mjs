@@ -21,11 +21,15 @@ export function renderHome(d) {
 
   /* Манифест: четыре проверяемые цифры завода — единственное «событие»
    * масштаба на странице (creative.md §5). Источники — site.proof. */
+  /* Набор пересобран 04.09.2026 по панели «глазами клиента»: четыре разных
+   * доказательства (срок · возможность · долговечность · технология), а не
+   * четыре техпараметра. Толщина стали и 43 типоразмера остались на
+   * /profili/ и /tekhnologii/lstk/. Источники — site.proof, production.stats. */
   const manifest = [
-    { val: '24', unit: 'м', key: 'пролёт без внутренних колонн' },
-    { val: '3,5', unit: 'мм', key: 'оцинкованная сталь профилей ПСУ и ПС' },
-    { val: '43', unit: '', key: 'типоразмера в сертифицированном сортаменте' },
-    { val: '30–45', unit: 'дн', key: 'от утверждения КМД до контура здания' },
+    { val: '30–45', unit: 'дней', key: 'от утверждённых чертежей до закрытых стен и кровли' },
+    { pre: 'до', val: '24', unit: 'м', key: 'пролёт без внутренних колонн' },
+    { val: '50+', unit: 'лет', key: 'оцинкованный каркас без покраски' },
+    { val: '100', unit: '%', key: 'болтовая сборка — сварки на площадке нет' },
   ];
 
   /* Модульная сетка решений: флагман 2×2 с фото, четыре с фото 1×1,
@@ -101,7 +105,7 @@ export function renderHome(d) {
           </div>
           <p class="hero__meta" data-reveal>
             <span>${site.brand.legalName}</span>
-            <span>Сертифицированный сортамент</span>
+            <span>Сертификат РК № ${d.designers.cert.number}</span>
             <span>Расчёт за 24 часа</span>
           </p>
         </div>
@@ -116,7 +120,7 @@ export function renderHome(d) {
           ${manifest.map(
             (m) => html`
               <div class="manifest__item" data-reveal>
-                <span class="manifest__val">${m.val}${m.unit ? html`<small>${m.unit}</small>` : ''}</span>
+                <span class="manifest__val">${m.pre ? html`<small class="manifest__pre">${m.pre}</small>` : ''}${m.val}${m.unit ? html`<small>${m.unit}</small>` : ''}</span>
                 <span class="manifest__key">${m.key}</span>
               </div>
             `
