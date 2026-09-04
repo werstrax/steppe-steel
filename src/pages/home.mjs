@@ -1,101 +1,123 @@
 /**
- * Главная v4.1 — по макету Шамиля (30.08.2026): лендинг с фото-карточками,
- * показателями в кружках, типовыми решениями, объектами, шагами в ряд.
- * Фото — слотами (заказчик передаст), цифры — только проверенные.
+ * Главная v5 «Цех в работе» (03.09.2026). Порядок блоков — по макету
+ * Шамиля (30.08): первый экран → показатели → что производим → как работаем
+ * → типовые → аудитории → объекты → о заводе → CTA → подвал с картой.
+ * Фото — из собственных презентаций завода (images.json), цифры — только
+ * проверенные (site.proof, production.stats). Слоты без кадра — честная плашка.
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import {
-  sectionHead, stat, ctaBand, solutionCard, photoSlot, vizTag,
-  iconArrow, iconCheck, statIcons, iconDownload,
-} from '../lib/components.mjs';
+import { sectionHead, ctaBand, photoSlot, iconArrow, iconCheck } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
-import { hasImage, picture } from '../lib/util.mjs';
+import { hasImage, picture, cx } from '../lib/util.mjs';
 
 export function renderHome(d) {
   const { site, solutions, production, portfolio, documents } = d;
   const p = site.proof;
   const typical = solutions.hub.typical;
   const presentation = documents.categories.find((c) => c.id === 'prezentacii')?.items[0];
+  const bySlug = Object.fromEntries(solutions.items.map((s) => [s.slug, s]));
+  const secByid = Object.fromEntries(production.sections.map((s) => [s.id, s]));
 
-  /* Показатели: только проверенные цифры. Мощности завода (м², т/мес,
-   * представители) — ждут подтверждения Шамиля, см. CONTENT-TODO. */
-  const stats = [
-    { icon: 'span', val: p.span, key: 'пролёт без внутренних колонн' },
-    { icon: 'steel', val: `до ${p.steelMax}`, key: 'оцинкованная сталь профилей ПСУ и ПС' },
-    { icon: 'cert', val: '43', key: 'типоразмера в сертифицированном сортаменте' },
-    { icon: 'clock', val: `${p.termDays} дней`, key: 'от утверждения проекта до контура здания' },
+  /* Манифест: четыре проверяемые цифры завода — единственное «событие»
+   * масштаба на странице (creative.md §5). Источники — site.proof. */
+  const manifest = [
+    { val: '24', unit: 'м', key: 'пролёт без внутренних колонн' },
+    { val: '3,5', unit: 'мм', key: 'оцинкованная сталь профилей ПСУ и ПС' },
+    { val: '43', unit: '', key: 'типоразмера в сертифицированном сортаменте' },
+    { val: '30–45', unit: 'дн', key: 'от утверждения КМД до контура здания' },
   ];
+
+  /* Модульная сетка решений: флагман 2×2 с фото, четыре с фото 1×1,
+   * четыре без кадра — графитовые плитки с метаданными. */
+  const tileOrder = [
+    'zernohranilishcha', 'sklady', 'proizvodstvennye-zdaniya', 'angary', 'zdaniya-dlya-tekhniki',
+    'ovoshchehranilishcha', 'sto-avtoparki', 'sportivnye-obekty', 'modulnye-zdaniya',
+  ];
+  const tiles = tileOrder.map((slug) => bySlug[slug]).filter(Boolean);
+
+  /* Мозаика цеха: линия профилирования широким кадром, дальше — резка,
+   * сварка, контроль, отгрузка. Подписи — номера переделов. */
+  const mosaic = [
+    { id: 'profil', mod: 'mosaic__item--wide' },
+    { id: 'rezka' },
+    { id: 'svarka' },
+    { id: 'kontrol' },
+    { id: 'otgruzka' },
+  ].map((m) => ({ ...m, sec: secByid[m.id], num: production.sections.findIndex((s) => s.id === m.id) + 1 }));
 
   const audiences = [
     {
       url: '/proektirovshchikam/',
-      title: 'Для проектировщиков',
+      title: 'Проектировщикам',
       items: ['Конструктив: расчёты, КМ и КМД силами завода', 'Нагрузки на фундамент, узлы, РПЗ', 'Сопровождение экспертизы', 'Агентское вознаграждение по договору'],
       photoSlot: 'aud-designers',
       cta: 'Подробнее',
     },
     {
       url: '/partneram/',
-      title: 'Стать партнёром Steppe Steel',
-      items: ['Запросы клиентов по вашему региону', 'Партнёрские условия на металлоконструкции', 'Обучение бригад и шеф-монтаж первого объекта', 'Маркетинговые материалы и поддержка сделок'],
+      title: 'Партнёрам и дилерам',
+      items: ['Запросы клиентов по вашему региону', 'Партнёрские условия на металлоконструкции', 'Обучение бригад и шеф-монтаж первого объекта', 'Материалы и поддержка сделок'],
       photoSlot: 'aud-partners',
       cta: 'Получить условия',
     },
     {
       url: '/agrariyam/',
-      title: 'Для аграрных предприятий',
+      title: 'Аграриям',
       items: ['Зернохранилища, овощехранилища, здания для техники', 'Расширение секциями под рост урожая', 'Калькулятор длины и окупаемости'],
       cta: 'Подробнее',
     },
     {
       url: '/stroitelnym-kompaniyam/',
-      title: 'Для строительных компаний',
+      title: 'Строительным компаниям',
       items: ['Вы строите — завод проектирует и производит каркас', 'Прогнозируемая себестоимость и сроки', 'Техподдержка монтажной организации'],
       cta: 'Условия сотрудничества',
     },
   ];
 
-  const aboutPhotos = production.sections.slice(0, 4);
+  const obj = portfolio.items[0];
 
   const content = html`
-    <!-- Первый экран: заголовок-категория по ТЗ и макету, фото справа (слот) -->
-    <section class="hero">
-      <div class="container hero__grid">
+    <!-- Первый экран: цех во всю ширину, заголовок-категория по ТЗ -->
+    <section class="hero hero--photo">
+      <div class="hero__bg" aria-hidden="true">
+        ${hasImage('hero-photo')
+          ? raw(picture('hero-photo', { alt: '', sizes: '100vw', priority: true }))
+          : ''}
+      </div>
+      <div class="container hero__inner">
         <div class="hero__text">
+          <p class="eyebrow mono" data-reveal>Костанайская область · весь Казахстан</p>
           <h1 class="hero__title" data-reveal>STEPPESTEEL — завод строительных металло&shy;конструкций</h1>
-          <p class="hero__slogan" data-reveal>Проектирование. Производство. Комплектная поставка.</p>
+          <p class="hero__slogan" data-reveal>${site.brand.slogan}</p>
           <p class="hero__lead" data-reveal>
-            Производство металлокаркасов из ЛСТК и ЛМК для промышленных,
-            сельскохозяйственных, складских и коммерческих зданий —
-            по всей территории Казахстана.
+            Металлокаркасы из ЛСТК и ЛМК для зернохранилищ, складов, ангаров
+            и производственных зданий. Проектный отдел, своя линия профилирования,
+            комплект с маркировкой каждой детали — с одной площадки.
           </p>
           <div class="btn-row" data-reveal>
             <a class="btn btn--primary btn--lg" href="${site.cta.primary.url}">${site.cta.primary.title}</a>
             <a class="btn btn--ghost btn--lg" href="/resheniya/">Посмотреть решения</a>
           </div>
-        </div>
-        <div class="hero__media hero__media--photo" data-reveal>
-          ${hasImage('hero-photo')
-            ? raw(picture('hero-photo', { alt: 'Производство Steppe Steel: металлокаркас здания', sizes: '(min-width: 900px) 50vw, 100vw', priority: true, className: 'hero__photo' }))
-            : raw(photoSlot('hero-photo', { label: 'Фото в обработке', alt: 'Фото производства готовится', className: 'photo-slot--hero' }))}
+          <p class="hero__meta" data-reveal>
+            <span>${site.brand.legalName}</span>
+            <span>Сертифицированный сортамент</span>
+            <span>Расчёт за 24 часа</span>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Показатели -->
-    <section class="section section--tight">
+    <!-- Цифры-манифест -->
+    <section class="manifest section--dark" aria-labelledby="manifest-title">
       <div class="container">
-        <h2 class="u-visually-hidden">Наши показатели</h2>
-        <div class="kpi">
-          ${stats.map(
-            (s) => html`
-              <div class="kpi__item" data-reveal>
-                <span class="kpi__icon" aria-hidden="true">${statIcons[s.icon]}</span>
-                <span class="kpi__body">
-                  <span class="kpi__val">${s.val}</span>
-                  <span class="kpi__key">${s.key}</span>
-                </span>
+        <h2 class="u-visually-hidden" id="manifest-title">Завод в цифрах</h2>
+        <div class="manifest__grid">
+          ${manifest.map(
+            (m) => html`
+              <div class="manifest__item" data-reveal>
+                <span class="manifest__val">${m.val}${m.unit ? html`<small>${m.unit}</small>` : ''}</span>
+                <span class="manifest__key">${m.key}</span>
               </div>
             `
           )}
@@ -103,22 +125,81 @@ export function renderHome(d) {
       </div>
     </section>
 
-    <!-- Что мы производим -->
-    <section class="section section--tint" id="resheniya">
+    <!-- Что мы производим: модульная сетка девяти решений -->
+    <section class="section" id="resheniya">
       <div class="container">
         ${sectionHead({
-          label: 'Наши решения',
+          label: 'Решения',
           title: 'Что мы производим',
-          text: 'Девять типов зданий с одной производственной площадки. Каждое — отдельная страница с конструктивом, параметрами и ответами на вопросы.',
+          text: 'Девять типов зданий с одной производственной площадки. У каждого — своя страница: конструктив, параметры, ответы на вопросы.',
           action: { title: 'Все решения', url: '/resheniya/' },
         })}
-        <div class="card-grid card-grid--3">
-          ${solutions.items.map((s) => solutionCard(s))}
+        <div class="tiles">
+          ${tiles.map((s, i) => {
+            const img = s.cover || `sol-${s.slug}`;
+            const photo = hasImage(img);
+            return html`
+              <a class="${cx('tile', s.flag && 'tile--flag', photo ? 'tile--photo' : 'tile--dark')}" href="${s.url}" data-reveal>
+                ${photo
+                  ? html`<span class="tile__img" aria-hidden="true">${raw(picture(img, { alt: '', sizes: s.flag ? '(min-width: 1020px) 50vw, 100vw' : '(min-width: 1020px) 25vw, 50vw' }))}</span>`
+                  : ''}
+                <span class="tile__num mono">${String(i + 1).padStart(2, '0')}</span>
+                ${s.flag ? html`<span class="tile__flag mono">Флагман</span>` : ''}
+                <span class="tile__title">${s.short || s.title}</span>
+                ${s.cardMeta?.length ? html`<span class="tile__meta mono">${s.cardMeta.map((m) => html`<span>${m}</span>`)}</span>` : ''}
+                <span class="tile__arrow" aria-hidden="true">${iconArrow}</span>
+              </a>
+            `;
+          })}
         </div>
       </div>
     </section>
 
-    <!-- Типовые решения -->
+    <!-- Производство: тёмный контрапункт с кадрами цеха -->
+    <section class="section section--dark" id="proizvodstvo">
+      <div class="container">
+        ${sectionHead({
+          label: 'Производство',
+          title: 'Завод, а не посредник',
+          text: 'Линия профилирования ПСУ и ПС, участки резки и сварки, контроль на каждом переделе, комплектация и отгрузка — одна площадка в Костанайской области.',
+          action: { title: 'Смотреть производство', url: '/proizvodstvo/' },
+        })}
+        <div class="mosaic">
+          ${mosaic.map(
+            (m) => html`
+              <figure class="${cx('mosaic__item', m.mod)}" data-reveal>
+                ${hasImage(m.sec.photoSlot)
+                  ? raw(picture(m.sec.photoSlot, { alt: `${m.sec.title} — производство Steppe Steel`, sizes: m.mod ? '(min-width: 720px) 66vw, 100vw' : '(min-width: 720px) 33vw, 50vw' }))
+                  : raw(photoSlot(m.sec.photoSlot, { label: m.sec.title, alt: m.sec.title }))}
+                <figcaption class="mosaic__cap"><b>${String(m.num).padStart(2, '0')}</b>${m.sec.title}</figcaption>
+              </figure>
+            `
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Как мы работаем: шесть шагов в ряд -->
+    <section class="section section--tint" id="process">
+      <div class="container">
+        ${sectionHead({ label: 'Процесс', title: 'Как мы работаем', text: production.process.intro })}
+        <ol class="flow-row">
+          ${production.process.steps.map(
+            (s, i) => html`
+              <li class="flow-row__step" data-reveal>
+                <span class="flow-row__num">${i + 1}</span>
+                <span class="flow-row__title">${s.title}</span>
+                <span class="flow-row__text">${s.text}</span>
+                <span class="flow-row__dur mono">${s.duration}</span>
+              </li>
+            `
+          )}
+        </ol>
+        <p class="note">${production.process.note}</p>
+      </div>
+    </section>
+
+    <!-- Типовые решения: конфигурации с проверенными габаритами -->
     <section class="section" id="tipovye">
       <div class="container">
         ${sectionHead({
@@ -129,76 +210,33 @@ export function renderHome(d) {
         })}
         <div class="card-grid card-grid--4">
           ${typical.items.map(
-            (t) => html`
+            (t, i) => html`
               <a class="card typ-card" href="${t.url}" data-reveal>
-                <span class="card__media">
-                  ${hasImage(t.photoSlot)
-                    ? raw(picture(t.photoSlot, { alt: t.title, sizes: '(min-width: 900px) 25vw, 100vw' }))
-                    : raw(photoSlot(t.photoSlot, { label: 'Фото в обработке', alt: t.title }))}
-                  ${hasImage(t.photoSlot) ? vizTag() : ''}
-                </span>
                 <span class="card__body">
+                  <span class="card__meta">Типовое ${String(i + 1).padStart(2, '0')}</span>
                   <h3 class="card__title">${t.title}</h3>
                   <dl class="typ-card__params">
                     ${t.params.map(([k, v]) => html`<div><dt>${k}</dt><dd>${v}</dd></div>`)}
                   </dl>
+                  <span class="card__more arrow-link">Подробнее <span class="arrow">${iconArrow}</span></span>
                 </span>
               </a>
             `
           )}
-        </div>
-      </div>
-    </section>
-
-    <!-- Реализованные объекты -->
-    <section class="section section--tint" id="obekty">
-      <div class="container">
-        ${sectionHead({
-          label: 'Портфолио',
-          title: 'Реализованные объекты',
-          text: portfolio.intro,
-          action: { title: 'Смотреть все объекты', url: '/obekty/' },
-        })}
-        <div class="card-grid card-grid--3">
-          ${portfolio.items.slice(0, 3).map(
-            (o) => html`
-              <a class="card obj-teaser" href="/obekty/" data-reveal>
-                <span class="card__media">
-                  ${o.photos?.length
-                    ? raw(picture(o.photos[0].img, { alt: o.photos[0].alt || o.title, sizes: '(min-width: 900px) 33vw, 100vw' }))
-                    : raw(photoSlot(`obj-${o.slug}`, { label: 'Фото объекта в обработке', alt: o.title }))}
-                </span>
-                <span class="card__body">
-                  ${o.badge ? html`<span class="card__badge mono">${o.badge}</span>` : ''}
-                  <h3 class="card__title">${o.title}</h3>
-                  <span class="card__meta">${o.region}${o.year ? html`, ${o.year}` : ''} · ${o.size}</span>
-                </span>
-              </a>
-            `
-          )}
-          ${portfolio.items.length < 3
-            ? html`
-                <div class="card card--note" data-reveal>
-                  <span class="card__body">
-                    <h3 class="card__title">${portfolio.empty.title}</h3>
-                    <p class="card__text">${portfolio.empty.text}</p>
-                  </span>
-                </div>
-              `
-            : ''}
         </div>
       </div>
     </section>
 
     <!-- Аудитории: проектировщики, партнёры, аграрии, строители -->
-    <section class="section" id="partnyorstvo">
+    <section class="section section--tint" id="partnyorstvo">
       <div class="container">
+        ${sectionHead({ label: 'Кому', title: 'С кем работает завод', text: 'Четыре входа — под задачу каждого. Внутри: условия, документы, что готовит завод и что остаётся за вами.' })}
         <div class="card-grid card-grid--2">
           ${audiences.map(
             (a) => html`
               <div class="card aud" data-reveal>
                 <div class="aud__body">
-                  <h2 class="aud__title">${a.title}</h2>
+                  <h3 class="aud__title">${a.title}</h3>
                   <ul class="aud__list">
                     ${a.items.map((it) => html`<li>${iconCheck}<span>${it}</span></li>`)}
                   </ul>
@@ -216,82 +254,70 @@ export function renderHome(d) {
       </div>
     </section>
 
-    <!-- Как мы работаем -->
-    <section class="section section--tint" id="process">
+    <!-- Объекты: один реальный кейс проектного отдела, честная заметка -->
+    <section class="section" id="obekty">
       <div class="container">
-        ${sectionHead({ label: 'Процесс', title: 'Как мы работаем', text: production.process.intro })}
-        <ol class="flow-row">
-          ${production.process.steps.map(
-            (s, i) => html`
-              <li class="flow-row__step" data-reveal>
-                <span class="flow-row__num">${i + 1}</span>
-                <span class="flow-row__title">${s.title}</span>
-                <span class="flow-row__text">${s.text}</span>
-                <span class="flow-row__dur mono">${s.duration}</span>
-              </li>
-            `
-          )}
-        </ol>
+        ${sectionHead({
+          label: 'Портфолио',
+          title: 'Реализованные объекты',
+          text: portfolio.intro,
+          action: { title: 'Все объекты', url: '/obekty/' },
+        })}
+        <div class="card-grid card-grid--2">
+          ${obj
+            ? html`
+                <a class="card obj-teaser" href="/obekty/" data-reveal>
+                  <span class="card__body">
+                    ${obj.badge ? html`<span class="card__badge mono">${obj.badge}</span>` : ''}
+                    <h3 class="card__title">${obj.title}</h3>
+                    <span class="card__text">${obj.purpose}. ${obj.frameType}.</span>
+                    <dl class="typ-card__params">
+                      <div><dt>Размеры</dt><dd>${obj.size}</dd></div>
+                      <div><dt>Площадь</dt><dd>${obj.area}</dd></div>
+                      <div><dt>Регион</dt><dd>${obj.region}, ${obj.year}</dd></div>
+                    </dl>
+                    <span class="card__more arrow-link">Смотреть кейс <span class="arrow">${iconArrow}</span></span>
+                  </span>
+                </a>
+              `
+            : ''}
+          <div class="card card--note" data-reveal>
+            <span class="card__body">
+              <h3 class="card__title">${portfolio.empty.title}</h3>
+              <p class="card__text">${portfolio.empty.text}</p>
+              <a class="arrow-link card__more" href="${site.contacts.instagram}" target="_blank" rel="noopener">Съёмки монтажа в Instagram <span class="arrow">${iconArrow}</span></a>
+            </span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- О заводе кратко + фото производства -->
-    <section class="section" id="zavod">
+    <!-- О заводе: текст + база, оборудование и сертификат -->
+    <section class="section section--tint" id="zavod">
       <div class="container about-band">
         <div class="about-band__text" data-reveal>
           <p class="eyebrow mono">О заводе</p>
-          <h2 class="section-head__title">О заводе Steppe Steel</h2>
-          <p>Завод строительных металлоконструкций полного цикла в Костанайской
-          области: собственная линия профилирования ПСУ и ПС, участки резки
-          и сварки, проектный отдел с ЛИРА-САПР и Tekla, комплектация и отгрузка
-          по всему Казахстану.</p>
-          <p>Контроль качества на всех переделах, сертифицированный сортамент —
-          43 типоразмера профиля.</p>
+          <h2 class="section-head__title">Завод полного цикла в Костанайской области</h2>
+          <p class="lead">${site.brand.legalName}, Узункольский район. Линия профилирования
+          ПСУ и ПС, участки резки и сварки, проектный отдел с ЛИРА-САПР
+          и Tekla Structures, комплектация и отгрузка по всему Казахстану.</p>
+          <p>Профили сертифицированы: 43 типоразмера в сортаменте. Каждая деталь
+          промаркирована по КМД — на площадке остаётся только болтовая сборка.</p>
           <div class="btn-row">
             <a class="btn btn--primary" href="/o-zavode/">Подробнее о заводе</a>
-            <a class="btn btn--ghost" href="/proizvodstvo/">Производство</a>
+            ${presentation ? html`<a class="btn btn--ghost" href="${presentation.file}" download data-goal="pdf_download">Скачать презентацию</a>` : ''}
           </div>
         </div>
         <div class="about-band__photos">
-          ${aboutPhotos.map(
-            (s) => html`
-              <div class="about-band__photo" data-reveal>
-                ${hasImage(s.photoSlot)
-                  ? raw(picture(s.photoSlot, { alt: `${s.title} — производство Steppe Steel`, sizes: '(min-width: 900px) 25vw, 50vw' }))
-                  : raw(photoSlot(s.photoSlot, { label: s.title, alt: s.title }))}
-              </div>
+          ${[['prod-baza', 'Производственная база'], ['prod-oborudovanie', 'Оборудование'], ['cert-p1', 'Сертификат соответствия на профили ПСУ и ПС']].map(
+            ([slot, cap], i) => html`
+              <figure class="${cx('about-band__photo', slot.startsWith('cert') && 'about-band__photo--doc')}" data-reveal>
+                ${hasImage(slot)
+                  ? raw(picture(slot, { alt: `${cap} — Steppe Steel`, sizes: i === 0 ? '(min-width: 1020px) 58vw, 100vw' : '(min-width: 1020px) 29vw, 50vw' }))
+                  : raw(photoSlot(slot, { label: cap, alt: cap }))}
+              </figure>
             `
           )}
-        </div>
-      </div>
-    </section>
-
-    <!-- Производство: тёмная полоса «завод, а не посредник» -->
-    <section class="section section--dark">
-      <div class="container">
-        ${sectionHead({
-          label: 'Производство',
-          title: 'Завод, а не посредник',
-          text: 'Собственная линия профилирования, участки резки и сварки, комплектация и отгрузка — одна площадка в Костанайской области.',
-          action: { title: 'Смотреть производство', url: '/proizvodstvo/' },
-        })}
-        <div class="prod-band">
-          <ul class="prod-band__list">
-            ${production.sections.map(
-              (s, i) => html`
-                <li data-reveal>
-                  <a class="prod-band__item" href="/proizvodstvo/#${s.id}">
-                    <span class="prod-band__num mono">${String(i + 1).padStart(2, '0')}</span>
-                    <span class="prod-band__title">${s.title}</span>
-                    <span class="prod-band__arrow" aria-hidden="true">${iconArrow}</span>
-                  </a>
-                </li>
-              `
-            )}
-          </ul>
-          <div class="prod-band__stats">
-            ${production.stats.map((s) => stat(s))}
-          </div>
         </div>
       </div>
     </section>

@@ -4,11 +4,11 @@
 
 import { layout, html, raw } from '../lib/layout.mjs';
 import {
-  pageHero, sectionHead, specs, faq, ctaBand,
+  pageHero, sectionHead, specs, faq, ctaBand, photoSlot,
   solutionRow, solutionCard, iconArrow, grainCalcBlock, modularScheme,
 } from '../lib/components.mjs';
 import { productNode, faqNode, itemListNode } from '../lib/schema.mjs';
-import { hasImage } from '../lib/util.mjs';
+import { hasImage, picture } from '../lib/util.mjs';
 
 /* --- Хаб ------------------------------------------------------------------ */
 
@@ -120,12 +120,21 @@ export function renderSolution(d, s) {
       titleHtml: s.title,
       text: s.lead,
       crumbList,
+      image: s.cover || `sol-${s.slug}`,
     })}
 
     <section class="section section--flush-top">
       <div class="container split">
         <div class="stack">
           ${(s.intro || []).map((par) => html`<p class="text-lg" data-reveal>${par}</p>`)}
+          ${(s.figures || []).length
+            ? html`<div class="tech-media" data-lightbox>
+                ${s.figures.map((m) => html`<figure class="tech-media__item" data-reveal>
+                  ${hasImage(m.slot) ? raw(picture(m.slot, { alt: m.caption, sizes: '(min-width: 900px) 40vw, 100vw' })) : raw(photoSlot(m.slot, { label: m.caption, alt: m.caption }))}
+                  <figcaption class="media-caption">${m.caption}</figcaption>
+                </figure>`)}
+              </div>`
+            : ''}
           ${s.audience?.length
             ? html`
                 <div data-reveal>

@@ -70,7 +70,16 @@
         }
       ],
       "url": "/tekhnologii/lstk/",
-      "media": []
+      "media": [
+        {
+          "slot": "tech-lstk-1",
+          "caption": "Профиль ПСУ: сигма-сечение с ребром жёсткости в стенке (рендер завода)"
+        },
+        {
+          "slot": "tech-lstk-2",
+          "caption": "Профиль ПС: С-образное сечение (рендер завода)"
+        }
+      ]
     },
     {
       "slug": "lmk",
@@ -191,7 +200,12 @@
         }
       ],
       "url": "/tekhnologii/boltovye-soedineniya/",
-      "media": []
+      "media": [
+        {
+          "slot": "tech-boltovye-1",
+          "caption": "Болтовой узел каркаса: рендер из проекта КМД"
+        }
+      ]
     },
     {
       "slug": "zavodskaya-gotovnost",
@@ -251,7 +265,16 @@
         }
       ],
       "url": "/tekhnologii/zavodskaya-gotovnost/",
-      "media": []
+      "media": [
+        {
+          "slot": "prod-komplekt",
+          "caption": "Комплектация: маркированные детали по КМД"
+        },
+        {
+          "slot": "prod-otgruzka",
+          "caption": "Отгрузка комплекта заказчику"
+        }
+      ]
     },
     {
       "slug": "modulnost",
@@ -308,7 +331,12 @@
         }
       ],
       "url": "/tekhnologii/modulnost/",
-      "media": []
+      "media": [
+        {
+          "slot": "sol-zdaniya-dlya-tekhniki",
+          "caption": "Навес для техники из модулей 5 × 10 м"
+        }
+      ]
     },
     {
       "slug": "antikorroziynaya-zashchita",
@@ -423,7 +451,12 @@
         }
       ],
       "url": "/tekhnologii/proektirovanie/",
-      "media": []
+      "media": [
+        {
+          "slot": "tech-hub",
+          "caption": "Проектный отдел: расчётная модель каркаса"
+        }
+      ]
     }
   ],
   "_mediaNote": "media: [{ \"slot\": \"tech-lstk-1\", \"caption\": \"…\" }] — схемы, рисунки, фото профилей и чертежи; кадр кладётся под именем slot, страница подхватит (ТЗ §13)."

@@ -1,106 +1,388 @@
 {
-  "_readme": "Генерируется автоматически: python tools/optimize_images.py. Руками не править.",
-  "aud-designers": {
-    "w": 1264,
-    "h": 848,
-    "ratio": 1.4906,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1264
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwC+SB4ME0q+dv/U7QAA/NoyWP4O/jDLRzEqBMAXLj8rCcQFmGA+I0qlUS619WXqBK+BNInXazabzDTz5d/jyEsdK58rVqm3Q0EXNCvKz2J9qp12UZQA"
-  },
-  "aud-partners": {
-    "w": 1264,
-    "h": 848,
-    "ratio": 1.4906,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1264
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoUAA0APuleqE0pJSQiMAgBIB0JQBOgBDvkSvxYtMcFAAD+rOpRKrUK0dcNk1h2M9b0EORc2b+eSbUkyqgpzl2ehufSLeAro9RwGktx6huWy4I312Yn4AAA"
-  },
-  "cert-p1": {
-    "w": 1654,
-    "h": 2339,
-    "ratio": 0.7071,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1654
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAwCdASoUABwAPuliqk4pJaQiKA1RIB0JaQAAKdCU4DxgncwvAAAA/vOCuPwEbKN8kKX4wUXeVn8eeAgt+DnlH90sAAAA"
-  },
-  "cert-p2": {
-    "w": 1654,
-    "h": 2339,
-    "ratio": 0.7071,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1654
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUABwAPulkqE8pJaOiKA1RIB0JaQAAO73/tZhpNOv7YkAAAP7wT0afLizsIdgFXv8SpQO+5PJUi0KvKgag1mGPtXJ0RQx2AAA="
-  },
-  "cert-p3": {
-    "w": 1654,
-    "h": 2339,
-    "ratio": 0.7071,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1654
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABwAwCdASoUABwAPulmrU+pJaQiKAqpIB0JaQAAPlIPAMCdxgAA/vBPRqGv42CaW4lRA/d9sMUexOXZXAAAAA=="
-  },
-  "cert-p4": {
-    "w": 1654,
-    "h": 2339,
-    "ratio": 0.7071,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1654
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoUABwAPuliq08pJSOiMBgIASAdCWkAAC50Wznyhkh+AAAA/vIjkt5+TtFyTHJONsxtxbtoMzAAAA=="
-  },
-  "og-default": {
-    "w": 1200,
-    "h": 630,
-    "ratio": 1.9048,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1200
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
-  },
-  "_vizNote": "Визуализации (hero-photo, sol-*, typ-*) сняты 02.09.2026 по решению Рамазана: слоты ждут реальных фото, файлы в src/assets/img/raw/viz-archive/. aud-* (блок партнёров) оставлены."
+ "_readme": "Генерируется автоматически: python tools/optimize_images.py. Руками не править.",
+ "aud-designers": {
+  "w": 1396,
+  "h": 941,
+  "ratio": 1.4835,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1396
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoUAA0APulgqE0pJaQiMAgBIB0JZwAAW4rUTQuLkQELxTACAAD+5zWIHWwOTz7iGxQZQLOgx7nV+UQFgG/90s1QSpJwE23fdtOMBY9qS/lDMOFqzawVjbEKGo9aF5AA"
+ },
+ "aud-partners": {
+  "w": 1269,
+  "h": 772,
+  "ratio": 1.6438,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1269
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoUAAwAPulgqU2pJaQiMAgBIB0JTB1owRKAC4NQd58fIAD9Mf/+DYRnF4BiPdFGb21Q7TWfd5KOeZF/TXYWqawUfyLFruwaKkSTAiVmBm0g/W76CNY6QAAA"
+ },
+ "cert-p1": {
+  "w": 1654,
+  "h": 2339,
+  "ratio": 0.7071,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1654
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAwCdASoUABwAPuliqk4pJaQiKA1RIB0JaQAAKdCU4DxgncwvAAAA/vOCuPwEbKN8kKX4wUXeVn8eeAgt+DnlH90sAAAA"
+ },
+ "cert-p2": {
+  "w": 1654,
+  "h": 2339,
+  "ratio": 0.7071,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1654
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUABwAPulkqE8pJaOiKA1RIB0JaQAAO73/tZhpNOv7YkAAAP7wT0afLizsIdgFXv8SpQO+5PJUi0KvKgag1mGPtXJ0RQx2AAA="
+ },
+ "cert-p3": {
+  "w": 1654,
+  "h": 2339,
+  "ratio": 0.7071,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1654
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABwAwCdASoUABwAPulmrU+pJaQiKAqpIB0JaQAAPlIPAMCdxgAA/vBPRqGv42CaW4lRA/d9sMUexOXZXAAAAA=="
+ },
+ "cert-p4": {
+  "w": 1654,
+  "h": 2339,
+  "ratio": 0.7071,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1654
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoUABwAPuliq08pJSOiMBgIASAdCWkAAC50Wznyhkh+AAAA/vIjkt5+TtFyTHJONsxtxbtoMzAAAA=="
+ },
+ "hero-photo": {
+  "w": 2642,
+  "h": 1487,
+  "ratio": 1.7767,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2642
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoUAAsAPulgqE2pJaOiMAgBIB0JZQCdABhzS+/AFWCfAAD+5CH+9dxeNj6YaUyapdlXymc4ErYHsFL5U0jc9bnx8Y1LB0IQkIMBKB35+AA="
+ },
+ "og-default": {
+  "w": 1200,
+  "h": 630,
+  "ratio": 1.9048,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1200
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
+ },
+ "prod-baza": {
+  "w": 1526,
+  "h": 859,
+  "ratio": 1.7765,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1526
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwAAW5ztzBQ6ytAAAP6qEp6PtZH9I18o0MYmLmVTEl6AtvhzY4paYphe/D4JcF+Io+88fwAAAA=="
+ },
+ "prod-komplekt": {
+  "w": 1254,
+  "h": 1206,
+  "ratio": 1.0398,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1254
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwBACdASoUABMAPulkqU8pJaOiKA1RIB0JaQAALqp9TPDFtlUuUFTeCWwzb2yJGAAA/rI3jpq5ByoEqJI41gZNnbcDG3VnstQ5kU3hYRnGywyCU3Uq0+5TI9wqdFB+MvrNVYfWE6UrrdLHQJvWm0irBBBgQAAA"
+ },
+ "prod-kontrol": {
+  "w": 1258,
+  "h": 708,
+  "ratio": 1.7768,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1258
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoUAAsAPulgqE0pJaOiMAgBIB0JZQC7ACFe2RKPj0BJxiAA/rnERnNlgCRNDDnC3OhpiFw7cfbayoqTeoDWthNn1z2x5CM4a84ogWQS4iLsAAAA"
+ },
+ "prod-oborudovanie": {
+  "w": 983,
+  "h": 911,
+  "ratio": 1.079,
+  "widths": [
+   384,
+   576,
+   864,
+   983
+  ],
+  "fallback": 983,
+  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQBACdASoUABMAPulqrVGpJaQiqAgBIB0JaQAAJaBoUmU8S2H+ZXGKkE2NAm8HAAD+7L8EuffmaaOAzoHrIbUb5J/xScFGAuY36B5Ym+sGJ+uanaThb8iuNbJLI2PdIllKzaugeSF7UkrBpO+DDSNjOKEAAA=="
+ },
+ "prod-otgruzka": {
+  "w": 868,
+  "h": 1008,
+  "ratio": 0.8611,
+  "widths": [
+   384,
+   576,
+   864,
+   868
+  ],
+  "fallback": 868,
+  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBQCdASoUABcAPulcpk2pJKMiMBgMASAdCWMAAC+V4rem6kR+BybTVppw5Cs9LbAAAP6J1jMR6ikbGnH9RBQxNtErT94tCqa+IIH6YEj4GpKOm5GAAYm4MyKG1VGZ393+dY2qyxs6144AtB2p9Ldk3JwucAAA"
+ },
+ "prod-plazma": {
+  "w": 1182,
+  "h": 675,
+  "ratio": 1.7511,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1182
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoUAAsAPuliqE2pJaOiMAgBIB0JQBdgBFFaN+6FMKaNR8oqyAD+7C3CYN8Fwiq1C/V6KsWwaMPW/KYPlC2L85UaU2fLozPQrAAhfyeYx+AAAA=="
+ },
+ "prod-profil": {
+  "w": 1009,
+  "h": 1012,
+  "ratio": 0.997,
+  "widths": [
+   384,
+   576,
+   864,
+   1009
+  ],
+  "fallback": 1009,
+  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQBACdASoUABQAPulmqE+pJaOiKA1RIB0JZQCBugRa35j6spRsc5sNlpoCjXea0AD+5ZB7WSjLuXQ9C67Tfc1lhU3alo+dBtRAKkNPIbfQTOqNSi/V7PFwFTWvOJAYx/C67xQFf4yMFM4zGp2olLlA1mvgAA=="
+ },
+ "prod-rezka": {
+  "w": 2003,
+  "h": 1129,
+  "ratio": 1.7741,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2003
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoUAAsAPulgqk2pJaQiMAgBIB0JQBdkBshgagcIpy8CUYovAAD+7Dp1E/3398MFjyHGqBLgWOSu3Y10bvtdDdtGG0mKyJrLP9DSCsa6lNMSINAIAAA="
+ },
+ "prod-svarka": {
+  "w": 983,
+  "h": 663,
+  "ratio": 1.4827,
+  "widths": [
+   384,
+   576,
+   864,
+   983
+  ],
+  "fallback": 983,
+  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
+ },
+ "sol-angary": {
+  "w": 1827,
+  "h": 764,
+  "ratio": 2.3914,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1827
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoUAAgAPulkqU2pJaQiMAgBIB0JZQCdABZTvrOtZoSAAAD+14KcqJMu5Mpqpoq3Q60JK4ZpaZ3L4WxvVzkS4FFyBPengAAA"
+ },
+ "sol-proizvodstvennye-zdaniya": {
+  "w": 1826,
+  "h": 1020,
+  "ratio": 1.7902,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1826
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBOgBEBBuCUUNskiWAD+sLAIRdKD7x3YgZ6Bytkj/3qInqFuRvo7QQcEdNf1PPdwFIyGXingsgyYBMz3oAAA"
+ },
+ "sol-zdaniya-dlya-tekhniki": {
+  "w": 1536,
+  "h": 798,
+  "ratio": 1.9248,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoUAAoAPuliqE2pJaOiMAgBIB0JZwDA3CIfu0j+7QAtujr4AAD+6JIOQ7WDsK/6UprgKafiDJz7tbMUAM1BuA/oliBovjN8K+QwPEdjVhlTdQRAAAA="
+ },
+ "sol-zernohranilishcha": {
+  "w": 870,
+  "h": 452,
+  "ratio": 1.9248,
+  "widths": [
+   384,
+   576,
+   864,
+   870
+  ],
+  "fallback": 870,
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAAoAPulgqE0pJaQiMAgBIB0JZQDE2CPx11/L59jkFAAA/rQrXo919KFkDRPMUr8E6MSC3UhWR2DGIu8jhMGXLdUobasesAA="
+ },
+ "tech-boltovye-1": {
+  "w": 1536,
+  "h": 1133,
+  "ratio": 1.3557,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoUAA8APulep00pJSOiMAgBIB0JZQAAW+vCb7dQAAD+7Yq5+jJinsGvQVdRC6WXIi2A2m3WIPa+RDGEOAA="
+ },
+ "tech-hub": {
+  "w": 1536,
+  "h": 999,
+  "ratio": 1.5375,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536
+  ],
+  "fallback": 1152,
+  "lqip": "",
+  "alpha": true
+ },
+ "tech-lstk-1": {
+  "w": 945,
+  "h": 1230,
+  "ratio": 0.7683,
+  "widths": [
+   384,
+   576,
+   864,
+   945
+  ],
+  "fallback": 945,
+  "lqip": "",
+  "alpha": true
+ },
+ "tech-lstk-2": {
+  "w": 1210,
+  "h": 680,
+  "ratio": 1.7794,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1210
+  ],
+  "fallback": 1152,
+  "lqip": "",
+  "alpha": true
+ },
+ "zerno-cutaway": {
+  "w": 2560,
+  "h": 1440,
+  "ratio": 1.7778,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2560
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JQBdgA9Lkt+YZ5/BG4R2AAP7yKW2HH6lnMJMNJj9mladLsELZSEdJe6xjcOvvJqQLprwQqiBm+T3QAAA="
+ },
+ "zerno-node": {
+  "w": 2560,
+  "h": 1440,
+  "ratio": 1.7778,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2560
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwC+SCIex8D1xmVYZK4AAP7twuzQn74u+stKC/DBICQW+9Agef4V+sRNgVGBcOBb35Re3kUAAA=="
+ }
 }

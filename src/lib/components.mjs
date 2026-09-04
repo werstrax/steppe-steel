@@ -361,7 +361,29 @@ export function crumbs(list) {
 
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
-export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, count }) {
+export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, count, image }) {
+  /* Фото-режим: слева заголовок и лид, справа кадр из манифеста с оранжевой
+   * кромкой. Без кадра — обычный типографический хиро. */
+  if (image && hasImage(image)) {
+    return html`
+      <section class="page-hero page-hero--photo">
+        <div class="container">
+          <div class="page-hero__grid">
+            <div class="page-hero__body">
+              ${crumbList ? raw(crumbs(crumbList)) : ''}
+              ${label ? html`<p class="eyebrow mono page-hero__label">${label}</p>` : ''}
+              <h1 class="${cx('page-hero__title', small && 'page-hero__title--sm')}">${raw(titleHtml)}</h1>
+              ${text ? html`<p class="page-hero__aside" style="margin-top:1.25rem">${raw(text)}</p>` : ''}
+              ${actions ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>` : ''}
+            </div>
+            <div class="page-hero__media" data-reveal>
+              ${raw(picture(image, { alt: '', sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
   return html`
     <section class="page-hero">
       <div class="container">
