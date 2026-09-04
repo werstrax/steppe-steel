@@ -243,5 +243,71 @@
       "title": "Кокшетау",
       "url": "/kokshetau/"
     }
-  ]
+  ],
+  "navTz": [
+    {
+      "title": "Решения",
+      "url": "/resheniya/"
+    },
+    {
+      "title": "Аграриям",
+      "url": "/agrariyam/"
+    },
+    {
+      "title": "Строительным компаниям",
+      "url": "/stroitelnym-kompaniyam/",
+      "shortTitle": "Строителям"
+    },
+    {
+      "title": "Проектировщикам",
+      "url": "/proektirovshchikam/"
+    },
+    {
+      "title": "Партнёрам",
+      "url": "/partneram/"
+    },
+    {
+      "title": "Портфолио",
+      "url": "/obekty/"
+    },
+    {
+      "title": "О заводе",
+      "url": "/o-zavode/",
+      "children": [
+        {
+          "title": "О заводе",
+          "url": "/o-zavode/"
+        },
+        {
+          "title": "Производство",
+          "url": "/proizvodstvo/"
+        },
+        {
+          "title": "Технологии",
+          "url": "/tekhnologii/"
+        },
+        {
+          "title": "Профили ПСУ и ПС",
+          "url": "/profili/"
+        },
+        {
+          "title": "Документация",
+          "url": "/dokumentaciya/"
+        },
+        {
+          "title": "Журнал",
+          "url": "/blog/"
+        },
+        {
+          "title": "Вопросы и ответы",
+          "url": "/faq/"
+        }
+      ]
+    },
+    {
+      "title": "Контакты",
+      "url": "/kontakty/"
+    }
+  ],
+  "_navTzNote": "Меню варианта Б (VARIANT=tz): восемь пунктов дословно по ТЗ §4, «О заводе» — выпадающий список (ТЗ §4 разрешает объединять). Вариант А использует nav."
 }

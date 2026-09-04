@@ -18,6 +18,7 @@ export function renderDesigners(d) {
 
   const content = html`
     ${pageHero({
+      image: 'tech-hub',
       label: p.heroLabel,
       titleHtml: p.heroTitle,
       text: p.heroText,

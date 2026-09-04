@@ -95,8 +95,7 @@ export function renderHome(d) {
           <h1 class="hero__title" data-reveal>STEPPESTEEL — завод строительных металло&shy;конструкций</h1>
           <p class="hero__slogan" data-reveal>${site.brand.slogan}</p>
           <p class="hero__lead" data-reveal>
-            Металлокаркасы из ЛСТК и ЛМК для зернохранилищ, складов, ангаров
-            и производственных зданий. Проектный отдел, своя линия профилирования,
+            ${site.brand.tagline}. Проектный отдел, своя линия профилирования,
             комплект с маркировкой каждой детали — с одной площадки.
           </p>
           <div class="btn-row" data-reveal>
@@ -113,7 +112,7 @@ export function renderHome(d) {
     </section>
 
     <!-- Цифры-манифест -->
-    <section class="manifest section--dark" aria-labelledby="manifest-title">
+    <section class="manifest" aria-labelledby="manifest-title">
       <div class="container">
         <h2 class="u-visually-hidden" id="manifest-title">Завод в цифрах</h2>
         <div class="manifest__grid">

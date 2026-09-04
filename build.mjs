@@ -16,6 +16,7 @@ import { createHash } from 'node:crypto';
 import { loadJSON, setImageManifest, outPath, copyDir } from './src/lib/util.mjs';
 
 import { renderHome } from './src/pages/home.mjs';
+import { renderHomeTz } from './src/pages/home-tz.mjs';
 import { renderSolutionsIndex, renderSolution } from './src/pages/solutions.mjs';
 import { renderAgro } from './src/pages/agro.mjs';
 import { renderBuilders } from './src/pages/builders.mjs';
@@ -86,6 +87,7 @@ function loadData(lang) {
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
   site.buildId = assetHash([
     join(SRC, 'assets', 'css', 'site.css'),
+    join(SRC, 'assets', 'css', 'theme-tz.css'),
     join(SRC, 'assets', 'js', 'site.js'),
   ]);
   site.buildDate = new Date().toISOString().slice(0, 10);
@@ -95,6 +97,13 @@ function loadData(lang) {
   if (process.env.SITE_URL) site.url = process.env.SITE_URL;
   if (process.env.BASE_PATH !== undefined) site.basePath = normalizeBase(process.env.BASE_PATH);
   site._preview = process.env.PREVIEW === '1';
+
+  // Вариант Б «строго по ТЗ и макету» (VARIANT=tz, 04.09.2026): светлая главная
+  // по 10 блокам макета, плоское меню из ТЗ §4, тема theme-tz.css поверх site.css.
+  // Вариант А (по умолчанию) — v5 «Цех в работе». Данные и внутренние страницы общие.
+  site.variant = process.env.VARIANT === 'tz' ? 'tz' : 'a';
+  if (site.variant === 'tz' && site.navTz) site.nav = site.navTz;
+  if (site.variant === 'tz') site.presentationLabel = 'Презентация';
 
   // Для футера и перелинковки
   site._solutions = d.solutions.items;
@@ -150,7 +159,7 @@ function buildPages(d) {
   const pages = [];
   const add = (url, html, opts = {}) => pages.push({ url, html, ...opts });
 
-  add('/', renderHome(d));
+  add('/', d.site.variant === 'tz' ? renderHomeTz(d) : renderHome(d));
 
   add('/resheniya/', renderSolutionsIndex(d));
   for (const s of d.solutions.items) add(s.url, renderSolution(d, s));

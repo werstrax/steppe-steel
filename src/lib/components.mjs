@@ -182,7 +182,7 @@ export function header(site, { current = '' } = {}) {
         ${raw(logo(site))}
         <nav class="nav" aria-label="Основная навигация">${raw(navItems)}</nav>
         <div class="header__actions">
-          ${site.presentation ? html`<a class="btn btn--ghost header__pres" href="${site.presentation}" target="_blank" rel="noopener">Скачать презентацию</a>` : ''}
+          ${site.presentation ? html`<a class="btn btn--ghost header__pres" href="${site.presentation}" target="_blank" rel="noopener">${site.presentationLabel || 'Скачать презентацию'}</a>` : ''}
           <a class="btn btn--primary header__cta" href="${site.cta.primary.url}">${site.cta.primary.title}</a>
           <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Меню">
             <span></span><span></span><span></span>
@@ -718,3 +718,66 @@ export function grainCalcBlock() {
 }
 
 export { num, plural, dateRu };
+
+
+/* --- Лента сортамента: сечения ПСУ и ПС ------------------------------------ */
+
+/**
+ * Настоящая инженерная графика, а не декор: контуры из profiles.json (пути
+ * завода), высоты — из сертифицированного сортамента. Масштаб по H, поэтому
+ * ряд читается как линейка: от ПС100 до ПСУ280.
+ */
+export function sortamentStrip(profiles, { max = 9 } = {}) {
+  const byCode = Object.fromEntries(profiles.items.map((i) => [i.code, i]));
+  const list = [];
+  for (const table of Object.values(profiles.sortament)) {
+    const item = byCode[table.code];
+    if (!item) continue;
+    for (const row of table.rows) list.push({ name: row[0], h: Number(row[1]), path: item.path, code: table.code });
+  }
+  list.sort((a, b) => a.h - b.h);
+  const picked = list.slice(0, max);
+  const maxH = Math.max(...picked.map((p) => p.h));
+
+  const cell = (p) => {
+    const k = p.h / maxH;
+    return `<figure class="sortament__item" style="--k:${k.toFixed(3)}">
+      <svg class="sortament__sec" viewBox="170 90 140 260" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="${p.path}"/></svg>
+      <figcaption class="sortament__cap mono"><b>${e(p.name)}</b><span>H ${p.h}</span></figcaption>
+    </figure>`;
+  };
+
+  return html`
+    <div class="sortament" role="img" aria-label="Сортамент профилей: ${picked.map((p) => p.name).join(', ')} — высота сечения от ${picked[0].h} до ${maxH} мм">
+      <div class="sortament__row">${raw(picked.map(cell).join(''))}</div>
+      <p class="sortament__note mono">Сечения профилей собственной линии · сертификат РК · 43 типоразмера · толщина 1,5–3,5 мм</p>
+    </div>
+  `;
+}
+
+/* --- Схема типового решения (лист КМ вместо пустой карточки) --------------- */
+
+/**
+ * Поперечная рама с размерной линией пролёта или разрез зернохранилища —
+ * рисуется по подтверждённым габаритам из solutions.json → hub.typical.
+ */
+export function typicalScheme({ span, length, kind = 'frame', label = '' }) {
+  const dim = (x1, x2, y, text) =>
+    `<g class="ts-dim"><line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/><line x1="${x1}" y1="${y - 4}" x2="${x1}" y2="${y + 4}"/><line x1="${x2}" y1="${y - 4}" x2="${x2}" y2="${y + 4}"/><text x="${(x1 + x2) / 2}" y="${y - 6}" text-anchor="middle">${e(text)}</text></g>`;
+  const body = kind === 'grain'
+    ? `<path class="ts-main" d="M30 118 L60 74 L150 60 L240 74 L270 118"/>
+       <path class="ts-main" d="M30 118 L30 130 M270 118 L270 130 M60 74 L60 118 M240 74 L240 118"/>
+       <path class="ts-fill" d="M52 118 L86 84 L214 84 L248 118 Z"/>
+       <g class="ts-web"><line x1="60" y1="74" x2="150" y2="118"/><line x1="240" y1="74" x2="150" y2="118"/><line x1="150" y1="60" x2="150" y2="118"/></g>`
+    : `<path class="ts-main" d="M40 120 L40 78 L150 52 L260 78 L260 120"/>
+       <g class="ts-web">${Array.from({ length: 6 }, (_, i) => { const x = 40 + i * 44; const y = x <= 150 ? 78 - (x - 40) * 26 / 110 : 52 + (x - 150) * 26 / 110; return `<line x1="${x}" y1="${y}" x2="${x}" y2="96"/>`; }).join('')}
+         <line x1="40" y1="96" x2="260" y2="96"/></g>`;
+  return raw(`
+  <svg class="ts" viewBox="0 0 300 150" fill="none" role="img" aria-label="Схема: ${e(label)}">
+    <g class="ts-grid">${Array.from({ length: 12 }, (_, i) => `<line x1="${12 + i * 25}" y1="16" x2="${12 + i * 25}" y2="134"/>`).join('')}${Array.from({ length: 5 }, (_, i) => `<line x1="12" y1="${22 + i * 28}" x2="288" y2="${22 + i * 28}"/>`).join('')}</g>
+    <line class="ts-ground" x1="20" y1="120" x2="280" y2="120"/>
+    ${body}
+    ${span ? dim(40, 260, 140, span) : ''}
+    ${length ? `<text class="ts-note" x="20" y="30">${e(length)}</text>` : ''}
+  </svg>`);
+}

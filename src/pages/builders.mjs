@@ -17,6 +17,7 @@ export function renderBuilders(d) {
 
   const content = html`
     ${pageHero({
+      image: 'sol-proizvodstvennye-zdaniya',
       label: 'Строительным компаниям',
       titleHtml: b.heroTitle,
       text: b.heroLead,

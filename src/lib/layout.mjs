@@ -98,6 +98,7 @@ ${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImag
 <link rel="preload" href="/assets/fonts/golos-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">
+${site.variant === 'tz' ? `<link rel="stylesheet" href="/assets/css/theme-tz.css?v=${site.buildId}">` : ''}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -107,13 +108,13 @@ ${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImag
 <noscript><style>.menu[hidden]{display:flex}.menu{position:static;opacity:1;visibility:visible;padding-top:1.5rem}.burger{display:none}.nav__sub{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none}</style></noscript>
 ${metrika ? metrikaSnippet(metrika) : ''}${ga ? gaSnippet(ga) : ''}
 </head>
-<body class="${e(page.bodyClass || '')}">
+<body class="${e([page.bodyClass, site.variant === 'tz' && 'variant-tz', site._preview && 'is-preview'].filter(Boolean).join(' '))}">
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 ${header(site, { current: page.url })}
 <main id="main">
 ${content}
 </main>
-${page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand(NEXT[page.url]) : ''}
+${page.noNext ? '' : page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand(NEXT[page.url]) : ''}
 ${footer(site)}
 ${mobileBar(site, page.url)}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>

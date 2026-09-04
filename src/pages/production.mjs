@@ -17,6 +17,7 @@ export function renderProduction(d) {
 
   const content = html`
     ${pageHero({
+      image: 'prod-profil',
       label: production.kicker,
       titleHtml: production.title,
       text: production.lead,

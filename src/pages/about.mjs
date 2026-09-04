@@ -15,6 +15,7 @@ export function renderAbout(d) {
 
   const content = html`
     ${raw(pageHero({
+      image: 'prod-baza',
       label: 'О заводе',
       titleHtml: 'Steppe Steel — завод строительных метал&shy;локонструкций',
       crumbList: crumbs,

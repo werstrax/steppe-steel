@@ -18,6 +18,7 @@ export function renderAgro(d) {
 
   const content = html`
     ${pageHero({
+      image: 'sol-zernohranilishcha',
       label: 'Аграриям',
       titleHtml: a.heroTitle,
       text: a.heroLead,
