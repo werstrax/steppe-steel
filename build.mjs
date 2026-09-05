@@ -66,6 +66,7 @@ function loadData(lang) {
 
   const d = {
     site,
+    home: loadJSON(dataPath('home.json', lang)),
     images,
     solutions: loadJSON(dataPath('solutions.json', lang)),
     tech: loadJSON(dataPath('tech.json', lang)),
@@ -87,6 +88,7 @@ function loadData(lang) {
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
   site.buildId = assetHash([
     join(SRC, 'assets', 'css', 'site.css'),
+    join(SRC, 'assets', 'css', 'pro.css'),
     join(SRC, 'assets', 'css', 'theme-tz.css'),
     join(SRC, 'assets', 'js', 'site.js'),
   ]);

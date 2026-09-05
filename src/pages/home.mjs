@@ -1,351 +1,149 @@
 /**
- * Главная v5 «Цех в работе» (03.09.2026). Порядок блоков — по макету
- * Шамиля (30.08): первый экран → показатели → что производим → как работаем
- * → типовые → аудитории → объекты → о заводе → CTA → подвал с картой.
- * Фото — из собственных презентаций завода (images.json), цифры — только
- * проверенные (site.proof, production.stats). Слоты без кадра — честная плашка.
+ * STEPPESTEEL — customer-facing factory site.
+ * Content is sourced from data JSON; photography from the supplied image manifest.
  */
-
 import { layout, html, raw } from '../lib/layout.mjs';
-import { sectionHead, ctaBand, photoSlot, iconArrow, iconCheck } from '../lib/components.mjs';
+import { sectionHead, ctaBand, iconArrow, iconCheck } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
-import { hasImage, picture, cx } from '../lib/util.mjs';
+import { hasImage, picture } from '../lib/util.mjs';
 
 export function renderHome(d) {
-  const { site, solutions, production, portfolio, documents } = d;
-  const p = site.proof;
-  const typical = solutions.hub.typical;
-  const presentation = documents.categories.find((c) => c.id === 'prezentacii')?.items[0];
-  const bySlug = Object.fromEntries(solutions.items.map((s) => [s.slug, s]));
-  const secByid = Object.fromEntries(production.sections.map((s) => [s.id, s]));
-
-  /* Манифест: четыре проверяемые цифры завода — единственное «событие»
-   * масштаба на странице (creative.md §5). Источники — site.proof. */
-  /* Набор пересобран 04.09.2026 по панели «глазами клиента»: четыре разных
-   * доказательства (срок · возможность · долговечность · технология), а не
-   * четыре техпараметра. Толщина стали и 43 типоразмера остались на
-   * /profili/ и /tekhnologii/lstk/. Источники — site.proof, production.stats. */
-  const manifest = [
-    { val: '30–45', unit: 'дней', key: 'от утверждённых чертежей до закрытых стен и кровли' },
-    { pre: 'до', val: '24', unit: 'м', key: 'пролёт без внутренних колонн' },
-    { val: '50+', unit: 'лет', key: 'оцинкованный каркас без покраски' },
-    { val: '100', unit: '%', key: 'болтовая сборка — сварки на площадке нет' },
-  ];
-
-  /* Модульная сетка решений: флагман 2×2 с фото, четыре с фото 1×1,
-   * четыре без кадра — графитовые плитки с метаданными. */
-  const tileOrder = [
-    'zernohranilishcha', 'sklady', 'proizvodstvennye-zdaniya', 'angary', 'zdaniya-dlya-tekhniki',
-    'ovoshchehranilishcha', 'sto-avtoparki', 'sportivnye-obekty', 'modulnye-zdaniya',
-  ];
-  const tiles = tileOrder.map((slug) => bySlug[slug]).filter(Boolean);
-
-  /* Мозаика цеха: линия профилирования широким кадром, дальше — резка,
-   * сварка, контроль, отгрузка. Подписи — номера переделов. */
-  const mosaic = [
-    { id: 'profil', mod: 'mosaic__item--wide' },
-    { id: 'rezka' },
-    { id: 'svarka' },
-    { id: 'kontrol' },
-    { id: 'otgruzka' },
-  ].map((m) => ({ ...m, sec: secByid[m.id], num: production.sections.findIndex((s) => s.id === m.id) + 1 }));
-
-  const audiences = [
-    {
-      url: '/proektirovshchikam/',
-      title: 'Проектировщикам',
-      items: ['Конструктив: расчёты, КМ и КМД силами завода', 'Нагрузки на фундамент, узлы, РПЗ', 'Сопровождение экспертизы', 'Агентское вознаграждение по договору'],
-      photoSlot: 'aud-designers',
-      cta: 'Подробнее',
-    },
-    {
-      url: '/partneram/',
-      title: 'Партнёрам и дилерам',
-      items: ['Запросы клиентов по вашему региону', 'Партнёрские условия на металлоконструкции', 'Обучение бригад и шеф-монтаж первого объекта', 'Материалы и поддержка сделок'],
-      photoSlot: 'aud-partners',
-      cta: 'Получить условия',
-    },
-    {
-      url: '/agrariyam/',
-      title: 'Аграриям',
-      items: ['Зернохранилища, овощехранилища, здания для техники', 'Расширение секциями под рост урожая', 'Калькулятор длины и окупаемости'],
-      cta: 'Подробнее',
-    },
-    {
-      url: '/stroitelnym-kompaniyam/',
-      title: 'Строительным компаниям',
-      items: ['Вы строите — завод проектирует и производит каркас', 'Прогнозируемая себестоимость и сроки', 'Техподдержка монтажной организации'],
-      cta: 'Условия сотрудничества',
-    },
-  ];
-
+  const { site, solutions, production, portfolio, documents, home } = d;
+  const bySlug = Object.fromEntries(solutions.items.map(s => [s.slug, s]));
+  const featured = home.featured.map(slug => bySlug[slug]).filter(Boolean);
+  const other = solutions.items.filter(s => !home.featured.includes(s.slug));
   const obj = portfolio.items[0];
-
+  const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
   const content = html`
-    <!-- Первый экран: цех во всю ширину, заголовок-категория по ТЗ -->
-    <section class="hero hero--photo">
-      <div class="hero__bg" aria-hidden="true">
-        ${hasImage('hero-photo')
-          ? raw(picture('hero-photo', { alt: '', sizes: '100vw', priority: true }))
-          : ''}
-      </div>
-      <div class="container hero__inner">
-        <div class="hero__text">
-          <p class="eyebrow mono" data-reveal>Костанайская область · весь Казахстан</p>
-          <h1 class="hero__title" data-reveal>STEPPESTEEL — завод строительных металло&shy;конструкций</h1>
-          <p class="hero__slogan" data-reveal>${site.brand.slogan}</p>
-          <p class="hero__lead" data-reveal>
-            ${site.brand.tagline}. Проектный отдел, своя линия профилирования,
-            комплект с маркировкой каждой детали — с одной площадки.
-          </p>
-          <div class="btn-row" data-reveal>
-            <a class="btn btn--primary btn--lg" href="${site.cta.primary.url}">${site.cta.primary.title}</a>
-            <a class="btn btn--ghost btn--lg" href="/resheniya/">Посмотреть решения</a>
+    <section class="factory-hero" aria-labelledby="factory-title">
+      <div class="factory-hero__image" aria-hidden="true">${raw(picture('prod-baza',{alt:'',sizes:'100vw',priority:true}))}</div>
+      <div class="container factory-hero__inner">
+        <div class="factory-hero__copy">
+          <p class="factory-hero__eyebrow"><span></span>ЗАВОД МЕТАЛЛОКОНСТРУКЦИЙ / КАЗАХСТАН</p>
+          <h1 id="factory-title">От проекта —<br>до стального<br><span>каркаса.</span></h1>
+          <p class="factory-hero__lead">Зернохранилища, склады, ангары и производственные здания. Проектируем, производим и поставляем по всему Казахстану.</p>
+          <div class="factory-hero__actions">
+            <a class="btn btn--primary" href="/raschet/">Обсудить проект ${iconArrow}</a>
+            <a class="factory-hero__link" href="/resheniya/">Выбрать здание <span>↗</span></a>
           </div>
-          <p class="hero__meta" data-reveal>
-            <span>${site.brand.legalName}</span>
-            <span>Сертификат РК № ${d.designers.cert.number}</span>
-            <span>Расчёт за 24 часа</span>
-          </p>
         </div>
+        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>СВОЁ ПРОИЗВОДСТВО<small>с. Троебратское<br>Костанайская область</small></div></div>
+      </div>
+      <div class="factory-hero__bottom"><div class="container">
+        <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
+        <a href="/proizvodstvo/"><span>02</span>Заводское производство ${iconArrow}</a>
+        <a href="/proizvodstvo/#otgruzka"><span>03</span>Комплектная поставка ${iconArrow}</a>
+      </div></div>
+    </section>
+
+    <section class="pro-proof" aria-label="Возможности завода">
+      <div class="container pro-proof__grid">
+        ${home.proof.map(p => html`<div class="pro-proof__item">
+          <div class="pro-proof__value">${p.prefix ? html`<small>${p.prefix}</small>` : ''}${p.value}<small>${p.unit}</small></div>
+          <h2>${p.title}</h2><p>${p.text}</p>
+        </div>`)}
       </div>
     </section>
 
-    <!-- Цифры-манифест -->
-    <section class="manifest" aria-labelledby="manifest-title">
-      <div class="container">
-        <h2 class="u-visually-hidden" id="manifest-title">Завод в цифрах</h2>
-        <div class="manifest__grid">
-          ${manifest.map(
-            (m) => html`
-              <div class="manifest__item" data-reveal>
-                <span class="manifest__val">${m.pre ? html`<small class="manifest__pre">${m.pre}</small>` : ''}${m.val}${m.unit ? html`<small>${m.unit}</small>` : ''}</span>
-                <span class="manifest__key">${m.key}</span>
-              </div>
-            `
-          )}
-        </div>
-      </div>
-    </section>
-
-    <!-- Что мы производим: модульная сетка девяти решений -->
     <section class="section" id="resheniya">
       <div class="container">
-        ${sectionHead({
-          label: 'Решения',
-          title: 'Что мы производим',
-          text: 'Девять типов зданий с одной производственной площадки. У каждого — своя страница: конструктив, параметры, ответы на вопросы.',
-          action: { title: 'Все решения', url: '/resheniya/' },
-        })}
-        <div class="tiles">
-          ${tiles.map((s, i) => {
-            const img = s.cover || `sol-${s.slug}`;
-            const photo = hasImage(img);
-            return html`
-              <a class="${cx('tile', s.flag && 'tile--flag', photo ? 'tile--photo' : 'tile--dark')}" href="${s.url}" data-reveal>
-                ${photo
-                  ? html`<span class="tile__img" aria-hidden="true">${raw(picture(img, { alt: '', sizes: s.flag ? '(min-width: 1020px) 50vw, 100vw' : '(min-width: 1020px) 25vw, 50vw' }))}</span>`
-                  : ''}
-                <span class="tile__num mono">${String(i + 1).padStart(2, '0')}</span>
-                ${s.flag ? html`<span class="tile__flag mono">Флагман</span>` : ''}
-                <span class="tile__title">${s.short || s.title}</span>
-                ${s.cardMeta?.length ? html`<span class="tile__meta mono">${s.cardMeta.map((m) => html`<span>${m}</span>`)}</span>` : ''}
-                <span class="tile__arrow" aria-hidden="true">${iconArrow}</span>
-              </a>
-            `;
-          })}
+        ${sectionHead({label:'01 / Решения',title:home.solutions.title,text:home.solutions.text,action:{title:'Все решения',url:'/resheniya/'}})}
+        <div class="pro-solutions">
+          ${featured.map((s,i) => html`<a class="pro-solution" href="${s.url}">
+            <div class="pro-solution__photo">
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.title+' — материалы Steppe Steel',sizes:'(min-width: 900px) 25vw, (min-width: 540px) 50vw, 100vw'}))}
+              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span>
+            </div>
+            <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
+              <p>${home.solutionDescriptions[s.slug]}</p>
+            </div>
+          </a>`)}
+        </div>
+        <div class="pro-other">
+          ${other.map((s,i) => html`<a href="${s.url}"><span class="mono">0${i+4}</span><strong>${s.short || s.title}</strong>${iconArrow}</a>`)}
+        </div>
+        <div class="pro-help"><p>${home.solutions.help}</p><a class="arrow-link" href="/raschet/">Обсудить задачу ${iconArrow}</a></div>
+      </div>
+    </section>
+
+    <section class="section section--dark pro-factory" id="proizvodstvo">
+      <div class="container">
+        ${sectionHead({label:'02 / Производство',title:home.factory.title,text:home.factory.text,action:{title:'Как устроено производство',url:'/proizvodstvo/'}})}
+        <div class="pro-factory__grid">
+          <figure class="pro-factory__photo">${raw(picture('prod-profil',{alt:'Линия профилирования ПСУ и ПС на заводе Steppe Steel',sizes:'(min-width:900px) 60vw, 100vw'}))}
+            <figcaption>Линия профилирования / ПСУ и ПС</figcaption>
+          </figure>
+          <div class="pro-factory__stages">
+            ${home.factory.stages.map((s,i)=>html`<div><span class="mono">0${i+1}</span><h3>${s.title}</h3><p>${s.text}</p></div>`)}
+            <a class="arrow-link" href="/dokumentaciya/">Документы и сертификаты ${iconArrow}</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Производство: тёмный контрапункт с кадрами цеха -->
-    <section class="section section--dark" id="proizvodstvo">
-      <div class="container">
-        ${sectionHead({
-          label: 'Производство',
-          title: 'Завод, а не посредник',
-          text: 'Линия профилирования ПСУ и ПС, участки резки и сварки, контроль на каждом переделе, комплектация и отгрузка — одна площадка в Костанайской области.',
-          action: { title: 'Смотреть производство', url: '/proizvodstvo/' },
-        })}
-        <div class="mosaic">
-          ${mosaic.map(
-            (m) => html`
-              <figure class="${cx('mosaic__item', m.mod)}" data-reveal>
-                ${hasImage(m.sec.photoSlot)
-                  ? raw(picture(m.sec.photoSlot, { alt: `${m.sec.title} — производство Steppe Steel`, sizes: m.mod ? '(min-width: 720px) 66vw, 100vw' : '(min-width: 720px) 33vw, 50vw' }))
-                  : raw(photoSlot(m.sec.photoSlot, { label: m.sec.title, alt: m.sec.title }))}
-                <figcaption class="mosaic__cap"><b>${String(m.num).padStart(2, '0')}</b>${m.sec.title}</figcaption>
-              </figure>
-            `
-          )}
-        </div>
-      </div>
-    </section>
-
-    <!-- Как мы работаем: шесть шагов в ряд -->
-    <section class="section section--tint" id="process">
-      <div class="container">
-        ${sectionHead({ label: 'Процесс', title: 'Как мы работаем', text: production.process.intro })}
-        <ol class="flow-row">
-          ${production.process.steps.map(
-            (s, i) => html`
-              <li class="flow-row__step" data-reveal>
-                <span class="flow-row__num">${i + 1}</span>
-                <span class="flow-row__title">${s.title}</span>
-                <span class="flow-row__text">${s.text}</span>
-                <span class="flow-row__dur mono">${s.duration}</span>
-              </li>
-            `
-          )}
-        </ol>
-        <p class="note">${production.process.note}</p>
-      </div>
-    </section>
-
-    <!-- Типовые решения: конфигурации с проверенными габаритами -->
     <section class="section" id="tipovye">
       <div class="container">
-        ${sectionHead({
-          label: typical.kicker,
-          title: typical.title,
-          text: typical.intro,
-          action: { title: 'Получить расчёт', url: '/raschet/' },
-        })}
-        <div class="card-grid card-grid--4">
-          ${typical.items.map(
-            (t, i) => html`
-              <a class="card typ-card" href="${t.url}" data-reveal>
-                <span class="card__body">
-                  <span class="card__meta">Типовое ${String(i + 1).padStart(2, '0')}</span>
-                  <h3 class="card__title">${t.title}</h3>
-                  <dl class="typ-card__params">
-                    ${t.params.map(([k, v]) => html`<div><dt>${k}</dt><dd>${v}</dd></div>`)}
-                  </dl>
-                  <span class="card__more arrow-link">Подробнее <span class="arrow">${iconArrow}</span></span>
-                </span>
-              </a>
-            `
-          )}
+        ${sectionHead({label:'03 / Типовые здания',title:home.typical.title,text:home.typical.text})}
+        <div class="pro-typicals">
+          ${solutions.hub.typical.items.map((t,i)=>html`<a class="pro-typical" href="${t.url}">
+            <span class="pro-typical__label mono">ТИПОВОЕ РЕШЕНИЕ / 0${i+1}</span><h3>${t.title}</h3>
+            <dl>${t.params.map(([k,v])=>html`<div><dt>${k}</dt><dd>${v}</dd></div>`)}</dl>
+            <span class="arrow-link">Параметры здания ${iconArrow}</span>
+          </a>`)}
         </div>
       </div>
     </section>
 
-    <!-- Аудитории: проектировщики, партнёры, аграрии, строители -->
-    <section class="section section--tint" id="partnyorstvo">
+    <section class="section section--tint" id="process">
       <div class="container">
-        ${sectionHead({ label: 'Кому', title: 'С кем работает завод', text: 'Четыре входа — под задачу каждого. Внутри: условия, документы, что готовит завод и что остаётся за вами.' })}
-        <div class="card-grid card-grid--2">
-          ${audiences.map(
-            (a) => html`
-              <div class="card aud" data-reveal>
-                <div class="aud__body">
-                  <h3 class="aud__title">${a.title}</h3>
-                  <ul class="aud__list">
-                    ${a.items.map((it) => html`<li>${iconCheck}<span>${it}</span></li>`)}
-                  </ul>
-                  <a class="btn btn--primary" href="${a.url}">${a.cta}</a>
-                </div>
-                ${a.photoSlot
-                  ? html`<div class="aud__media">${hasImage(a.photoSlot)
-                      ? raw(picture(a.photoSlot, { alt: a.title, sizes: '(min-width: 900px) 25vw, 100vw' }))
-                      : raw(photoSlot(a.photoSlot, { label: 'Фото в обработке', alt: a.title }))}</div>`
-                  : ''}
-              </div>
-            `
-          )}
-        </div>
+        ${sectionHead({label:'04 / Порядок работы',title:home.process.title,text:home.process.text})}
+        <ol class="pro-process">
+          ${production.process.steps.map((s,i)=>html`<li><span class="pro-process__num">0${i+1}</span><h3>${s.title}</h3><p>${home.process.descriptions[i]}</p></li>`)}
+        </ol>
+        <p class="pro-process__note">${home.process.note}</p>
       </div>
     </section>
 
-    <!-- Объекты: один реальный кейс проектного отдела, честная заметка -->
-    <section class="section" id="obekty">
+    <section class="section" id="partnyorstvo">
       <div class="container">
-        ${sectionHead({
-          label: 'Портфолио',
-          title: 'Реализованные объекты',
-          text: portfolio.intro,
-          action: { title: 'Все объекты', url: '/obekty/' },
-        })}
-        <div class="card-grid card-grid--2">
-          ${obj
-            ? html`
-                <a class="card obj-teaser" href="/obekty/" data-reveal>
-                  <span class="card__body">
-                    ${obj.badge ? html`<span class="card__badge mono">${obj.badge}</span>` : ''}
-                    <h3 class="card__title">${obj.title}</h3>
-                    <span class="card__text">${obj.purpose}. ${obj.frameType}.</span>
-                    <dl class="typ-card__params">
-                      <div><dt>Размеры</dt><dd>${obj.size}</dd></div>
-                      <div><dt>Площадь</dt><dd>${obj.area}</dd></div>
-                      <div><dt>Регион</dt><dd>${obj.region}, ${obj.year}</dd></div>
-                    </dl>
-                    <span class="card__more arrow-link">Смотреть кейс <span class="arrow">${iconArrow}</span></span>
-                  </span>
-                </a>
-              `
-            : ''}
-          <div class="card card--note" data-reveal>
-            <span class="card__body">
-              <h3 class="card__title">${portfolio.empty.title}</h3>
-              <p class="card__text">${portfolio.empty.text}</p>
-              <a class="arrow-link card__more" href="${site.contacts.instagram}" target="_blank" rel="noopener">Съёмки монтажа в Instagram <span class="arrow">${iconArrow}</span></a>
-            </span>
-          </div>
+        ${sectionHead({label:'05 / Сотрудничество',title:home.audiencesTitle,text:home.audiencesText})}
+        <div class="pro-audiences">
+          ${home.audiences.map((a,i)=>html`<a class="pro-audience" href="${a.url}">
+            <span class="pro-audience__num mono">0${i+1}</span><h3>${a.title}</h3><p>${a.text}</p>
+            <span class="arrow-link">${a.cta} ${iconArrow}</span>
+          </a>`)}
         </div>
       </div>
     </section>
 
-    <!-- О заводе: текст + база, оборудование и сертификат -->
-    <section class="section section--tint" id="zavod">
-      <div class="container about-band">
-        <div class="about-band__text" data-reveal>
-          <p class="eyebrow mono">О заводе</p>
-          <h2 class="section-head__title">Завод полного цикла в Костанайской области</h2>
-          <p class="lead">${site.brand.legalName}, Узункольский район. Линия профилирования
-          ПСУ и ПС, участки резки и сварки, проектный отдел с ЛИРА-САПР
-          и Tekla Structures, комплектация и отгрузка по всему Казахстану.</p>
-          <p>Профили сертифицированы: 43 типоразмера в сортаменте. Каждая деталь
-          промаркирована по КМД — на площадке остаётся только болтовая сборка.</p>
-          <div class="btn-row">
-            <a class="btn btn--primary" href="/o-zavode/">Подробнее о заводе</a>
-            ${presentation ? html`<a class="btn btn--ghost" href="${presentation.file}" download data-goal="pdf_download">Скачать презентацию</a>` : ''}
-          </div>
-        </div>
-        <div class="about-band__photos">
-          ${[['prod-baza', 'Производственная база'], ['prod-oborudovanie', 'Оборудование'], ['cert-p1', 'Сертификат соответствия на профили ПСУ и ПС']].map(
-            ([slot, cap], i) => html`
-              <figure class="${cx('about-band__photo', slot.startsWith('cert') && 'about-band__photo--doc')}" data-reveal>
-                ${hasImage(slot)
-                  ? raw(picture(slot, { alt: `${cap} — Steppe Steel`, sizes: i === 0 ? '(min-width: 1020px) 58vw, 100vw' : '(min-width: 1020px) 29vw, 50vw' }))
-                  : raw(photoSlot(slot, { label: cap, alt: cap }))}
-              </figure>
-            `
-          )}
+    ${obj ? html`<section class="section section--tint" id="obekty"><div class="container pro-case">
+      <div><p class="eyebrow">06 / ${obj.badge}</p><h2>${obj.title}</h2><p class="pro-case__location">${obj.region} / ${obj.year}</p>
+        <p>${obj.text}</p><a class="btn btn--ghost" href="/obekty/">Подробнее о проекте ${iconArrow}</a></div>
+      <div class="pro-case__passport"><p class="mono">ПАРАМЕТРЫ ПРОЕКТА</p>
+        <div class="pro-case__area">${obj.area}</div>
+        <dl><div><dt>Назначение</dt><dd>${obj.purpose}</dd></div><div><dt>Размеры</dt><dd>${obj.size}</dd></div><div><dt>Конструктив</dt><dd>${obj.frameType}</dd></div></dl>
+        <span class="pro-case__docs">${obj.docs}</span>
+      </div>
+    </div></section>` : ''}
+
+    <section class="section" id="zavod"><div class="container pro-about">
+      <figure>${raw(picture('prod-baza',{alt:'Производственная база Steppe Steel в Костанайской области',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>${site.contacts.address.settlement} · ${site.contacts.address.region}</figcaption></figure>
+      <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
+        <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
+        <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
+          ${presentation ? html`<a class="arrow-link" href="${presentation.file}" download data-goal="pdf_download">Презентация PDF ${iconArrow}</a>` : ''}
         </div>
       </div>
-    </section>
+    </div></section>
 
-    ${ctaBand(site, {
-      secondary: presentation ? { title: 'Скачать презентацию', url: presentation.file } : null,
-    })}
+    ${ctaBand(site,{title:home.cta.title,text:home.cta.text})}
   `;
-
-  return layout(
-    site,
-    {
-      url: '/',
-      image: hasImage('hero-photo') ? 'hero-photo' : undefined,
-      title: 'Завод металлоконструкций в Казахстане — Steppe Steel',
-      description:
-        'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары, производственные здания. Расчёт за 24 часа.',
-      ogTitle: 'STEPPESTEEL — завод строительных металлоконструкций',
-      schema: [
-        organizationNode(site, { products: solutions.items }),
-        websiteNode(site),
-        itemListNode(site, '/', solutions.items, 'Решения Steppe Steel'),
-        howToNode(site, '/', production.process.steps, 'Как заказать здание на заводе Steppe Steel'),
-      ],
-    },
-    content
-  );
+  return layout(site,{
+    url:'/',bodyClass:'pro-home',noNext:true,
+    image:hasImage('hero-photo')?'hero-photo':undefined,
+    title:'Завод металлоконструкций в Казахстане — Steppe Steel',
+    description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',
+    ogTitle:'STEPPESTEEL — завод строительных металлоконструкций',
+    schema:[organizationNode(site,{products:solutions.items}),websiteNode(site),itemListNode(site,'/',solutions.items,'Решения Steppe Steel'),howToNode(site,'/',production.process.steps,'Как заказать здание на заводе Steppe Steel')]
+  },content);
 }

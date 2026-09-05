@@ -144,7 +144,7 @@ export function renderRaschet(d) {
               </label>
               <span class="field__hint" data-file-hint>${site.forms.endpoint
                 ? 'Файл уйдёт вместе с заявкой. До 25 МБ.'
-                : raw('Приём файлов прямо с сайта ещё подключается. Пока пришлите проект на <a href="mailto:' + site.contacts.email + '">' + site.contacts.email + '</a> или прикрепите его в чате WhatsApp после отправки заявки.')}</span>
+                : raw('Отправьте проект на <a href="mailto:' + site.contacts.email + '">' + site.contacts.email + '</a> или прикрепите его в чате WhatsApp вместе с заявкой.')}</span>
             </div>
           </fieldset>
 
@@ -167,7 +167,7 @@ export function renderRaschet(d) {
           <input type="text" name="website" class="u-visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
 
           <div class="btn-row">
-            <button class="btn btn--primary btn--lg" type="submit">Отправить заявку</button>
+            <button class="btn btn--primary btn--lg" type="submit">${site.forms.endpoint ? 'Отправить заявку' : 'Подготовить заявку в WhatsApp'}</button>
             <a class="btn btn--wa btn--lg" href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
               ${iconWhatsApp}<span>Спросить в WhatsApp</span>
             </a>

@@ -289,8 +289,8 @@ export function footer(site) {
           </div>
 
           <div>
-            <h2 class="footer__title">Представители по Казахстану</h2>
-            <p class="footer__text">Сеть формируется — на карте завод и регионы с отдельными страницами; подключённые партнёры появятся метками.</p>
+            <h2 class="footer__title">Поставки по Казахстану</h2>
+            <p class="footer__text">Производство в Костанайской области. Доставку и состав комплекта согласуем под вашу площадку.</p>
             ${kzMap({ compact: true })}
             <ul class="footer__list footer__list--row">
               ${(site.regionsNav || []).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
@@ -438,7 +438,7 @@ export function kzMap({ compact = false } = {}) {
     </svg>
     <figcaption class="kz-map__legend mono">
       <span><i class="kz-map__key kz-map__key--plant"></i>завод</span>
-      <span><i class="kz-map__key kz-map__key--page"></i>регионы с отдельной страницей</span>
+      <span><i class="kz-map__key kz-map__key--page"></i>регионы поставок</span>
       <span><i class="kz-map__key kz-map__key--dot"></i>доставка по всему Казахстану</span>
     </figcaption>
   </figure>`);
@@ -454,11 +454,11 @@ export function solutionCard(s, { level = 3 } = {}) {
   const H = `h${level}`;
   const img = s.cover || `sol-${s.slug}`;
   return html`
-    <a class="${cx('card sol-card', s.flag && 'sol-card--flag')}" href="${s.url}" data-reveal>
+    <a class="${cx('card sol-card', !hasImage(img) && 'sol-card--text', s.flag && 'sol-card--flag')}" href="${s.url}" data-reveal>
       <span class="card__media">
         ${hasImage(img)
           ? raw(picture(img, { alt: `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
-          : raw(photoSlot(img, { label: 'Фото в обработке', alt: s.title }))}
+          : html`<span class="sol-card__category">ЛСТК / ЛМК<br>ПРОЕКТИРОВАНИЕ И ПОСТАВКА</span>`}
         ${hasImage(img) && s.coverViz ? vizTag() : ''}
         ${s.flag ? html`<span class="card__flag mono">${s.flag}</span>` : ''}
       </span>
@@ -583,7 +583,7 @@ export const articleCard = (a) => html`
     <div class="media media--3x2">
       ${a.cover
         ? html`${raw(picture(a.cover, { alt: '', sizes: '(min-width: 900px) 33vw, 100vw' }))}${a.coverViz ? vizTag() : ''}`
-        : raw(photoSlot(a.slug, { label: 'Фото в обработке', alt: '' }))}
+        : html`<div class="editorial-cover"><span class="mono">ИНЖЕНЕРНЫЙ ЖУРНАЛ</span><strong>${a.index}</strong><span>${a.cardMeta || 'Технологии и проектирование'}</span></div>`}
     </div>
     <div class="stack stack--sm">
       <p class="article-card__meta mono"><span>${dateRu(a.date)}</span><span>${a.readingTime} мин</span></p>
@@ -641,7 +641,7 @@ export function portfolioCard(o) {
       <div class="obj-card__media">
         ${o.photos?.length
           ? raw(picture(o.photos[0].img, { alt: o.photos[0].alt || o.title, sizes: '(min-width: 900px) 50vw, 100vw' }))
-          : raw(photoSlot(`obj-${o.slug}`, { label: 'Фото объекта в обработке', alt: o.title }))}
+          : html`<div class="project-cover"><span class="mono">КЕЙС ПРОЕКТНОГО ОТДЕЛА</span><strong>${o.area}</strong><span>${o.region} · ${o.year}</span></div>`}
       </div>
       <div class="obj-card__body">
         <p class="obj-card__top mono">

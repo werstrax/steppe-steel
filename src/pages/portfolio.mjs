@@ -4,7 +4,7 @@
  */
 
 import { layout, html } from '../lib/layout.mjs';
-import { pageHero, portfolioCard, ctaBand, iconWhatsApp } from '../lib/components.mjs';
+import { pageHero, portfolioCard, ctaBand, iconInstagram } from '../lib/components.mjs';
 import { itemListNode } from '../lib/schema.mjs';
 
 export function renderPortfolio(d) {
@@ -48,7 +48,7 @@ export function renderPortfolio(d) {
           <h2 class="h4">${portfolio.empty.title}</h2>
           <p>${portfolio.empty.text}</p>
           <a class="btn btn--wa" href="${site.contacts.instagram}" target="_blank" rel="noopener">
-            ${iconWhatsApp}<span>Instagram ${site.contacts.instagramHandle}</span>
+            ${iconInstagram}<span>Instagram ${site.contacts.instagramHandle}</span>
           </a>
         </div>
       </div>
