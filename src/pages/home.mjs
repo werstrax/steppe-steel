@@ -17,7 +17,7 @@ export function renderHome(d) {
   const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
   const content = html`
     <section class="factory-hero" aria-labelledby="factory-title">
-      <div class="factory-hero__image" aria-hidden="true">${raw(picture('concept-hero',{alt:'',sizes:'100vw',priority:true}))}</div>
+      <div class="factory-hero__image" aria-hidden="true">${raw(picture('photo-warehouse-exterior',{alt:'',sizes:'100vw',priority:true}))}</div>
       <div class="container factory-hero__inner">
         <div class="factory-hero__copy">
           <p class="factory-hero__eyebrow"><span></span>ЗАВОД МЕТАЛЛОКОНСТРУКЦИЙ / КАЗАХСТАН</p>
@@ -25,11 +25,11 @@ export function renderHome(d) {
           <p class="factory-hero__lead">Зернохранилища, склады, ангары и производственные здания. Проектируем, производим и поставляем по всему Казахстану.</p>
           <div class="factory-hero__actions">
             <a class="btn btn--primary" href="/raschet/">Обсудить проект ${iconArrow}</a>
-            <a class="factory-hero__link" href="#engineering">Посмотреть каркас в 3D <span>↗</span></a>
+            <a class="factory-hero__link" href="#engineering">Посмотреть конструкцию <span>↗</span></a>
           </div>
           <a class="factory-hero__documents" href="#documents">Презентации и сертификат ${iconArrow}</a>
         </div>
-        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>КОНЦЕПЦИЯ ЗДАНИЯ<small>Архитектурная визуализация<br>Облик уточняется в проекте</small></div></div>
+        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>ЗЕРНОХРАНИЛИЩА<small>Стальной каркас<br>и профилированная обшивка</small></div></div>
       </div>
       <div class="factory-hero__bottom"><div class="container">
         <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
@@ -53,8 +53,8 @@ export function renderHome(d) {
         <div class="pro-solutions">
           ${featured.map((s,i) => html`<a class="pro-solution" href="${s.url}">
             <div class="pro-solution__photo">
-              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.title+' — архитектурная визуализация',sizes:'(min-width: 900px) 25vw, (min-width: 540px) 50vw, 100vw'}))}
-              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span><span class="concept-label">Визуализация</span>
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:i===0?'(min-width: 1100px) 45vw, 100vw':'(min-width: 1100px) 28vw, (min-width: 640px) 50vw, 100vw'}))}
+              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span>
             </div>
             <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
               <p>${home.solutionDescriptions[s.slug]}</p>
@@ -117,7 +117,7 @@ export function renderHome(d) {
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
-      <div class="pro-about__identity"><span>КАЗАХСТАН / КОСТАНАЙСКАЯ ОБЛАСТЬ</span><strong>STEPPE<br><i>STEEL</i></strong><p>Проектирование. Производство. Комплектная поставка.</p><a class="arrow-link" href="/proizvodstvo/">Узнать о производстве ${iconArrow}</a></div>
+      <figure class="pro-about__photo">${raw(picture('photo-editorial-interior',{alt:'Фотореалистичный сгенерированный интерьер здания со стальными фермами',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Интерьер здания из металлоконструкций · сгенерированный кадр</figcaption></figure>
       <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
@@ -131,7 +131,7 @@ export function renderHome(d) {
     ${ctaBand(site,{title:home.cta.title,text:home.cta.text})}
   `;
   return layout(site,{
-    url:'/',bodyClass:'pro-home',noNext:true,frameViewer:true,
+    url:'/',bodyClass:'pro-home',noNext:true,
     image:hasImage('hero-photo')?'hero-photo':undefined,
     title:'Завод металлоконструкций в Казахстане — Steppe Steel',
     description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',

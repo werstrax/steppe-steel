@@ -1,4 +1,4 @@
-import {html,raw} from './util.mjs';
+import {html,raw,picture} from './util.mjs';
 import {iconArrow,iconDownload,sectionHead} from './components.mjs';
 
 export function documentShelf(d,{heading=true}={}) {
@@ -24,28 +24,25 @@ export function documentShelf(d,{heading=true}={}) {
 export function engineeringExperience(d){
 return html`<section class="section engineering-experience" id="engineering">
  <div class="container">
- ${sectionHead({label:'02 / Инженерный подход',title:'Посмотрите,\nкак устроен каркас.',text:'За каждым зданием — расчёт нагрузок и комплект рабочих чертежей. 3D-схема показывает основные элементы: рамы, прогоны, связи и обшивку.',action:{title:'Проектный отдел и документация',url:'/proektirovshchikam/'}})}
- <div class="frame-experience" data-frame-viewer>
-   <div class="frame-experience__toolbar" data-frame-controls>
-     <span class="frame-experience__label">3D / КАРКАС ЗДАНИЯ</span>
-     <label>Пример здания <select data-frame-size disabled><option value="18x36">18 × 36 м</option><option value="24x60">24 × 60 м</option></select></label>
-     <button type="button" data-frame-skin aria-pressed="false" disabled>Показать обшивку</button>
-   </div>
-   <div class="frame-experience__viewport" data-frame-viewport>
-     <img class="frame-experience__fallback" src="/assets/img/concept-frame-1152.webp" width="1448" height="1086" alt="Архитектурная концепция металлического каркаса; иллюстрация, не рабочий проект" loading="lazy">
-     <div class="frame-experience__dimensions"><strong data-frame-dimensions>18 × 36 м</strong><span data-frame-area>648 м²</span></div>
-     <span class="frame-experience__legend"><i></i>Связи жёсткости</span>
-   </div>
-   <div class="frame-experience__bottom" data-frame-controls>
-     <p data-frame-status role="status">Загружаем 3D-схему. Доступна также иллюстрация каркаса.</p>
-     <div><button type="button" data-frame-left aria-label="Повернуть каркас влево" disabled>←</button><button type="button" data-frame-right aria-label="Повернуть каркас вправо" disabled>→</button><button type="button" data-frame-reset disabled>Исходный вид</button></div>
-   </div>
+ ${sectionHead({label:'02 / Конструкция',title:'Основа здания —\nстальной каркас.',text:'Открытые фермы, связи и ограждающие конструкции. Состав каркаса и каждого узла определяем в проекте под назначение здания и нагрузки площадки.',action:{title:'Проектирование КМ и КМД',url:'/proektirovshchikam/'}})}
+ <div class="construction-photos">
+  <figure class="construction-photos__interior">
+   <a href="/assets/img/photo-warehouse-interior-1024.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию интерьера зернохранилища">
+    ${raw(picture('photo-warehouse-interior',{alt:'Интерьер зернохранилища: стальные фермы, профнастил и наклонные нижние стены',sizes:'(min-width: 900px) 60vw, 100vw'}))}
+   </a>
+   <figcaption><span>01 / ВНУТРЕННЕЕ ПРОСТРАНСТВО</span>Фермы и ограждающие конструкции зернохранилища</figcaption>
+  </figure>
+  <figure class="construction-photos__frame">
+   <a href="/assets/img/photo-warehouse-frame-577.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию металлического каркаса">
+    ${raw(picture('photo-warehouse-frame',{alt:'Металлический каркас зернохранилища до завершения обшивки',sizes:'(min-width: 900px) 35vw, (min-width: 540px) 65vw, 100vw'}))}
+   </a>
+   <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи до закрытия контура</figcaption>
+  </figure>
  </div>
- <p class="engineering-experience__note">Принципиальная схема. Сечения, высота, шаг рам и узлы показаны условно. Конструктив конкретного здания определяется расчётом и рабочим проектом.</p>
  <div class="engineering-deliverables">
    <div><span>01 / РАСЧЁТ</span><h3>Под вашу площадку</h3><p>Назначение здания, снеговые и ветровые нагрузки, пролёты и расположение оборудования.</p></div>
-   <div><span>02 / КМ</span><h3>Конструкции металлические</h3><p>Принятая конструктивная схема, сечения элементов, узлы и данные для смежных разделов проекта.</p></div>
-   <div><span>03 / КМД</span><h3>Детали для производства</h3><p>Чертежи изготовления, маркировка элементов и документация, по которой собирают каркас.</p></div>
+   <div><span>02 / КМ</span><h3>Конструкции металлические</h3><p>Конструктивная схема, сечения элементов, узлы и данные для смежных разделов проекта.</p></div>
+   <div><span>03 / КМД</span><h3>Детали для производства</h3><p>Чертежи изготовления, маркировка элементов и документация для сборки каркаса.</p></div>
  </div>
  </div>
 </section>`;

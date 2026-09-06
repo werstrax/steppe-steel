@@ -429,5 +429,91 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAAAQBQCdASoYABIAPtFUoUwoJKMiMBgMAQAaCWMApxQQ7Cy0dqJjCEEtto9dXYXP1vvgAP7UqSJvTHOj/KAzc7q4l/WKj1UG6b9Ikmu+ivXX0v2sRW4800RyYcdxMKNM+fCMcZKgJSKha5EwKG+UDBESooNApeh4lj/aDuqrI9fQAoDx3NqyfxLFl/iz8JogpK8lZStPlocNdmAoAAA=",
   "_source": "Built-in image_gen, architectural concept, 2026-09-07; not a completed project"
+ },
+ "photo-warehouse-interior": {
+  "w": 1024,
+  "h": 678,
+  "ratio": 1.51032,
+  "widths": [
+   320,
+   480,
+   640,
+   864,
+   1024
+  ],
+  "fallback": 1024,
+  "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoYABAAPtFWpEuoJKOhsAgBABoJZQCsACFrf21dTPtOGSf/CAD+2pDkyiZyb3xFYnwm55Y6A5oU/8pjNnuI/FKn2fId8Gd1DTv+V75gkGKw5sEdLaAsBDGfHuGgLoulBlCRqwAA",
+  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.37.jpeg",
+  "_kind": "supplied",
+  "_note": "Client supplied photograph; no project identity assumed"
+ },
+ "photo-warehouse-frame": {
+  "w": 577,
+  "h": 325,
+  "ratio": 1.77538,
+  "widths": [
+   320,
+   480,
+   577
+  ],
+  "fallback": 577,
+  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwBACdASoYAA4APtE4sFMoIiWjmAEAGgloAJ0yhHAAGLtVZgUxWssU9IAA/t7oDuDxSuzliitOw7i9VSYl4TJJoFxgNvioaTEIqxANxj3FLowhDy94vCkbjOkiFlOIwqt5fs63IK3cXJRIeuDkvptiVvmDUAAA",
+  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.56.jpeg",
+  "_kind": "supplied",
+  "_note": "Client supplied photograph; no project identity assumed"
+ },
+ "photo-warehouse-exterior": {
+  "w": 1024,
+  "h": 678,
+  "ratio": 1.51032,
+  "widths": [
+   320,
+   480,
+   640,
+   864,
+   1024
+  ],
+  "fallback": 1024,
+  "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABwBACdASoYABAAPtFWpEuoJKOhsAgBABoJbACdMoR4GCxk1N+L/feOSak2oAD+5BHM0MtdT9eugleIvC+fUXlda60vQ71tiR/O1zScAdiZQD1QaHlVSrWsupuWHqcictnjm6TSd+I2nqSCcPwKjSbsSTJWjJVk3QtAMc2Qe17bEGiMK8qGEJDyAAA=",
+  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.26.jpeg",
+  "_kind": "supplied",
+  "_note": "Client supplied photograph; no project identity assumed"
+ },
+ "photo-grain-complex": {
+  "w": 1536,
+  "h": 864,
+  "ratio": 1.77778,
+  "widths": [
+   320,
+   480,
+   640,
+   864,
+   1152,
+   1536
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAABQBACdASoYAA4APtFUo0uoJKMhsAgBABoJQBOkBshf2AJvKF/b5wI5ddbAAMskfpByoYgwTfe25h2UMV41uWH6b6pdlQQli9xfnTI30iZtZlax4Km4peS5CpNlemtPYIxJNkDyiveRVYcEQG1qpOrex9H5WO5am6glrwvZs9UtN79SwSCrlaa6ft29ZA/z1Q3Yw4KYvLYdTZI4dfsEvZ/PDm++cJ3ZQO65OwlfrO6zdFueVDecxgAA",
+  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.08.18.jpeg",
+  "_kind": "supplied",
+  "_note": "Client supplied photograph; no project identity assumed"
+ },
+ "photo-editorial-interior": {
+  "w": 1672,
+  "h": 941,
+  "ratio": 1.77683,
+  "widths": [
+   320,
+   480,
+   640,
+   864,
+   1152,
+   1536,
+   1672
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABwBACdASoYAA4APtFWpEuoJKOhsAgBABoJZQCdACBS71Tj8jeGdRAIOzqowAD+0DC/VtDi/b63PzE1GW0nNL9LayD3PEPeqRRewyX6X/G2yxb9K/KtQL/XmR3y2y6ckAWeTXSrPHeglzgQAAA=",
+  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-c6f80e11-c6ee-4d9c-aa5c-4d3db8ac2d09.png",
+  "_kind": "generated",
+  "_note": "Generated photo-like illustration, explicitly labelled on website"
  }
 }

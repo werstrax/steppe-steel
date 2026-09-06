@@ -29,8 +29,8 @@
   ],
   "featured": [
     "zernohranilishcha",
-    "angary",
-    "proizvodstvennye-zdaniya"
+    "sklady",
+    "angary"
   ],
   "solutions": {
     "title": "Здания под задачи\nвашего бизнеса",
@@ -41,7 +41,8 @@
     "zernohranilishcha": "Для хранения зерна навалом и расширения хозяйства.",
     "angary": "Для хранения, мастерских и хозяйственных задач.",
     "proizvodstvennye-zdaniya": "Под оборудование, рабочие процессы и нагрузки.",
-    "zdaniya-dlya-tekhniki": "Для размещения и обслуживания сельхозтехники."
+    "zdaniya-dlya-tekhniki": "Для размещения и обслуживания сельхозтехники.",
+    "sklady": "Для хранения продукции, товаров и материалов."
   },
   "factory": {
     "title": "От чертежа —\nк готовому комплекту",

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "photo-warehouse-interior",
+    "kind": "supplied",
+    "size": [
+      1024,
+      678
+    ],
+    "source_bytes": 86002,
+    "display_webp_bytes": 78998,
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1024
+    ],
+    "display_width": 1024,
+    "mobile_480_bytes": 25696
+  },
+  {
+    "name": "photo-warehouse-frame",
+    "kind": "supplied",
+    "size": [
+      577,
+      325
+    ],
+    "source_bytes": 40152,
+    "display_webp_bytes": 38128,
+    "widths": [
+      320,
+      480,
+      577
+    ],
+    "display_width": 577,
+    "mobile_480_bytes": 26730
+  },
+  {
+    "name": "photo-warehouse-exterior",
+    "kind": "supplied",
+    "size": [
+      1024,
+      678
+    ],
+    "source_bytes": 74371,
+    "display_webp_bytes": 66496,
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1024
+    ],
+    "display_width": 1024,
+    "mobile_480_bytes": 19800
+  },
+  {
+    "name": "photo-grain-complex",
+    "kind": "supplied",
+    "size": [
+      1536,
+      864
+    ],
+    "source_bytes": 310191,
+    "display_webp_bytes": 141902,
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536
+    ],
+    "display_width": 1152,
+    "mobile_480_bytes": 33930
+  },
+  {
+    "name": "photo-editorial-interior",
+    "kind": "generated",
+    "size": [
+      1672,
+      941
+    ],
+    "source_bytes": 2341651,
+    "display_webp_bytes": 116616,
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "mobile_480_bytes": 25150
+  }
+]
