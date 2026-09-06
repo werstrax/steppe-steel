@@ -89,6 +89,9 @@ function loadData(lang) {
   site.buildId = assetHash([
     join(SRC, 'assets', 'css', 'site.css'),
     join(SRC, 'assets', 'css', 'pro.css'),
+    join(SRC, 'assets', 'css', 'experience.css'),
+    join(SRC, 'assets', 'js', 'frame-viewer.js'),
+    join(SRC, 'assets', 'js', 'frame-geometry.mjs'),
     join(SRC, 'assets', 'css', 'theme-tz.css'),
     join(SRC, 'assets', 'js', 'site.js'),
   ]);

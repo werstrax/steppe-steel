@@ -316,7 +316,7 @@
         "fundament",
         "km-kmd"
       ],
-      "coverViz": false,
+      "coverViz": true,
       "figures": [
         {
           "slot": "zerno-cutaway",
@@ -326,7 +326,9 @@
           "slot": "zerno-node",
           "caption": "Узел опирания стойки на винтовую сваю"
         }
-      ]
+      ],
+      "cover": "concept-grain",
+      "_coverNote": "Архитектурная ИИ-визуализация, разрешена пользователем 06.09.2026; не построенный объект."
     },
     {
       "slug": "sklady",
@@ -438,7 +440,9 @@
         "холодный или тёплый контур"
       ],
       "summary": "Холодный или утеплённый склад на каркасе заводского производства: до 24 м пролёта без внутренних колонн — стеллажи и проезды техники размечаются по схеме логистики, а не по осям колонн.",
-      "coverViz": false
+      "coverViz": true,
+      "cover": "concept-hero",
+      "_coverNote": "Архитектурная ИИ-визуализация, разрешена пользователем 06.09.2026; не построенный объект."
     },
     {
       "slug": "proizvodstvennye-zdaniya",
@@ -542,7 +546,9 @@
         "km-kmd",
         "lstk-lmk"
       ],
-      "coverViz": false
+      "coverViz": true,
+      "cover": "concept-frame",
+      "_coverNote": "Архитектурная ИИ-визуализация, разрешена пользователем 06.09.2026; не построенный объект."
     },
     {
       "slug": "angary",
@@ -654,7 +660,9 @@
         "fundament",
         "lstk-lmk"
       ],
-      "coverViz": false
+      "coverViz": true,
+      "cover": "concept-hero",
+      "_coverNote": "Архитектурная ИИ-визуализация, разрешена пользователем 06.09.2026; не построенный объект."
     },
     {
       "slug": "ovoshchehranilishcha",

@@ -384,5 +384,50 @@
   ],
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwC+SCIex8D1xmVYZK4AAP7twuzQn74u+stKC/DBICQW+9Agef4V+sRNgVGBcOBb35Re3kUAAA=="
+ },
+ "concept-hero": {
+  "w": 1672,
+  "h": 941,
+  "ratio": 1.77683,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1600
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAABQBACdASoYAA4APtFWpUwoJKOiMAgBABoJZQC7B3gAmj+vhPb+yv1qRxdgAP7yOmmR/80T2lVJJAqS2H1AqB5Qetx/sdiOGfwJcK89CpGIIi9Ey/v8mA08dbFpOsPGOASaIYcWEsuR7FpKiUP3oUVH6YYU5aqooDwAAA==",
+  "_source": "Built-in image_gen, architectural concept, 2026-09-07; not a completed project"
+ },
+ "concept-frame": {
+  "w": 1448,
+  "h": 1086,
+  "ratio": 1.33333,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1448
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABQBACdASoYABIAPtFcqU2oJSQiKAqpABoJaQAIEAH0bt3qzJB65hnBaB7QAP7v0QsGxTqPHAEPny38GWvnnbQAR/qsdQ+PhFhu7ml4atTtyKxKY2rF2iUWjJOwbDhTnK3OGgAA",
+  "_source": "Built-in image_gen, architectural concept, 2026-09-07; not a completed project"
+ },
+ "concept-grain": {
+  "w": 1448,
+  "h": 1086,
+  "ratio": 1.33333,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1448
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAAAQBQCdASoYABIAPtFUoUwoJKMiMBgMAQAaCWMApxQQ7Cy0dqJjCEEtto9dXYXP1vvgAP7UqSJvTHOj/KAzc7q4l/WKj1UG6b9Ikmu+ivXX0v2sRW4800RyYcdxMKNM+fCMcZKgJSKha5EwKG+UDBESooNApeh4lj/aDuqrI9fQAoDx3NqyfxLFl/iz8JogpK8lZStPlocNdmAoAAA=",
+  "_source": "Built-in image_gen, architectural concept, 2026-09-07; not a completed project"
  }
 }

@@ -5,6 +5,7 @@
 import { layout, html, raw } from '../lib/layout.mjs';
 import { sectionHead, ctaBand, iconArrow, iconCheck } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
+import {documentShelf,engineeringExperience} from '../lib/experience.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
 
 export function renderHome(d) {
@@ -16,7 +17,7 @@ export function renderHome(d) {
   const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
   const content = html`
     <section class="factory-hero" aria-labelledby="factory-title">
-      <div class="factory-hero__image" aria-hidden="true">${raw(picture('prod-baza',{alt:'',sizes:'100vw',priority:true}))}</div>
+      <div class="factory-hero__image" aria-hidden="true">${raw(picture('concept-hero',{alt:'',sizes:'100vw',priority:true}))}</div>
       <div class="container factory-hero__inner">
         <div class="factory-hero__copy">
           <p class="factory-hero__eyebrow"><span></span>ЗАВОД МЕТАЛЛОКОНСТРУКЦИЙ / КАЗАХСТАН</p>
@@ -24,10 +25,11 @@ export function renderHome(d) {
           <p class="factory-hero__lead">Зернохранилища, склады, ангары и производственные здания. Проектируем, производим и поставляем по всему Казахстану.</p>
           <div class="factory-hero__actions">
             <a class="btn btn--primary" href="/raschet/">Обсудить проект ${iconArrow}</a>
-            <a class="factory-hero__link" href="/resheniya/">Выбрать здание <span>↗</span></a>
+            <a class="factory-hero__link" href="#engineering">Посмотреть каркас в 3D <span>↗</span></a>
           </div>
+          <a class="factory-hero__documents" href="#documents">Презентации и сертификат ${iconArrow}</a>
         </div>
-        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>СВОЁ ПРОИЗВОДСТВО<small>с. Троебратское<br>Костанайская область</small></div></div>
+        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>КОНЦЕПЦИЯ ЗДАНИЯ<small>Архитектурная визуализация<br>Облик уточняется в проекте</small></div></div>
       </div>
       <div class="factory-hero__bottom"><div class="container">
         <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
@@ -51,8 +53,8 @@ export function renderHome(d) {
         <div class="pro-solutions">
           ${featured.map((s,i) => html`<a class="pro-solution" href="${s.url}">
             <div class="pro-solution__photo">
-              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.title+' — материалы Steppe Steel',sizes:'(min-width: 900px) 25vw, (min-width: 540px) 50vw, 100vw'}))}
-              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span>
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.title+' — архитектурная визуализация',sizes:'(min-width: 900px) 25vw, (min-width: 540px) 50vw, 100vw'}))}
+              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span><span class="concept-label">Визуализация</span>
             </div>
             <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
               <p>${home.solutionDescriptions[s.slug]}</p>
@@ -66,20 +68,8 @@ export function renderHome(d) {
       </div>
     </section>
 
-    <section class="section section--dark pro-factory" id="proizvodstvo">
-      <div class="container">
-        ${sectionHead({label:'02 / Производство',title:home.factory.title,text:home.factory.text,action:{title:'Как устроено производство',url:'/proizvodstvo/'}})}
-        <div class="pro-factory__grid">
-          <figure class="pro-factory__photo">${raw(picture('prod-profil',{alt:'Линия профилирования ПСУ и ПС на заводе Steppe Steel',sizes:'(min-width:900px) 60vw, 100vw'}))}
-            <figcaption>Линия профилирования / ПСУ и ПС</figcaption>
-          </figure>
-          <div class="pro-factory__stages">
-            ${home.factory.stages.map((s,i)=>html`<div><span class="mono">0${i+1}</span><h3>${s.title}</h3><p>${s.text}</p></div>`)}
-            <a class="arrow-link" href="/dokumentaciya/">Документы и сертификаты ${iconArrow}</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    ${engineeringExperience(d)}
+
 
     <section class="section" id="tipovye">
       <div class="container">
@@ -127,7 +117,7 @@ export function renderHome(d) {
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
-      <figure>${raw(picture('prod-baza',{alt:'Производственная база Steppe Steel в Костанайской области',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>${site.contacts.address.settlement} · ${site.contacts.address.region}</figcaption></figure>
+      <div class="pro-about__identity"><span>КАЗАХСТАН / КОСТАНАЙСКАЯ ОБЛАСТЬ</span><strong>STEPPE<br><i>STEEL</i></strong><p>Проектирование. Производство. Комплектная поставка.</p><a class="arrow-link" href="/proizvodstvo/">Узнать о производстве ${iconArrow}</a></div>
       <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
@@ -136,10 +126,12 @@ export function renderHome(d) {
       </div>
     </div></section>
 
+    ${documentShelf(d)}
+
     ${ctaBand(site,{title:home.cta.title,text:home.cta.text})}
   `;
   return layout(site,{
-    url:'/',bodyClass:'pro-home',noNext:true,
+    url:'/',bodyClass:'pro-home',noNext:true,frameViewer:true,
     image:hasImage('hero-photo')?'hero-photo':undefined,
     title:'Завод металлоконструкций в Казахстане — Steppe Steel',
     description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',

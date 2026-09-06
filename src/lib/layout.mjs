@@ -100,6 +100,7 @@ ${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImag
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">
 ${site.variant === 'tz' ? `<link rel="stylesheet" href="/assets/css/theme-tz.css?v=${site.buildId}">` : ''}
 <link rel="stylesheet" href="/assets/css/pro.css?v=${site.buildId}">
+<link rel="stylesheet" href="/assets/css/experience.css?v=${site.buildId}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -119,6 +120,7 @@ ${page.noNext ? '' : page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand
 ${footer(site)}
 ${mobileBar(site, page.url)}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
+${page.frameViewer ? '<script type="module" src="/assets/js/frame-viewer.js?v='+site.buildId+'"></script>' : ''}
 </body>
 </html>
 `;

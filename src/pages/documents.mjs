@@ -1,64 +1,25 @@
-/**
- * /dokumentaciya/ (ТЗ §15): категории документов, PDF на скачивание.
- * Новые файлы добавляются в src/assets/docs/ + запись в documents.json.
- */
+import {layout,html} from '../lib/layout.mjs';
+import {pageHero,ctaBand} from '../lib/components.mjs';
+import {documentShelf} from '../lib/experience.mjs';
 
-import { layout, html } from '../lib/layout.mjs';
-import { pageHero, sectionHead, docRow, ctaBand } from '../lib/components.mjs';
-
-export function renderDocuments(d) {
-  const { site, documents } = d;
-  const crumbList = [
-    { title: 'Главная', url: '/' },
-    { title: 'Документация', url: '/dokumentaciya/' },
-  ];
-
-  const content = html`
-    ${pageHero({
-      label: documents.kicker,
-      titleHtml: documents.title,
-      text: documents.intro,
-      crumbList,
-    })}
-
-    <section class="section section--flush-top">
-      <div class="container container--narrow">
-        ${documents.categories.map(
-          (cat) => html`
-            <div class="doc-cat" id="${cat.id}">
-              <h2 class="doc-cat__title">${cat.title}</h2>
-              ${cat.items.length
-                ? html`<div class="docs">${cat.items.map((doc) => docRow(doc))}</div>`
-                : ''}
-              ${cat.id === 'rekvizity' && site.brand.legalName
-                ? html`<div class="specs" data-reveal>
-                    <div class="specs__row"><span class="specs__key">Юрлицо</span><span class="specs__val">${site.brand.legalName}</span></div>
-                    <div class="specs__row"><span class="specs__key">БИН</span><span class="specs__val mono">${site.brand.bin}</span></div>
-                    <div class="specs__row"><span class="specs__key">Юридический адрес</span><span class="specs__val">${site.brand.legalAddress}</span></div>
-                    <div class="specs__row"><span class="specs__key">Производство</span><span class="specs__val">${site.contacts.address.settlement}, ${site.contacts.address.district}, ${site.contacts.address.region}</span></div>
-                  </div>
-                  <p class="note" data-reveal>Банковские реквизиты и карточку предприятия в PDF вышлем по запросу.</p>`
-                : cat.note ? html`<p class="note" data-reveal>${cat.note}</p>` : ''}
-            </div>
-          `
-        )}
-      </div>
-    </section>
-
-    ${ctaBand(site, {
-      title: 'Нужен документ, которого здесь нет?',
-      text: 'Реквизиты, заверенные копии, сортамент в рабочем виде — вышлем по запросу в WhatsApp или на почту.',
-    })}
-  `;
-
-  return layout(
-    site,
-    {
-      url: '/dokumentaciya/',
-      title: documents.seoTitle,
-      description: documents.seoDescription,
-      crumbs: crumbList,
-    },
-    content
-  );
+export function renderDocuments(d){
+const {site,documents}=d;
+const crumbs=[{title:'Главная',url:'/'},{title:'Документы',url:'/dokumentaciya/'}];
+const content=html`
+ ${pageHero({label:'Документы завода',titleHtml:'Презентации.\nСертификаты.\nТехническая информация.',text:'Оригинальные PDF завода Steppe Steel: познакомьтесь с производством, изучите партнёрскую программу и проверьте сертификат на профили ПСУ и ПС.',crumbList:crumbs})}
+ ${documentShelf(d,{heading:false})}
+ <section class="section"><div class="container">
+ <div class="doc-library__request">
+  <div><h2>Реквизиты предприятия</h2><div class="specs">
+   <div class="specs__row"><span class="specs__key">Юрлицо</span><span class="specs__val">${site.brand.legalName}</span></div>
+   <div class="specs__row"><span class="specs__key">БИН</span><span class="specs__val">${site.brand.bin}</span></div>
+   <div class="specs__row"><span class="specs__key">Юридический адрес</span><span class="specs__val">${site.brand.legalAddress}</span></div>
+  </div></div>
+  <div><h2>Материалы для проектирования</h2><p>Сортамент ПСУ и ПС доступен на сайте. Паспорт конкретного комплекта выдаётся с поставкой. Узлы, монтажные чертежи и заверенные копии документов запросите у проектного отдела.</p>
+   <div class="btn-row"><a class="btn btn--primary" href="/profili/">Сортамент профилей</a><a class="btn btn--ghost" href="/proektirovshchikam/">Проектировщикам</a></div>
+  </div>
+ </div></div></section>
+ ${ctaBand(site,{title:'Нужны документы\nдля вашего проекта?',text:'Напишите, что требуется: исходные данные, сортамент, заверенный сертификат или карточка предприятия. Запрос передадим профильному специалисту.'})}
+`;
+return layout(site,{url:'/dokumentaciya/',title:documents.seoTitle,description:documents.seoDescription,crumbs},content);
 }
