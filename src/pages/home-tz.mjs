@@ -98,9 +98,9 @@ export function renderHomeTz(d) {
       <a class="${cx('card tzcard', s.flag && 'tzcard--flag')}" href="${s.url}" data-reveal>
         <span class="card__media">
           ${photo
-            ? raw(picture(img, { alt: `${s.short || s.title} — Steppe Steel`, sizes: '(min-width: 1020px) 33vw, (min-width: 640px) 50vw, 100vw' }))
+            ? raw(picture(img, { alt: s.photoAlt || `${s.short || s.title} — Steppe Steel`, sizes: '(min-width: 1020px) 33vw, (min-width: 640px) 50vw, 100vw' }))
             : html`<span class="tzcard__spec"><span class="tzcard__spec-num mono">${String(i + 1).padStart(2, '0')}</span>${pict(s.slug)}<span class="tzcard__spec-list mono">${(s.cardMeta || []).map((m) => html`<span>${m}</span>`)}</span></span>`}
-          ${photo && s.coverViz ? vizTag() : ''}
+          ${photo && s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
           ${s.flag ? html`<span class="card__flag mono">${s.flag}</span>` : ''}
         </span>
         <span class="card__body">

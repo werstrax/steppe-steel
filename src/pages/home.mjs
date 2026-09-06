@@ -55,6 +55,7 @@ export function renderHome(d) {
             <div class="pro-solution__photo">
               ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:i===0?'(min-width: 1100px) 45vw, 100vw':'(min-width: 1100px) 28vw, (min-width: 640px) 50vw, 100vw'}))}
               <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span>
+              ${s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
             </div>
             <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
               <p>${home.solutionDescriptions[s.slug]}</p>
@@ -117,7 +118,7 @@ export function renderHome(d) {
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
-      <figure class="pro-about__photo">${raw(picture('photo-editorial-interior',{alt:'Фотореалистичный сгенерированный интерьер здания со стальными фермами',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Интерьер здания из металлоконструкций · сгенерированный кадр</figcaption></figure>
+      <figure class="pro-about__photo">${raw(picture('photo-production-hall',{alt:'Пример производственного цеха на стальном каркасе — сгенерированная иллюстрация',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Пример производственного здания · сгенерированный кадр</figcaption></figure>
       <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "photo-logistics-warehouse",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 127558,
+    "mobile_480_bytes": 30538
+  },
+  {
+    "name": "photo-production-hall",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 150746,
+    "mobile_480_bytes": 37172
+  },
+  {
+    "name": "photo-general-hangar",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 58786,
+    "mobile_480_bytes": 12354
+  },
+  {
+    "name": "photo-vehicle-shelter",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 91458,
+    "mobile_480_bytes": 17012
+  },
+  {
+    "name": "photo-vegetable-storage",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 141954,
+    "mobile_480_bytes": 32148
+  },
+  {
+    "name": "photo-service-workshop",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 94740,
+    "mobile_480_bytes": 21546
+  },
+  {
+    "name": "photo-sports-hall",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 96014,
+    "mobile_480_bytes": 23408
+  },
+  {
+    "name": "photo-modular-building",
+    "native_size": [
+      1672,
+      941
+    ],
+    "widths": [
+      320,
+      480,
+      640,
+      864,
+      1152,
+      1536,
+      1672
+    ],
+    "display_width": 1152,
+    "display_bytes": 73618,
+    "mobile_480_bytes": 14478
+  }
+]

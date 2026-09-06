@@ -121,6 +121,8 @@ export function renderSolution(d, s) {
       text: s.lead,
       crumbList,
       image: s.cover || `sol-${s.slug}`,
+      imageAlt: s.photoAlt || s.title,
+      imageCaption: s.coverCaption,
     })}
 
     <section class="section section--flush-top">

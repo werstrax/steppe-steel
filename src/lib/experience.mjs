@@ -24,7 +24,7 @@ export function documentShelf(d,{heading=true}={}) {
 export function engineeringExperience(d){
 return html`<section class="section engineering-experience" id="engineering">
  <div class="container">
- ${sectionHead({label:'02 / Конструкция',title:'Основа здания —\nстальной каркас.',text:'Открытые фермы, связи и ограждающие конструкции. Состав каркаса и каждого узла определяем в проекте под назначение здания и нагрузки площадки.',action:{title:'Проектирование КМ и КМД',url:'/proektirovshchikam/'}})}
+ ${sectionHead({label:'02 / Зернохранилища',title:'Конструкция\nзернохранилища.',text:'На фотографиях — зернохранилище с наклонными нижними стенами для хранения навалом. Каркас, фермы и ограждающие конструкции рассчитываем под нагрузки площадки и давление зерна.',action:{title:'Подробнее о зернохранилищах',url:'/resheniya/zernohranilishcha/'}})}
  <div class="construction-photos">
   <figure class="construction-photos__interior">
    <a href="/assets/img/photo-warehouse-interior-1024.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию интерьера зернохранилища">
@@ -36,7 +36,7 @@ return html`<section class="section engineering-experience" id="engineering">
    <a href="/assets/img/photo-warehouse-frame-577.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию металлического каркаса">
     ${raw(picture('photo-warehouse-frame',{alt:'Металлический каркас зернохранилища до завершения обшивки',sizes:'(min-width: 900px) 35vw, (min-width: 540px) 65vw, 100vw'}))}
    </a>
-   <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи до закрытия контура</figcaption>
+   <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи зернохранилища до закрытия контура</figcaption>
   </figure>
  </div>
  <div class="engineering-deliverables">

@@ -319,17 +319,21 @@
       "coverViz": false,
       "figures": [
         {
-          "slot": "zerno-cutaway",
-          "caption": "Зернохранилище в разрезе: наклонные стены, свайный фундамент"
+          "slot": "photo-warehouse-interior",
+          "caption": "Зернохранилище изнутри: стальные фермы и наклонные стены для хранения зерна навалом"
         },
         {
-          "slot": "zerno-node",
-          "caption": "Узел опирания стойки на винтовую сваю"
+          "slot": "photo-warehouse-frame",
+          "caption": "Каркас зернохранилища до завершения обшивки"
+        },
+        {
+          "slot": "photo-grain-complex",
+          "caption": "Зернохранилища в составе агрокомплекса"
         }
       ],
       "cover": "photo-warehouse-exterior",
-      "_coverNote": "Фотография, предоставленная пользователем 07.09.2026. Не приписывается конкретному проекту или объекту завода.",
-      "photoAlt": "Зернохранилище с металлическим каркасом и профилированной обшивкой"
+      "_coverNote": "All four user photographs show grain-storage buildings only. Do not use as warehouses, hangars or production halls.",
+      "photoAlt": "Зернохранилище: металлический каркас, наклонные нижние стены и профилированная обшивка"
     },
     {
       "slug": "sklady",
@@ -442,9 +446,10 @@
       ],
       "summary": "Холодный или утеплённый склад на каркасе заводского производства: до 24 м пролёта без внутренних колонн — стеллажи и проезды техники размечаются по схеме логистики, а не по осям колонн.",
       "coverViz": false,
-      "cover": "photo-grain-complex",
-      "_coverNote": "Фотография, предоставленная пользователем 07.09.2026. Не приписывается конкретному проекту или объекту завода.",
-      "photoAlt": "Складские здания на зерновом комплексе"
+      "cover": "photo-logistics-warehouse",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
+      "photoAlt": "Обычный склад товаров: вертикальные стены, стальной каркас, паллетные стеллажи и проезд для погрузчика — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация"
     },
     {
       "slug": "proizvodstvennye-zdaniya",
@@ -549,9 +554,10 @@
         "lstk-lmk"
       ],
       "coverViz": false,
-      "cover": "photo-warehouse-interior",
-      "_coverNote": "Фотография, предоставленная пользователем 07.09.2026. Не приписывается конкретному проекту или объекту завода.",
-      "photoAlt": "Внутреннее пространство здания из металлоконструкций"
+      "cover": "photo-production-hall",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
+      "photoAlt": "Производственный цех: стальные колонны и фермы, мостовой кран и оборудование — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация"
     },
     {
       "slug": "angary",
@@ -664,9 +670,10 @@
         "lstk-lmk"
       ],
       "coverViz": false,
-      "cover": "photo-warehouse-frame",
-      "_coverNote": "Фотография, предоставленная пользователем 07.09.2026. Не приписывается конкретному проекту или объекту завода.",
-      "photoAlt": "Открытый металлический каркас до завершения обшивки"
+      "cover": "photo-general-hangar",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
+      "photoAlt": "Прямоугольный ангар с вертикальными стенами, двускатной крышей и широкими воротами — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация"
     },
     {
       "slug": "ovoshchehranilishcha",
@@ -777,7 +784,11 @@
         "каркас 50+ лет"
       ],
       "summary": "Каркас и ограждающий контур под утеплённое хранилище картофеля и овощей: пролёт до 24 м без внутренних колонн — под навальное или контейнерное хранение.",
-      "coverViz": false
+      "coverViz": false,
+      "cover": "photo-vegetable-storage",
+      "photoAlt": "Утеплённое овощехранилище с контейнерами для овощей и вентиляцией — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
       "slug": "zdaniya-dlya-tekhniki",
@@ -893,9 +904,10 @@
       ],
       "summary": "Навес, гараж или машинный двор под ваш парк: пролёт до 24 м без колонн, ворота — по габаритам техники.",
       "coverViz": false,
-      "cover": "photo-warehouse-interior",
-      "photoAlt": "Пример пространства здания на металлическом каркасе",
-      "_coverNote": "Фотография, предоставленная пользователем 07.09.2026. Не приписывается конкретному проекту или объекту завода."
+      "cover": "photo-vehicle-shelter",
+      "photoAlt": "Открытый стальной навес с вертикальными колоннами для сельскохозяйственной техники — сгенерированная иллюстрация",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
+      "coverCaption": "Сгенерированная иллюстрация"
     },
     {
       "slug": "sto-avtoparki",
@@ -1007,7 +1019,11 @@
         "нагрузки в расчёте"
       ],
       "summary": "Ремонтный бокс, мойка или автосалон на каркасе заводского производства: свободный зал до 24 м без колонн, расчёт под ваше оборудование и участок.",
-      "coverViz": false
+      "coverViz": false,
+      "cover": "photo-service-workshop",
+      "photoAlt": "Автосервис на стальном каркасе с автомобильными подъёмниками и ремонтными постами — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
       "slug": "sportivnye-obekty",
@@ -1118,7 +1134,11 @@
         "тёплый контур"
       ],
       "summary": "Игровой зал, крытый манеж или ФОК на стальном каркасе заводского производства: пролёт до 24 м без колонн над площадкой, расчёт под снеговые нагрузки севера Казахстана.",
-      "coverViz": false
+      "coverViz": false,
+      "cover": "photo-sports-hall",
+      "photoAlt": "Спортивный зал с баскетбольной площадкой и открытыми стальными фермами — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
       "slug": "modulnye-zdaniya",
@@ -1230,8 +1250,12 @@
         "длина до 140 м"
       ],
       "summary": "Каркас из повторяющихся заводских секций: сегодня — объём под текущую задачу, позже — новые секции к торцу без демонтажа построенного.",
-      "coverViz": false
+      "coverViz": false,
+      "cover": "photo-modular-building",
+      "photoAlt": "Одноэтажное модульное здание из повторяющихся стальных каркасных секций — сгенерированная иллюстрация",
+      "coverCaption": "Сгенерированная иллюстрация",
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     }
   ],
-  "_vizNote": "coverViz: true только у рендеров заказчика (навес для техники из презентации). Обложки sol-<slug> — реальные фото из презентаций завода (04.09.2026); визуализации kie.ai сняты и лежат в raw/viz-archive/raw-kie/."
+  "_vizNote": "07.09.2026: user photos show grain storage only. Every other solution has its own generated photorealistic illustration and caption."
 }

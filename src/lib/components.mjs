@@ -361,7 +361,7 @@ export function crumbs(list) {
 
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
-export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, count, image }) {
+export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, count, image, imageAlt = '', imageCaption }) {
   /* Фото-режим: слева заголовок и лид, справа кадр из манифеста с оранжевой
    * кромкой. Без кадра — обычный типографический хиро. */
   if (image && hasImage(image)) {
@@ -377,7 +377,8 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
               ${actions ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>` : ''}
             </div>
             <div class="page-hero__media" data-reveal>
-              ${raw(picture(image, { alt: '', sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
+              ${raw(picture(image, { alt: imageAlt, sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
+              ${imageCaption ? html`<span class="solution-image-note">${imageCaption}</span>` : ''}
             </div>
           </div>
         </div>
@@ -457,9 +458,9 @@ export function solutionCard(s, { level = 3 } = {}) {
     <a class="${cx('card sol-card', !hasImage(img) && 'sol-card--text', s.flag && 'sol-card--flag')}" href="${s.url}" data-reveal>
       <span class="card__media">
         ${hasImage(img)
-          ? raw(picture(img, { alt: `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
+          ? raw(picture(img, { alt: s.photoAlt || `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
           : html`<span class="sol-card__category">ЛСТК / ЛМК<br>ПРОЕКТИРОВАНИЕ И ПОСТАВКА</span>`}
-        ${hasImage(img) && s.coverViz ? vizTag() : ''}
+        ${hasImage(img) && s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
         ${s.flag ? html`<span class="card__flag mono">${s.flag}</span>` : ''}
       </span>
       <span class="card__body">
