@@ -24,3 +24,6 @@ screenshots/
 
 # Python
 __pycache__/
+
+# Слепок сборки из ChatGPT (эталон для сравнения, 27 МБ)
+gpt-site/

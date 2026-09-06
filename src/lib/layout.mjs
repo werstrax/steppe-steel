@@ -120,7 +120,6 @@ ${page.noNext ? '' : page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand
 ${footer(site)}
 ${mobileBar(site, page.url)}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
-${page.frameViewer ? '<script type="module" src="/assets/js/frame-viewer.js?v='+site.buildId+'"></script>' : ''}
 </body>
 </html>
 `;
