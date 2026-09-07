@@ -118,7 +118,7 @@ export function renderHome(d) {
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
-      <figure class="pro-about__photo">${raw(picture('photo-production-hall',{alt:'Пример производственного цеха на стальном каркасе — сгенерированная иллюстрация',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Пример производственного здания · сгенерированный кадр</figcaption></figure>
+      <figure class="pro-about__photo">${raw(picture('photo-production-hall',{alt:'Пример производственного цеха на стальном каркасе — сгенерированная иллюстрация',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Производственное здание на стальном каркасе</figcaption></figure>
       <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>

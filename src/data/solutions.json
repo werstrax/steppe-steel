@@ -448,8 +448,7 @@
       "coverViz": false,
       "cover": "photo-logistics-warehouse",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Обычный склад товаров: вертикальные стены, стальной каркас, паллетные стеллажи и проезд для погрузчика — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация"
+      "photoAlt": "Обычный склад товаров: вертикальные стены, стальной каркас, паллетные стеллажи и проезд для погрузчика — сгенерированная иллюстрация"
     },
     {
       "slug": "proizvodstvennye-zdaniya",
@@ -556,8 +555,7 @@
       "coverViz": false,
       "cover": "photo-production-hall",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Производственный цех: стальные колонны и фермы, мостовой кран и оборудование — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация"
+      "photoAlt": "Производственный цех: стальные колонны и фермы, мостовой кран и оборудование — сгенерированная иллюстрация"
     },
     {
       "slug": "angary",
@@ -672,8 +670,7 @@
       "coverViz": false,
       "cover": "photo-general-hangar",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Прямоугольный ангар с вертикальными стенами, двускатной крышей и широкими воротами — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация"
+      "photoAlt": "Прямоугольный ангар с вертикальными стенами, двускатной крышей и широкими воротами — сгенерированная иллюстрация"
     },
     {
       "slug": "ovoshchehranilishcha",
@@ -787,7 +784,6 @@
       "coverViz": false,
       "cover": "photo-vegetable-storage",
       "photoAlt": "Утеплённое овощехранилище с контейнерами для овощей и вентиляцией — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
@@ -906,8 +902,7 @@
       "coverViz": false,
       "cover": "photo-vehicle-shelter",
       "photoAlt": "Открытый стальной навес с вертикальными колоннами для сельскохозяйственной техники — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "coverCaption": "Сгенерированная иллюстрация"
+      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
       "slug": "sto-avtoparki",
@@ -1022,7 +1017,6 @@
       "coverViz": false,
       "cover": "photo-service-workshop",
       "photoAlt": "Автосервис на стальном каркасе с автомобильными подъёмниками и ремонтными постами — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
@@ -1137,7 +1131,6 @@
       "coverViz": false,
       "cover": "photo-sports-hall",
       "photoAlt": "Спортивный зал с баскетбольной площадкой и открытыми стальными фермами — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     },
     {
@@ -1253,7 +1246,6 @@
       "coverViz": false,
       "cover": "photo-modular-building",
       "photoAlt": "Одноэтажное модульное здание из повторяющихся стальных каркасных секций — сгенерированная иллюстрация",
-      "coverCaption": "Сгенерированная иллюстрация",
       "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
     }
   ],
