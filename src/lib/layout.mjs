@@ -3,7 +3,7 @@
  * v4 «Белый завод»: светлая тема, двухъярусная шапка, мобильная панель действий.
  */
 
-import { html, raw, e, jsonld, imageUrl } from './util.mjs';
+import { html, raw, e, jsonld, imageUrl, preloadImageAttrs } from './util.mjs';
 import { header, footer, mobileBar } from './components.mjs';
 import { webPageNode, breadcrumbNode, organizationRefNode, websiteRefNode, ids } from './schema.mjs';
 
@@ -94,7 +94,7 @@ ${site.analytics?.googleSiteVerification ? `<meta name="google-site-verification
 <meta name="geo.region" content="KZ-KUS">
 <meta name="geo.placename" content="${e(site.contacts.address.settlement)}">
 
-${page.preloadImage ? `<link rel="preload" as="image" href="${e(page.preloadImage)}" fetchpriority="high">` : ''}
+${typeof page.preloadImage === 'string' ? `<link rel="preload" as="image" href="${e(page.preloadImage)}" fetchpriority="high">` : page.preloadImage?.name && preloadImageAttrs(page.preloadImage.name, page.preloadImage.sizes) ? `<link rel="preload" as="image" ${preloadImageAttrs(page.preloadImage.name, page.preloadImage.sizes)} fetchpriority="high">` : ''}
 <link rel="preload" href="/assets/fonts/golos-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">

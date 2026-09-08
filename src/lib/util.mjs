@@ -217,3 +217,16 @@ export const outPath = (url) => {
 };
 
 export const abs = (base, url) => `${base}${url}`;
+
+/**
+ * Атрибуты <link rel="preload" as="image"> для LCP-кадра: адаптивный
+ * imagesrcset из манифеста, чтобы браузер предзагрузил ровно ту ширину,
+ * которую потом выберет <picture>. Нет записи — null (ничего не грузим).
+ */
+export function preloadImageAttrs(name, sizes = '100vw') {
+  const meta = IMAGES[name];
+  if (!meta) return null;
+  const srcset = meta.widths.map((w) => `/assets/img/${name}-${w}.webp ${w}w`).join(', ');
+  const fallback = `/assets/img/${name}-${meta.fallback}.${meta.alpha ? 'png' : 'jpg'}`;
+  return `href="${fallback}" imagesrcset="${srcset}" imagesizes="${e(sizes)}" type="image/webp"`;
+}

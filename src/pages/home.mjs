@@ -118,7 +118,7 @@ export function renderHome(d) {
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
-      <figure class="pro-about__photo">${raw(picture('photo-production-hall',{alt:'Пример производственного цеха на стальном каркасе — сгенерированная иллюстрация',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>Производственное здание на стальном каркасе</figcaption></figure>
+      <figure class="pro-about__photo">${raw(picture(hasImage('prod-baza') ? 'prod-baza' : 'photo-production-hall',{alt:'Производственный корпус Steppe Steel: линия профилирования и рулоны оцинкованной стали',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>${hasImage('prod-baza') ? 'Производственный корпус завода, с. Троебратское' : 'Производственное здание на стальном каркасе'}</figcaption></figure>
       <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
@@ -133,6 +133,8 @@ export function renderHome(d) {
   `;
   return layout(site,{
     url:'/',bodyClass:'pro-home',noNext:true,
+    // LCP — фото первого экрана: предзагрузка той же ширины, что выберет <picture>
+    preloadImage:{name:'photo-warehouse-exterior',sizes:'100vw'},
     image:hasImage('hero-photo')?'hero-photo':undefined,
     title:'Завод металлоконструкций в Казахстане — Steppe Steel',
     description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',

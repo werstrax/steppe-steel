@@ -17,7 +17,7 @@ export function renderAbout(d) {
     ${raw(pageHero({
       image: 'prod-baza',
       label: 'О заводе',
-      titleHtml: 'Steppe Steel — завод строительных метал&shy;локонструкций',
+      titleHtml: 'Steppe Steel — завод строительных металло&shy;конструкций',
       crumbList: crumbs,
       text: raw('Проектирование, производство ЛСТК и ЛМК, комплектная поставка — на одной площадке в с.&nbsp;Троебратское Костанайской области. Работаем по всему Казахстану.'),
     }))}
