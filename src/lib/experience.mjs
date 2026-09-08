@@ -24,19 +24,19 @@ export function documentShelf(d,{heading=true}={}) {
 export function engineeringExperience(d){
 return html`<section class="section engineering-experience" id="engineering">
  <div class="container">
- ${sectionHead({label:'02 / Зернохранилища',title:'Конструкция\nзернохранилища.',text:'На фотографиях — зернохранилище с наклонными нижними стенами для хранения навалом. Каркас, фермы и ограждающие конструкции рассчитываем под нагрузки площадки и давление зерна.',action:{title:'Подробнее о зернохранилищах',url:'/resheniya/zernohranilishcha/'}})}
+ ${sectionHead({label:'02 / Объект завода',title:'Каркас и обшивка —\nна реальном объекте.',text:'Один и тот же принцип для склада, цеха, ангара или хранилища: стойки и фермы из профилей ПСУ и ПС, болтовая сборка по КМД, профилированная обшивка. На фото — построенное зернохранилище завода: каркас до закрытия контура и готовое здание изнутри.',action:{title:'Все типы зданий',url:'/resheniya/'}})}
  <div class="construction-photos">
   <figure class="construction-photos__interior">
    <a href="/assets/img/photo-warehouse-interior-1024.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию интерьера зернохранилища">
     ${raw(picture('photo-warehouse-interior',{alt:'Интерьер зернохранилища: стальные фермы, профнастил и наклонные нижние стены',sizes:'(min-width: 900px) 60vw, 100vw'}))}
    </a>
-   <figcaption><span>01 / ВНУТРЕННЕЕ ПРОСТРАНСТВО</span>Фермы и ограждающие конструкции зернохранилища</figcaption>
+   <figcaption><span>01 / ГОТОВОЕ ЗДАНИЕ ИЗНУТРИ</span>Фермы пролётом без колонн и ограждающие конструкции — объект завода в Костанайской области</figcaption>
   </figure>
   <figure class="construction-photos__frame">
    <a href="/assets/img/photo-warehouse-frame-577.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию металлического каркаса">
     ${raw(picture('photo-warehouse-frame',{alt:'Металлический каркас зернохранилища до завершения обшивки',sizes:'(min-width: 900px) 35vw, (min-width: 540px) 65vw, 100vw'}))}
    </a>
-   <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи зернохранилища до закрытия контура</figcaption>
+   <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи до закрытия контура — так собирается любое здание завода</figcaption>
   </figure>
  </div>
  <div class="engineering-deliverables">

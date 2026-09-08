@@ -17,7 +17,7 @@ export function renderHome(d) {
   const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
   const content = html`
     <section class="factory-hero" aria-labelledby="factory-title">
-      <div class="factory-hero__image" aria-hidden="true">${raw(picture('photo-warehouse-exterior',{alt:'',sizes:'100vw',priority:true}))}</div>
+      <div class="factory-hero__image" aria-hidden="true">${raw(picture(hasImage('hero-photo') ? 'hero-photo' : 'photo-warehouse-exterior',{alt:'',sizes:'100vw',priority:true}))}</div>
       <div class="container factory-hero__inner">
         <div class="factory-hero__copy">
           <p class="factory-hero__eyebrow"><span></span>ЗАВОД МЕТАЛЛОКОНСТРУКЦИЙ / КАЗАХСТАН</p>
@@ -29,7 +29,7 @@ export function renderHome(d) {
           </div>
           <a class="factory-hero__documents" href="#documents">Презентации и сертификат ${iconArrow}</a>
         </div>
-        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>ЗЕРНОХРАНИЛИЩА<small>Стальной каркас<br>и профилированная обшивка</small></div></div>
+        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>ПРОИЗВОДСТВО<small>Линия профилирования ПСУ и ПС<br>с. Троебратское, Костанайская область</small></div></div>
       </div>
       <div class="factory-hero__bottom"><div class="container">
         <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
@@ -62,8 +62,16 @@ export function renderHome(d) {
             </div>
           </a>`)}
         </div>
-        <div class="pro-other">
-          ${other.map((s,i) => html`<a href="${s.url}"><span class="mono">0${i+4}</span><strong>${s.short || s.title}</strong>${iconArrow}</a>`)}
+        <div class="pro-solutions pro-solutions--all" aria-label="Ещё шесть типов зданий">
+          ${other.map((s,i) => html`<a class="pro-solution" href="${s.url}">
+            <div class="pro-solution__photo">
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:'(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 100vw'}))}
+              <span class="pro-solution__index">0${i+4} / STEPPESTEEL</span>
+            </div>
+            <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
+              <p>${home.solutionDescriptions[s.slug] || s.summary}</p>
+            </div>
+          </a>`)}
         </div>
         <div class="pro-help"><p>${home.solutions.help}</p><a class="arrow-link" href="/raschet/">Обсудить задачу ${iconArrow}</a></div>
       </div>
@@ -134,7 +142,7 @@ export function renderHome(d) {
   return layout(site,{
     url:'/',bodyClass:'pro-home',noNext:true,
     // LCP — фото первого экрана: предзагрузка той же ширины, что выберет <picture>
-    preloadImage:{name:'photo-warehouse-exterior',sizes:'100vw'},
+    preloadImage:{name:hasImage('hero-photo') ? 'hero-photo' : 'photo-warehouse-exterior',sizes:'100vw'},
     image:hasImage('hero-photo')?'hero-photo':undefined,
     title:'Завод металлоконструкций в Казахстане — Steppe Steel',
     description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',
