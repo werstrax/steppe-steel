@@ -569,6 +569,36 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JQBOmUACM4uBKVAAA/ubvb4gmo3pPATM76SN/eqJD8Nym9GYpV5fdVtmvxd8AAAA="
  },
+ "stock-montazh": {
+  "w": 2400,
+  "h": 1600,
+  "ratio": 1.5,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2400
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoUAA0APulep00pJSOiMAgBIB0JQBOmUABpunC0QLSL8y5/AAD+wzZeANjIpZYdylDsq6vJYrHafXyu1/dKCVZwRku2d43AgzGcfy04OPALkhRkX2eWNvrnsLYaVewA"
+ },
+ "stock-profil-sklad": {
+  "w": 2400,
+  "h": 1600,
+  "ratio": 1.5,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2400
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JZwDCgBoslfg81CsAAP7suxbmde0d17jmC9cQMQo9D32mSLpsW9AIWA5cIg2OxBICABIEVo/gLHDksAA="
+ },
  "tech-boltovye-1": {
   "w": 1536,
   "h": 1133,
