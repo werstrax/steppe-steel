@@ -137,18 +137,18 @@
   "_note": "Generated photo-like illustration, explicitly labelled on website"
  },
  "photo-general-hangar": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCdACHXGND18FkuiAD+7U5CFhcU7OIwXYoW7F+eJi7swJ7hHQMWvpVdhQAA"
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqk2pJaQiMAgBIB0JQBOgBDvUlugJ9L3YAP7UkIKdbokCkF6M+Zl87TuZW1XP/tEElV+Oy+buem/Wo79rGlKMAAA="
  },
  "photo-grain-complex": {
   "w": 1536,
@@ -170,102 +170,102 @@
   "_subject": "grain-storage-only"
  },
  "photo-logistics-warehouse": {
-  "w": 1264,
-  "h": 848,
-  "ratio": 1.4906,
+  "w": 1536,
+  "h": 1024,
+  "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1264
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBjehDtJPCA4Nf+KrDIAAP7vvtZLVgVkUMzR+gOHv4MQfH/Xks/fqL6loOeU6l59Vlu0NaaI3tSoRoCL8kxQXYwLdmKzaDnIbX4uAAA="
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoUAA0APuliqk2pJaQiMAgBIB0JZQAAW8tTCsZhBb6UJAAA/urDeRZ4phMebVSin21cwkSlsTJzFaF3fJgGPqonqAV1LBRSHXI5TT1paSXCFftmOAA="
  },
  "photo-modular-building": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JYwC2yCHgQMmGotu9dQAA/uqNjAjlPuVMXATBiUtQA2R+wmzTN6JXH6BqZq/XZ65ogAAA"
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZwCw7CHPLXMTZHipKAD+6o6d5vzf9waeAVCr6jfVl+qYbTY/YWyAacwEtPknsAA="
  },
  "photo-production-hall": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAwCdASoUAA0APulgqk2pJaQiMAgBIB0JZQAAWo1KrJbxtsi+nAD+6tlUb2aJQDRK7ftjtD+P6XfPmmSnl7+9hNpSmvkcC847pWKrT2UA0AAA"
+  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JZQCsABuwqaW2ZOmjvuiAAP7e3daTj+e6CdGU+Of4RIMXGiWfmJFYFPiICIjZ/0v2WKsOQ4gAAA=="
  },
  "photo-service-workshop": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUAA0APuliqU2pJaQiMAgBIB0JYwDG9CHWABhLl8vEdiAA/ucpiTH9m1yECavc6LXQ4l+3cgy5c+LzkK4w57AWldvf6gAA"
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAwCdASoUAA0APuluq08pJyQiMAgBIB0JYwAAUoObnLyDkyMwAAD+6pbpe1NAG1fgfm/A/IvGDkaj6k9Apyh58+UA8TJoP3/b2hLgZ15cZvuew6/0CmsAAAA="
  },
  "photo-sports-hall": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqU0pJaQiMAgBIB0JaQAAW9xu1USv8SVvTAD+5yxvviXLX0s3Y30ohLCoEwceheGFxU108oEAAA=="
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoUAA0APulkqE0pJaQiMAgBIB0JZwDImCHeu27H0WAPKNgAAP7tQ12RJAJ9YqyTlem47L1qufdaT1jOMuwIhIHSAXMyqAAA"
  },
  "photo-vegetable-storage": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUAA0APulgqE2pJaOiMAgBIB0JQBYdhDw2PKRjuxzll4gA/tXrTDhAH9kMXehYJgYDMD4CZjFeKIHvbqhwO8EtO5Ekr1RZhKXYVsWObC398XvUBgAAAA=="
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoUAA0APulkqU2pJaQiMAgBIB0JYwAAVJqc2y40dM0AAP7rEvjOcX5Zm+18z8vj6NEqE9DxmAgPrcrXbT64S0NnVLLiGAAA"
  },
  "photo-vehicle-shelter": {
-  "w": 1248,
-  "h": 832,
+  "w": 1536,
+  "h": 1024,
   "ratio": 1.5,
   "widths": [
    384,
    576,
    864,
    1152,
-   1248
+   1536
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JaACdAB6C6YodFH72AADdcW01NVg2wiZTuTVyA9pn7yByKMKnyRN7FAeO7GrxZpN0FVJsi1wAAA=="
+  "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDvVr0H9Nq7KepMAAP6QAbK4QvGGkwIIRA6/ZlcL9WYY8TlqYTo7C6EC4aryTRYyv6SGAAAA"
  },
  "photo-warehouse-exterior": {
   "w": 1024,
