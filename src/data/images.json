@@ -137,23 +137,18 @@
   "_note": "Generated photo-like illustration, explicitly labelled on website"
  },
  "photo-general-hangar": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASoYAA4APu1kqU2ppaQiMAgBMB2JZwDA3B470ew6RzNdcDeAAP7x4KNhcWJQf0zNSF1H/aBk0ly0koUhiicWQcZBfsdc4CsOfEjfA/MnPvc716/220HeRi2/TIaCUPDPvxcblaavdFbHqRI6fAAAAA==",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-93d9537e-b894-4823-a9ff-63f13263a480.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQBACdASoUAA0APuliqk2pJaQiMAgBIB0JYwCdMoADTuUWKCIKRNLegAD+Utfi4VX19xqZzBpy6FwKkhDGMEegQMlOX9d0kVW8Q3HfOWmhgAAA"
  },
  "photo-grain-complex": {
   "w": 1536,
@@ -175,137 +170,102 @@
   "_subject": "grain-storage-only"
  },
  "photo-logistics-warehouse": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAAAwBACdASoYAA4APu1iqU2ppaQiMAgBMB2JZQCo9B6Ij4+XOMVePy16zZAA/qrrRySHrOqmjhFcOAJf1Xm94iK0M2OpvBh0MHswBsQECIA+salvpWUzqEVMdjFWV8DSlTx0N+CuIOh7///jWZurA+XYnNmTkSOFAIaWXU30PxJ7Eh0ah5GoRADPKH+ZdSAA",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-65af2804-c5e2-462b-bf8c-761f7d1a6783.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JZQCw7B6VW1JewHUFvUAA/t9f8NlRxqS7mh4e9Q85sDwfeJGC5MewBPjZXZmgAAA="
  },
  "photo-modular-building": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAACwAwCdASoYAA4APu1iqU2ppaOiMAgBMB2JQBOgBHv+DJXDVRwsWAD91bCfuGVfhdndKeUZxQF6byXY7H0XBa3WdBHQayh2Ov4U/a8oSAEzItqnmzvbjwQE16h3c+dG4vBs+aEGOzrXY0XcqQogn7EDw4/BiwxAwAAAAA==",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-0f238841-a48c-4bde-a6ed-4b02382ee648.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUAA0APulep00pJSOiMAgBIB0JZQC/OCHeviOgBIowqagA/t6y37M/KD7CYK4kRzIKork+4hgo0755JL8kwkuLsN22AAAA"
  },
  "photo-production-hall": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAAAQBACdASoYAA4APu1iqU2ppaOiMAgBMB2JZwAD5eocVDKhRSbgMc2f4AD+qaf0Of8QeX218dq+7aWmSp+WOgZ5PJveXrMzdpdPylpD9TRpAGR40V246wW3TI0YLhQ1EjgZzSfE/9v46oOSUJjU93aKmK7b2JIr7TQ+Az9oiMEdEYUK5wonSFdFC9w35yRJz1YMR1wA",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-8ec42296-78d8-48b2-8c84-907b294521f8.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoUAA0APulep00pJSOiMAgBIB0JZQC+SBuyPG8s+dGOi9veAAD+51dZg6Hbl4npfPtxwR4hL9rjyNEfdO9nPQf+s/CwWLFnI0mJUMT9ZyYAAA=="
  },
  "photo-service-workshop": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAADQAwCdASoYAA4APu1iqU2ppaQiMAgBMB2JZQAAUva/TiOBzu6gq8AA/qL6Ta1Qtc4gvDk/wqNwJbsyPAvBlW2bbBvLRsLxX8251YjO9CxKslyVXMyOuSXhH/2EZkGu+yoY2Eftb1UgiF3uQqmXigIOdrFedb1jaDjRIkrPsRM3uiPlHwAAAA==",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-66f385da-658b-41a6-a8b7-eaff33596277.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JZwAAW+EQOcqmCEX8AP7tSSGoSsIhGTkZxx8xGJFzrzSmYQNLzmkM2bMd8uaNs7Yqx3DqZnW0Foe+GDRoh86IAAA="
  },
  "photo-sports-hall": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAADwAwCdASoYAA4APu1iqk2ppaQiMAgBMB2JQBbZA9Xw5QtyZ9iU61QAAP7lM3NGAujywcnWoWRaZHCXerGWjvdDRpQ+VwQ4n3jZsq6w9MGWxvzbCV/bZWlxSKbpY7iAzDPo9TR8iLbzhVJWRZ5TrGWTbD6hHATFus0cfylWbguia9MxhdodgAuO+KMFwAAA",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-399bfe75-2e7e-46a1-89f7-657b9a3890f7.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqU0pJaQiMAgBIB0JaQAAW9xu1USv8SVvTAD+5yxvviXLX0s3Y30ohLCoEwceheGFxU108oEAAA=="
  },
  "photo-vegetable-storage": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADwAwCdASoYAA4APu1iqU2ppaQiMAgBMB2JQBYdhHmA89+/DS9leqIwAPwSRAdt5aboy+3WRLuWKJ1RzvVTX9m934SDlPoaJDqNcvmId1ELEpZvBiaqmh6SXOxCQU+bkTCVSH7BOmPKCU8AroT6MTARGe0LaZoMEJxZeFOEHaniTy+SMLclcLXxHpfYRsez/DN5IBlQ9AAAAA==",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-8dbad314-3870-4bd1-b539-085eb3715813.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUAA0APulgqE2pJaOiMAgBIB0JQBYdhDw2PKRjuxzll4gA/tXrTDhAH9kMXehYJgYDMD4CZjFeKIHvbqhwO8EtO5Ekr1RZhKXYVsWObC398XvUBgAAAA=="
  },
  "photo-vehicle-shelter": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
+  "w": 1248,
+  "h": 832,
+  "ratio": 1.5,
   "widths": [
-   320,
-   480,
-   640,
+   384,
+   576,
    864,
    1152,
-   1536,
-   1672
+   1248
   ],
   "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAgCdASoYAA4AA4BaJYwCdMoAGteHr8QJRdL+6QAA/vcaGeUKV3p9ErELMZDiAxBVGdb3UcfU81d42WiAGIgL05H7xXUtq3kCOnX3NdlRWXdxnnpwwQPTjK7cIEhr/eVC4LAA",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-5f8b2b58-7e8e-406e-ae66-f0ef081de2cb.png",
-  "_kind": "generated",
-  "_note": "Generated photorealistic category image, not a completed factory project. Subject-specific geometry, no grain retaining walls."
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoUAA0APulep00pJSOiMAgBIB0JQBOgA8RKgzybl3SYjC4A/rGEtaitWbccQqkwjMTqoMZdmYWZI4yVN6/gG9qNzumQeZqk+I23lqCqiAAAAA=="
  },
  "photo-warehouse-exterior": {
   "w": 1024,
