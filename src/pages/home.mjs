@@ -54,7 +54,6 @@ export function renderHome(d) {
           ${featured.map((s,i) => html`<a class="pro-solution" href="${s.url}">
             <div class="pro-solution__photo">
               ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:i===0?'(min-width: 1100px) 45vw, 100vw':'(min-width: 1100px) 28vw, (min-width: 640px) 50vw, 100vw'}))}
-              <span class="pro-solution__index">0${i+1} / STEPPESTEEL</span>
               ${s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
             </div>
             <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
@@ -66,7 +65,6 @@ export function renderHome(d) {
           ${other.map((s,i) => html`<a class="pro-solution" href="${s.url}">
             <div class="pro-solution__photo">
               ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:'(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 100vw'}))}
-              <span class="pro-solution__index">0${i+4} / STEPPESTEEL</span>
             </div>
             <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
               <p>${home.solutionDescriptions[s.slug] || s.summary}</p>

@@ -286,7 +286,8 @@ export function renderSolution(d, s) {
       : ''}
 
     ${ctaBand(site, {
-      title: `Рассчитать ${s.short ? s.short.toLowerCase() : 'здание'}`,
+      // Строчная только первая буква, аббревиатуры (СТО) не трогаем
+      title: `Рассчитать ${s.short ? (/^[A-ZА-ЯЁ]{2,}/.test(s.short) ? s.short : s.short.charAt(0).toLowerCase() + s.short.slice(1)) : 'здание'}`,
       text: 'Назначение, размеры, регион строительства — инженер завода вернёт расчёт с конструктивом и спецификацией.',
     })}
   `;

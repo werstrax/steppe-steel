@@ -96,7 +96,6 @@ ${site.analytics?.googleSiteVerification ? `<meta name="google-site-verification
 
 ${typeof page.preloadImage === 'string' ? `<link rel="preload" as="image" href="${e(page.preloadImage)}" fetchpriority="high">` : page.preloadImage?.name && preloadImageAttrs(page.preloadImage.name, page.preloadImage.sizes) ? `<link rel="preload" as="image" ${preloadImageAttrs(page.preloadImage.name, page.preloadImage.sizes)} fetchpriority="high">` : ''}
 <link rel="preload" href="/assets/fonts/golos-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/inter-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${site.buildId}">
 ${site.variant === 'tz' ? `<link rel="stylesheet" href="/assets/css/theme-tz.css?v=${site.buildId}">` : ''}
 <link rel="stylesheet" href="/assets/css/pro.css?v=${site.buildId}">
