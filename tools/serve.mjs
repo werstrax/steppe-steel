@@ -8,8 +8,9 @@ import { readFile, stat } from 'node:fs/promises';
 import { join, extname, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
-const PORT = Number(process.argv[2]) || 4321;
+// DIST_DIR — раздать другую сборку (параллельная работа над копией: DIST_DIR=… node build.mjs)
+const ROOT = process.env.DIST_DIR ? resolve(process.env.DIST_DIR) : resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
+const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 4321;
 // Сайт живёт в подпапке (GitHub project pages) — локально имитируем тот же префикс.
 const BASE = '';
 

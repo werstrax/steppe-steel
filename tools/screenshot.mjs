@@ -15,9 +15,10 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = join(ROOT, 'screenshots');
+// SHOT_TAG / SHOT_PORT / SHOT_BASE — параллельные прогоны (свой подкаталог, профиль Chrome и порт CDP)
+const OUT = join(ROOT, 'screenshots', process.env.SHOT_TAG || '');
 const BASE = process.env.SHOT_BASE || 'http://localhost:4321';
-const PORT = 9924;
+const PORT = Number(process.env.SHOT_PORT) || 9924;
 
 const CHROME = [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',

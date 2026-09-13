@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BASE = process.env.SHOT_BASE || 'http://localhost:4321';
-const PORT = 9926;
+const PORT = Number(process.env.SHOT_PORT) || 9926;
 
 const CHROME = [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -54,7 +54,7 @@ const ok = (name) => { results.push(['ok', name]); console.log('ok  ' + name); }
 const fail = (name, why) => { results.push(['FAIL', name]); console.log('✗   ' + name + ' — ' + why); };
 
 async function main() {
-  const profile = join(ROOT, 'screenshots', '.chrome-test');
+  const profile = join(ROOT, 'screenshots', process.env.SHOT_TAG || '', '.chrome-test');
   rmSync(profile, { recursive: true, force: true });
   mkdirSync(profile, { recursive: true });
 

@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BASE = process.env.SHOT_BASE || 'http://localhost:4321';
-const PORT = 9925;
+const PORT = Number(process.env.SHOT_PORT) || 9925;
 
 const CHROME = [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -91,7 +91,7 @@ const AUDIT = `(() => {
 })()`;
 
 async function main() {
-  const profile = join(ROOT, 'screenshots', '.chrome-audit');
+  const profile = join(ROOT, 'screenshots', process.env.SHOT_TAG || '', '.chrome-audit');
   rmSync(profile, { recursive: true, force: true });
   mkdirSync(profile, { recursive: true });
 
