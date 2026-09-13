@@ -6,7 +6,9 @@ import { layout, html, raw } from '../lib/layout.mjs';
 import { sectionHead, ctaBand, iconArrow, iconCheck } from '../lib/components.mjs';
 import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
 import {documentShelf,engineeringExperience} from '../lib/experience.mjs';
+import { objectVideo } from '../lib/video.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
+import { casePlan, caseDocs } from './portfolio.mjs';
 
 export function renderHome(d) {
   const { site, solutions, production, portfolio, documents, home } = d;
@@ -14,6 +16,8 @@ export function renderHome(d) {
   const featured = home.featured.map(slug => bySlug[slug]).filter(Boolean);
   const other = solutions.items.filter(s => !home.featured.includes(s.slug));
   const obj = portfolio.items[0];
+  const objPlan = obj ? casePlan(obj) : '';
+  const objDocs = obj ? caseDocs(obj) : '';
   const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
   const content = html`
     <section class="factory-hero" aria-labelledby="factory-title">
@@ -24,12 +28,13 @@ export function renderHome(d) {
           <h1 id="factory-title">От проекта —<br>до стального<br><span>каркаса.</span></h1>
           <p class="factory-hero__lead">Зернохранилища, склады, ангары и производственные здания. Проектируем, производим и поставляем по всему Казахстану.</p>
           <div class="factory-hero__actions">
-            <a class="btn btn--primary" href="/raschet/">Обсудить проект ${iconArrow}</a>
-            <a class="factory-hero__link" href="#engineering">Посмотреть конструкцию <span>↗</span></a>
+            <a class="btn btn--primary" href="/raschet/">Получить расчёт ${iconArrow}</a>
+            <a class="factory-hero__link" href="#engineering">Смотреть конструкцию <span aria-hidden="true">↓</span></a>
           </div>
+          <p class="factory-hero__promise">Предварительный расчёт и спецификация — за&nbsp;24&nbsp;часа, без предоплаты. Отвечает инженер.</p>
           <a class="factory-hero__documents" href="#documents">Презентации и сертификат ${iconArrow}</a>
         </div>
-        <div class="factory-hero__location"><span class="factory-hero__location-mark">↗</span><div>ПОСТРОЕННЫЙ ОБЪЕКТ<small>Комплекс зданий<br>на стальном каркасе завода</small></div></div>
+        <a class="factory-hero__location" href="/resheniya/zernohranilishcha/"><span class="factory-hero__location-mark">↗</span><div>НА СНИМКЕ<small>Напольные зернохранилища на переднем плане</small></div></a>
       </div>
       <div class="factory-hero__bottom"><div class="container">
         <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
@@ -71,31 +76,38 @@ export function renderHome(d) {
             </div>
           </a>`)}
         </div>
-        <div class="pro-help"><p>${home.solutions.help}</p><a class="arrow-link" href="/raschet/">Обсудить задачу ${iconArrow}</a></div>
+        <div class="pro-help"><p>${home.solutions.help}</p><a class="arrow-link" href="/raschet/">Получить расчёт ${iconArrow}</a></div>
       </div>
     </section>
 
     ${engineeringExperience(d)}
 
+    ${objectVideo({ id: 'video', tint: true })}
 
     <section class="section" id="tipovye">
       <div class="container">
-        ${sectionHead({label:'03 / Типовые здания',title:home.typical.title,text:home.typical.text})}
+        ${sectionHead({label:'04 / Типовые здания',title:home.typical.title,text:home.typical.text})}
         <div class="pro-typicals">
-          ${solutions.hub.typical.items.map((t,i)=>html`<a class="pro-typical" href="${t.url}">
+          ${solutions.hub.typical.items.map((t,i)=>html`<div class="pro-typical">
             <span class="pro-typical__label mono">ТИПОВОЕ РЕШЕНИЕ / 0${i+1}</span><h3>${t.title}</h3>
             <dl>${t.params.map(([k,v])=>html`<div><dt>${k}</dt><dd>${v}</dd></div>`)}</dl>
-            <span class="arrow-link">Параметры здания ${iconArrow}</span>
-          </a>`)}
+            <div class="pro-typical__links">
+              <a class="arrow-link pro-typical__cta" href="${t.url}">Рассчитать этот вариант ${iconArrow}</a>
+              ${t.pageUrl ? html`<a class="pro-typical__page" href="${t.pageUrl}">Параметры здания</a>` : ''}
+            </div>
+          </div>`)}
         </div>
       </div>
     </section>
 
     <section class="section section--tint" id="process">
       <div class="container">
-        ${sectionHead({label:'04 / Порядок работы',title:home.process.title,text:home.process.text})}
+        ${sectionHead({label:'05 / Порядок работы',title:home.process.title,text:home.process.text})}
         <ol class="pro-process">
-          ${production.process.steps.map((s,i)=>html`<li><span class="pro-process__num">0${i+1}</span><h3>${s.title}</h3><p>${home.process.descriptions[i]}</p></li>`)}
+          ${production.process.steps.map((s,i)=>{
+            const term = home.process.terms?.[i] || s.duration;
+            return html`<li><span class="pro-process__num">0${i+1}</span>${term ? html`<span class="pro-process__term mono">${term}</span>` : ''}<h3>${s.title}</h3><p>${home.process.descriptions[i]}</p></li>`;
+          })}
         </ol>
         <p class="pro-process__note">${home.process.note}</p>
       </div>
@@ -103,7 +115,7 @@ export function renderHome(d) {
 
     <section class="section" id="partnyorstvo">
       <div class="container">
-        ${sectionHead({label:'05 / Сотрудничество',title:home.audiencesTitle,text:home.audiencesText})}
+        ${sectionHead({label:'06 / Сотрудничество',title:home.audiencesTitle,text:home.audiencesText})}
         <div class="pro-audiences">
           ${home.audiences.map((a,i)=>html`<a class="pro-audience" href="${a.url}">
             <span class="pro-audience__num mono">0${i+1}</span><h3>${a.title}</h3><p>${a.text}</p>
@@ -114,20 +126,21 @@ export function renderHome(d) {
     </section>
 
     ${obj ? html`<section class="section section--tint" id="obekty"><div class="container pro-case">
-      <div><p class="eyebrow">06 / ${obj.badge}</p><h2>${obj.title}</h2><p class="pro-case__location">${obj.region} / ${obj.year}</p>
+      <div><p class="eyebrow">07 / ${obj.badge}</p><h2>${obj.title}</h2><p class="pro-case__location">${obj.region} / ${obj.year}</p>
         <p>${obj.text}</p><a class="btn btn--ghost" href="/obekty/">Подробнее о проекте ${iconArrow}</a></div>
       <div class="pro-case__passport"><p class="mono">ПАРАМЕТРЫ ПРОЕКТА</p>
-        <div class="pro-case__area">${obj.area}</div>
-        <dl><div><dt>Назначение</dt><dd>${obj.purpose}</dd></div><div><dt>Размеры</dt><dd>${obj.size}</dd></div><div><dt>Конструктив</dt><dd>${obj.frameType}</dd></div></dl>
-        <span class="pro-case__docs">${obj.docs}</span>
+        ${objPlan || html`<div class="pro-case__area">${obj.area}</div>`}
+        <dl><div><dt>Назначение</dt><dd>${obj.purpose}</dd></div><div><dt>Размеры</dt><dd>${obj.size}</dd></div>${objPlan && obj.area ? html`<div><dt>Площадь</dt><dd>${obj.area}</dd></div>` : ''}<div><dt>Конструктив</dt><dd>${obj.frameType}</dd></div></dl>
+        ${objDocs || html`<span class="pro-case__docs">${obj.docs}</span>`}
       </div>
     </div></section>` : ''}
 
     <section class="section" id="zavod"><div class="container pro-about">
       <figure class="pro-about__photo">${raw(picture(hasImage('prod-baza') ? 'prod-baza' : 'photo-production-hall',{alt:'Производственный корпус Steppe Steel: линия профилирования и рулоны оцинкованной стали',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>${hasImage('prod-baza') ? 'Производственный корпус завода, с. Троебратское' : 'Производственное здание на стальном каркасе'}</figcaption></figure>
-      <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
+      <div><p class="eyebrow">08 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
         <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
         <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
+          <a class="arrow-link factory-visit" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод ${iconArrow}</a>
           ${presentation ? html`<a class="arrow-link" href="${presentation.file}" download data-goal="pdf_download">Презентация PDF ${iconArrow}</a>` : ''}
         </div>
       </div>

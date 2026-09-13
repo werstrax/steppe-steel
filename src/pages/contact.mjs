@@ -106,7 +106,9 @@ export function renderRaschet(d) {
 
     <section class="section section--flush-top">
       <div class="container container--narrow">
-        <form class="form" id="calc-form" data-calc-form data-endpoint="${e(site.forms.endpoint || '')}" novalidate>
+        <p class="note" style="margin:0 0 var(--space-m)">Не хотите заполнять?
+          <a class="link" href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">Напишите инженеру в WhatsApp</a></p>
+        <form class="form" id="calc-form" data-calc-form data-endpoint="${e(site.forms.endpoint || '')}" data-email="${e(c.email)}" novalidate>
           <fieldset class="form__fieldset">
             <legend class="form__legend mono">01 · Что считаем</legend>
             <div class="seg" role="radiogroup" aria-label="Тип заявки">
@@ -137,14 +139,16 @@ export function renderRaschet(d) {
               <textarea class="field__input" name="comment" rows="4" placeholder="Задача, объём хранения, кран-балка, сроки — всё, что важно"></textarea></label>
             <div class="field" data-file-field>
               <span class="field__label">Прикрепить проект</span>
-              <label class="file">
-                <input type="file" name="project" accept=".pdf,.dwg,.dxf,.xls,.xlsx,.doc,.docx,.zip" data-file-input>
-                <span class="file__btn btn btn--ghost">Выбрать файл</span>
-                <span class="file__name mono" data-file-name>PDF · DWG · DXF · XLS · DOC · ZIP</span>
-              </label>
-              <span class="field__hint" data-file-hint>${site.forms.endpoint
-                ? 'Файл уйдёт вместе с заявкой. До 25 МБ.'
-                : raw('Отправьте проект на <a href="mailto:' + site.contacts.email + '">' + site.contacts.email + '</a> или прикрепите его в чате WhatsApp вместе с заявкой.')}</span>
+              ${site.forms.endpoint
+                ? html`<label class="file">
+                    <input type="file" name="project" accept=".pdf,.dwg,.dxf,.xls,.xlsx,.doc,.docx,.zip" data-file-input>
+                    <span class="file__btn btn btn--ghost">Выбрать файл</span>
+                    <span class="file__name mono" data-file-name>PDF · DWG · DXF · XLS · DOC · ZIP</span>
+                  </label>
+                  <span class="field__hint" data-file-hint>Файл уйдёт вместе с заявкой. До 25 МБ.</span>`
+                : html`<p class="note" style="margin:0" data-file-hint>После отправки пришлите файл проекта в чат WhatsApp
+                    или на <a class="link" href="mailto:${c.email}">${c.email}</a>.</p>
+                  <span class="file__name mono">PDF · DWG · DXF · XLS · DOC · ZIP</span>`}
             </div>
           </fieldset>
 
@@ -156,7 +160,7 @@ export function renderRaschet(d) {
               <label class="field"><span class="field__label">Компания / хозяйство</span>
                 <input class="field__input" name="company" autocomplete="organization"></label>
               <label class="field"><span class="field__label">Телефон *</span>
-                <input class="field__input" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 ___ ___ __ __" required></label>
+                <input class="field__input" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 777 123 45 67" required></label>
               <label class="field"><span class="field__label">WhatsApp</span>
                 <input class="field__input" name="whatsapp" type="tel" inputmode="tel" placeholder="если отличается от телефона"></label>
               <label class="field"><span class="field__label">E-mail</span>
@@ -166,15 +170,21 @@ export function renderRaschet(d) {
 
           <input type="text" name="website" class="u-visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-          <div class="btn-row">
-            <button class="btn btn--primary btn--lg" type="submit">${site.forms.endpoint ? 'Отправить заявку' : 'Подготовить заявку в WhatsApp'}</button>
-            <a class="btn btn--wa btn--lg" href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
-              ${iconWhatsApp}<span>Спросить в WhatsApp</span>
-            </a>
+          <div class="stack">
+            <p style="margin:0;font-weight:600">Инженер вернёт предварительный расчёт в&nbsp;течение 24&nbsp;часов, без предоплаты.</p>
+            <div class="btn-row">
+              <button class="btn btn--primary btn--lg" type="submit">${site.forms.endpoint ? 'Отправить заявку' : 'Подготовить заявку в WhatsApp'}</button>
+            </div>
+            <p class="field__hint" style="margin:0">Отправляя форму, вы соглашаетесь с <a href="/privacy/">политикой конфиденциальности</a>.
+            Заявка уходит через ваш WhatsApp или почтовый клиент — данные передаются заводу только вашим действием.</p>
           </div>
-          <p class="field__hint">Отправляя форму, вы соглашаетесь с <a href="/privacy/">политикой конфиденциальности</a>.
-          Заявка уходит через ваш WhatsApp или почтовый клиент — данные передаются заводу только вашим действием.</p>
-          <p class="form__status" data-form-status aria-live="polite" hidden></p>
+          <div class="stack" data-form-done hidden>
+            <p class="form__status" data-form-status aria-live="polite" hidden></p>
+            <div class="btn-row" data-form-alt hidden>
+              <a class="btn btn--ghost" href="mailto:${c.email}" data-form-mail data-goal="calc_mail">Отправить на почту</a>
+              <button class="btn btn--ghost" type="button" data-form-copy data-goal="calc_copy">Скопировать текст заявки</button>
+            </div>
+          </div>
         </form>
 
         <div class="after" data-reveal>

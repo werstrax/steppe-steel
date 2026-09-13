@@ -13,7 +13,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
-import { loadJSON, setImageManifest, outPath, copyDir } from './src/lib/util.mjs';
+import { loadJSON, setImageManifest, outPath, copyDir, typoHtml } from './src/lib/util.mjs';
 
 import { renderHome } from './src/pages/home.mjs';
 import { renderHomeTz } from './src/pages/home-tz.mjs';
@@ -34,7 +34,8 @@ import { renderKontakty, renderRaschet, renderThanks, renderFaq, renderPrivacy, 
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, 'src');
-const DIST = join(ROOT, 'dist');
+// DIST_DIR — собрать в другую папку (сборка превью параллельно с обычной, без затирания dist/)
+const DIST = process.env.DIST_DIR ? resolve(process.env.DIST_DIR) : join(ROOT, 'dist');
 
 const warnings = [];
 const warn = (msg) => warnings.push(msg);
@@ -455,7 +456,7 @@ function build() {
     const rel = p.raw ? p.url.replace(/^\//, '') : outPath(p.url);
     const file = join(DIST, rel);
     mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, rebase(String(p.html), base), 'utf8');
+    writeFileSync(file, typoHtml(rebase(String(p.html), base)), 'utf8');
   }
 
   // Языковые зеркала: /kk/… с теми же слагами, hreflang и общими ассетами
@@ -475,7 +476,7 @@ function build() {
         .replace(new RegExp(`"/${l}/(assets/|favicon|icon-|apple-touch-icon|site\.webmanifest|sitemap\.xml)`, 'g'), '"/$1')
         .replace(new RegExp(`url\('/${l}/assets/`, 'g'), "url('/assets/")
         .replace(new RegExp(`${d.site.url}/${l}/assets/`, 'g'), `${d.site.url}/assets/`);
-      writeFileSync(file, html, 'utf8');
+      writeFileSync(file, typoHtml(html), 'utf8');
     }
   }
 

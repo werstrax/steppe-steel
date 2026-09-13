@@ -144,6 +144,42 @@ async function main() {
       ? ok('форма расчёта: предвыбор + валидация + WhatsApp-сообщение')
       : fail('форма расчёта', JSON.stringify(form1).slice(0, 220));
 
+    /* --- 2б. Ссылки типовых решений: ?type=&w=&l= заполняют форму --- */
+    await goto('/raschet/?type=angary&w=24&l=60');
+    const pre = await evalJs(`(() => {
+      const f = document.querySelector('[data-calc-form]');
+      return {
+        purpose: f.elements.purpose.value,
+        width: f.elements.width.value,
+        len: f.elements.len.value,
+        comment: f.elements.comment.value,
+      };
+    })()`);
+    (pre.purpose === 'angary' && pre.width === '24' && pre.len === '60'
+      && /Типовое решение: Ангары, 24 × 60/.test(pre.comment))
+      ? ok('предзаполнение из ссылки типового решения (?type=angary&w=24&l=60)')
+      : fail('предзаполнение размеров', JSON.stringify(pre).slice(0, 220));
+
+    /* --- 2в. Старые коды типов (?type=grain/warehouse/workshop) и длина без ширины --- */
+    const legacy = [
+      ['/raschet/?type=warehouse', 'angary', ''],
+      ['/raschet/?type=workshop', 'proizvodstvennye-zdaniya', ''],
+      ['/raschet/?type=zernohranilishcha&l=45', 'zernohranilishcha', 'длина 45'],
+    ];
+    let legacyBad = '';
+    for (const [url, want, commentPart] of legacy) {
+      await goto(url);
+      const r = await evalJs(`(() => {
+        const f = document.querySelector('[data-calc-form]');
+        return { purpose: f.elements.purpose.value, comment: f.elements.comment.value };
+      })()`);
+      if (r.purpose !== want) legacyBad += `${url}: purpose=${r.purpose}≠${want}; `;
+      if (commentPart && !r.comment.includes(commentPart)) legacyBad += `${url}: нет «${commentPart}»; `;
+    }
+    legacyBad
+      ? fail('старые коды типов в ссылках', legacyBad.slice(0, 200))
+      : ok('старые коды типов (warehouse/workshop) и ?l= без ?w=');
+
     /* --- 2а. Honeypot: заполненное скрытое поле глушит отправку --- */
     await goto('/raschet/');
     const honey = await evalJs(`(() => {

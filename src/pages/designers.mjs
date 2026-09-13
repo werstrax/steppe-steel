@@ -19,6 +19,7 @@ export function renderDesigners(d) {
   const content = html`
     ${pageHero({
       image: 'tech-hub',
+      imageAlt: 'Конструктивная схема каркаса Steppe Steel: рамы, прогоны и связи жёсткости',
       label: p.heroLabel,
       titleHtml: p.heroTitle,
       text: p.heroText,

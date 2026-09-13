@@ -24,7 +24,7 @@ export function renderBuilders(d) {
       crumbList,
       actions: html`
         <a class="btn btn--primary btn--lg" href="/raschet/?type=builder">Получить условия сотрудничества</a>
-        <a class="btn btn--ghost btn--lg" href="/proizvodstvo/">Смотреть производство</a>
+        <a class="btn btn--ghost btn--lg" href="/raschet/?type=project">Отправить проект на расчёт</a>
       `,
     })}
 
@@ -97,6 +97,8 @@ export function renderBuilders(d) {
       title: 'Пришлите проект на расчёт',
       text: 'Пришлите проект или исходные данные объекта — вернём расчёт каркаса, сроки производства и условия для подрядчика.',
       primary: { title: 'Стать партнёром Steppe Steel', url: '/raschet/?type=builder' },
+      secondary: { title: 'Отправить проект на расчёт', url: '/raschet/?type=project' },
+      waText: b.waText,
     })}
   `;
 
@@ -107,6 +109,8 @@ export function renderBuilders(d) {
       title: b.seoTitle,
       description: b.seoDescription,
       crumbs: crumbList,
+      waText: b.waText,
+      calcType: 'project',
       schema: [
         serviceNode(site, {
           url: '/stroitelnym-kompaniyam/',

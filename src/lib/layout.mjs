@@ -38,7 +38,9 @@ function nextBand(next) {
 /**
  * @param {object} site   данные из site.json
  * @param {object} page   url, title, description, image, crumbs, schema,
- *                        pageType, noindex, bodyClass, next
+ *                        pageType, noindex, bodyClass, next,
+ *                        waText (текст WhatsApp в мобильной панели),
+ *                        calcType (тип здания для /raschet/?type=…)
  * @param {string} content  разметка внутри <main>
  */
 export function layout(site, page, content) {
@@ -117,7 +119,7 @@ ${content}
 </main>
 ${page.noNext ? '' : page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand(NEXT[page.url]) : ''}
 ${footer(site)}
-${mobileBar(site, page.url)}
+${mobileBar(site, page.url, { waText: page.waText, calcType: page.calcType })}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
 </body>
 </html>

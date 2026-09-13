@@ -4,7 +4,7 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, faq, ctaBand, iconArrow, grainCalcBlock, modularScheme } from '../lib/components.mjs';
+import { pageHero, sectionHead, stat, faq, ctaBand, iconArrow, grainCalcBlock, modularScheme } from '../lib/components.mjs';
 import { faqNode } from '../lib/schema.mjs';
 
 export function renderAgro(d) {
@@ -15,15 +15,38 @@ export function renderAgro(d) {
     { title: 'Главная', url: '/' },
     { title: 'Аграриям', url: '/agrariyam/' },
   ];
-
+  /* WhatsApp с шаблоном под страницу (разбор 11.09, п.8) — ссылка как в components.mjs. */
+  const waText = a.waText || site.contacts.whatsappText;
+  const waHref = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
   const content = html`
     ${pageHero({
       image: 'sol-zernohranilishcha',
       label: 'Аграриям',
       titleHtml: a.heroTitle,
       text: a.heroLead,
+      offer: a.heroMeta,
       crumbList,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="#calc">Рассчитать под мой тоннаж</a>
+        <a class="btn btn--ghost btn--lg" href="${waHref}" target="_blank" rel="noopener" data-goal="wa_click">Написать в WhatsApp</a>
+      `,
     })}
+
+    ${a.harvest
+      ? html`
+          <section class="section section--flush-top" id="sroki">
+            <div class="container">
+              ${sectionHead({ label: a.harvest.label, title: a.harvest.title, split: false })}
+              <div class="hero__stats hero__stats--flat">
+                ${a.harvest.stages.map((s) => stat(s))}
+              </div>
+              ${a.harvest.notes?.length
+                ? html`<p class="note" data-reveal>${a.harvest.notes.map((n, i) => html`${i ? raw('<br>') : ''}${n}`)}</p>`
+                : ''}
+            </div>
+          </section>
+        `
+      : ''}
 
     <section class="section section--flush-top">
       <div class="container container--narrow stack">
@@ -156,6 +179,8 @@ export function renderAgro(d) {
     ${ctaBand(site, {
       title: 'Посчитаем под ваше хозяйство',
       text: 'Культура, объём, площадка — инженер вернёт расчёт здания и спецификацию. Расширение секциями заложим в проект сразу.',
+      waText,
+      calcUrl: '/raschet/?type=zernohranilishcha',
     })}
   `;
 
@@ -166,6 +191,8 @@ export function renderAgro(d) {
       title: a.seoTitle,
       description: a.seoDescription,
       crumbs: crumbList,
+      waText,
+      calcType: 'zernohranilishcha',
       schema: [faqNode(site, '/agrariyam/', a.faq)],
     },
     content

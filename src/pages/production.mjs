@@ -17,7 +17,8 @@ export function renderProduction(d) {
 
   const content = html`
     ${pageHero({
-      image: 'prod-profil',
+      image: 'prod-baza',
+      imageAlt: 'Производственный корпус завода Steppe Steel: линия профилирования, рулоны оцинкованной стали, зона отгрузки',
       label: production.kicker,
       titleHtml: production.title,
       text: production.lead,

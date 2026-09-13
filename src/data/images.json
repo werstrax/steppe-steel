@@ -617,6 +617,19 @@
   "lqip": "",
   "alpha": true
  },
+ "video-grain-poster": {
+  "w": 1080,
+  "h": 1920,
+  "ratio": 0.5625,
+  "widths": [
+   384,
+   576,
+   864,
+   1080
+  ],
+  "fallback": 1080,
+  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQBACdASoUACQAPulkqU4pJaOiKqwBIB0JZwDBkBffvQvHNka2IPYiydeXJFj5wAD+sU9sxt5XDWYKFjLnccZvNsW5Le0OAzOpQnz7d/zhMi/48aS5kb4pC8E5HE8UkXUkeloSdZdp22wYPiKKY1VbirXhS1gA"
+ },
  "zerno-cutaway": {
   "w": 2560,
   "h": 1440,

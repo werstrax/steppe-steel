@@ -233,20 +233,30 @@ function mobileMenu(site, current) {
 
 /* --- Мобильная панель действий (ТЗ §18) ----------------------------------- */
 
-export const mobileBar = (site, current = '') => html`
+/**
+ * @param {string} current  URL текущей страницы
+ * @param {object} opts     waText — текст WhatsApp под страницу (по умолчанию
+ *                          site.contacts.whatsappText); calcType — тип здания
+ *                          для /raschet/?type=… (форма откроется с ним)
+ */
+export const mobileBar = (site, current = '', { waText, calcType } = {}) => {
+  const onCalc = current === '/raschet/';
+  const calcUrl = onCalc ? '#calc-form' : calcType ? `/raschet/?type=${encodeURIComponent(calcType)}` : site.cta.primary.url;
+  return html`
   <div class="mbar" data-mbar>
-    <a class="mbar__btn" href="${site.contacts.phoneHref}" data-goal="tel_click">
+    <a class="mbar__btn" href="${site.contacts.phoneHref}" data-goal="tel_click" aria-label="Позвонить ${site.contacts.phone}">
       ${iconPhone}<span>Позвонить</span>
     </a>
-    <a class="mbar__btn mbar__btn--wa" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappText)}"
-       target="_blank" rel="noopener" data-goal="wa_click">
+    <a class="mbar__btn mbar__btn--wa" href="${site.contacts.whatsapp}?text=${encodeURIComponent(waText || site.contacts.whatsappText)}"
+       target="_blank" rel="noopener" data-goal="wa_click" aria-label="Написать в WhatsApp">
       ${iconWhatsApp}<span>WhatsApp</span>
     </a>
-    <a class="mbar__btn mbar__btn--cta" href="${current === '/raschet/' ? '#calc-form' : site.cta.primary.url}">
-      <span>${current === '/raschet/' ? 'К форме заявки' : 'Получить расчёт'}</span>
+    <a class="mbar__btn mbar__btn--cta" href="${calcUrl}">
+      <span>${onCalc ? 'К форме заявки' : 'Получить расчёт'}</span>
     </a>
   </div>
 `;
+};
 
 /* --- Подвал (по макету заказчика: контакты · представители · презентация) --- */
 
@@ -361,9 +371,11 @@ export function crumbs(list) {
 
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
-export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, count, image, imageAlt = '', imageCaption }) {
+export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, offer, count, image, imageAlt = '', imageCaption }) {
   /* Фото-режим: слева заголовок и лид, справа кадр из манифеста с оранжевой
-   * кромкой. Без кадра — обычный типографический хиро. */
+   * кромкой. Без кадра — обычный типографический хиро.
+   * offer — короткая моно-строка под лидом («Расчёт и КП за 24 часа · …»). */
+  const offerLine = offer ? html`<p class="page-hero__offer mono">${offer}</p>` : '';
   if (image && hasImage(image)) {
     return html`
       <section class="page-hero page-hero--photo">
@@ -374,6 +386,7 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
               ${label ? html`<p class="eyebrow mono page-hero__label">${label}</p>` : ''}
               <h1 class="${cx('page-hero__title', small && 'page-hero__title--sm')}">${raw(titleHtml)}</h1>
               ${text ? html`<p class="page-hero__aside" style="margin-top:1.25rem">${raw(text)}</p>` : ''}
+              ${offerLine}
               ${actions ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>` : ''}
             </div>
             <div class="page-hero__media" data-reveal>
@@ -401,6 +414,7 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
               : ''}
         </div>
         ${count && text ? html`<p class="page-hero__aside" style="margin-top:1.5rem">${raw(text)}</p>` : ''}
+        ${offerLine}
         ${actions
           ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>`
           : ''}
@@ -551,7 +565,11 @@ export function faq(items, { idPrefix = 'faq' } = {}) {
 
 /* --- CTA-полоса --------------------------------------------------------- */
 
-export function ctaBand(site, { title, text, primary, secondary } = {}) {
+/**
+ * waText — текст WhatsApp под страницу (по умолчанию site.contacts.whatsappText);
+ * calcUrl — адрес основной кнопки, например /raschet/?type=angary.
+ */
+export function ctaBand(site, { title, text, primary, secondary, waText, calcUrl } = {}) {
   const p = primary || site.cta.primary;
   return html`
     <section class="cta-band">
@@ -565,8 +583,8 @@ export function ctaBand(site, { title, text, primary, secondary } = {}) {
             </p>
           </div>
           <div class="cta-band__actions" data-reveal>
-            <a class="btn btn--primary btn--lg" href="${p.url}">${p.title}</a>
-            <a class="btn btn--wa btn--lg" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
+            <a class="btn btn--primary btn--lg" href="${calcUrl || p.url}">${p.title}</a>
+            <a class="btn btn--wa btn--lg" href="${site.contacts.whatsapp}?text=${encodeURIComponent(waText || site.contacts.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
               ${iconWhatsApp}<span>Написать в WhatsApp</span>
             </a>
             ${secondary ? html`<a class="btn btn--outline-light btn--lg" href="${secondary.url}">${secondary.title}</a>` : ''}

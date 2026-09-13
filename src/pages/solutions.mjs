@@ -2,13 +2,14 @@
  * Решения (ТЗ §6): хаб /resheniya/ и страницы типов зданий /resheniya/<slug>/.
  */
 
-import { layout, html, raw } from '../lib/layout.mjs';
+import { layout, html, raw, e } from '../lib/layout.mjs';
 import {
   pageHero, sectionHead, specs, faq, ctaBand, photoSlot,
-  solutionRow, solutionCard, iconArrow, grainCalcBlock, modularScheme,
+  solutionRow, solutionCard, iconArrow, iconWhatsApp, grainCalcBlock, modularScheme,
 } from '../lib/components.mjs';
 import { productNode, faqNode, itemListNode } from '../lib/schema.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
+import { objectVideo } from '../lib/video.mjs';
 
 /* --- Хаб ------------------------------------------------------------------ */
 
@@ -114,11 +115,28 @@ export function renderSolution(d, s) {
     .map((slug) => d.journal.items.find((a) => a.slug === slug))
     .filter(Boolean);
 
+  // Один адрес расчёта для всех кнопок страницы: форма откроется с этим типом
+  const calcType = s.preselect || s.slug;
+  const calcUrl = `/raschet/?type=${encodeURIComponent(calcType)}`;
+  const ctaTitle = s.ctaTitle || 'Получить расчёт';
+  const waText = s.waText || site.contacts.whatsappText;
+  const waUrl = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
+  // Мягкий перенос в длинном слове H1 — только в разметке заголовка, не в title/JSON-LD
+  const titleHtml = e(s.title).replace(/металлоконструкц/g, 'металло&shy;конструкц');
+  const offer = s.heroOffer || 'Расчёт и КП за 24 часа · WhatsApp · завод в Костанайской области';
+
   const content = html`
     ${pageHero({
-      label: s.flag || 'Решение Steppe Steel',
-      titleHtml: s.title,
+      label: s.flag || 'Решение STEPPESTEEL',
+      titleHtml,
       text: s.lead,
+      offer,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="${calcUrl}">${ctaTitle}</a>
+        <a class="btn btn--wa btn--lg" href="${waUrl}" target="_blank" rel="noopener" data-goal="wa_click">
+          ${iconWhatsApp}<span>Написать в WhatsApp</span>
+        </a>
+      `,
       crumbList,
       image: s.cover || `sol-${s.slug}`,
       imageAlt: s.photoAlt || s.title,
@@ -151,10 +169,12 @@ export function renderSolution(d, s) {
         <aside class="side" data-reveal>
           <h2 class="side__title mono">Параметры</h2>
           ${specs(s.specs || [])}
-          <a class="btn btn--primary btn--wide" href="/raschet/${s.preselect ? `?type=${s.preselect}` : ''}">Получить расчёт</a>
+          <a class="btn btn--primary btn--wide" href="${calcUrl}">Получить расчёт</a>
         </aside>
       </div>
     </section>
+
+    ${s.slug === 'zernohranilishcha' ? objectVideo({ label: 'Объект завода · видео', id: 'video', tint: true, action: null }) : ''}
 
     ${s.features?.length
       ? html`
@@ -218,7 +238,11 @@ export function renderSolution(d, s) {
       ? html`
           <section class="section section--tint">
             <div class="container">
-              ${sectionHead({ label: s.economy.kicker, title: s.economy.title })}
+              ${sectionHead({
+                label: s.economy.kicker,
+                title: s.economy.title,
+                action: s.slug === 'zernohranilishcha' ? { title: 'Посчитать окупаемость: свой склад против элеватора', url: '/agrariyam/#okupaemost' } : undefined,
+              })}
               <ul class="num-list" data-reveal>
                 ${s.economy.items.map((it, i) => html`<li><span class="mono">${String(i + 1).padStart(2, '0')}</span>${it}</li>`)}
               </ul>
@@ -286,9 +310,11 @@ export function renderSolution(d, s) {
       : ''}
 
     ${ctaBand(site, {
-      // Строчная только первая буква, аббревиатуры (СТО) не трогаем
-      title: `Рассчитать ${s.short ? (/^[A-ZА-ЯЁ]{2,}/.test(s.short) ? s.short : s.short.charAt(0).toLowerCase() + s.short.slice(1)) : 'здание'}`,
+      // Заголовок — готовое поле ctaTitle, без склейки через toLowerCase
+      title: e(ctaTitle),
       text: 'Назначение, размеры, регион строительства — инженер завода вернёт расчёт с конструктивом и спецификацией.',
+      calcUrl,
+      waText,
     })}
   `;
 
@@ -299,6 +325,8 @@ export function renderSolution(d, s) {
       title: s.seoTitle,
       description: s.seoDescription,
       crumbs: crumbList,
+      waText,
+      calcType,
       image: hasImage(s.cover || `sol-${s.slug}`) ? (s.cover || `sol-${s.slug}`) : undefined,
       schema: [productNode(site, s), faqNode(site, s.url, s.faq)],
     },

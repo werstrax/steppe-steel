@@ -12,13 +12,20 @@ export function renderRegion(d, r) {
   const url = `/${r.slug}/`;
   const crumbs = [{ title: 'Главная', url: '/' }, { title: r.city, url }];
   const featured = solutions.items.slice(0, 6);
-
+  /* WhatsApp с шаблоном под регион (разбор 11.09, п.8) — ссылка как в components.mjs. */
+  const waText = r.waText || site.contacts.whatsappText;
+  const waHref = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
   const content = html`
     ${raw(pageHero({
       label: `${r.region} · доставка по Казахстану`,
       titleHtml: raw(r.h1),
       crumbList: crumbs,
       text: r.lead,
+      offer: regions.heroMeta,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="${site.cta.primary.url}">Получить расчёт</a>
+        <a class="btn btn--ghost btn--lg" href="${waHref}" target="_blank" rel="noopener" data-goal="wa_click">Написать в WhatsApp</a>
+      `,
     }))}
 
     <section class="section section--flush-top">
@@ -87,6 +94,7 @@ export function renderRegion(d, r) {
       title: raw(regions.ctaTitle),
       text: regions.ctaText,
       secondary: { title: 'Профили ПСУ и ПС', url: '/profili/' },
+      waText,
     }))}
   `;
 
@@ -95,6 +103,7 @@ export function renderRegion(d, r) {
     title: r.seoTitle,
     description: r.seoDescription,
     crumbs,
+    waText,
     schema: [{
       '@type': 'Service',
       '@id': `${site.url}${url}#service`,

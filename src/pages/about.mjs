@@ -20,6 +20,7 @@ export function renderAbout(d) {
       titleHtml: 'Steppe Steel — завод строительных металло&shy;конструкций',
       crumbList: crumbs,
       text: raw('Проектирование, производство ЛСТК и ЛМК, комплектная поставка — на одной площадке в с.&nbsp;Троебратское Костанайской области. Работаем по всему Казахстану.'),
+      actions: html`<a class="arrow-link factory-visit" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод ${iconArrow}</a>`,
     }))}
 
     <section class="section section--flush-top">
@@ -94,7 +95,8 @@ export function renderAbout(d) {
           ].map(([t, x]) => html`<div class="pick-card" data-reveal><h3 class="pick-card__title">${t}</h3><p class="pick-card__text">${x}</p></div>`)}
         </div>
         <div class="about-band__photos" style="margin-top:var(--space-l)">
-          ${['prod-baza', 'prod-oborudovanie', 'prod-profil', 'prod-kontrol'].map((slot) => html`
+          ${/* prod-baza не повторяем: этот кадр уже стоит в первом экране страницы */ ''}
+          ${['prod-svarka', 'prod-oborudovanie', 'prod-profil', 'prod-kontrol'].map((slot) => html`
             <div class="about-band__photo" data-reveal>
               ${hasImage(slot)
                 ? raw(picture(slot, { alt: 'Производственная база Steppe Steel', sizes: '(min-width: 900px) 25vw, 50vw' }))

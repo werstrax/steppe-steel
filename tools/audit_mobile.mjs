@@ -60,11 +60,31 @@ const AUDIT = `(() => {
     if (r.right > vw + 2 && !el.closest('.table-wrap, .marquee, .loader, .hero__media, .header, .menu, .fab, .lightbox')) {
       problems.push('BOX ' + (el.className && el.className.toString().split(' ')[0] || el.tagName) + ' right=' + Math.round(r.right));
     }
-    // текст клипается внутри самого элемента (кроме сознательного ellipsis)
+    // текст клипается внутри самого элемента (кроме сознательного ellipsis).
+    // Узлы внутри svg пропускаем только здесь: подписи там рисуются по
+    // координатам viewBox, scrollWidth/clientWidth для них ничего не значат.
+    // Вместо этого ниже отдельная проверка — рамка подписи против рамки svg.
     if (el.children.length === 0 && el.scrollWidth > el.clientWidth + 2 && cs.textOverflow !== 'ellipsis'
+        && !(el.ownerSVGElement || el.tagName === 'svg')
         && !el.closest('.table-wrap, .marquee, .visually-hidden, .hp-field')
         && !el.classList.contains('visually-hidden')) {
       problems.push('CLIP ' + (el.className && el.className.toString().split(' ')[0] || el.tagName) + ' sw=' + el.scrollWidth + ' cw=' + el.clientWidth + ' «' + (el.textContent || '').trim().slice(0, 30) + '»');
+    }
+  }
+  // Подписи в svg (план объекта, схемы, карта): сравниваем рамку текста с
+  // рамкой самого svg — так видно подпись, уехавшую за пределы чертежа.
+  for (const svg of document.querySelectorAll('svg')) {
+    const scs = getComputedStyle(svg);
+    if (scs.display === 'none' || scs.visibility === 'hidden') continue;
+    const box = svg.getBoundingClientRect();
+    if (!box.width || !box.height) continue;
+    for (const t of svg.querySelectorAll('text')) {
+      const tr = t.getBoundingClientRect();
+      if (!tr.width || !tr.height) continue;
+      const out = Math.max(box.left - tr.left, tr.right - box.right, box.top - tr.top, tr.bottom - box.bottom);
+      if (out > 2) {
+        problems.push('SVGTEXT «' + (t.textContent || '').trim().slice(0, 24) + '» вышла за рамку svg на ' + Math.round(out) + 'px');
+      }
     }
   }
   return [...new Set(problems)].slice(0, 12);

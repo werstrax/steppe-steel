@@ -15,7 +15,7 @@ const content=html`
    <div class="specs__row"><span class="specs__key">БИН</span><span class="specs__val">${site.brand.bin}</span></div>
    <div class="specs__row"><span class="specs__key">Юридический адрес</span><span class="specs__val">${site.brand.legalAddress}</span></div>
   </div></div>
-  <div><h2>Материалы для проектирования</h2><p>Сортамент ПСУ и ПС доступен на сайте. Паспорт конкретного комплекта выдаётся с поставкой. Узлы, монтажные чертежи и заверенные копии документов запросите у проектного отдела.</p>
+  <div id="tehbiblioteka"><h2>Материалы для проектирования</h2><p>Сортамент ПСУ и ПС доступен на сайте. Паспорт конкретного комплекта выдаётся с поставкой. Узлы, монтажные чертежи и заверенные копии документов запросите у проектного отдела.</p>
    <div class="btn-row"><a class="btn btn--primary" href="/profili/">Сортамент профилей</a><a class="btn btn--ghost" href="/proektirovshchikam/">Проектировщикам</a></div>
   </div>
  </div></div></section>
