@@ -302,7 +302,6 @@ export function footer(site) {
             <h2 class="footer__title">Поставки по Казахстану</h2>
             <p class="footer__text">Производство в Костанайской области. Доставку и состав комплекта согласуем под вашу площадку.</p>
             ${kzMap({ compact: true })}
-            ${c.address.note ? html`<p class="footer__route mono">${c.address.note}</p>` : ''}
             <ul class="footer__list footer__list--row">
               ${(site.regionsNav || []).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
             </ul>
@@ -336,7 +335,7 @@ export function footer(site) {
 export function sectionHead({ label, title, text, action, split = true, level = 2 }) {
   const H = `h${level}`;
   return html`
-    <div class="${cx('section-head', split && 'section-head--split')}">
+    <div class="${cx('section-head', split && 'section-head--split')}" data-reveal>
       <div>
         ${label ? raw(`<p class="eyebrow mono">${e(label)}</p>`) : ''}
         ${title ? raw(`<${H} class="section-head__title">${title}</${H}>`) : ''}
@@ -372,18 +371,14 @@ export function crumbs(list) {
 
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
-export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, offer, count, image, imageAlt = '', imageCaption, variant }) {
+export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, offer, count, image, imageAlt = '', imageCaption }) {
   /* Фото-режим: слева заголовок и лид, справа кадр из манифеста с оранжевой
    * кромкой. Без кадра — обычный типографический хиро.
-   * offer — короткая моно-строка под лидом («Расчёт и КП за 24 часа · …»).
-   * variant:'photo' — кадр уходит в правый край окна и растёт до 420–600 px
-   * (page-hero--bleed, дизайн-проход 13.09 п.5). Режим опциональный: без
-   * variant остаётся сплит в контейнере — иначе /proektirovshchikam/ с рендером
-   * tech-hub (contain на серой подложке) получил бы градиент и растяжку. */
+   * offer — короткая моно-строка под лидом («Расчёт и КП за 24 часа · …»). */
   const offerLine = offer ? html`<p class="page-hero__offer mono">${offer}</p>` : '';
   if (image && hasImage(image)) {
     return html`
-      <section class="${cx('page-hero', 'page-hero--photo', variant === 'photo' && 'page-hero--bleed')}">
+      <section class="page-hero page-hero--photo">
         <div class="container">
           <div class="page-hero__grid">
             <div class="page-hero__body">
@@ -394,7 +389,7 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
               ${offerLine}
               ${actions ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>` : ''}
             </div>
-            <div class="page-hero__media">
+            <div class="page-hero__media" data-reveal>
               ${raw(picture(image, { alt: imageAlt, sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
               ${imageCaption ? html`<span class="solution-image-note">${imageCaption}</span>` : ''}
             </div>
@@ -474,7 +469,7 @@ export function solutionCard(s, { level = 3 } = {}) {
   const H = `h${level}`;
   const img = s.cover || `sol-${s.slug}`;
   return html`
-    <a class="${cx('card sol-card', !hasImage(img) && 'sol-card--text', s.flag && 'sol-card--flag')}" href="${s.url}">
+    <a class="${cx('card sol-card', !hasImage(img) && 'sol-card--text', s.flag && 'sol-card--flag')}" href="${s.url}" data-reveal>
       <span class="card__media">
         ${hasImage(img)
           ? raw(picture(img, { alt: s.photoAlt || `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
@@ -485,7 +480,6 @@ export function solutionCard(s, { level = 3 } = {}) {
       <span class="card__body">
         <${raw(H)} class="card__title">${s.short || s.title}</${raw(H)}>
         <span class="card__text">${s.summary}</span>
-        ${s.cardMeta?.length ? html`<span class="card__meta">${s.cardMeta.join(' · ')}</span>` : ''}
         <span class="card__more">Подробнее ${iconArrow}</span>
       </span>
     </a>
@@ -502,7 +496,7 @@ export function solutionCard(s, { level = 3 } = {}) {
 export function solutionRow(s, { num, summary = false, level = 3 } = {}) {
   const H = `h${level}`;
   return html`
-    <a class="${cx('sol-row', s.flag && 'sol-row--flag', !num && 'sol-row--nonum')}" href="${s.url}">
+    <a class="${cx('sol-row', s.flag && 'sol-row--flag', !num && 'sol-row--nonum')}" href="${s.url}" data-reveal>
       ${num ? html`<span class="sol-row__num mono">${String(num).padStart(2, '0')}</span>` : ''}
       <span class="sol-row__body">
         ${s.flag ? html`<span class="sol-row__flag mono">${s.flag}</span>` : ''}
@@ -519,7 +513,7 @@ export function solutionRow(s, { num, summary = false, level = 3 } = {}) {
 
 export function step(s, i) {
   return html`
-    <div class="step">
+    <div class="step" data-reveal>
       <span class="step__num mono">${String(i + 1).padStart(2, '0')}</span>
       <div>
         <h3 class="step__title">${s.title}</h3>
@@ -538,35 +532,12 @@ export function step(s, i) {
 /* --- Цифра -------------------------------------------------------------- */
 
 export const stat = (s) => html`
-  <div class="stat">
+  <div class="stat" data-reveal>
     <span class="stat__val">${s.val}</span>
     <span class="stat__key">${s.key}</span>
     ${s.note ? html`<span class="stat__note mono">${s.note}</span>` : ''}
   </div>
 `;
-
-/* --- Цоколь цифр (дизайн-проход 13.09, п.1) ------------------------------- */
-
-/**
- * Графитовая полоса из 2–4 проверяемых чисел под первым экраном: цифры
- * в 2,5 раза крупнее h2, над каждой — оранжевая засечка (.tick).
- * item = { prefix?, value, unit?, title?, text? }. Целые (/^\d+\+?$/)
- * получают data-count и отсчитываются в site.js; нецелые («3,5», «30–45»)
- * и слова («КМ / КМД») статичны. В HTML сразу стоит итоговое значение —
- * без JS и при reduced-motion числа не двигаются. Секция несёт section--dark
- * сама: eyebrow, ссылки и текст перекрашиваются токенами.
- * size: 'lg' (главная) | 'sm' (посадочные, /proizvodstvo/, /o-zavode/).
- */
-export function plinth(items, { size = 'lg', label = '' } = {}) {
-  const isInt = (v) => /^\d+\+?$/.test(String(v));
-  return html`<section class="${cx('plinth', `plinth--${size}`, 'section--dark')}"${label ? raw(` aria-label="${e(label)}"`) : ''}>
-    <div class="container plinth__grid">${items.map((p) => html`<div class="plinth__item tick">
-      <span class="plinth__val">${p.prefix ? html`<small>${p.prefix}</small>` : ''}${isInt(p.value)
-        ? html`<span data-count="${String(p.value).replace('+', '')}" data-suffix="${String(p.value).endsWith('+') ? '+' : ''}" style="--ch:${String(p.value).length}ch">${p.value}</span>`
-        : p.value}${p.unit ? html`<small>${p.unit}</small>` : ''}</span>
-      ${p.title ? html`<h2 class="plinth__title">${p.title}</h2>` : ''}${p.text ? html`<p class="plinth__text">${p.text}</p>` : ''}
-    </div>`)}</div></section>`;
-}
 
 /* --- FAQ ---------------------------------------------------------------- */
 
@@ -575,7 +546,7 @@ export function faq(items, { idPrefix = 'faq' } = {}) {
     <div class="faq">
       ${items.map(
         (qa, i) => html`
-          <div class="faq__item">
+          <div class="faq__item" data-reveal>
             <h3 style="margin:0">
               <button class="faq__q" type="button" aria-expanded="false" aria-controls="${idPrefix}-${i}">
                 <span>${qa.q}</span>
@@ -604,14 +575,14 @@ export function ctaBand(site, { title, text, primary, secondary, waText, calcUrl
     <section class="cta-band">
       <div class="container">
         <div class="cta-band__inner">
-          <div>
+          <div data-reveal>
             <h2 class="cta-band__title">${raw(title || 'Получите расчёт<br>вашего здания')}</h2>
             <p class="cta-band__text">
               ${text ||
               'Назначение, размеры, регион — инженер завода посчитает конструктив и пришлёт коммерческое предложение. Есть готовый проект — приложите его к заявке.'}
             </p>
           </div>
-          <div class="cta-band__actions">
+          <div class="cta-band__actions" data-reveal>
             <a class="btn btn--primary btn--lg" href="${calcUrl || p.url}">${p.title}</a>
             <a class="btn btn--wa btn--lg" href="${site.contacts.whatsapp}?text=${encodeURIComponent(waText || site.contacts.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">
               ${iconWhatsApp}<span>Написать в WhatsApp</span>
@@ -627,7 +598,7 @@ export function ctaBand(site, { title, text, primary, secondary, waText, calcUrl
 /* --- Карточка статьи ---------------------------------------------------- */
 
 export const articleCard = (a) => html`
-  <a class="article-card" href="${a.url}">
+  <a class="article-card" href="${a.url}" data-reveal>
     <div class="media media--3x2">
       ${a.cover
         ? html`${raw(picture(a.cover, { alt: '', sizes: '(min-width: 900px) 33vw, 100vw' }))}${a.coverViz ? vizTag() : ''}`
@@ -661,7 +632,7 @@ export const specs = (rows) => html`
 /* --- Строка документа ---------------------------------------------------- */
 
 export const docRow = (d) => html`
-  <a class="doc-row" href="${d.file || d.url}" target="_blank" rel="noopener">
+  <a class="doc-row" href="${d.file || d.url}" target="_blank" rel="noopener" data-reveal>
     <span class="doc-row__icon" aria-hidden="true">${iconDownload}</span>
     <span class="doc-row__body">
       <span class="doc-row__title">${d.title}</span>
@@ -685,7 +656,7 @@ export function portfolioCard(o) {
     o.docs && { key: 'Документация', val: o.docs },
   ].filter(Boolean);
   return html`
-    <article class="obj-card" data-category="${o.category}">
+    <article class="obj-card" data-category="${o.category}" data-reveal>
       <div class="obj-card__media">
         ${o.photos?.length
           ? raw(picture(o.photos[0].img, { alt: o.photos[0].alt || o.title, sizes: '(min-width: 900px) 50vw, 100vw' }))
@@ -732,12 +703,12 @@ export function modularScheme() {
 
 /* --- Калькулятор длины зернохранилища ------------------------------------- */
 
-/** Вместимость на 1 м длины — проверенные цифры из ПЗ (по культурам).
- *  bare:true — только <div class="calc" data-grain-calc> без секции и контейнера:
- *  для разворота «шкала вместимости + калькулятор» на странице зернохранилищ
- *  (дизайн-проход 13.09, п.11). Логика в site.js не меняется. */
-export function grainCalcBlock({ bare = false } = {}) {
-  const calc = `<div class="calc" data-grain-calc>
+/** Вместимость на 1 м длины — проверенные цифры из ПЗ (по культурам). */
+export function grainCalcBlock() {
+  return `
+  <section class="section" id="calc">
+    <div class="container container--narrow">
+      <div class="calc" data-grain-calc data-reveal>
         <p class="eyebrow mono">Калькулятор</p>
         <h2 class="section-head__title">Сколько метров под ваш объём</h2>
         <p class="calc__intro">Выберите культуру и объём — посчитаем ориентировочную длину зернохранилища по вместимости на 1 м.</p>
@@ -760,12 +731,7 @@ export function grainCalcBlock({ bare = false } = {}) {
         <p class="calc__result" aria-live="polite">Ориентировочная длина: <strong data-gc-out>≈ 45 м</strong></p>
         <p class="note mono">Расчёт по вместимости на 1 м длины при хранении навалом. Точную длину и сечение под культуру и площадку определит инженер.</p>
         <a class="btn btn--primary" data-gc-link href="/raschet/?type=grain&amp;tons=3000">Получить расчёт под этот объём</a>
-      </div>`;
-  if (bare) return calc;
-  return `
-  <section class="section" id="calc">
-    <div class="container container--narrow">
-      ${calc}
+      </div>
     </div>
   </section>`;
 }

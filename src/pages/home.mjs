@@ -1,51 +1,160 @@
+/**
+ * STEPPESTEEL — customer-facing factory site.
+ * Content is sourced from data JSON; photography from the supplied image manifest.
+ */
 import { layout, html, raw } from '../lib/layout.mjs';
-import { picture } from '../lib/util.mjs';
-import { iconArrow } from '../lib/components.mjs';
-import { organizationNode, websiteNode, itemListNode } from '../lib/schema.mjs';
-import { casePlan } from './portfolio.mjs';
+import { sectionHead, ctaBand, iconArrow, iconCheck } from '../lib/components.mjs';
+import { organizationNode, websiteNode, itemListNode, howToNode } from '../lib/schema.mjs';
+import {documentShelf,engineeringExperience} from '../lib/experience.mjs';
+import { hasImage, picture } from '../lib/util.mjs';
+import { casePlan, caseDocs } from './portfolio.mjs';
 
 export function renderHome(d) {
- const {site,home,solutions,portfolio,documents}=d;
- const selected=['zernohranilishcha','sklady','angary','proizvodstvennye-zdaniya'].map(slug=>solutions.items.find(s=>s.slug===slug)).filter(Boolean);
- const project=portfolio.items[0];
- const docs=documents.categories.flatMap(c=>c.items);
- const image=(name,alt,sizes='50vw',priority=false)=>raw(picture(name,{alt,sizes,priority}));
- const content=html`
- <section class="ed-hero" aria-labelledby="ed-title">
-  <div class="ed-hero__photo">${image('drone-hero','Напольное зернохранилище на стальном каркасе завода с синей кровлей, вид с дрона','100vw',true)}</div>
-  <div class="ed-hero__shade"></div>
-  <div class="container ed-hero__inner">
-   <div class="ed-hero__meta"><span><i></i> STEPPE STEEL / КАЗАХСТАН</span><span>ПРОЕКТИРУЕМ. ПРОИЗВОДИМ. ПОСТАВЛЯЕМ.</span></div>
-   <h1 id="ed-title">Сила стали.<br>Точность<br><span>инженерии.</span></h1>
-   <div class="ed-hero__bottom"><p>Завод строительных металлоконструкций.<br>От первого чертежа до готового каркаса —<br>для бизнеса по всему Казахстану.</p><a class="ed-button" href="/raschet/">Получить расчёт <span>↗</span></a></div>
-   <div class="ed-hero__foot"><span>ЛСТК / ЛМК / КОМПЛЕКТНЫЕ ЗДАНИЯ</span><a href="#solutions">Откройте возможности <span>↓</span></a></div>
-  </div>
-  <span class="ed-hero__vertical" aria-hidden="true">INDUSTRIAL STANDARD — STEPPE STEEL</span>
- </section>
- <section class="ed-intro container" aria-labelledby="intro-title">
-  <p class="ed-label">01 / ОСНОВА ВАШЕГО ПРОЕКТА</p>
-  <div class="ed-intro__body"><h2 id="intro-title">Вы строите бизнес.<br><span>Мы создаём его основу.</span></h2><p>Склад, новый цех или зернохранилище — у каждого здания своя задача. Мы соединяем инженерный расчёт, собственное производство и комплектную поставку в один процесс.</p><a class="ed-textlink" href="/o-zavode/">Познакомиться с заводом ${iconArrow}</a></div>
- </section>
- <section class="ed-stats container" aria-label="Возможности конструкций">${home.proof.map(p=>html`<div><strong>${p.prefix?html`<small>${p.prefix} </small>`:''}${p.value}<small> ${p.unit}</small></strong><h3>${p.title}</h3><p>${p.text}</p></div>`)}</section>
- <section class="ed-section ed-solutions" id="solutions"><div class="container">
-  <div class="ed-sectionhead"><div><p class="ed-label">02 / РЕШЕНИЯ</p><h2>Ваши задачи.<br>Наши конструкции.</h2></div><div><p>Подберём здание под технологию,<br>площадку и планы вашего бизнеса.</p><a class="ed-textlink" href="/resheniya/">Все 9 направлений ${iconArrow}</a></div></div>
-  <div class="ed-solutiongrid">${selected.map((s,i)=>html`<a class="ed-solution" href="${s.url}"><div class="ed-solution__image">${image(s.cover||'sol-'+s.slug,s.photoAlt||s.title,'(min-width: 760px) 48vw, 100vw')}<span class="ed-solution__number">0${i+1}</span>${s.coverCaption?html`<span class="ed-image-note">${s.coverCaption}</span>`:''}</div><div class="ed-solution__title"><h3>${s.short||s.title}</h3><span>↗</span></div><p>${home.solutionDescriptions[s.slug]}</p></a>`)}</div>
- </div></section>
- <section class="ed-engineering ed-section" id="engineering"><div class="container">
-  <div class="ed-sectionhead"><div><p class="ed-label">03 / ИНЖЕНЕРИЯ В ДЕТАЛЯХ</p><h2>Продумано<br>до каждого соединения.</h2></div><p>Посмотрите, как устроен каркас.<br>Поверните модель и добавьте обшивку,<br>чтобы увидеть здание целиком.</p></div>
-  <div class="ed-model" data-structure>
-   <div class="ed-model__stage"><div class="ed-model__top"><span>SS / КОНСТРУКТИВНАЯ СХЕМА</span><span class="ed-model__live">3D</span></div><canvas id="structure-canvas" tabindex="0" role="img" aria-label="Вращаемая трёхмерная схема ангара. Используйте стрелки влево и вправо для поворота.">Схема стального ангара: колонны, фермы, прогоны и связи. Размер 18 × 36 м.</canvas><div class="ed-model__hint">↔ Потяните для вращения <span>или используйте стрелки ← →</span></div><noscript><p>Интерактивная модель доступна с JavaScript. <a href="/tekhnologii/">Посмотреть технологии</a></p></noscript></div>
-   <div class="ed-model__panel"><p class="ed-label">ТИПОВОЙ АНГАР</p><h3>Пространство<br>без лишних опор.</h3><p>Свободный пролёт и модульная конструкция. Размеры и сечения рассчитываем под ваш объект.</p><div class="ed-model__sizes" aria-label="Размер ангара"><button type="button" data-size="18,36" aria-pressed="true">18 × 36 м</button><button type="button" data-size="24,60" aria-pressed="false">24 × 60 м</button></div><dl><div><dt>Площадь в плане</dt><dd data-model-area aria-live="polite">648 м²</dd></div><div><dt>Соединения</dt><dd>Болтовые</dd></div><div><dt>Документация</dt><dd>КМ / КМД</dd></div></dl><label class="ed-switch"><input type="checkbox" data-model-cladding><span></span>Показать обшивку</label><div class="ed-model__rotate"><button type="button" data-rotate="-1" aria-label="Повернуть модель влево">←</button><button type="button" data-reset>Исходный ракурс</button><button type="button" data-rotate="1" aria-label="Повернуть модель вправо">→</button></div><a class="ed-button" data-model-link href="/raschet/?type=angary&w=18&l=36">Рассчитать этот ангар <span>↗</span></a><small class="ed-model__note">Иллюстративная схема. Не заменяет расчёт и рабочую документацию.</small></div>
-  </div>
- </div></section>
- <section class="ed-section ed-factory" id="zavod"><div class="container">
-  <div class="ed-sectionhead"><div><p class="ed-label">04 / СОБСТВЕННОЕ ПРОИЗВОДСТВО</p><h2>От рулона стали —<br>до комплекта здания.</h2></div><a class="ed-textlink" href="/proizvodstvo/">Внутри производства ${iconArrow}</a></div>
-  <div class="ed-factory__grid"><figure>${image('prod-baza','Производственный корпус и линия профилирования Steppe Steel','(min-width: 900px) 58vw, 100vw')}<figcaption><span>STEPPE STEEL</span>Троебратское / Костанайская область</figcaption></figure><div class="ed-stages">${home.factory.stages.map((s,i)=>html`<article><span>0${i+1}</span><div><h3>${s.title}</h3><p>${s.text}</p></div></article>`)}<a class="ed-textlink" href="/proizvodstvo/#otgruzka">Как устроена поставка ${iconArrow}</a></div></div>
- </div></section>
- ${project?html`<section class="ed-project ed-section"><div class="container"><div class="ed-sectionhead"><div><p class="ed-label">05 / ПРОЕКТ ЗАВОДА</p><h2>Инженерия,<br>которая становится зданием.</h2></div><a class="ed-textlink" href="/obekty/">Подробнее о проекте ${iconArrow}</a></div><div class="ed-project__grid"><div class="ed-project__drawing">${casePlan(project)}<span>КОНСТРУКТИВНАЯ СХЕМА / КОСТАНАЙ</span></div><div><p class="ed-label">${project.region} / ${project.year}</p><h3>${project.title}</h3><p>Рамно-связевый каркас ЛСТК. Расчётная модель, эскизный проект и документация для изготовления и монтажа.</p><strong>690 <small>м² в плане</small></strong><p class="ed-project__docs">${project.docs}</p></div></div></div></section>`:''}
- <section class="ed-section ed-partners"><div class="container"><div class="ed-sectionhead"><div><p class="ed-label">06 / СОТРУДНИЧЕСТВО</p><h2>Один завод.<br>Разные точки роста.</h2></div><p>Подключаемся на том этапе,<br>на котором нужна наша экспертиза.</p></div><div class="ed-partnerlist">${home.audiences.map((a,i)=>html`<a href="${a.url}"><span>0${i+1}</span><h3>${a.title}</h3><p>${a.text}</p><b>↗</b></a>`)}</div></div></section>
- <section class="ed-documents container" id="documents"><div><p class="ed-label">ДОКУМЕНТЫ ЗАВОДА</p><h2>Открыто.<br>По существу.</h2></div><div>${docs.map(doc=>html`<a href="${doc.file}" target="_blank" rel="noopener"><div><span>PDF</span><h3>${doc.title}</h3><small>${doc.size}</small></div><b>↓</b></a>`)}</div></section>
- <section class="ed-contact"><div class="container"><p class="ed-label">НАЧНЁМ С ВАШЕЙ ЗАДАЧИ</p><div class="ed-contact__row"><h2>Большие планы<br>нуждаются<br>в прочной основе.</h2><a class="ed-contact__circle" href="/raschet/" aria-label="Обсудить проект с инженером">↗</a></div><div class="ed-contact__foot"><p>Расскажите о будущем здании.<br>Инженер подготовит предварительный расчёт.</p><a href="${site.contacts.phoneHref}">${site.contacts.phone}</a><a class="ed-textlink" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappEngineer)}" target="_blank" rel="noopener">Написать в WhatsApp ${iconArrow}</a></div></div></section>
- `;
- return layout(site,{url:'/',bodyClass:'editorial-home',noNext:true,preloadImage:{name:'drone-hero',sizes:'100vw'},image:'drone-hero',title:'Завод металлоконструкций в Казахстане — Steppe Steel',description:'Steppe Steel — проектирование, производство ЛСТК и ЛМК, комплектная поставка зданий по Казахстану. Склады, ангары, зернохранилища и производственные здания.',schema:[organizationNode(site,{products:solutions.items}),websiteNode(site),itemListNode(site,'/',solutions.items,'Решения Steppe Steel')]},content);
+  const { site, solutions, production, portfolio, documents, home } = d;
+  const bySlug = Object.fromEntries(solutions.items.map(s => [s.slug, s]));
+  const featured = home.featured.map(slug => bySlug[slug]).filter(Boolean);
+  const other = solutions.items.filter(s => !home.featured.includes(s.slug));
+  const obj = portfolio.items[0];
+  const objPlan = obj ? casePlan(obj) : '';
+  const objDocs = obj ? caseDocs(obj) : '';
+  const presentation = documents.categories.find(c => c.id === 'prezentacii')?.items[0];
+  const content = html`
+    <section class="factory-hero" aria-labelledby="factory-title">
+      <div class="factory-hero__image" aria-hidden="true">${raw(picture('drone-hero',{alt:'',sizes:'100vw',priority:true}))}</div>
+      <div class="container factory-hero__inner">
+        <div class="factory-hero__copy">
+          <p class="factory-hero__eyebrow"><span></span>ЗАВОД МЕТАЛЛОКОНСТРУКЦИЙ / КАЗАХСТАН</p>
+          <h1 id="factory-title">От проекта —<br>до стального<br><span>каркаса.</span></h1>
+          <p class="factory-hero__lead">Зернохранилища, склады, ангары и производственные здания. Проектируем, производим и поставляем по всему Казахстану.</p>
+          <div class="factory-hero__actions">
+            <a class="btn btn--primary" href="/raschet/">Получить расчёт ${iconArrow}</a>
+            <a class="factory-hero__link" href="#engineering">Смотреть конструкцию <span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="factory-hero__promise">Предварительный расчёт и спецификация — за&nbsp;24&nbsp;часа, без предоплаты. Отвечает инженер.</p>
+          <a class="factory-hero__documents" href="#documents">Презентации и сертификат ${iconArrow}</a>
+        </div>
+        <a class="factory-hero__location" href="/resheniya/zernohranilishcha/"><span class="factory-hero__location-mark">↗</span><div>НА СНИМКЕ<small>Напольное зернохранилище на каркасе завода</small></div></a>
+      </div>
+      <div class="factory-hero__bottom"><div class="container">
+        <a href="/proektirovshchikam/"><span>01</span>Проектирование КМ / КМД ${iconArrow}</a>
+        <a href="/proizvodstvo/"><span>02</span>Заводское производство ${iconArrow}</a>
+        <a href="/proizvodstvo/#otgruzka"><span>03</span>Комплектная поставка ${iconArrow}</a>
+      </div></div>
+    </section>
+
+    <section class="pro-proof" aria-label="Возможности завода">
+      <div class="container pro-proof__grid">
+        ${home.proof.map(p => html`<div class="pro-proof__item">
+          <div class="pro-proof__value">${p.prefix ? html`<small>${p.prefix}</small>` : ''}${p.value}<small>${p.unit}</small></div>
+          <h2>${p.title}</h2><p>${p.text}</p>
+        </div>`)}
+      </div>
+    </section>
+
+    <section class="section" id="resheniya">
+      <div class="container">
+        ${sectionHead({label:'01 / Решения',title:home.solutions.title,text:home.solutions.text,action:{title:'Все решения',url:'/resheniya/'}})}
+        <div class="pro-solutions">
+          ${featured.map((s,i) => html`<a class="pro-solution" href="${s.url}">
+            <div class="pro-solution__photo">
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:i===0?'(min-width: 1100px) 45vw, 100vw':'(min-width: 1100px) 28vw, (min-width: 640px) 50vw, 100vw'}))}
+              ${s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
+            </div>
+            <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
+              <p>${home.solutionDescriptions[s.slug]}</p>
+            </div>
+          </a>`)}
+        </div>
+        <div class="pro-solutions pro-solutions--all" aria-label="Ещё шесть типов зданий">
+          ${other.map((s,i) => html`<a class="pro-solution" href="${s.url}">
+            <div class="pro-solution__photo">
+              ${raw(picture(s.cover || 'sol-'+s.slug,{alt:s.photoAlt || s.title,sizes:'(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 100vw'}))}
+            </div>
+            <div class="pro-solution__body"><h3>${s.short || s.title}</h3><span class="pro-solution__arrow">${iconArrow}</span>
+              <p>${home.solutionDescriptions[s.slug] || s.summary}</p>
+            </div>
+          </a>`)}
+        </div>
+        <div class="pro-help"><p>${home.solutions.help}</p><a class="arrow-link" href="/raschet/">Получить расчёт ${iconArrow}</a></div>
+      </div>
+    </section>
+
+    ${engineeringExperience(d)}
+
+    <section class="section" id="tipovye">
+      <div class="container">
+        ${sectionHead({label:'03 / Типовые здания',title:home.typical.title,text:home.typical.text})}
+        <div class="pro-typicals">
+          ${solutions.hub.typical.items.map((t,i)=>html`<div class="pro-typical">
+            <span class="pro-typical__label mono">ТИПОВОЕ РЕШЕНИЕ / 0${i+1}</span><h3>${t.title}</h3>
+            <dl>${t.params.map(([k,v])=>html`<div><dt>${k}</dt><dd>${v}</dd></div>`)}</dl>
+            <div class="pro-typical__links">
+              <a class="arrow-link pro-typical__cta" href="${t.url}">Рассчитать этот вариант ${iconArrow}</a>
+              ${t.pageUrl ? html`<a class="pro-typical__page" href="${t.pageUrl}">Параметры здания</a>` : ''}
+            </div>
+          </div>`)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="process">
+      <div class="container">
+        ${sectionHead({label:'04 / Порядок работы',title:home.process.title,text:home.process.text})}
+        <ol class="pro-process">
+          ${production.process.steps.map((s,i)=>{
+            const term = home.process.terms?.[i] || s.duration;
+            return html`<li><span class="pro-process__num">0${i+1}</span>${term ? html`<span class="pro-process__term mono">${term}</span>` : ''}<h3>${s.title}</h3><p>${home.process.descriptions[i]}</p></li>`;
+          })}
+        </ol>
+        <p class="pro-process__note">${home.process.note}</p>
+      </div>
+    </section>
+
+    <section class="section" id="partnyorstvo">
+      <div class="container">
+        ${sectionHead({label:'05 / Сотрудничество',title:home.audiencesTitle,text:home.audiencesText})}
+        <div class="pro-audiences">
+          ${home.audiences.map((a,i)=>html`<a class="pro-audience" href="${a.url}">
+            <span class="pro-audience__num mono">0${i+1}</span><h3>${a.title}</h3><p>${a.text}</p>
+            <span class="arrow-link">${a.cta} ${iconArrow}</span>
+          </a>`)}
+        </div>
+      </div>
+    </section>
+
+    ${obj ? html`<section class="section section--tint" id="obekty"><div class="container pro-case">
+      <div><p class="eyebrow">06 / ${obj.badge}</p><h2>${obj.title}</h2><p class="pro-case__location">${obj.region} / ${obj.year}</p>
+        <p>${obj.text}</p><a class="btn btn--ghost" href="/obekty/">Подробнее о проекте ${iconArrow}</a></div>
+      <div class="pro-case__passport"><p class="mono">ПАРАМЕТРЫ ПРОЕКТА</p>
+        ${objPlan || html`<div class="pro-case__area">${obj.area}</div>`}
+        <dl><div><dt>Назначение</dt><dd>${obj.purpose}</dd></div><div><dt>Размеры</dt><dd>${obj.size}</dd></div>${objPlan && obj.area ? html`<div><dt>Площадь</dt><dd>${obj.area}</dd></div>` : ''}<div><dt>Конструктив</dt><dd>${obj.frameType}</dd></div></dl>
+        ${objDocs || html`<span class="pro-case__docs">${obj.docs}</span>`}
+      </div>
+    </div></section>` : ''}
+
+    <section class="section" id="zavod"><div class="container pro-about">
+      <figure class="pro-about__photo">${raw(picture(hasImage('prod-baza') ? 'prod-baza' : 'photo-production-hall',{alt:'Производственный корпус Steppe Steel: линия профилирования и рулоны оцинкованной стали',sizes:'(min-width:900px) 50vw, 100vw'}))}<figcaption>${hasImage('prod-baza') ? 'Производственный корпус завода, с. Троебратское' : 'Производственное здание на стальном каркасе'}</figcaption></figure>
+      <div><p class="eyebrow">07 / О заводе</p><h2>${home.about.title}</h2><p class="lead">${home.about.text}</p>
+        <ul class="pro-about__list">${home.about.items.map(t=>html`<li>${iconCheck}<span>${t}</span></li>`)}</ul>
+        <div class="btn-row"><a class="btn btn--ghost" href="/o-zavode/">О компании ${iconArrow}</a>
+          <a class="arrow-link factory-visit" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод ${iconArrow}</a>
+          ${presentation ? html`<a class="arrow-link" href="${presentation.file}" download data-goal="pdf_download">Презентация PDF ${iconArrow}</a>` : ''}
+        </div>
+      </div>
+    </div></section>
+
+    ${documentShelf(d)}
+
+    ${ctaBand(site,{title:home.cta.title,text:home.cta.text})}
+  `;
+  return layout(site,{
+    url:'/',bodyClass:'pro-home',noNext:true,
+    // LCP — фото первого экрана: предзагрузка той же ширины, что выберет <picture>
+    preloadImage:{name:'drone-hero',sizes:'100vw'},
+    image:'drone-hero',
+    title:'Завод металлоконструкций в Казахстане — Steppe Steel',
+    description:'STEPPESTEEL — завод строительных металлоконструкций: проектирование, производство ЛСТК и ЛМК, комплектная поставка. Зернохранилища, склады, ангары и производственные здания.',
+    ogTitle:'STEPPESTEEL — завод строительных металлоконструкций',
+    schema:[organizationNode(site,{products:solutions.items}),websiteNode(site),itemListNode(site,'/',solutions.items,'Решения Steppe Steel'),howToNode(site,'/',production.process.steps,'Как заказать здание на заводе Steppe Steel')]
+  },content);
 }

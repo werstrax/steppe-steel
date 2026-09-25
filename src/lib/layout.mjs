@@ -102,7 +102,6 @@ ${typeof page.preloadImage === 'string' ? `<link rel="preload" as="image" href="
 ${site.variant === 'tz' ? `<link rel="stylesheet" href="/assets/css/theme-tz.css?v=${site.buildId}">` : ''}
 <link rel="stylesheet" href="/assets/css/pro.css?v=${site.buildId}">
 <link rel="stylesheet" href="/assets/css/experience.css?v=${site.buildId}">
-<link rel="stylesheet" href="/assets/css/editorial.css?v=${site.buildId}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -122,7 +121,6 @@ ${page.noNext ? '' : page.next ? nextBand(page.next) : NEXT[page.url] ? nextBand
 ${footer(site)}
 ${mobileBar(site, page.url, { waText: page.waText, calcType: page.calcType })}
 <script src="/assets/js/site.js?v=${site.buildId}" defer></script>
-${page.bodyClass?.includes('editorial-home') ? `<script src="/assets/js/structure.js?v=${site.buildId}" defer></script>` : ''}
 </body>
 </html>
 `;
