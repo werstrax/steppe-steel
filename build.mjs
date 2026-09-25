@@ -93,6 +93,8 @@ function loadData(lang) {
     join(SRC, 'assets', 'css', 'experience.css'),
     join(SRC, 'assets', 'css', 'theme-tz.css'),
     join(SRC, 'assets', 'js', 'site.js'),
+    join(SRC, 'assets', 'css', 'editorial.css'),
+    join(SRC, 'assets', 'js', 'structure.js'),
   ]);
   site.buildDate = new Date().toISOString().slice(0, 10);
 

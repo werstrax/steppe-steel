@@ -9,7 +9,6 @@ import {
 } from '../lib/components.mjs';
 import { productNode, faqNode, itemListNode } from '../lib/schema.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
-import { objectVideo } from '../lib/video.mjs';
 
 /* --- Хаб ------------------------------------------------------------------ */
 
@@ -173,8 +172,6 @@ export function renderSolution(d, s) {
         </aside>
       </div>
     </section>
-
-    ${s.slug === 'zernohranilishcha' ? objectVideo({ label: 'Объект завода · видео', id: 'video', tint: true, action: null }) : ''}
 
     ${s.features?.length
       ? html`

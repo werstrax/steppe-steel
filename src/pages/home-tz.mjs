@@ -53,19 +53,19 @@ export function renderHomeTz(d) {
       url: '/proektirovshchikam/',
       title: 'Для проектировщиков',
       items: ['Конструктив: расчёты, КМ и КМД силами завода', 'Нагрузки на фундамент, узлы, РПЗ', 'Сопровождение экспертизы', 'Агентское вознаграждение по договору'],
-      photoSlot: 'aud-designers',
+      photoSlot: 'drone-truss',
       cta: 'Условия для проектировщиков',
     },
     {
       url: '/partneram/',
       title: 'Стать дилером STEPPESTEEL',
       items: ['Запросы клиентов по вашему региону', 'Партнёрские условия на металлоконструкции', 'Обучение бригад и шеф-монтаж первого объекта', 'Материалы и поддержка сделок'],
-      photoSlot: 'aud-partners',
+      photoSlot: 'drone-montazh',
       cta: 'Получить условия партнёра',
     },
   ];
 
-  const aboutPhotos = ['prod-baza', 'prod-oborudovanie', 'prod-profil', 'prod-svarka']
+  const aboutPhotos = ['prod-baza', 'prod-komplekt', 'prod-svarka', 'drone-montazh']
     .map((slot) => ({ slot, sec: production.sections.find((s) => s.photoSlot === slot) }));
 
   /* Схемы типовых: габариты только из подтверждённых (solutions.hub.typical). */
@@ -77,7 +77,7 @@ export function renderHomeTz(d) {
   ];
 
   const obj = portfolio.items[0];
-  const heroImg = hasImage('sol-angary') ? 'sol-angary' : hasImage('hero-photo') ? 'hero-photo' : null;
+  const heroImg = hasImage('sol-angary') ? 'sol-angary' : hasImage('drone-hero') ? 'drone-hero' : null;
 
   /* Пиктограмма типа здания — линейный разрез, а не «фото в обработке».
    * ТЗ §3: чертёж и схема допустимы, стоковые картинки — нет. */

@@ -342,21 +342,22 @@
       "coverViz": false,
       "figures": [
         {
-          "slot": "photo-warehouse-interior",
-          "caption": "Зернохранилище изнутри: стальные фермы и наклонные стены для хранения зерна навалом"
+          "slot": "drone-grain-inside",
+          "caption": "Зерно навалом под фермами каркаса завода"
         },
         {
-          "slot": "photo-warehouse-frame",
-          "caption": "Каркас зернохранилища до завершения обшивки"
+          "slot": "drone-interior",
+          "caption": "Каркас изнутри: наклонные стены и фермы пролёта во время монтажа"
         },
         {
-          "slot": "photo-grain-complex",
-          "caption": "Зернохранилища в составе агрокомплекса"
+          "slot": "drone-loading",
+          "caption": "Загрузка зерна в готовую секцию"
         }
       ],
-      "cover": "photo-warehouse-exterior",
-      "_coverNote": "All four user photographs show grain-storage buildings only. Do not use as warehouses, hangars or production halls.",
-      "photoAlt": "Зернохранилище: металлический каркас, наклонные нижние стены и профилированная обшивка"
+      "cover": "drone-grain-front",
+      "photoAlt": "Напольное зернохранилище на каркасе завода: наклонные стены, стальные фермы, зерно под кровлей",
+      "coverCaption": "Объект завода, сентябрь 2026",
+      "_coverNote": "Реальная съёмка с дрона 24.09.2026 (Яндекс Диск завода, папка «24 09 26 Дрон»). Регион объекта не подтверждён — не указывать."
     },
     {
       "slug": "sklady",
@@ -471,9 +472,10 @@
       ],
       "summary": "Холодный или утеплённый склад на каркасе заводского производства: до 24 м пролёта без внутренних колонн — стеллажи и проезды техники размечаются по схеме логистики, а не по осям колонн.",
       "coverViz": false,
-      "cover": "photo-logistics-warehouse",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Обычный склад товаров: вертикальные стены, стальной каркас, паллетные стеллажи и проезд для погрузчика — сгенерированная иллюстрация"
+      "cover": "drone-storage",
+      "photoAlt": "Длинное здание на стальном каркасе завода с синей кровлей, вид с дрона",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "proizvodstvennye-zdaniya",
@@ -584,9 +586,10 @@
         "lstk-lmk"
       ],
       "coverViz": false,
-      "cover": "photo-production-hall",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Производственный цех: стальные колонны и фермы, мостовой кран и оборудование — сгенерированная иллюстрация"
+      "cover": "drone-frame-long",
+      "photoAlt": "Стальной каркас протяжённого здания в процессе монтажа кровли, вид с дрона",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "angary",
@@ -705,9 +708,10 @@
         "lstk-lmk"
       ],
       "coverViz": false,
-      "cover": "photo-general-hangar",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls.",
-      "photoAlt": "Прямоугольный ангар с вертикальными стенами, двускатной крышей и широкими воротами — сгенерированная иллюстрация"
+      "cover": "drone-frame-front",
+      "photoAlt": "Торец стального каркаса с фермами пролёта и наклонными стенами, вид с дрона",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "ovoshchehranilishcha",
@@ -821,9 +825,10 @@
       ],
       "summary": "Каркас и ограждающий контур под утеплённое хранилище картофеля и овощей: пролёт до 24 м без внутренних колонн — под навальное или контейнерное хранение.",
       "coverViz": false,
-      "cover": "photo-vegetable-storage",
-      "photoAlt": "Утеплённое овощехранилище с контейнерами для овощей и вентиляцией — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
+      "cover": "drone-frame-long-2",
+      "photoAlt": "Каркас здания из оцинкованных профилей завода во время монтажа, вид с дрона",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "zdaniya-dlya-tekhniki",
@@ -945,9 +950,10 @@
       ],
       "summary": "Навес, гараж или машинный двор под ваш парк: пролёт до 24 м без колонн, ворота — по габаритам техники.",
       "coverViz": false,
-      "cover": "photo-vehicle-shelter",
-      "photoAlt": "Открытый стальной навес с вертикальными колоннами для сельскохозяйственной техники — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
+      "cover": "drone-side",
+      "photoAlt": "Здание на каркасе завода с открытой боковой стороной и двускатной кровлей",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "sto-avtoparki",
@@ -1062,9 +1068,10 @@
       ],
       "summary": "Ремонтный бокс, мойка или автосалон на каркасе заводского производства: свободный зал до 24 м без колонн, расчёт под ваше оборудование и участок.",
       "coverViz": false,
-      "cover": "photo-service-workshop",
-      "photoAlt": "Автосервис на стальном каркасе с автомобильными подъёмниками и ремонтными постами — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
+      "cover": "drone-span",
+      "photoAlt": "Пролёт стального каркаса без внутренних колонн, фермы из оцинкованных профилей",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "sportivnye-obekty",
@@ -1178,9 +1185,10 @@
       ],
       "summary": "Игровой зал, крытый манеж или ФОК на стальном каркасе заводского производства: пролёт до 24 м без колонн над площадкой, расчёт под снеговые нагрузки севера Казахстана.",
       "coverViz": false,
-      "cover": "photo-sports-hall",
-      "photoAlt": "Спортивный зал с баскетбольной площадкой и открытыми стальными фермами — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
+      "cover": "drone-truss",
+      "photoAlt": "Стальные фермы большого пролёта из оцинкованных профилей, вид снизу",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     },
     {
       "slug": "modulnye-zdaniya",
@@ -1295,9 +1303,10 @@
       ],
       "summary": "Каркас из повторяющихся заводских секций: сегодня — объём под текущую задачу, позже — новые секции к торцу без демонтажа построенного.",
       "coverViz": false,
-      "cover": "photo-modular-building",
-      "photoAlt": "Одноэтажное модульное здание из повторяющихся стальных каркасных секций — сгенерированная иллюстрация",
-      "_coverNote": "Generated image of this building type, not a completed Steppe Steel project. Vertical walls, no grain retaining walls."
+      "cover": "drone-hall",
+      "photoAlt": "Длинный пролёт каркаса завода: повторяющиеся рамы и фермы, монтаж на объекте",
+      "coverCaption": "Каркас завода на объекте, 2026",
+      "_coverNote": "Реального объекта этого типа пока нет — на обложке каркас завода с объекта 24.09.2026 (подпись «Каркас завода на объекте»). ИИ-картинки убраны 25.09 перед запуском."
     }
   ],
   "_vizNote": "07.09.2026: user photos show grain storage only. Every other solution has its own generated photorealistic illustration and caption."

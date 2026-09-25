@@ -17,7 +17,7 @@ export function renderNetwork(d) {
 
   const content = html`
     ${pageHero({
-      image: 'aud-partners',
+      image: 'drone-montazh',
       label: n.heroLabel,
       titleHtml: n.heroTitle,
       text: n.heroText,

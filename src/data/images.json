@@ -1,663 +1,506 @@
 {
- "_readme": "Генерируется автоматически: python tools/optimize_images.py. Руками не править.",
- "aud-designers": {
-  "w": 1396,
-  "h": 941,
-  "ratio": 1.4835,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1396
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoUAA0APulgqE0pJaQiMAgBIB0JZwAAW4rUTQuLkQELxTACAAD+5zWIHWwOTz7iGxQZQLOgx7nV+UQFgG/90s1QSpJwE23fdtOMBY9qS/lDMOFqzawVjbEKGo9aF5AA"
- },
- "aud-partners": {
-  "w": 1269,
-  "h": 772,
-  "ratio": 1.6438,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1269
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoUAAwAPulgqU2pJaQiMAgBIB0JTB1owRKAC4NQd58fIAD9Mf/+DYRnF4BiPdFGb21Q7TWfd5KOeZF/TXYWqawUfyLFruwaKkSTAiVmBm0g/W76CNY6QAAA"
- },
- "cert-p1": {
-  "w": 1654,
-  "h": 2339,
-  "ratio": 0.7071,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1654
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAwCdASoUABwAPuliqk4pJaQiKA1RIB0JaQAAKdCU4DxgncwvAAAA/vOCuPwEbKN8kKX4wUXeVn8eeAgt+DnlH90sAAAA"
- },
- "cert-p2": {
-  "w": 1654,
-  "h": 2339,
-  "ratio": 0.7071,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1654
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUABwAPulkqE8pJaOiKA1RIB0JaQAAO73/tZhpNOv7YkAAAP7wT0afLizsIdgFXv8SpQO+5PJUi0KvKgag1mGPtXJ0RQx2AAA="
- },
- "cert-p3": {
-  "w": 1654,
-  "h": 2339,
-  "ratio": 0.7071,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1654
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABwAwCdASoUABwAPulmrU+pJaQiKAqpIB0JaQAAPlIPAMCdxgAA/vBPRqGv42CaW4lRA/d9sMUexOXZXAAAAA=="
- },
- "cert-p4": {
-  "w": 1654,
-  "h": 2339,
-  "ratio": 0.7071,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1654
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoUABwAPuliq08pJSOiMBgIASAdCWkAAC50Wznyhkh+AAAA/vIjkt5+TtFyTHJONsxtxbtoMzAAAA=="
- },
- "hero-photo": {
-  "w": 2642,
-  "h": 1487,
-  "ratio": 1.7767,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2642
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoUAAsAPulgqE2pJaOiMAgBIB0JZQCdABhzS+/AFWCfAAD+5CH+9dxeNj6YaUyapdlXymc4ErYHsFL5U0jc9bnx8Y1LB0IQkIMBKB35+AA="
- },
- "og-default": {
-  "w": 1200,
-  "h": 630,
-  "ratio": 1.9048,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1200
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
- },
- "photo-editorial-interior": {
-  "w": 1672,
-  "h": 941,
-  "ratio": 1.77683,
-  "widths": [
-   320,
-   480,
-   640,
-   864,
-   1152,
-   1536,
-   1672
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABwBACdASoYAA4APtFWpEuoJKOhsAgBABoJZQCdACBS71Tj8jeGdRAIOzqowAD+0DC/VtDi/b63PzE1GW0nNL9LayD3PEPeqRRewyX6X/G2yxb9K/KtQL/XmR3y2y6ckAWeTXSrPHeglzgQAAA=",
-  "_source": "C:\\Users\\Flockyman\\.codex\\generated_images\\01a07129-66d9-7293-8ac6-944581512449\\exec-c6f80e11-c6ee-4d9c-aa5c-4d3db8ac2d09.png",
-  "_kind": "generated",
-  "_note": "Generated photo-like illustration, explicitly labelled on website"
- },
- "photo-general-hangar": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqk2pJaQiMAgBIB0JQBOgBDvUlugJ9L3YAP7UkIKdbokCkF6M+Zl87TuZW1XP/tEElV+Oy+buem/Wo79rGlKMAAA="
- },
- "photo-grain-complex": {
-  "w": 1536,
-  "h": 864,
-  "ratio": 1.77778,
-  "widths": [
-   320,
-   480,
-   640,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAABQBACdASoYAA4APtFUo0uoJKMhsAgBABoJQBOkBshf2AJvKF/b5wI5ddbAAMskfpByoYgwTfe25h2UMV41uWH6b6pdlQQli9xfnTI30iZtZlax4Km4peS5CpNlemtPYIxJNkDyiveRVYcEQG1qpOrex9H5WO5am6glrwvZs9UtN79SwSCrlaa6ft29ZA/z1Q3Yw4KYvLYdTZI4dfsEvZ/PDm++cJ3ZQO65OwlfrO6zdFueVDecxgAA",
-  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.08.18.jpeg",
-  "_kind": "supplied",
-  "_note": "User confirmed: this image shows grain storage. Do not use as cover for any other building type.",
-  "_subject": "grain-storage-only"
- },
- "photo-logistics-warehouse": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoUAA0APuliqk2pJaQiMAgBIB0JZQAAW8tTCsZhBb6UJAAA/urDeRZ4phMebVSin21cwkSlsTJzFaF3fJgGPqonqAV1LBRSHXI5TT1paSXCFftmOAA="
- },
- "photo-modular-building": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZwCw7CHPLXMTZHipKAD+6o6d5vzf9waeAVCr6jfVl+qYbTY/YWyAacwEtPknsAA="
- },
- "photo-production-hall": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JZQCsABuwqaW2ZOmjvuiAAP7e3daTj+e6CdGU+Of4RIMXGiWfmJFYFPiICIjZ/0v2WKsOQ4gAAA=="
- },
- "photo-service-workshop": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAwCdASoUAA0APuluq08pJyQiMAgBIB0JYwAAUoObnLyDkyMwAAD+6pbpe1NAG1fgfm/A/IvGDkaj6k9Apyh58+UA8TJoP3/b2hLgZ15cZvuew6/0CmsAAAA="
- },
- "photo-sports-hall": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoUAA0APulkqE0pJaQiMAgBIB0JZwDImCHeu27H0WAPKNgAAP7tQ12RJAJ9YqyTlem47L1qufdaT1jOMuwIhIHSAXMyqAAA"
- },
- "photo-vegetable-storage": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoUAA0APulkqU2pJaQiMAgBIB0JYwAAVJqc2y40dM0AAP7rEvjOcX5Zm+18z8vj6NEqE9DxmAgPrcrXbT64S0NnVLLiGAAA"
- },
- "photo-vehicle-shelter": {
-  "w": 1536,
-  "h": 1024,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDvVr0H9Nq7KepMAAP6QAbK4QvGGkwIIRA6/ZlcL9WYY8TlqYTo7C6EC4aryTRYyv6SGAAAA"
- },
- "photo-warehouse-exterior": {
-  "w": 1024,
-  "h": 678,
-  "ratio": 1.51032,
-  "widths": [
-   320,
-   480,
-   640,
-   864,
-   1024
-  ],
-  "fallback": 1024,
-  "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABwBACdASoYABAAPtFWpEuoJKOhsAgBABoJbACdMoR4GCxk1N+L/feOSak2oAD+5BHM0MtdT9eugleIvC+fUXlda60vQ71tiR/O1zScAdiZQD1QaHlVSrWsupuWHqcictnjm6TSd+I2nqSCcPwKjSbsSTJWjJVk3QtAMc2Qe17bEGiMK8qGEJDyAAA=",
-  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.26.jpeg",
-  "_kind": "supplied",
-  "_note": "User confirmed: this image shows grain storage. Do not use as cover for any other building type.",
-  "_subject": "grain-storage-only"
- },
- "photo-warehouse-frame": {
-  "w": 577,
-  "h": 325,
-  "ratio": 1.77538,
-  "widths": [
-   320,
-   480,
-   577
-  ],
-  "fallback": 577,
-  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwBACdASoYAA4APtE4sFMoIiWjmAEAGgloAJ0yhHAAGLtVZgUxWssU9IAA/t7oDuDxSuzliitOw7i9VSYl4TJJoFxgNvioaTEIqxANxj3FLowhDy94vCkbjOkiFlOIwqt5fs63IK3cXJRIeuDkvptiVvmDUAAA",
-  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.56.jpeg",
-  "_kind": "supplied",
-  "_note": "User confirmed: this image shows grain storage. Do not use as cover for any other building type.",
-  "_subject": "grain-storage-only"
- },
- "photo-warehouse-interior": {
-  "w": 1024,
-  "h": 678,
-  "ratio": 1.51032,
-  "widths": [
-   320,
-   480,
-   640,
-   864,
-   1024
-  ],
-  "fallback": 1024,
-  "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoYABAAPtFWpEuoJKOhsAgBABoJZQCsACFrf21dTPtOGSf/CAD+2pDkyiZyb3xFYnwm55Y6A5oU/8pjNnuI/FKn2fId8Gd1DTv+V75gkGKw5sEdLaAsBDGfHuGgLoulBlCRqwAA",
-  "_source": "C:\\Users\\Flockyman\\Downloads\\WhatsApp Image 2026-09-07 at 00.07.37.jpeg",
-  "_kind": "supplied",
-  "_note": "User confirmed: this image shows grain storage. Do not use as cover for any other building type.",
-  "_subject": "grain-storage-only"
- },
- "prod-baza": {
-  "w": 1526,
-  "h": 859,
-  "ratio": 1.7765,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1526
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwAAW5ztzBQ6ytAAAP6qEp6PtZH9I18o0MYmLmVTEl6AtvhzY4paYphe/D4JcF+Io+88fwAAAA=="
- },
- "prod-komplekt": {
-  "w": 1254,
-  "h": 1206,
-  "ratio": 1.0398,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1254
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwBACdASoUABMAPulkqU8pJaOiKA1RIB0JaQAALqp9TPDFtlUuUFTeCWwzb2yJGAAA/rI3jpq5ByoEqJI41gZNnbcDG3VnstQ5kU3hYRnGywyCU3Uq0+5TI9wqdFB+MvrNVYfWE6UrrdLHQJvWm0irBBBgQAAA"
- },
- "prod-kontrol": {
-  "w": 1258,
-  "h": 708,
-  "ratio": 1.7768,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1258
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoUAAsAPulgqE0pJaOiMAgBIB0JZQC7ACFe2RKPj0BJxiAA/rnERnNlgCRNDDnC3OhpiFw7cfbayoqTeoDWthNn1z2x5CM4a84ogWQS4iLsAAAA"
- },
- "prod-oborudovanie": {
-  "w": 983,
-  "h": 911,
-  "ratio": 1.079,
-  "widths": [
-   384,
-   576,
-   864,
-   983
-  ],
-  "fallback": 983,
-  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQBACdASoUABMAPulqrVGpJaQiqAgBIB0JaQAAJaBoUmU8S2H+ZXGKkE2NAm8HAAD+7L8EuffmaaOAzoHrIbUb5J/xScFGAuY36B5Ym+sGJ+uanaThb8iuNbJLI2PdIllKzaugeSF7UkrBpO+DDSNjOKEAAA=="
- },
- "prod-otgruzka": {
-  "w": 868,
-  "h": 1008,
-  "ratio": 0.8611,
-  "widths": [
-   384,
-   576,
-   864,
-   868
-  ],
-  "fallback": 868,
-  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBQCdASoUABcAPulcpk2pJKMiMBgMASAdCWMAAC+V4rem6kR+BybTVppw5Cs9LbAAAP6J1jMR6ikbGnH9RBQxNtErT94tCqa+IIH6YEj4GpKOm5GAAYm4MyKG1VGZ393+dY2qyxs6144AtB2p9Ldk3JwucAAA"
- },
- "prod-plazma": {
-  "w": 1182,
-  "h": 675,
-  "ratio": 1.7511,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1182
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoUAAsAPuliqE2pJaOiMAgBIB0JQBdgBFFaN+6FMKaNR8oqyAD+7C3CYN8Fwiq1C/V6KsWwaMPW/KYPlC2L85UaU2fLozPQrAAhfyeYx+AAAA=="
- },
- "prod-profil": {
-  "w": 1009,
-  "h": 1012,
-  "ratio": 0.997,
-  "widths": [
-   384,
-   576,
-   864,
-   1009
-  ],
-  "fallback": 1009,
-  "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQBACdASoUABQAPulmqE+pJaOiKA1RIB0JZQCBugRa35j6spRsc5sNlpoCjXea0AD+5ZB7WSjLuXQ9C67Tfc1lhU3alo+dBtRAKkNPIbfQTOqNSi/V7PFwFTWvOJAYx/C67xQFf4yMFM4zGp2olLlA1mvgAA=="
- },
- "prod-rezka": {
-  "w": 2003,
-  "h": 1129,
-  "ratio": 1.7741,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2003
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoUAAsAPulgqk2pJaQiMAgBIB0JQBdkBshgagcIpy8CUYovAAD+7Dp1E/3398MFjyHGqBLgWOSu3Y10bvtdDdtGG0mKyJrLP9DSCsa6lNMSINAIAAA="
- },
- "prod-svarka": {
-  "w": 983,
-  "h": 663,
-  "ratio": 1.4827,
-  "widths": [
-   384,
-   576,
-   864,
-   983
-  ],
-  "fallback": 983,
-  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
- },
- "sol-angary": {
-  "w": 1827,
-  "h": 764,
-  "ratio": 2.3914,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1827
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoUAAgAPulkqU2pJaQiMAgBIB0JZQCdABZTvrOtZoSAAAD+14KcqJMu5Mpqpoq3Q60JK4ZpaZ3L4WxvVzkS4FFyBPengAAA"
- },
- "sol-proizvodstvennye-zdaniya": {
-  "w": 1826,
-  "h": 1020,
-  "ratio": 1.7902,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   1826
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBOgBEBBuCUUNskiWAD+sLAIRdKD7x3YgZ6Bytkj/3qInqFuRvo7QQcEdNf1PPdwFIyGXingsgyYBMz3oAAA"
- },
- "sol-zdaniya-dlya-tekhniki": {
-  "w": 1536,
-  "h": 798,
-  "ratio": 1.9248,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoUAAoAPuliqE2pJaOiMAgBIB0JZwDA3CIfu0j+7QAtujr4AAD+6JIOQ7WDsK/6UprgKafiDJz7tbMUAM1BuA/oliBovjN8K+QwPEdjVhlTdQRAAAA="
- },
- "sol-zernohranilishcha": {
-  "w": 870,
-  "h": 452,
-  "ratio": 1.9248,
-  "widths": [
-   384,
-   576,
-   864,
-   870
-  ],
-  "fallback": 870,
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAAoAPulgqE0pJaQiMAgBIB0JZQDE2CPx11/L59jkFAAA/rQrXo919KFkDRPMUr8E6MSC3UhWR2DGIu8jhMGXLdUobasesAA="
- },
- "stock-frame-dark": {
-  "w": 2400,
-  "h": 1600,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2400
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JZQAAQCnMPQgAAP6vi35IZfWgUpszSjw/thuquB8hvWvOV56kDRcWkn6K0gk6kgKoD6pED9sMIxnBeLyUJgAA"
- },
- "stock-frame-zinc": {
-  "w": 2400,
-  "h": 1599,
-  "ratio": 1.5009,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2400
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JQBOmUACM4uBKVAAA/ubvb4gmo3pPATM76SN/eqJD8Nym9GYpV5fdVtmvxd8AAAA="
- },
- "stock-montazh": {
-  "w": 2400,
-  "h": 1600,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2400
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoUAA0APulep00pJSOiMAgBIB0JQBOmUABpunC0QLSL8y5/AAD+wzZeANjIpZYdylDsq6vJYrHafXyu1/dKCVZwRku2d43AgzGcfy04OPALkhRkX2eWNvrnsLYaVewA"
- },
- "stock-profil-sklad": {
-  "w": 2400,
-  "h": 1600,
-  "ratio": 1.5,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2400
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JZwDCgBoslfg81CsAAP7suxbmde0d17jmC9cQMQo9D32mSLpsW9AIWA5cIg2OxBICABIEVo/gLHDksAA="
- },
- "tech-boltovye-1": {
-  "w": 1536,
-  "h": 1133,
-  "ratio": 1.3557,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoUAA8APulep00pJSOiMAgBIB0JZQAAW+vCb7dQAAD+7Yq5+jJinsGvQVdRC6WXIi2A2m3WIPa+RDGEOAA="
- },
- "tech-hub": {
-  "w": 1536,
-  "h": 999,
-  "ratio": 1.5375,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536
-  ],
-  "fallback": 1152,
-  "lqip": "",
-  "alpha": true
- },
- "tech-lstk-1": {
-  "w": 945,
-  "h": 1230,
-  "ratio": 0.7683,
-  "widths": [
-   384,
-   576,
-   864,
-   945
-  ],
-  "fallback": 945,
-  "lqip": "",
-  "alpha": true
- },
- "tech-lstk-2": {
-  "w": 1210,
-  "h": 680,
-  "ratio": 1.7794,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1210
-  ],
-  "fallback": 1152,
-  "lqip": "",
-  "alpha": true
- },
- "video-grain-poster": {
-  "w": 1080,
-  "h": 1920,
-  "ratio": 0.5625,
-  "widths": [
-   384,
-   576,
-   864,
-   1080
-  ],
-  "fallback": 1080,
-  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQBACdASoUACQAPulkqU4pJaOiKqwBIB0JZwDBkBffvQvHNka2IPYiydeXJFj5wAD+sU9sxt5XDWYKFjLnccZvNsW5Le0OAzOpQnz7d/zhMi/48aS5kb4pC8E5HE8UkXUkeloSdZdp22wYPiKKY1VbirXhS1gA"
- },
- "zerno-cutaway": {
-  "w": 2560,
-  "h": 1440,
-  "ratio": 1.7778,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2560
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JQBdgA9Lkt+YZ5/BG4R2AAP7yKW2HH6lnMJMNJj9mladLsELZSEdJe6xjcOvvJqQLprwQqiBm+T3QAAA="
- },
- "zerno-node": {
-  "w": 2560,
-  "h": 1440,
-  "ratio": 1.7778,
-  "widths": [
-   384,
-   576,
-   864,
-   1152,
-   1536,
-   2560
-  ],
-  "fallback": 1152,
-  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwC+SCIex8D1xmVYZK4AAP7twuzQn74u+stKC/DBICQW+9Agef4V+sRNgVGBcOBb35Re3kUAAA=="
- }
+  "_readme": "Генерируется автоматически: python tools/optimize_images.py. Руками не править.",
+  "cert-p1": {
+    "w": 1654,
+    "h": 2339,
+    "ratio": 0.7071,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1654
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAwCdASoUABwAPuliqk4pJaQiKA1RIB0JaQAAKdCU4DxgncwvAAAA/vOCuPwEbKN8kKX4wUXeVn8eeAgt+DnlH90sAAAA"
+  },
+  "cert-p2": {
+    "w": 1654,
+    "h": 2339,
+    "ratio": 0.7071,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1654
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUABwAPulkqE8pJaOiKA1RIB0JaQAAO73/tZhpNOv7YkAAAP7wT0afLizsIdgFXv8SpQO+5PJUi0KvKgag1mGPtXJ0RQx2AAA="
+  },
+  "cert-p3": {
+    "w": 1654,
+    "h": 2339,
+    "ratio": 0.7071,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1654
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABwAwCdASoUABwAPulmrU+pJaQiKAqpIB0JaQAAPlIPAMCdxgAA/vBPRqGv42CaW4lRA/d9sMUexOXZXAAAAA=="
+  },
+  "cert-p4": {
+    "w": 1654,
+    "h": 2339,
+    "ratio": 0.7071,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1654
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoUABwAPuliq08pJSOiMBgIASAdCWkAAC50Wznyhkh+AAAA/vIjkt5+TtFyTHJONsxtxbtoMzAAAA=="
+  },
+  "drone-aerial": {
+    "w": 2400,
+    "h": 1350,
+    "ratio": 1.7778,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      2400
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPulgqE0pJaQiMAgBIB0JZwC/OCHEgOrwJiAAAP3jYuhWGYuSxRah8fZq4KGwnvQON9pN6UTXpQAAAA=="
+  },
+  "drone-frame-front": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwBACdASoUAA0APuliqk2pJaQiMAgBIB0JZQCdIExDA0PKifCXNu3qVYAA/t/0ruZS7Rf4KJhfAZxjjqCMBFuSSuH1qR/wKBABbVSFx7Xiog9PWBKAQvdwAAA="
+  },
+  "drone-frame-gable": {
+    "w": 1920,
+    "h": 1080,
+    "ratio": 1.7778,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoUAAsAPulgqE0pJaQiMAgBIB0JYwC7ACHYOE4kAMo0IAD+1ilEWopODxclnR3j3j4kfeqZQ1W1qThlP/s9IDnnHg3R8d7kJlPH0hnhAAA="
+  },
+  "drone-frame-long": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JZQDCgCGVDOpYETIgqAAA/dsRfUpT0GiSIB2uk8lldzhvh86TOO+u8lGhtBzRPpa1NFlwN2cCgXoA5TRyF6WuDQAAAA=="
+  },
+  "drone-frame-long-2": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JZQCw7B5NsxKq5Y3h5QAA/lswk8fgXMxHEuKGUa1BAkGl74gp7yC1lA/kwUdqwZT+EVDhdNrnd6Mv5IfGPaNHoiDhVgQA"
+  },
+  "drone-grain-front": {
+    "w": 2400,
+    "h": 1600,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      2400
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBACdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUGWOiDr8d0Ix73mYwAD+Um9dX+GXM4qlxY6QIe4J0mbuJNsFpmkIrNaG4NLxPZ3G4i7PdVq484FwwXL88kHRKT+a0rfHnLX+QAA="
+  },
+  "drone-grain-gable": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAwBACdASoUAA0APuliqE2pJaOiMAgBIB0JYwCdEf/gPIZUMgKLyqX7eoAA/rD/Cnp1ruUZe6awsum8aQcs3pfKMOr6FAKGgTJRh+T2/yblDmU/JhD0Yo1UregakqRwAAA="
+  },
+  "drone-grain-inside": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBWABFNN9FpeWD1foADyeeU07fatvulyVQLTgxNtx/1pK3r3Zi994OYRX31d/e/jOWf4Cc3zeVplthNpMNdT1jx//t4ADd8AAA=="
+  },
+  "drone-hall": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoUAA0APuliq04pJaQiMAgBIB0JYwDCgBnLLoCdcN6tPQAA/GW1OCFU4w8shXAu9rRafFKZzniAmSOFceBnbSve0M8Jmcni4IgMpJUvJWgAAA=="
+  },
+  "drone-hero": {
+    "w": 2400,
+    "h": 1350,
+    "ratio": 1.7778,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      2400
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAwCdASoUAAsAPulgqE2pJaQiMAgBIB0JYwCsACHQTZj586VWQAD+kUIrMGiqsWY0kJuF+uH5nHOkAVd0AH4y8fqJF/6E3RAHSSrt/ky04AAA"
+  },
+  "drone-interior": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCw7BmR2jsngix5cvAA94grHv8BWYJ47EybjiJa17BEFy3C0B4txbdwRUc0YqCYQssXXbRv+i2JywAAAA=="
+  },
+  "drone-loading": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JYwCdMoACq7VqgJqCioAA+Qxvkqoc8Ste6aCein7VOHg4WhUdsPgw0v2+zj5J9AXpHd5dVuitY/a0jpQrU6RRiuZb+AEAAAA="
+  },
+  "drone-montazh": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JQBOgAn4nF7XXgwE3wAD8fE5T6KeEZAyGwxQ8Po35N9saa7dojhSlD7ODHBUcFQ2tQsEnQAA="
+  },
+  "drone-panels": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwAAW7wjNdXii5SmIAGAAP6RIPwJHFahkV6t47lCEly8wcbXWXaTHPMFxHxhcHjKmGBf1CotqDUvMMbplKYOC9JEtVj23LAAAA=="
+  },
+  "drone-side": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQBACdASoUAA0APulgqU2pJaQiMAgBIB0JYwCdMkCxoA8/99dzxei51jIAAP6w+4V/ibvS8S9SD6/GG0N62WLi7YsBD9TFXy+5YEZ1/xysBKhuXw284JleQELx5nmkOwAAAA=="
+  },
+  "drone-span": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYgCdABSRiJ7uZpGNc4AAAPfYmBm2wfO/b/3xkhhfPgCq2dKqtippmmMwPird+XSEoB82rGRqKpX1jZ5AAA=="
+  },
+  "drone-storage": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqU2pJaQiMAgBIB0JYwCdACHQSRvu34WLVAD+sPvCkWcSW7sgv7jelMxsmZmEyXC+MrYbd1isbG+KmMG0bUnYZAA="
+  },
+  "drone-truss": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": 1.5,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1920
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JYgCdACzcFyOgAP7Zez73ymNSNmtBHRE9lXXRZF/8YZsjZ3kmPk83OTTZy/aBXnBm2JzX12inxXrAAAA="
+  },
+  "og-default": {
+    "w": 1200,
+    "h": 630,
+    "ratio": 1.9048,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1200
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
+  },
+  "prod-baza": {
+    "w": 1526,
+    "h": 859,
+    "ratio": 1.7765,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1526
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwAAW5ztzBQ6ytAAAP6qEp6PtZH9I18o0MYmLmVTEl6AtvhzY4paYphe/D4JcF+Io+88fwAAAA=="
+  },
+  "prod-komplekt": {
+    "w": 1254,
+    "h": 1206,
+    "ratio": 1.0398,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1254
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwBACdASoUABMAPulkqU8pJaOiKA1RIB0JaQAALqp9TPDFtlUuUFTeCWwzb2yJGAAA/rI3jpq5ByoEqJI41gZNnbcDG3VnstQ5kU3hYRnGywyCU3Uq0+5TI9wqdFB+MvrNVYfWE6UrrdLHQJvWm0irBBBgQAAA"
+  },
+  "prod-svarka": {
+    "w": 983,
+    "h": 663,
+    "ratio": 1.4827,
+    "widths": [
+      384,
+      576,
+      864,
+      983
+    ],
+    "fallback": 983,
+    "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
+  },
+  "sol-angary": {
+    "w": 1827,
+    "h": 764,
+    "ratio": 2.3914,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1827
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoUAAgAPulkqU2pJaQiMAgBIB0JZQCdABZTvrOtZoSAAAD+14KcqJMu5Mpqpoq3Q60JK4ZpaZ3L4WxvVzkS4FFyBPengAAA"
+  },
+  "sol-proizvodstvennye-zdaniya": {
+    "w": 1826,
+    "h": 1020,
+    "ratio": 1.7902,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      1826
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBOgBEBBuCUUNskiWAD+sLAIRdKD7x3YgZ6Bytkj/3qInqFuRvo7QQcEdNf1PPdwFIyGXingsgyYBMz3oAAA"
+  },
+  "tech-boltovye-1": {
+    "w": 1536,
+    "h": 1133,
+    "ratio": 1.3557,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoUAA8APulep00pJSOiMAgBIB0JZQAAW+vCb7dQAAD+7Yq5+jJinsGvQVdRC6WXIi2A2m3WIPa+RDGEOAA="
+  },
+  "tech-hub": {
+    "w": 1536,
+    "h": 999,
+    "ratio": 1.5375,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536
+    ],
+    "fallback": 1152,
+    "lqip": "",
+    "alpha": true
+  },
+  "tech-lstk-1": {
+    "w": 945,
+    "h": 1230,
+    "ratio": 0.7683,
+    "widths": [
+      384,
+      576,
+      864,
+      945
+    ],
+    "fallback": 945,
+    "lqip": "",
+    "alpha": true
+  },
+  "tech-lstk-2": {
+    "w": 1210,
+    "h": 680,
+    "ratio": 1.7794,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1210
+    ],
+    "fallback": 1152,
+    "lqip": "",
+    "alpha": true
+  },
+  "zerno-cutaway": {
+    "w": 2560,
+    "h": 1440,
+    "ratio": 1.7778,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      2560
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JQBdgA9Lkt+YZ5/BG4R2AAP7yKW2HH6lnMJMNJj9mladLsELZSEdJe6xjcOvvJqQLprwQqiBm+T3QAAA="
+  },
+  "zerno-node": {
+    "w": 2560,
+    "h": 1440,
+    "ratio": 1.7778,
+    "widths": [
+      384,
+      576,
+      864,
+      1152,
+      1536,
+      2560
+    ],
+    "fallback": 1152,
+    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwC+SCIex8D1xmVYZK4AAP7twuzQn74u+stKC/DBICQW+9Agef4V+sRNgVGBcOBb35Re3kUAAA=="
+  }
 }

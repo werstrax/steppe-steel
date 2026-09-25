@@ -20,7 +20,7 @@ export function renderAgro(d) {
   const waHref = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
   const content = html`
     ${pageHero({
-      image: 'sol-zernohranilishcha',
+      image: 'drone-grain-front',
       label: 'Аграриям',
       titleHtml: a.heroTitle,
       text: a.heroLead,

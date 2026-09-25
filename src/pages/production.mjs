@@ -41,13 +41,10 @@ export function renderProduction(d) {
         <div class="prod-grid">
           ${production.sections.map(
             (s, i) => html`
-              <article class="prod-card" id="${s.id}" data-reveal>
-                <div class="prod-card__media">
-                  ${hasImage(s.photoSlot)
-                    ? raw(picture(s.photoSlot, { alt: `${s.title} — производство Steppe Steel`, sizes: '(min-width: 900px) 50vw, 100vw' }))
-                    : raw(photoSlot(s.photoSlot, { label: 'Фото производства в обработке', alt: s.title }))}
-                  ${s.photoViz && hasImage(s.photoSlot) ? vizTag() : ''}
-                </div>
+              <article class="prod-card${hasImage(s.photoSlot) ? '' : ' prod-card--text'}" id="${s.id}" data-reveal>
+                ${hasImage(s.photoSlot) ? html`<div class="prod-card__media">
+                  ${raw(picture(s.photoSlot, { alt: `${s.title} — производство Steppe Steel`, sizes: '(min-width: 900px) 50vw, 100vw' }))}
+                </div>` : ''}
                 <div class="prod-card__body">
                   <span class="prod-card__num mono">${String(i + 1).padStart(2, '0')}</span>
                   <h2 class="prod-card__title">${s.title}</h2>

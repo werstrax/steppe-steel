@@ -96,11 +96,9 @@ export function renderAbout(d) {
         </div>
         <div class="about-band__photos" style="margin-top:var(--space-l)">
           ${/* prod-baza не повторяем: этот кадр уже стоит в первом экране страницы */ ''}
-          ${['prod-svarka', 'prod-oborudovanie', 'prod-profil', 'prod-kontrol'].map((slot) => html`
+          ${['prod-svarka', 'prod-komplekt'].filter(hasImage).map((slot) => html`
             <div class="about-band__photo" data-reveal>
-              ${hasImage(slot)
-                ? raw(picture(slot, { alt: 'Производственная база Steppe Steel', sizes: '(min-width: 900px) 25vw, 50vw' }))
-                : raw(photoSlot(slot, { label: 'Фото производства в обработке', alt: 'Производственная база' }))}
+              ${raw(picture(slot, { alt: 'Производственная база Steppe Steel', sizes: '(min-width: 900px) 25vw, 50vw' }))}
             </div>`)}
         </div>
       </div>
