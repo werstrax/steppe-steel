@@ -125,7 +125,7 @@ export function renderHome(d) {
           </div>
         </div>
         ${heroPhoto
-          ? html`<figure class="hm-hero__media">${raw(picture(heroPhoto.img, { alt: heroPhoto.alt, sizes: HERO_SIZES, priority: true }))}${raw(brandTag(heroPhoto.caption))}</figure>`
+          ? html`<figure class="hm-hero__media">${raw(picture(heroPhoto.img, { alt: heroPhoto.alt, sizes: HERO_SIZES, priority: true }))}${heroPhoto.video ? html`<video class="hm-hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-hero-video><source src="${heroPhoto.video}" type="video/mp4"></video>` : ''}${raw(brandTag(heroPhoto.caption))}</figure>`
           : ''}
       </div>
       <nav class="hm-strip" aria-label="Завод-изготовитель">
