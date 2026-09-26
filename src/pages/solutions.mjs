@@ -178,6 +178,7 @@ export function renderSolution(d, s) {
           <h2 class="side__title mono">Параметры</h2>
           ${specs(s.specs || [])}
           <a class="btn btn--primary btn--wide" href="${calcUrl}">Получить расчёт</a>
+          ${s.presentation ? html`<a class="arrow-link side__doc" href="${s.presentation}" download data-goal="pdf_download">Презентация зернохранилища · PDF ${iconArrow}</a>` : ''}
         </aside>
       </div>
     </section>

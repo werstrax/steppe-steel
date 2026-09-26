@@ -276,6 +276,32 @@ async function main() {
       ? ok(`дропдаун меню (${drop.links} ссылок)`)
       : fail('дропдаун меню', JSON.stringify(drop));
 
+    /* --- 7б. Главная по макету: лента «Что мы производим» — 9 типов, стрелки прокручивают --- */
+    const rail = await evalJs(`(async () => {
+      const root = document.querySelector('[data-rail]');
+      if (!root) return { found: false };
+      const track = root.querySelector('[data-rail-track]');
+      const prev = root.querySelector('[data-rail-prev]');
+      const next = root.querySelector('[data-rail-next]');
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = 0;
+      await new Promise((r) => setTimeout(r, 150));
+      const startDisabled = prev.disabled;
+      next.click();
+      await new Promise((r) => setTimeout(r, 900));
+      const moved = track.scrollLeft > 0;
+      const prevEnabled = !prev.disabled;
+      return {
+        found: true,
+        cards: track.querySelectorAll('a[href^="/resheniya/"]').length,
+        navVisible: getComputedStyle(next.parentElement).display !== 'none',
+        startDisabled, moved, prevEnabled,
+      };
+    })()`);
+    (rail.found && rail.cards === 9 && rail.navVisible && rail.startDisabled && rail.moved && rail.prevEnabled)
+      ? ok('лента «Что мы производим»: 9 карточек, стрелки прокручивают')
+      : fail('лента «Что мы производим»', JSON.stringify(rail));
+
     /* --- 8. Табы форматов на /proektirovshchikam/ --- */
     await goto('/proektirovshchikam/');
     const tabs = await evalJs(`(() => {

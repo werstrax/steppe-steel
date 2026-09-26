@@ -31,6 +31,7 @@ export function renderAgro(d) {
       actions: html`
         <a class="btn btn--primary btn--lg" href="#calc">Рассчитать под мой тоннаж</a>
         <a class="btn btn--ghost btn--lg" href="${waHref}" target="_blank" rel="noopener" data-goal="wa_click">Написать в WhatsApp</a>
+        <a class="arrow-link hero-doc" href="/assets/docs/steppe-steel-zernohranilishcha.pdf" download data-goal="pdf_download">Презентация зернохранилища · PDF ${iconArrow}</a>
       `,
     })}
 

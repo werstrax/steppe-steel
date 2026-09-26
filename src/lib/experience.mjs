@@ -7,7 +7,7 @@ export function documentShelf(d,{heading=true}={}) {
  return html`<section class="section document-shelf" id="documents">
   <div class="container">
    ${heading?sectionHead({label:'Документы завода',title:'За словами —\nдокументы.',text:'Презентации производства и партнёрской программы. Сертификат соответствия на выпускаемые профили — с оригиналом для проверки.',action:{title:'Вся документация',url:'/dokumentaciya/'}}):''}
-   <div class="document-shelf__grid">
+   <div class="document-shelf__grid document-shelf__grid--n${docs.length}">
     ${docs.map(doc=>html`<article class="document-preview ${doc.kind==='sertifikaty'?'document-preview--certificate':''}">
       <a class="document-preview__image" href="${doc.file}" target="_blank" rel="noopener" aria-label="Открыть PDF: ${doc.title}">
         ${doc.file.endsWith('steppe-steel-prezentaciya.pdf')

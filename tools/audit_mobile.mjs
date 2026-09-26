@@ -56,8 +56,10 @@ const AUDIT = `(() => {
     if (el.classList && el.classList.contains('u-visually-hidden')) continue;
     const r = el.getBoundingClientRect();
     if (r.width === 0) continue;
-    // коробка вылезает за вьюпорт и не внутри overflow-х прокрутки
-    if (r.right > vw + 2 && !el.closest('.table-wrap, .marquee, .loader, .hero__media, .header, .menu, .fab, .lightbox')) {
+    // коробка вылезает за вьюпорт и не внутри overflow-х прокрутки.
+    // [data-rail-track] > * — карточки ленты на главной (overflow-x:auto, свайп): уходят
+    // за край намеренно; сама лента в список не входит и по-прежнему проверяется.
+    if (r.right > vw + 2 && !el.closest('.table-wrap, .marquee, .loader, .hero__media, .header, .menu, .fab, .lightbox, [data-rail-track] > *')) {
       problems.push('BOX ' + (el.className && el.className.toString().split(' ')[0] || el.tagName) + ' right=' + Math.round(r.right));
     }
     // текст клипается внутри самого элемента (кроме сознательного ellipsis).
