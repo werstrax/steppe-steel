@@ -92,7 +92,7 @@ const AUDIT = `(() => {
 
 async function main() {
   const profile = join(ROOT, 'screenshots', process.env.SHOT_TAG || '', '.chrome-audit');
-  rmSync(profile, { recursive: true, force: true });
+  try { rmSync(profile, { recursive: true, force: true }); } catch {}
   mkdirSync(profile, { recursive: true });
 
   const chrome = spawn(CHROME, [
@@ -140,8 +140,10 @@ async function main() {
     }
   } finally {
     chrome.kill();
-    await sleep(300);
-    rmSync(profile, { recursive: true, force: true });
+    // Windows держит файлы профиля ещё какое-то время после kill — без паузы
+    // и try чистый прогон падал на EPERM и выходил с кодом 1.
+    await sleep(1000);
+    try { rmSync(profile, { recursive: true, force: true }); } catch {}
   }
   console.log(bad ? `\nПроблемных страниц: ${bad}` : '\nПереполнений нет.');
   process.exit(bad ? 1 : 0);

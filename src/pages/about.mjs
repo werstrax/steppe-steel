@@ -5,7 +5,7 @@
 
 import { layout } from '../lib/layout.mjs';
 import { html, raw } from '../lib/util.mjs';
-import { pageHero, sectionHead, ctaBand, stat, iconArrow, photoSlot } from '../lib/components.mjs';
+import { pageHero, sectionHead, ctaBand, stat, iconArrow, photoSlot, brandTag, FACTORY_SHOTS } from '../lib/components.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
 import { organizationNode } from '../lib/schema.mjs';
 
@@ -15,12 +15,18 @@ export function renderAbout(d) {
 
   const content = html`
     ${raw(pageHero({
-      image: 'prod-baza',
-      label: 'О заводе',
-      titleHtml: 'Steppe Steel — завод строительных металло&shy;конструкций',
+      // prod-baza — первый экран /proizvodstvo/; здесь цех с рулонами, чтобы соседние пункты меню не открывались одним кадром
+      image: 'prod-komplekt',
+      imageAlt: FACTORY_SHOTS['prod-komplekt'].alt,
+      imageCaption: FACTORY_SHOTS['prod-komplekt'].caption,
+      label: 'Предприятие',
+      titleHtml: 'Steppe Steel — завод строительных металлоконструкций',
       crumbList: crumbs,
-      text: raw('Проектирование, производство ЛСТК и ЛМК, комплектная поставка — на одной площадке в с.&nbsp;Троебратское Костанайской области. Работаем по всему Казахстану.'),
-      actions: html`<a class="arrow-link factory-visit" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод ${iconArrow}</a>`,
+      text: raw('Зернохранилища, склады, ангары и производственные здания: проектирование, производство ЛСТК и ЛМК и комплектная поставка — на одной площадке в с.&nbsp;Троебратское Костанайской области. Работаем по всему Казахстану.'),
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод</a>
+        <a class="btn btn--ghost btn--lg" href="/raschet/">Получить расчёт</a>
+      `,
     }))}
 
     <section class="section section--flush-top">
@@ -35,9 +41,9 @@ export function renderAbout(d) {
             ['Полный цикл', 'Эскиз, расчёт, раздел КМ, производство, комплектация и отгрузка — на одном заводе, без потери ответственности между подрядчиками.'],
             ['ЛСТК + ЛМК', 'Комбинируем лёгкие стальные тонкостенные и чёрные металлоконструкции — от ангара до корпуса с крановыми нагрузками и разделом КМ под экспертизу.'],
             ['до 3,5 мм', 'Толщина профилей ПСУ и ПС подбирается под расчётную нагрузку — III снеговой район севера Казахстана, ~180 кгс/м².'],
-            ['пролёт 24 м', 'Свободные пролёты без промежуточных колонн — чистая площадь для техники, стеллажей и производственных линий.'],
+            ['до 24 м', 'Свободные пролёты без промежуточных колонн — чистая площадь для техники, стеллажей и производственных линий.'],
             ['50+ лет', 'Оцинкованный профиль не требует покраски и антикоррозийного обслуживания весь срок службы каркаса.'],
-            ['43 позиции', 'Сортамент профилей сертифицирован: сертификат соответствия РК № KZ.3510317.01.01.67913.'],
+            ['43 позиции', 'сортамента профилей ПСУ и ПС. Сертификат соответствия РК № KZ.3510317.01.01.67913, до 01.06.2027.'],
           ].map(([v, k]) => stat({ val: v, key: k }))}
         </div>
       </div>
@@ -95,10 +101,11 @@ export function renderAbout(d) {
           ].map(([t, x]) => html`<div class="pick-card" data-reveal><h3 class="pick-card__title">${t}</h3><p class="pick-card__text">${x}</p></div>`)}
         </div>
         <div class="about-band__photos" style="margin-top:var(--space-l)">
-          ${/* prod-baza не повторяем: этот кадр уже стоит в первом экране страницы */ ''}
-          ${['prod-svarka', 'prod-komplekt'].filter(hasImage).map((slot) => html`
+          ${/* prod-komplekt не повторяем: этот кадр уже стоит в первом экране страницы */ ''}
+          ${['prod-baza', 'prod-svarka'].filter(hasImage).map((slot) => html`
             <div class="about-band__photo" data-reveal>
-              ${raw(picture(slot, { alt: 'Производственная база Steppe Steel', sizes: '(min-width: 900px) 25vw, 50vw' }))}
+              ${raw(picture(slot, { alt: FACTORY_SHOTS[slot].alt, sizes: '(min-width: 900px) 50vw, 100vw' }))}
+              ${raw(brandTag(FACTORY_SHOTS[slot].caption))}
             </div>`)}
         </div>
       </div>
@@ -145,8 +152,8 @@ export function renderAbout(d) {
 
   return layout(site, {
     url: '/o-zavode/',
-    title: 'О заводе Steppe Steel — металлоконструкции, Казахстан',
-    description: 'Steppe Steel — завод строительных металлоконструкций в Костанайской области: собственное проектирование, производство ЛСТК и ЛМК, комплектная поставка по Казахстану.',
+    title: 'О заводе Steppe Steel — изготовитель металлоконструкций',
+    description: 'Steppe Steel — завод-изготовитель металлоконструкций в с. Троебратское Костанайской области: проектный отдел, линия профилирования, комплектная поставка.',
     pageType: 'AboutPage',
     crumbs,
     schema: [organizationNode(site, { products: solutions.items })],

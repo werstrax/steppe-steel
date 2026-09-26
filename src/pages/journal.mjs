@@ -130,6 +130,7 @@ export function renderArticle(d, a) {
     <article data-article>
       ${raw(pageHero({
         label: `Журнал · Статья ${a.index} · ${dateRu(a.date)} · ${a.readingTime} мин`,
+        brandEyebrow: false,
         titleHtml: e(a.title),
         crumbList: crumbs,
         text: raw(e(a.lead)),

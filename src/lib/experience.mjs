@@ -10,8 +10,11 @@ export function documentShelf(d,{heading=true}={}) {
    <div class="document-shelf__grid">
     ${docs.map(doc=>html`<article class="document-preview ${doc.kind==='sertifikaty'?'document-preview--certificate':''}">
       <a class="document-preview__image" href="${doc.file}" target="_blank" rel="noopener" aria-label="Открыть PDF: ${doc.title}">
-        <img src="/assets/img/documents/${doc.file.split('/').pop().replace('.pdf','.webp')}" alt="Первая страница: ${doc.title}" width="1000" height="${doc.kind==='sertifikaty'?1415:563}" loading="lazy">
-        <span class="document-preview__tag">ОРИГИНАЛ / PDF</span>
+        ${doc.file.endsWith('steppe-steel-prezentaciya.pdf')
+          ? html`<span class="document-preview__brand" aria-hidden="true"><span class="docbrand__steppe">STEPPE</span><span class="docbrand__steel">STEEL</span><span class="docbrand__title">Презентация завода</span></span>`
+          : html`<img src="/assets/img/documents/${doc.file.split('/').pop().replace('.pdf','.webp')}" alt="Первая страница: ${doc.title}" width="1000" height="${doc.kind==='sertifikaty'?1415:563}" loading="lazy">`}
+        ${/* «ОРИГИНАЛ» — только у реальных сканов первой страницы; плитку презентации рисует сайт */ ''}
+        <span class="document-preview__tag">${doc.file.endsWith('steppe-steel-prezentaciya.pdf') ? doc.size.replace(/ · [\d,]+ МБ/, '') : 'ОРИГИНАЛ / PDF'}</span>
       </a>
       <div class="document-preview__body"><p class="document-preview__meta">${doc.size}</p><h3>${doc.title}</h3><p>${doc.text}</p>
         <div class="document-preview__links"><a href="${doc.file}" target="_blank" rel="noopener">Открыть документ ${iconArrow}</a><a href="${doc.file}" download data-goal="pdf_download" aria-label="Скачать PDF: ${doc.title}">${iconDownload}</a></div>
@@ -22,9 +25,9 @@ export function documentShelf(d,{heading=true}={}) {
  </section>`;
 }
 export function engineeringExperience(d){
-return html`<section class="section engineering-experience" id="engineering">
+return html`<section class="section engineering-experience" id="obekty">
  <div class="container">
- ${sectionHead({label:'02 / Объект завода',title:'Каркас и обшивка —\nна реальном объекте.',text:'Один и тот же принцип для склада, цеха, ангара или хранилища: стойки и фермы из профилей ПСУ и ПС, болтовая сборка по КМД, профилированная обшивка. На фото — построенное зернохранилище завода: каркас до закрытия контура и готовое здание изнутри.',action:{title:'Все типы зданий',url:'/resheniya/'}})}
+ ${sectionHead({label:'03 / Реализованные объекты',title:'Каркас и обшивка —\nна реальном объекте.',text:'Один и тот же принцип для склада, цеха, ангара или хранилища: стойки и фермы из профилей ПСУ и ПС, болтовая сборка по КМД, профилированная обшивка. На фото — построенное зернохранилище завода: каркас до закрытия контура и готовое здание изнутри.',action:{title:'Все объекты',url:'/obekty/'}})}
  <div class="construction-photos">
   <figure class="construction-photos__interior">
    <a href="/assets/img/drone-grain-inside-1920.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию интерьера зернохранилища">
@@ -33,8 +36,8 @@ return html`<section class="section engineering-experience" id="engineering">
    <figcaption><span>01 / ГОТОВОЕ ЗДАНИЕ ИЗНУТРИ</span>Фермы пролётом без колонн, зерно навалом — объект завода, сентябрь 2026</figcaption>
   </figure>
   <figure class="construction-photos__frame">
-   <a href="/assets/img/drone-frame-gable-1920.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию металлического каркаса">
-    ${raw(picture('drone-frame-gable',{alt:'Торец стального каркаса с фермами и наклонными стенами во время монтажа',sizes:'(min-width: 900px) 35vw, (min-width: 540px) 65vw, 100vw'}))}
+   <a href="/assets/img/drone-interior-1920.webp" target="_blank" rel="noopener" aria-label="Открыть фотографию металлического каркаса">
+    ${raw(picture('drone-interior',{alt:'Стальные фермы каркаса до закрытия кровли, вид внутрь секции',sizes:'(min-width: 900px) 35vw, (min-width: 540px) 65vw, 100vw'}))}
    </a>
    <figcaption><span>02 / НЕСУЩИЙ КАРКАС</span>Стойки, фермы и связи до закрытия контура — так собирается любое здание завода</figcaption>
   </figure>

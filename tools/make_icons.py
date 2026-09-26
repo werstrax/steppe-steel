@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Иконки сайта: apple-touch-icon.png и og-логотип.
+Иконки сайта STEPPESTEEL: apple-touch-icon.png (180), icon-192.png, icon-512.png.
 
-Знак повторяет логотип BÜRO: графитовый квадрат, тонкая светлая рамка,
-строчная «b» геометрическим гротеском. Century Gothic (GOTHIC.TTF) — самый
-близкий к оригиналу шрифт из тех, что есть в Windows.
+Знак — тот же, что в шапке, подвале и OG (tools/make_og.py): на графите
+#10191f STEPPE вразрядку над крупным STEEL, под STEEL оранжевая линия
+#f47b36 во всю ширину слова. Слоган INDUSTRIAL STANDARD на иконке не
+пишется — в 180 px он нечитаем. Содержимое укладывается в центральные ~64 %
+квадрата: icon-512 объявлена maskable (Android режет её кругом).
+
+Фавикон — отдельный векторный src/assets/static/favicon.svg (знак «S» из
+прямоугольников и та же оранжевая линия), его этот скрипт не трогает.
 
   python tools/make_icons.py
 """
@@ -15,65 +20,91 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "src", "assets", "static")
 
-INK = (23, 24, 26)
-PAPER = (241, 239, 236)
+GRAPHITE = (16, 25, 31)        # #10191f
+ORANGE = (244, 123, 54)        # #f47b36
+WHITE = (255, 255, 255)
 
-FONTS = [
-    r"C:\Windows\Fonts\GOTHIC.TTF",      # Century Gothic — геометрический, как в логотипе
-    r"C:\Windows\Fonts\segoeuil.ttf",
-    r"C:\Windows\Fonts\arial.ttf",
-]
+BAHN = "C:/Windows/Fonts/bahnschrift.ttf"
+ARIAL_B = "C:/Windows/Fonts/arialbd.ttf"
 
 
 def font(size):
-    for path in FONTS:
-        if os.path.exists(path):
-            return ImageFont.truetype(path, size)
-    return ImageFont.load_default()
+    """Bahnschrift Bold, как в OG-картинке; запасной — Arial Bold."""
+    if os.path.exists(BAHN):
+        f = ImageFont.truetype(BAHN, size)
+        try:
+            f.set_variation_by_name("Bold")
+            return f
+        except Exception:
+            pass
+    return ImageFont.truetype(ARIAL_B, size)
 
 
-def mark(size, scale_text=0.62, frame=True):
-    im = Image.new("RGB", (size, size), INK)
+def tracked_width(draw, text, f, tracking):
+    return sum(draw.textlength(c, font=f) for c in text) + (len(text) - 1) * f.size * tracking
+
+
+def tracked(draw, xy, text, f, fill, tracking):
+    x, y = xy
+    for i, ch in enumerate(text):
+        draw.text((x, y), ch, font=f, fill=fill)
+        x += draw.textlength(ch, font=f)
+        if i < len(text) - 1:
+            x += f.size * tracking
+
+
+def mark(size, safe=0.64):
+    """Составной знак по центру квадрата; ширина STEEL = safe × size."""
+    k = 4  # рисуем в 4× и уменьшаем — ровные края букв
+    S = size * k
+    im = Image.new("RGB", (S, S), GRAPHITE)
     d = ImageDraw.Draw(im)
-    if frame:
-        inset = max(2, round(size * 0.07))
-        w = max(1, round(size / 64))
-        d.rectangle([inset, inset, size - inset - 1, size - inset - 1], outline=PAPER, width=w)
-    f = font(round(size * scale_text))
-    box = d.textbbox((0, 0), "b", font=f)
-    x = (size - (box[2] - box[0])) / 2 - box[0]
-    y = (size - (box[3] - box[1])) / 2 - box[1]
-    d.text((x, y), "b", font=f, fill=PAPER)
-    return im
 
+    target = S * safe
+    # кегль STEEL подбирается под нужную ширину
+    fs = int(S * 0.3)
+    f_steel = font(fs)
+    while d.textlength("STEEL", font=f_steel) > target and fs > 8:
+        fs -= 2
+        f_steel = font(fs)
+    steel_w = d.textlength("STEEL", font=f_steel)
+    sb = d.textbbox((0, 0), "STEEL", font=f_steel)
+    steel_h = sb[3] - sb[1]
 
-def wordmark(w=1200, h=630):
-    """Картинка для Open Graph, если понадобится отдельная от фото."""
-    im = Image.new("RGB", (w, h), INK)
-    d = ImageDraw.Draw(im)
-    inset = 40
-    d.rectangle([inset, inset, w - inset - 1, h - inset - 1], outline=PAPER, width=2)
+    # STEPPE вразрядку — той же ширины, что STEEL
+    tr = 0.5
+    fp = max(8, int(fs * 0.3))
+    f_steppe = font(fp)
+    while tracked_width(d, "STEPPE", f_steppe, tr) > steel_w and fp > 6:
+        fp -= 1
+        f_steppe = font(fp)
+    steppe_w = tracked_width(d, "STEPPE", f_steppe, tr)
+    pb = d.textbbox((0, 0), "STEPPE", font=f_steppe)
+    steppe_h = pb[3] - pb[1]
 
-    f1 = font(150)
-    t1 = "büro"
-    b1 = d.textbbox((0, 0), t1, font=f1)
-    d.text(((w - (b1[2] - b1[0])) / 2 - b1[0], h / 2 - 120), t1, font=f1, fill=PAPER)
+    gap1 = fs * 0.16          # STEPPE → STEEL
+    gap2 = fs * 0.16          # STEEL → линия
+    line_h = max(k * 2, fs * 0.075)
+    total = steppe_h + gap1 + steel_h + gap2 + line_h
 
-    f2 = font(30)
-    t2 = "a r c h i t e c t u r e   &   d e s i g n"
-    b2 = d.textbbox((0, 0), t2, font=f2)
-    d.text(((w - (b2[2] - b2[0])) / 2 - b2[0], h / 2 + 60), t2, font=f2, fill=(157, 154, 148))
-    return im
+    x0 = (S - steel_w) / 2
+    y = (S - total) / 2
+    tracked(d, ((S - steppe_w) / 2 - pb[0], y - pb[1]), "STEPPE", f_steppe, WHITE, tr)
+    y += steppe_h + gap1
+    d.text((x0 - sb[0], y - sb[1]), "STEEL", font=f_steel, fill=WHITE)
+    y += steel_h + gap2
+    d.rectangle((x0, y, x0 + steel_w, y + line_h), fill=ORANGE)
+
+    return im.resize((size, size), Image.LANCZOS)
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    mark(180).save(os.path.join(OUT, "apple-touch-icon.png"), optimize=True)
-    mark(512).save(os.path.join(OUT, "icon-512.png"), optimize=True)
-    mark(192).save(os.path.join(OUT, "icon-192.png"), optimize=True)
-    wordmark().save(os.path.join(OUT, "og-logo.jpg"), quality=88, optimize=True)
+    mark(180, safe=0.70).save(os.path.join(OUT, "apple-touch-icon.png"), optimize=True)
+    mark(192, safe=0.66).save(os.path.join(OUT, "icon-192.png"), optimize=True)
+    mark(512, safe=0.60).save(os.path.join(OUT, "icon-512.png"), optimize=True)
     print("Иконки записаны в", OUT)
-    for name in sorted(os.listdir(OUT)):
+    for name in ("apple-touch-icon.png", "icon-192.png", "icon-512.png"):
         print(" -", name, os.path.getsize(os.path.join(OUT, name)) // 1024, "KB")
 
 

@@ -4,7 +4,7 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, stat, faq, ctaBand, iconArrow, grainCalcBlock, modularScheme } from '../lib/components.mjs';
+import { pageHero, sectionHead, stat, faq, ctaBand, iconArrow, grainCalcBlock, modularScheme, factoryBand } from '../lib/components.mjs';
 import { faqNode } from '../lib/schema.mjs';
 
 export function renderAgro(d) {
@@ -20,8 +20,10 @@ export function renderAgro(d) {
   const waHref = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
   const content = html`
     ${pageHero({
-      image: 'drone-grain-front',
-      label: 'Аграриям',
+      image: 'drone-grain-gable',
+      imageAlt: 'Напольное зернохранилище на каркасе завода, вид с дрона',
+      imageCaption: 'Объект завода, сентябрь 2026',
+      label: 'Здания для хозяйств',
       titleHtml: a.heroTitle,
       text: a.heroLead,
       offer: a.heroMeta,
@@ -53,6 +55,8 @@ export function renderAgro(d) {
         ${(a.intro || []).map((par) => html`<p class="text-lg" data-reveal>${par}</p>`)}
       </div>
     </section>
+
+    ${factoryBand(site)}
 
     <section class="section section--tint">
       <div class="container">
@@ -105,7 +109,7 @@ export function renderAgro(d) {
         ${sectionHead({
           label: 'Контекст',
           title: 'Хранение — узкое место урожая',
-          text: 'Проверенные цифры сезона-2025 по данным Qoldau и акиматов.',
+          text: 'Урожай Костанайской области 2025 года — kstnews.kz, inbusiness.kz; ёмкости хранения на 18.08.2026 — Qoldau.kz и primeminister.kz.',
         })}
         <div class="hero__stats hero__stats--dark">
           <div class="stat" data-reveal><span class="stat__val">${p.kostanayHarvest}</span><span class="stat__key">зерна собрала Костанайская область в 2025 году</span></div>

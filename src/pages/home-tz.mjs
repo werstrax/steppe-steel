@@ -45,7 +45,7 @@ export function renderHomeTz(d) {
     { icon: stepIcons.design, title: 'Проектирование', text: 'Договор, раздел КМ под экспертизу, КМД для производства и монтажа.', dur: st[2]?.duration },
     { icon: stepIcons.factory, title: 'Производство', text: 'Профилирование, резка, сварка узлов, маркировка каждой детали.', dur: st[3]?.duration },
     { icon: stepIcons.kit, title: 'Комплектация', text: 'Рамы, прогоны, связи, крепёж по спецификации, КМД и паспорта — одним комплектом.', dur: '' },
-    { icon: stepIcons.ship, title: 'Отгрузка и монтаж', text: 'Автотранспорт или ж/д по Казахстану, монтаж по КМД — бригада завода или шеф-монтаж.', dur: st[4] && st[5] ? `${st[4].duration} + ${st[5].duration}` : '' },
+    { icon: stepIcons.ship, title: 'Отгрузка и монтаж', text: 'Автотранспорт или ж/д по Казахстану, монтаж по КМД — бригадой завода или вашей бригадой под шеф-монтажом инженера завода.', dur: st[4] && st[5] ? `${st[4].duration} + ${st[5].duration}` : '' },
   ];
 
   const aud = [
@@ -73,10 +73,11 @@ export function renderHomeTz(d) {
     { span: '18 000', length: 'ДЛИНА 36 000', kind: 'frame', label: 'Ангар 18 × 36 м' },
     { span: '24 000', length: 'ДЛИНА 60 000', kind: 'frame', label: 'Ангар 24 × 60 м' },
     { span: '', length: 'ДЛИНА 45 000 · ≈ 3 000 Т', kind: 'grain', label: 'Зернохранилище 45 м' },
-    { span: '', length: 'ДЛИНА 140 000 · ≈ 9 300 Т', kind: 'grain', label: 'Зернохранилище 140 м' },
+    { span: '', length: 'ДЛИНА 140 000 · ≈ 9 400 Т', kind: 'grain', label: 'Зернохранилище 140 м' },
   ];
 
-  const obj = portfolio.items[0];
+  // Кейс проекта (без фото): построенное зернохранилище теперь первое в portfolio.items (I-08)
+  const obj = portfolio.items.find((o) => o.slug === 'ofisno-skladskoe-kostanay') ?? portfolio.items.find((o) => !o.photos?.length);
   const heroImg = hasImage('sol-angary') ? 'sol-angary' : hasImage('drone-hero') ? 'drone-hero' : null;
 
   /* Пиктограмма типа здания — линейный разрез, а не «фото в обработке».

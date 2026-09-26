@@ -4,7 +4,7 @@
  */
 
 import { layout, html, raw } from '../lib/layout.mjs';
-import { pageHero, sectionHead, step, stat, faq, ctaBand, photoSlot, vizTag } from '../lib/components.mjs';
+import { pageHero, sectionHead, step, stat, faq, ctaBand, photoSlot, vizTag, brandTag, isBrandImage, FACTORY_SHOTS } from '../lib/components.mjs';
 import { serviceNode, faqNode, howToNode } from '../lib/schema.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
 
@@ -18,11 +18,16 @@ export function renderProduction(d) {
   const content = html`
     ${pageHero({
       image: 'prod-baza',
-      imageAlt: 'Производственный корпус завода Steppe Steel: линия профилирования, рулоны оцинкованной стали, зона отгрузки',
-      label: production.kicker,
+      imageAlt: 'Производственный корпус завода Steppe Steel, с. Троебратское',
+      imageCaption: 'Производственный корпус, с. Троебратское',
+      label: 'Площадка и переделы',
       titleHtml: production.title,
       text: production.lead,
       crumbList,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод</a>
+        <a class="btn btn--ghost btn--lg" href="/raschet/">Получить расчёт</a>
+      `,
     })}
 
     <section class="section section--flush-top">
@@ -44,6 +49,7 @@ export function renderProduction(d) {
               <article class="prod-card${hasImage(s.photoSlot) ? '' : ' prod-card--text'}" id="${s.id}" data-reveal>
                 ${hasImage(s.photoSlot) ? html`<div class="prod-card__media">
                   ${raw(picture(s.photoSlot, { alt: `${s.title} — производство Steppe Steel`, sizes: '(min-width: 900px) 50vw, 100vw' }))}
+                  ${isBrandImage(s.photoSlot) && FACTORY_SHOTS[s.photoSlot] ? raw(brandTag(FACTORY_SHOTS[s.photoSlot].caption)) : ''}
                 </div>` : ''}
                 <div class="prod-card__body">
                   <span class="prod-card__num mono">${String(i + 1).padStart(2, '0')}</span>

@@ -60,21 +60,6 @@
     "fallback": 1152,
     "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAwCdASoUABwAPuliq08pJSOiMBgIASAdCWkAAC50Wznyhkh+AAAA/vIjkt5+TtFyTHJONsxtxbtoMzAAAA=="
   },
-  "drone-aerial": {
-    "w": 2400,
-    "h": 1350,
-    "ratio": 1.7778,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      2400
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPulgqE0pJaQiMAgBIB0JZwC/OCHEgOrwJiAAAP3jYuhWGYuSxRah8fZq4KGwnvQON9pN6UTXpQAAAA=="
-  },
   "drone-frame-front": {
     "w": 1920,
     "h": 1280,
@@ -270,21 +255,6 @@
     "fallback": 1152,
     "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwAAW7wjNdXii5SmIAGAAP6RIPwJHFahkV6t47lCEly8wcbXWXaTHPMFxHxhcHjKmGBf1CotqDUvMMbplKYOC9JEtVj23LAAAA=="
   },
-  "drone-side": {
-    "w": 1920,
-    "h": 1280,
-    "ratio": 1.5,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1920
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQBACdASoUAA0APulgqU2pJaQiMAgBIB0JYwCdMkCxoA8/99dzxei51jIAAP6w+4V/ibvS8S9SD6/GG0N62WLi7YsBD9TFXy+5YEZ1/xysBKhuXw284JleQELx5nmkOwAAAA=="
-  },
   "drone-span": {
     "w": 1920,
     "h": 1280,
@@ -342,7 +312,7 @@
       1200
     ],
     "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAAoAPuliqE2pJaOiMAgBIB0JaQAAW/ABHA0zm7QAAP7xgG4/Tocua0XtnZsf5bmO1NBbnXgQAA=="
+    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAoAPulkqU2pJaQiMAgBIB0JZwDE2CPsJW+429jLu+sAAP7mbzi3ppu/pf6j/QeM8LLPTqPm2eru4F78RarTPJUdliZY6XAAAA=="
   },
   "prod-baza": {
     "w": 1526,
@@ -384,36 +354,6 @@
     ],
     "fallback": 983,
     "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
-  },
-  "sol-angary": {
-    "w": 1827,
-    "h": 764,
-    "ratio": 2.3914,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1827
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoUAAgAPulkqU2pJaQiMAgBIB0JZQCdABZTvrOtZoSAAAD+14KcqJMu5Mpqpoq3Q60JK4ZpaZ3L4WxvVzkS4FFyBPengAAA"
-  },
-  "sol-proizvodstvennye-zdaniya": {
-    "w": 1826,
-    "h": 1020,
-    "ratio": 1.7902,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      1826
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBOgBEBBuCUUNskiWAD+sLAIRdKD7x3YgZ6Bytkj/3qInqFuRvo7QQcEdNf1PPdwFIyGXingsgyYBMz3oAAA"
   },
   "tech-boltovye-1": {
     "w": 1536,
@@ -472,35 +412,5 @@
     "fallback": 1152,
     "lqip": "",
     "alpha": true
-  },
-  "zerno-cutaway": {
-    "w": 2560,
-    "h": 1440,
-    "ratio": 1.7778,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      2560
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JQBdgA9Lkt+YZ5/BG4R2AAP7yKW2HH6lnMJMNJj9mladLsELZSEdJe6xjcOvvJqQLprwQqiBm+T3QAAA="
-  },
-  "zerno-node": {
-    "w": 2560,
-    "h": 1440,
-    "ratio": 1.7778,
-    "widths": [
-      384,
-      576,
-      864,
-      1152,
-      1536,
-      2560
-    ],
-    "fallback": 1152,
-    "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAwCdASoUAAsAPuliqE2pJaOiMAgBIB0JZwC+SCIex8D1xmVYZK4AAP7twuzQn74u+stKC/DBICQW+9Agef4V+sRNgVGBcOBb35Re3kUAAA=="
   }
 }

@@ -23,6 +23,78 @@ export const logo = (site, { href = '/', footer = false } = {}) => html`
   </a>
 `;
 
+/* --- Фирменная подпись на реальном кадре ------------------------------------ */
+
+/**
+ * «STEPPESTEEL · подпись» поверх фото: графитовая плашка с оранжевой кромкой —
+ * та же линия, что под STEEL в знаке. Ставится ТОЛЬКО на реальные кадры завода
+ * и его объекта: drone-* и три кадра цеха (prod-baza, prod-komplekt,
+ * prod-svarka). На tech-*, cert-* остаётся нейтральная .solution-image-note;
+ * на сетке карточек решений подписей нет — одна строка под сеткой.
+ * Стили — только в site.css (.brand-tag).
+ */
+export const brandTag = (caption) =>
+  caption
+    // «с. Троебратское» не разрывается: на телефоне подпись переносится на вторую строку
+    ? html`<span class="brand-tag"><b>STEPPESTEEL</b><span>${String(caption).replace(/(^|\s)(с\.|г\.) /g, '$1$2 ')}</span></span>`
+    : '';
+
+/** Кадры, на которых допустима фирменная подпись. */
+export const isBrandImage = (name) => /^(drone-|prod-(baza|komplekt|svarka)$)/.test(String(name || ''));
+
+/** Подписи трёх реальных кадров цеха — одни на весь сайт. */
+export const FACTORY_SHOTS = {
+  'prod-baza': { caption: 'Производственный корпус, с. Троебратское', alt: 'Производственный корпус Steppe Steel: линия профилирования и рулоны оцинкованной стали' },
+  'prod-komplekt': { caption: 'Цех завода: рулоны и линии', alt: 'Цех завода Steppe Steel: рулоны оцинкованной стали перед профилированием' },
+  'prod-svarka': { caption: 'Сварочные посты завода', alt: 'Сварочные посты завода Steppe Steel: сборка ферм и колонн' },
+};
+
+/**
+ * Реальный кадр цеха с фирменной подписью: <figure> с picture() и brandTag.
+ * Если кадра нет в манифесте — пусто (никаких заглушек).
+ */
+export function factoryShot(slot, { sizes = '(min-width: 900px) 33vw, 100vw', cls = '' } = {}) {
+  if (!hasImage(slot)) return '';
+  const meta = FACTORY_SHOTS[slot] || { caption: '', alt: 'Завод Steppe Steel' };
+  return html`<figure class="${cx('factory-shot', cls)}">${raw(picture(slot, { alt: meta.alt, sizes }))}${raw(brandTag(meta.caption))}</figure>`;
+}
+
+/**
+ * Общий блок «Изготовлено на заводе в с. Троебратское» (ТЗ §1–2: завод, а не
+ * монтажная компания): два реальных кадра цеха с фирменной подписью, три факта
+ * из реестра и ссылка на /proizvodstvo/. Ставится на хаб решений, страницы
+ * решений и /agrariyam/ — там, где иначе только кадры объекта с дрона.
+ */
+export function factoryBand(site, { title = 'Изготовлено на заводе в с.&nbsp;Троебратское', lead } = {}) {
+  const shots = ['prod-komplekt', 'prod-svarka'].filter(hasImage);
+  if (!shots.length) return '';
+  const a = site.contacts.address;
+  const text = lead || `Каркас выпускает собственное производство: ${String(a.settlement).replace(/^(с\.|г\.) /, '$1 ')}, ${a.district}, ${a.region}. Проектирование, изготовление и комплектация — на одной площадке.`;
+  return html`
+    <section class="section section--dark factory-band" aria-labelledby="factory-band-title">
+      <div class="container factory-band__grid">
+        <div class="factory-band__copy" data-reveal>
+          <p class="eyebrow mono"><b>STEPPESTEEL</b> · производство</p>
+          <h2 class="section-head__title" id="factory-band-title">${raw(title)}</h2>
+          <p class="factory-band__lead">${text}</p>
+          <ul class="factory-band__facts">
+            <li><b>Своя линия профилирования</b>ПСУ и ПС из оцинкованной стали 1,5–3,5&nbsp;мм · 43&nbsp;позиции сортамента</li>
+            <li><b>КМ и КМД силами завода</b>ЛИРА-САПР, Tekla Structures</li>
+            <li><b>Сварка — на заводе</b>фермы, колонны и узлы в кондукторах; на площадке только болты</li>
+          </ul>
+          <div class="btn-row">
+            <a class="arrow-link" href="/proizvodstvo/">Как устроено производство ${iconArrow}</a>
+            <a class="arrow-link" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод ${iconArrow}</a>
+          </div>
+        </div>
+        <div class="factory-band__photos" data-reveal>
+          ${shots.map((slot) => raw(factoryShot(slot, { sizes: '(min-width: 900px) 30vw, 100vw' })))}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 /* --- Иконки ------------------------------------------------------------- */
 
 export const iconArrow = raw(
@@ -120,16 +192,14 @@ export const vizTag = (label = 'Визуализация') =>
 export const photoTag = (label = 'Фото с объекта') =>
   raw(`<span class="viz-tag viz-tag--photo">${e(label)}</span>`);
 
-/** Слот под реальное фото: пока кадра нет в манифесте — нейтральная плашка. */
-export function photoSlot(name, { alt = '', label = 'Фото в обработке', sizes = '(min-width: 900px) 50vw, 100vw', className = '' } = {}) {
-  // Слот оформлен как лист чертежа: миллиметровка, уголки кадра и штамп
-  // с именем файла — клиент сразу видит, какой снимок куда ляжет.
-  return raw(
-    `<span class="${cx('photo-slot', className)}" role="img" aria-label="${e(alt || label)}">` +
-      `<span class="photo-slot__center"><span class="photo-slot__label mono">${e(label)}</span></span>` +
-      `<span class="photo-slot__stamp mono" aria-hidden="true">лист · фото<b>${e(name)}.jpg</b></span>` +
-      `</span>`
-  );
+/**
+ * Кадра нет в манифесте — та же нейтральная пустая рамка, что у picture()
+ * (.media__missing). С 26.09 плашка «Фото в обработке» со штампом не выводится:
+ * на запуске только реальные кадры, а tools/check.mjs считает любую такую
+ * рамку на странице ошибкой сборки.
+ */
+export function photoSlot(name, { alt = '', label = 'Фото в обработке', className = '' } = {}) {
+  return raw(`<span class="${cx('media__missing', className)}" role="img" aria-label="${e(alt || label)}" data-missing="${e(name)}"></span>`);
 }
 
 /* --- Шапка -------------------------------------------------------------- */
@@ -169,7 +239,7 @@ export function header(site, { current = '' } = {}) {
   return html`
     <div class="topbar">
       <div class="container topbar__inner">
-        <span class="topbar__note mono">Завод строительных металлоконструкций · с. Троебратское, Костанайская область</span>
+        <span class="topbar__note mono">STEPPESTEEL — завод-изготовитель металлоконструкций · ${c.address.settlement}, ${c.address.district}, ${c.address.region}</span>
         <span class="topbar__links">
           <a class="topbar__link" href="mailto:${c.email}">${c.email}</a>
           <a class="topbar__link topbar__link--wa" href="${c.whatsapp}?text=${encodeURIComponent(c.whatsappText)}" target="_blank" rel="noopener" data-goal="wa_click">WhatsApp</a>
@@ -263,6 +333,24 @@ export const mobileBar = (site, current = '', { waText, calcType } = {}) => {
 export function footer(site) {
   const year = new Date().getFullYear();
   const c = site.contacts;
+  const a = c.address;
+  // Ссылки четвёртой колонки в общем списке не повторяем: одна ссылка
+  // на /dokumentaciya/ и одна на /raschet/ на весь подвал.
+  const docLinks = [
+    { title: 'Вся документация', url: '/dokumentaciya/' },
+    { title: 'Получить расчёт', url: site.cta.primary.url },
+  ];
+  const taken = new Set([...docLinks.map((l) => l.url), '/privacy/']);
+  // Верхние пункты меню со своим адресом — вместе с группой «О заводе»
+  // (раньше !n.children выкидывал её, и в подвале завода не было «О заводе»).
+  const navLinks = [
+    ...site.nav.filter((n) => n.url),
+    ...site.navFooter.filter((n) => !taken.has(n.url)).slice(0, 5),
+  ];
+  // Аудитории из группы «Для клиентов»; «Партнёрам» уже есть ссылкой «Стать партнёром»
+  const audienceLinks = site.nav
+    .flatMap((n) => (n.url ? [] : n.children || []))
+    .filter((n) => n.url && n.url !== '/partneram/');
 
   return html`
     <footer class="footer">
@@ -271,13 +359,17 @@ export function footer(site) {
           <div>
             ${raw(logo(site, { footer: true }))}
             <p class="footer__about">
-              Завод строительных металлоконструкций. Проектирование, производство
-              ЛСТК и ЛМК, комплектная поставка — с. Троебратское, Костанайская область.
+              Завод-изготовитель строительных металлоконструкций. Проектирование.
+              Производство. Комплектная поставка. Площадка — ${a.settlement}, ${a.district}, ${a.region}.
             </p>
             <ul class="footer__list footer__list--nav">
-              ${site.nav.filter((n) => !n.children).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
-              ${site.navFooter.slice(0, 6).map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
+              ${navLinks.map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
             </ul>
+            ${audienceLinks.length
+              ? html`<ul class="footer__list footer__list--nav footer__list--aud">
+                  ${audienceLinks.map((n) => html`<li><a href="${n.url}">${n.title}</a></li>`)}
+                </ul>`
+              : ''}
           </div>
 
           <div>
@@ -285,7 +377,7 @@ export function footer(site) {
             <ul class="footer__contacts">
               <li>${iconPhone}<a href="${c.phoneHref}" class="mono" data-goal="tel_click">${c.phone}</a></li>
               <li><span class="footer__at" aria-hidden="true">@</span><a href="mailto:${c.email}">${c.email}</a></li>
-              <li><span class="footer__pin" aria-hidden="true">●</span><span>${c.address.country}, ${c.address.region},<br>${c.address.district}, ${c.address.settlement}</span></li>
+              <li><span class="footer__pin" aria-hidden="true">●</span><span>${a.settlement}, ${a.district},<br>${a.region}<br><span class="footer__route">${a.note}</span></span></li>
               <li><span class="footer__pin" aria-hidden="true">○</span><span>${c.hours.text}</span></li>
             </ul>
             <div class="btn-row footer__social">
@@ -315,14 +407,13 @@ export function footer(site) {
               ? html`<a class="btn btn--primary" href="${site.presentation}" target="_blank" rel="noopener">${iconDownload}<span>Скачать PDF</span></a>`
               : ''}
             <ul class="footer__list" style="margin-top:1rem">
-              <li><a href="/dokumentaciya/">Вся документация</a></li>
-              <li><a href="/raschet/">Получить расчёт</a></li>
+              ${docLinks.map((l) => html`<li><a href="${l.url}">${l.title}</a></li>`)}
             </ul>
           </div>
         </div>
 
         <div class="footer__bottom">
-          <span>© ${year} STEPPESTEEL. Казахстан.</span>
+          <span class="footer__legal">© ${year} STEPPESTEEL — завод строительных металлоконструкций · <span class="u-nowrap">${site.brand.legalName}</span> · <span class="u-nowrap">БИН ${site.brand.bin}</span></span>
           <span><a href="/privacy/">Политика конфиденциальности</a></span>
         </div>
       </div>
@@ -371,27 +462,66 @@ export function crumbs(list) {
 
 /* --- Хиро внутренней страницы -------------------------------------------- */
 
-export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, offer, count, image, imageAlt = '', imageCaption }) {
+/**
+ * Мягкие переносы в H1 внутренних страниц: длинные составные слова иначе
+ * рвутся браузером посередине («картофелехранил|ища») или вылезают за колонку.
+ * Уже расставленные &shy; не удваиваются. Данные страниц &shy; не содержат.
+ */
+export function heroTitle(titleHtml) {
+  return String(titleHtml ?? '')
+    .replace(/(металло)(конструкц)/gi, '$1&shy;$2')
+    .replace(/(картофеле|овоще|зерно)(хранилищ)/gi, '$1&shy;$2')
+    .replace(/(сельхоз)(техник)/gi, '$1&shy;$2')
+    .replace(/(?:&shy;){2,}/g, '&shy;');
+}
+
+/** Последняя крошка совпадает с меткой — метку не повторяем. */
+const sameText = (a, b) => String(a ?? '').trim().toLowerCase() === String(b ?? '').trim().toLowerCase();
+
+/**
+ * Надзаголовок первого экрана. По умолчанию — фирменная строка
+ * «STEPPESTEEL · завод-изготовитель» (ТЗ §1–2: каждый первый экран называет
+ * завод), к ней « / label», если label не дублирует последнюю крошку.
+ * На ≤640 px раздел скрыт CSS, строка не добавляет высоты.
+ * brandEyebrow:false — прежний вывод label (статья журнала).
+ */
+function heroEyebrow({ label, crumbList, brandEyebrow }) {
+  if (!brandEyebrow) return label ? html`<p class="eyebrow mono page-hero__label">${label}</p>` : '';
+  const last = Array.isArray(crumbList) && crumbList.length ? crumbList[crumbList.length - 1].title : '';
+  const sec = label && !sameText(label, last) ? html`<span class="page-hero__section"> / ${label}</span>` : '';
+  return html`<p class="eyebrow mono page-hero__label page-hero__label--brand"><b>STEPPESTEEL</b><span> · завод-изготовитель</span>${sec}</p>`;
+}
+
+export function pageHero({ label, titleHtml, text, crumbList, small = false, actions, offer, count, image, imageAlt = '', imageCaption, brandEyebrow = true }) {
   /* Фото-режим: слева заголовок и лид, справа кадр из манифеста с оранжевой
    * кромкой. Без кадра — обычный типографический хиро.
-   * offer — короткая моно-строка под лидом («Расчёт и КП за 24 часа · …»). */
+   * offer — короткая моно-строка под лидом («Расчёт и КП за 24 часа · …»).
+   * imageCaption на реальном кадре завода (drone-*, prod-baza) становится
+   * фирменной подписью brandTag, на остальных — нейтральной плашкой. */
   const offerLine = offer ? html`<p class="page-hero__offer mono">${offer}</p>` : '';
+  const eyebrow = heroEyebrow({ label, crumbList, brandEyebrow });
+  const h1 = html`<h1 class="${cx('page-hero__title', small && 'page-hero__title--sm')}">${raw(heroTitle(titleHtml))}</h1>`;
   if (image && hasImage(image)) {
+    const caption = imageCaption
+      ? isBrandImage(image)
+        ? brandTag(imageCaption)
+        : html`<span class="solution-image-note">${imageCaption}</span>`
+      : '';
     return html`
       <section class="page-hero page-hero--photo">
         <div class="container">
           <div class="page-hero__grid">
             <div class="page-hero__body">
               ${crumbList ? raw(crumbs(crumbList)) : ''}
-              ${label ? html`<p class="eyebrow mono page-hero__label">${label}</p>` : ''}
-              <h1 class="${cx('page-hero__title', small && 'page-hero__title--sm')}">${raw(String(titleHtml).replace(/металлоконструкц/g, 'металло&shy;конструкц').replace(/металло&shy;&shy;/g, 'металло&shy;'))}</h1>
+              ${eyebrow}
+              ${h1}
               ${text ? html`<p class="page-hero__aside" style="margin-top:1.25rem">${raw(text)}</p>` : ''}
               ${offerLine}
               ${actions ? html`<div class="btn-row page-hero__actions">${raw(actions)}</div>` : ''}
             </div>
             <div class="page-hero__media" data-reveal>
-              ${raw(picture(image, { alt: imageAlt, sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
-              ${imageCaption ? html`<span class="solution-image-note">${imageCaption}</span>` : ''}
+              ${raw(picture(image, { alt: imageAlt || imageCaption || '', sizes: '(min-width: 1020px) 50vw, 100vw', priority: true }))}
+              ${caption}
             </div>
           </div>
         </div>
@@ -404,8 +534,8 @@ export function pageHero({ label, titleHtml, text, crumbList, small = false, act
         ${crumbList ? raw(crumbs(crumbList)) : ''}
         <div class="page-hero__row">
           <div style="min-width:0">
-            ${label ? html`<p class="eyebrow mono page-hero__label">${label}</p>` : ''}
-            <h1 class="${cx('page-hero__title', small && 'page-hero__title--sm')}">${raw(String(titleHtml).replace(/металлоконструкц/g, 'металло&shy;конструкц').replace(/металло&shy;&shy;/g, 'металло&shy;'))}</h1>
+            ${eyebrow}
+            ${h1}
           </div>
           ${count
             ? html`<span class="page-hero__count mono" aria-hidden="true">${count}</span>`
@@ -474,7 +604,8 @@ export function solutionCard(s, { level = 3 } = {}) {
         ${hasImage(img)
           ? raw(picture(img, { alt: s.photoAlt || `${s.title} — Steppe Steel`, sizes: '(min-width: 900px) 33vw, 100vw' }))
           : html`<span class="sol-card__category">ЛСТК / ЛМК<br>ПРОЕКТИРОВАНИЕ И ПОСТАВКА</span>`}
-        ${hasImage(img) && s.coverCaption ? html`<span class="solution-image-note">${s.coverCaption}</span>` : ''}
+        ${/* Подпись кадра на карточке не ставим: у девяти карточек она одна и та же —
+             одна строка под сеткой (solutionsPhotoNote) вместо девяти плашек */ ''}
         ${s.flag ? html`<span class="card__flag mono">${s.flag}</span>` : ''}
       </span>
       <span class="card__body">
@@ -485,6 +616,10 @@ export function solutionCard(s, { level = 3 } = {}) {
     </a>
   `;
 }
+
+/** Одна строка под сеткой решений: откуда кадры на карточках. */
+export const solutionsPhotoNote = () =>
+  html`<p class="solutions-photo-note mono"><b>STEPPESTEEL</b> · Фото — объект завода, сентябрь 2026. Кадры по типам зданий добавляются.</p>`;
 
 /* --- Строка реестра решений ------------------------------------------------ */
 
@@ -579,7 +714,7 @@ export function ctaBand(site, { title, text, primary, secondary, waText, calcUrl
             <h2 class="cta-band__title">${raw(title || 'Получите расчёт<br>вашего здания')}</h2>
             <p class="cta-band__text">
               ${text ||
-              'Назначение, размеры, регион — инженер завода посчитает конструктив и пришлёт коммерческое предложение. Есть готовый проект — приложите его к заявке.'}
+              'Назначение, размеры, регион — инженер завода посчитает конструктив и пришлёт коммерческое предложение. Есть готовый проект — пришлите файл в WhatsApp или на почту вместе с заявкой.'}
             </p>
           </div>
           <div class="cta-band__actions" data-reveal>
@@ -588,6 +723,7 @@ export function ctaBand(site, { title, text, primary, secondary, waText, calcUrl
               ${iconWhatsApp}<span>Написать в WhatsApp</span>
             </a>
             ${secondary ? html`<a class="btn btn--outline-light btn--lg" href="${secondary.url}">${secondary.title}</a>` : ''}
+            <p class="cta-band__visit"><a class="arrow-link" href="${site.contacts.whatsapp}?text=${encodeURIComponent(site.contacts.whatsappVisit)}" target="_blank" rel="noopener" data-goal="wa_click">Приехать на завод в ${site.contacts.address.settlement} ${iconArrow}</a></p>
           </div>
         </div>
       </div>
@@ -769,7 +905,7 @@ export function sortamentStrip(profiles, { max = 9 } = {}) {
   return html`
     <div class="sortament" role="img" aria-label="Сортамент профилей: ${picked.map((p) => p.name).join(', ')} — высота сечения от ${picked[0].h} до ${maxH} мм">
       <div class="sortament__row">${raw(picked.map(cell).join(''))}</div>
-      <p class="sortament__note mono">Сечения профилей собственной линии · сертификат РК · 43 типоразмера · толщина 1,5–3,5 мм</p>
+      <p class="sortament__note mono">Сечения профилей собственной линии · сертификат РК · 43 позиции сортамента · толщина 1,5–3,5 мм</p>
     </div>
   `;
 }

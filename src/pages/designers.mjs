@@ -20,10 +20,16 @@ export function renderDesigners(d) {
     ${pageHero({
       image: 'tech-hub',
       imageAlt: 'Конструктивная схема каркаса Steppe Steel: рамы, прогоны и связи жёсткости',
+      imageCaption: 'Схема каркаса — рендер из презентации завода',
       label: p.heroLabel,
       titleHtml: p.heroTitle,
       text: p.heroText,
+      offer: 'ЛИРА-САПР · Tekla Structures · СП РК EN · КМ и КМД',
       crumbList,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="/raschet/?type=project">Отправить объект на проработку</a>
+        <a class="btn btn--ghost btn--lg" href="/dokumentaciya/">Сертификат и сортамент</a>
+      `,
     })}
 
     <section class="section section--flush-top">
@@ -166,7 +172,7 @@ export function renderDesigners(d) {
             ${p.cert.pages.map(
               (pg) => html`
                 <figure class="cert-page">
-                  ${raw(picture(pg.img, { alt: pg.alt, sizes: '(min-width: 720px) 180px, 45vw' }))}
+                  ${raw(picture(pg.img, { alt: pg.alt, sizes: '(min-width: 720px) 180px, 100vw' }))}
                   <figcaption class="mono">${pg.label} · ${pg.cap}</figcaption>
                 </figure>
               `

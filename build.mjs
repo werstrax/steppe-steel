@@ -87,13 +87,16 @@ function loadData(lang) {
   };
 
   // Версия для ?v= у CSS/JS — от содержимого файлов, а не от даты сборки.
+  // pages.css (внутренние страницы) может ещё не существовать — отсутствующие
+  // файлы пропускаются, сборка не падает.
   site.buildId = assetHash([
     join(SRC, 'assets', 'css', 'site.css'),
     join(SRC, 'assets', 'css', 'pro.css'),
     join(SRC, 'assets', 'css', 'experience.css'),
+    join(SRC, 'assets', 'css', 'pages.css'),
     join(SRC, 'assets', 'css', 'theme-tz.css'),
     join(SRC, 'assets', 'js', 'site.js'),
-  ]);
+  ].filter((p) => existsSync(p)));
   site.buildDate = new Date().toISOString().slice(0, 10);
 
   // Превью-сборка (SITE_URL, BASE_PATH, PREVIEW=1): для показа заказчику на
@@ -406,7 +409,7 @@ function webmanifest(site) {
       start_url: `${b}/`,
       display: 'standalone',
       background_color: '#ffffff',
-      theme_color: '#16181b',
+      theme_color: '#10191f',
       lang: 'ru',
       icons: [
         { src: `${b}/favicon.svg`, sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
@@ -420,16 +423,9 @@ function webmanifest(site) {
   );
 }
 
-/** Фавикон — знак завода: графитовый квадрат, оранжевая полоса, буква S. */
-function favicon() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#16181b"/>
-  <rect x="0" y="50" width="64" height="6" fill="#e8781a"/>
-  <text x="32" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="34" font-weight="700" fill="#f5f6f7" letter-spacing="1">S</text>
-</svg>
-`;
-}
+/* Фавикон — один источник: src/assets/static/favicon.svg (знак из прямоугольников,
+   без зависимости от шрифта) уходит в корень dist вместе со static/. PNG-иконки
+   (apple-touch-icon, icon-192/512) — python tools/make_icons.py из того же знака. */
 
 /* --- Сборка -------------------------------------------------------------- */
 
@@ -491,14 +487,15 @@ function build() {
   }
 
   // Статика. static/ уходит в корень, raw/ — исходники, не копируем.
-  copyDir(join(SRC, 'assets'), join(DIST, 'assets'), (_src, name) => name === 'raw' || name === 'static');
+  // theme-tz.css нужен только варианту Б (VARIANT=tz) — в рабочую сборку не кладём.
+  copyDir(join(SRC, 'assets'), join(DIST, 'assets'), (_src, name) =>
+    name === 'raw' || name === 'static' || (name === 'theme-tz.css' && d.site.variant !== 'tz'));
   copyDir(join(SRC, 'assets', 'static'), DIST, (_src, name) => d.site._preview && name === 'CNAME');
 
   writeFileSync(join(DIST, 'sitemap.xml'), sitemap(d.site, pages), 'utf8');
   writeFileSync(join(DIST, 'robots.txt'), robots(d.site), 'utf8');
   writeFileSync(join(DIST, 'llms.txt'), llmsTxt(d), 'utf8');
   writeFileSync(join(DIST, 'site.webmanifest'), webmanifest(d.site), 'utf8');
-  writeFileSync(join(DIST, 'favicon.svg'), favicon(), 'utf8');
   writeFileSync(join(DIST, '.nojekyll'), '', 'utf8');
 
   const ms = Date.now() - t0;

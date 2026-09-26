@@ -4,7 +4,7 @@
  *
  *   node tools/screenshot.mjs                      # набор ключевых страниц
  *   node tools/screenshot.mjs / /projects/bayaan/  # конкретные страницы
- *   node tools/screenshot.mjs --mobile             # ширина 375
+ *   node tools/screenshot.mjs --mobile             # 375×812, эмуляция телефона (SHOT_H=667 — низкий)
  *   node tools/screenshot.mjs --viewport           # только первый экран
  *
  * PNG кладутся в screenshots/ в корне проекта (папка в .gitignore).
@@ -33,7 +33,8 @@ if (!CHROME) {
 const mobile = process.argv.includes('--mobile');
 const viewportOnly = process.argv.includes('--viewport');
 const width = mobile ? 375 : 1440;
-const height = 900;
+// Headless Chrome не даёт окно уже ~500 px: мобильный вьюпорт — только эмуляцией (ниже)
+const height = mobile ? Number(process.env.SHOT_H) || 812 : 900;
 const suffix = mobile ? '-mobile' : '';
 
 const pageArgs = process.argv.slice(2).filter((a) => a.startsWith('/'));
@@ -103,8 +104,12 @@ async function main() {
     const s = (method, params) => send(method, params, sessionId);
 
     await s('Page.enable');
-    // Размер окна задан через --window-size. Emulation.setDeviceMetricsOverride
-    // здесь не используем: в связке с captureBeyondViewport он подвешивает Chrome.
+    // Десктоп — размер окна через --window-size. Телефон — эмуляцией: окно headless
+    // Chrome не сужается меньше ~500 px, и «375» на деле снимались на 500.
+    // captureBeyondViewport не используется (кадры послайсово), поэтому эмуляция не виснет.
+    if (mobile) {
+      await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: true });
+    }
 
     for (const p of pages) {
       const name = (p === '/' ? 'home' : p.replace(/^\/|\/$/g, '').replace(/\//g, '-')) + suffix;

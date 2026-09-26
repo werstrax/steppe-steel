@@ -17,8 +17,10 @@ export function renderBuilders(d) {
 
   const content = html`
     ${pageHero({
-      image: 'sol-proizvodstvennye-zdaniya',
-      label: 'Строительным компаниям',
+      image: 'drone-frame-long-2',
+      imageAlt: 'Стальной каркас из профилей завода Steppe Steel на объекте, вид с дрона',
+      imageCaption: 'Каркас завода на объекте, 2026',
+      label: 'Субподряд по металлокаркасу',
       titleHtml: b.heroTitle,
       text: b.heroLead,
       crumbList,

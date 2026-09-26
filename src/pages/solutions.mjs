@@ -6,6 +6,7 @@ import { layout, html, raw, e } from '../lib/layout.mjs';
 import {
   pageHero, sectionHead, specs, faq, ctaBand, photoSlot,
   solutionRow, solutionCard, iconArrow, iconWhatsApp, grainCalcBlock, modularScheme,
+  factoryBand, solutionsPhotoNote,
 } from '../lib/components.mjs';
 import { productNode, faqNode, itemListNode } from '../lib/schema.mjs';
 import { hasImage, picture } from '../lib/util.mjs';
@@ -22,10 +23,14 @@ export function renderSolutionsIndex(d) {
 
   const content = html`
     ${pageHero({
-      label: hub.kicker,
+      label: 'Продукция завода',
       titleHtml: hub.title,
       text: hub.intro,
       crumbList,
+      actions: html`
+        <a class="btn btn--primary btn--lg" href="/raschet/">Получить расчёт</a>
+        <a class="btn btn--ghost btn--lg" href="/raschet/?type=project">Отправить проект</a>
+      `,
     })}
 
     <section class="section section--flush-top">
@@ -33,9 +38,12 @@ export function renderSolutionsIndex(d) {
         <div class="card-grid card-grid--3">
           ${solutions.items.map((s) => solutionCard(s, { level: 2 }))}
         </div>
+        ${solutionsPhotoNote()}
         <p class="note" data-reveal>${hub.note}</p>
       </div>
     </section>
+
+    ${factoryBand(site)}
 
     <section class="section section--tint">
       <div class="container">
@@ -120,13 +128,14 @@ export function renderSolution(d, s) {
   const ctaTitle = s.ctaTitle || 'Получить расчёт';
   const waText = s.waText || site.contacts.whatsappText;
   const waUrl = `${site.contacts.whatsapp}?text=${encodeURIComponent(waText)}`;
-  // Мягкий перенос в длинном слове H1 — только в разметке заголовка, не в title/JSON-LD
-  const titleHtml = e(s.title).replace(/металлоконструкц/g, 'металло&shy;конструкц');
-  const offer = s.heroOffer || 'Расчёт и КП за 24 часа · WhatsApp · завод в Костанайской области';
+  // Переносы в длинных словах H1 расставляет сам pageHero — здесь только экранирование
+  const titleHtml = e(s.title);
+  const offer = s.heroOffer || 'Расчёт и КП за 24 часа · WhatsApp · завод в с. Троебратское';
 
   const content = html`
     ${pageHero({
-      label: s.flag || 'Решение STEPPESTEEL',
+      // «/ Решение» ничего не сообщает — без флага остаётся фирменная строка «STEPPESTEEL · завод-изготовитель»
+      label: s.flag || '',
       titleHtml,
       text: s.lead,
       offer,
@@ -172,6 +181,8 @@ export function renderSolution(d, s) {
         </aside>
       </div>
     </section>
+
+    ${factoryBand(site)}
 
     ${s.features?.length
       ? html`

@@ -222,6 +222,17 @@ export function imageUrl(name, base) {
   return `${base}/assets/img/${name}-${meta.fallback}.${meta.alpha ? 'png' : 'jpg'}`;
 }
 
+/**
+ * Размеры растрового фолбэка, который отдаёт imageUrl() (для og:image:width/height).
+ * Нет кадра в манифесте — берётся og-default, как и в imageUrl().
+ */
+export function imageMeta(name) {
+  const meta = IMAGES[name] || IMAGES['og-default'];
+  if (!meta) return null;
+  const width = meta.fallback;
+  return { width, height: Math.round(width / meta.ratio) };
+}
+
 export function imageWebpUrl(name, base, width = 1152) {
   const meta = IMAGES[name];
   if (!meta) return `${base}/assets/img/og-default-1152.webp`;

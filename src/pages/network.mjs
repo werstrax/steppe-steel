@@ -18,6 +18,8 @@ export function renderNetwork(d) {
   const content = html`
     ${pageHero({
       image: 'drone-montazh',
+      imageAlt: 'Монтаж каркаса завода на объекте',
+      imageCaption: 'Каркас завода на объекте, 2026',
       label: n.heroLabel,
       titleHtml: n.heroTitle,
       text: n.heroText,

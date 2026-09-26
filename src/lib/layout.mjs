@@ -3,7 +3,7 @@
  * v4 «Белый завод»: светлая тема, двухъярусная шапка, мобильная панель действий.
  */
 
-import { html, raw, e, jsonld, imageUrl, preloadImageAttrs } from './util.mjs';
+import { html, raw, e, jsonld, imageUrl, imageMeta, preloadImageAttrs } from './util.mjs';
 import { header, footer, mobileBar } from './components.mjs';
 import { webPageNode, breadcrumbNode, organizationRefNode, websiteRefNode, ids } from './schema.mjs';
 
@@ -46,6 +46,8 @@ function nextBand(next) {
 export function layout(site, page, content) {
   const url = `${site.url}${page.url}`;
   const ogImage = imageUrl(page.image || 'og-default', site.url);
+  // Размеры — из манифеста того же кадра (раньше стояли 1152×768 для любого)
+  const ogMeta = imageMeta(page.image || 'og-default');
 
   const graph = [
     webPageNode(site, page),
@@ -85,8 +87,8 @@ ${site.analytics?.googleSiteVerification ? `<meta name="google-site-verification
 <meta property="og:description" content="${e(page.description)}">
 <meta property="og:url" content="${e(url)}">
 <meta property="og:image" content="${e(ogImage)}">
-<meta property="og:image:width" content="1152">
-<meta property="og:image:height" content="768">
+${ogMeta ? `<meta property="og:image:width" content="${ogMeta.width}">
+<meta property="og:image:height" content="${ogMeta.height}">` : ''}
 <meta property="og:image:alt" content="${e(page.imageAlt || page.title)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${e(page.ogTitle || page.title)}">
@@ -102,6 +104,7 @@ ${typeof page.preloadImage === 'string' ? `<link rel="preload" as="image" href="
 ${site.variant === 'tz' ? `<link rel="stylesheet" href="/assets/css/theme-tz.css?v=${site.buildId}">` : ''}
 <link rel="stylesheet" href="/assets/css/pro.css?v=${site.buildId}">
 <link rel="stylesheet" href="/assets/css/experience.css?v=${site.buildId}">
+<link rel="stylesheet" href="/assets/css/pages.css?v=${site.buildId}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">

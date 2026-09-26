@@ -75,7 +75,7 @@ export function renderTech(d, t) {
 
   const content = html`
     ${pageHero({
-      label: 'Технологии Steppe Steel',
+      label: 'Технологии',
       titleHtml: t.title,
       text: t.lead,
       crumbList,

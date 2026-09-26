@@ -11,7 +11,8 @@ import { join, dirname, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const DIST = join(ROOT, 'dist');
+// DIST_DIR — проверить сборку из другой папки (параллельные песочницы)
+const DIST = process.env.DIST_DIR ? resolve(process.env.DIST_DIR) : join(ROOT, 'dist');
 
 const errors = [];
 const warns = [];
@@ -123,6 +124,13 @@ for (const file of htmlFiles) {
     if (src && src.startsWith('/') && !exists.has(unbase(src))) err(`${url}: нет файла картинки ${src}`);
   }
 
+  /* --- Запуск без заглушек и ИИ-пометок (26.09): на страницах только реальные кадры --- */
+  for (const m of html.matchAll(/<[a-z]+\b[^>]*class="[^"]*\b(?:media__missing|photo-slot)\b[^"]*"[^>]*>/g)) {
+    const slot = (m[0].match(/data-missing="([^"]*)"/) || [])[1];
+    err(`${url}: пустая рамка вместо фото${slot ? ` «${slot}»` : ''} — кадра нет в манифесте`);
+  }
+  if (/viz-tag|Визуализация|сгенерирован/.test(html)) err(`${url}: пометка визуализации/генерации на странице`);
+
   /* --- srcset --- */
   for (const m of html.matchAll(/srcset="([^"]+)"/g)) {
     for (const part of m[1].split(',')) {
@@ -154,6 +162,19 @@ for (const loc of locs) {
   const path = loc.replace(/^https?:\/\/[^/]+/, '');
   if (!hasTarget(path)) err(`sitemap: ссылка на несуществующую страницу ${path}`);
 }
+
+/* --- Картинки в выдаче, на которые не ссылается ни одна страница --- */
+// На домене должны лежать только используемые реальные кадры (гигиена 26.09).
+const usedSlots = new Set();
+for (const file of htmlFiles) {
+  for (const m of readFileSync(file, 'utf8').matchAll(/\/assets\/img\/([a-z0-9-]+?)-\d+\.(?:webp|jpg|png)/g)) usedSlots.add(m[1]);
+}
+const shippedSlots = new Set(
+  [...exists]
+    .filter((p) => p.startsWith('/assets/img/') && !p.startsWith('/assets/img/documents/') && !p.startsWith('/assets/img/ui/'))
+    .map((p) => p.replace('/assets/img/', '').replace(/-\d+\.(webp|jpg|png)$/, ''))
+);
+for (const slot of shippedSlots) if (!usedSlots.has(slot)) warn(`картинка в выдаче не используется ни одной страницей: ${slot}`);
 
 /* --- Вес страниц --- */
 const heavy = htmlFiles
