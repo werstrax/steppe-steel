@@ -1,0 +1,145 @@
+
+/* Factory photography and original documentation.
+   26.09: правила первого экрана (.factory-hero*) собраны в pro.css — здесь их больше нет,
+   иначе этот файл (он подключается позже) перебивал мобильную раскладку. */
+
+.document-shelf{background:#f5f6f6}
+.document-shelf__grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;align-items:stretch}
+.document-preview{background:white;display:flex;flex-direction:column;border:1px solid #dfe3e5}
+.document-preview__image{position:relative;display:flex;justify-content:center;align-items:center;aspect-ratio:1.5;background:#e5e9eb;overflow:hidden;padding:0}
+.document-preview__image img{width:100%;height:100%;object-fit:cover;transition:transform 250ms}
+.document-preview__image:hover img{transform:scale(1.025)}
+/* 26.09 (H-06): обложка «Презентации завода» — фирменная типографская карточка вместо кадра из PDF.
+   Свои классы, не .logo*: карточка лежит внутри ссылки на PDF */
+.document-preview__brand{display:grid;place-content:center;justify-items:center;width:100%;height:100%;background:#10191f;color:#fff}
+.docbrand__steppe{font:700 12px/1 var(--f-d);letter-spacing:.52em;margin-right:-.52em}
+.docbrand__steel{font:800 clamp(34px,4vw,48px)/1 var(--f-d);letter-spacing:.02em;margin-top:6px;padding-bottom:6px;border-bottom:3px solid var(--accent)}
+.docbrand__title{font:400 12px var(--f-m);letter-spacing:.12em;text-transform:uppercase;color:#a5adb3;margin-top:14px}
+.document-preview--certificate .document-preview__image{padding:22px}
+.document-preview--certificate .document-preview__image img{width:auto;max-width:85%;height:100%;object-fit:contain;box-shadow:0 6px 20px #16202b20}
+.document-preview__tag{position:absolute;left:12px;top:auto;bottom:12px;background:#fff;padding:6px 8px;font-size:10px;letter-spacing:.05em;color:#273540}
+/* Обложки презентаций 16:9 — показываем целиком, без обрезки названия */
+.document-preview:not(.document-preview--certificate) .document-preview__image{aspect-ratio:16/9}
+.document-preview__body{padding:24px;display:flex;flex:1;flex-direction:column}
+.document-preview__meta{font-size:12px;color:#65727d;margin:0 0 16px}
+.document-preview h3{font-size:23px;font-weight:500;line-height:1.25;margin:0 0 14px}
+.document-preview__body>p:not(.document-preview__meta){font-size:14px;color:#647078;line-height:1.65;margin-bottom:24px}
+.document-preview__links{display:flex;align-items:center;gap:20px;justify-content:space-between;margin-top:auto;border-top:1px solid #e1e5e7;padding-top:18px}
+.document-preview__links a{display:flex;align-items:center;gap:14px;font-size:14px;min-height:44px}
+.document-preview__links a:last-child{width:44px;min-width:44px;justify-content:center;border:1px solid #d8dfe4}
+.engineering-experience{background:#fff}
+
+.engineering-experience__note{font-size:12px;color:#737c84;line-height:1.6;margin-top:14px;max-width:95ch}
+.engineering-deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:42px}
+.engineering-deliverables>div{border-top:1px solid #d9dfe3;padding-top:24px}
+.engineering-deliverables span{font:11px var(--f-m);color:#a74d1b;display:block;margin-bottom:16px}
+.engineering-deliverables h3{font-size:22px;font-weight:500}
+.engineering-deliverables p{font-size:15px;color:#68747d;line-height:1.7}
+.doc-library__request{display:grid;grid-template-columns:1fr 1fr;gap:40px;background:#fff;padding:38px;border:1px solid #dce1e4;margin-top:40px}
+.doc-library__request h2{font-size:26px;font-weight:500}
+.doc-library__request p{font-size:15px;color:#65727c}
+.pro-about__identity{background:#15232d;padding:45px;color:#fff;align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.pro-about__identity>span{font:12px var(--f-m);color:#91a2ae;letter-spacing:.08em}
+.pro-about__identity>strong{font:800 clamp(44px,5.5vw,80px)/.91 var(--f-d);letter-spacing:-.045em}
+.pro-about__identity>strong i{color:#f47b36;font-style:normal}
+.pro-about__identity>p{font-size:15px;max-width:35ch;color:#b7c2ca}
+@media(max-width:980px){.document-shelf__grid{grid-template-columns:1fr 1fr}.document-preview:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.document-preview:last-child .document-preview__image{height:100%;aspect-ratio:auto;min-height:280px}.document-preview--certificate .document-preview__image img{max-height:260px}.engineering-deliverables{gap:22px}}
+@media(max-width:640px){.document-shelf__grid{grid-template-columns:1fr}.document-preview:last-child{display:flex;grid-column:auto}.document-preview:last-child .document-preview__image{height:230px;min-height:0}.document-preview h3{font-size:23px}.engineering-deliverables{grid-template-columns:1fr;gap:22px;margin-top:32px}.engineering-deliverables h3{font-size:22px}.doc-library__request{grid-template-columns:1fr;padding:24px;gap:20px}.pro-about__identity{padding:30px}.pro-about__identity>strong{font-size:64px}}
+@media(prefers-reduced-motion:reduce){.document-preview__image img{transition:none}.document-preview__image:hover img{transform:none}}
+@media(max-width:1120px){.header .nav,.header .header__cta{display:none}.header .burger{display:inline-flex}.topbar__note{display:none}.topbar__inner{justify-content:flex-end}}
+
+/* Client supplied photography — use native resolution and responsive sources. */
+.pro-solutions{grid-template-columns:1.35fr 1fr 1fr}
+.pro-solution__photo img{object-position:center}
+.pro-solution__photo--frame{background:#dbe4ec}
+.construction-photos{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:32px;align-items:end}
+.construction-photos figure{min-width:0;margin:0}
+.construction-photos a{display:block;overflow:hidden}
+.construction-photos picture,.construction-photos img{display:block;width:100%;height:auto}
+.construction-photos__interior a{aspect-ratio:1.51}
+.construction-photos__interior img{width:100%;height:100%;object-fit:cover}
+.construction-photos__frame a{aspect-ratio:1.775}
+.construction-photos__frame img{width:100%;height:100%;object-fit:cover}
+.construction-photos figcaption{font-size:14px;line-height:1.5;color:#596b77;padding-top:17px}
+.construction-photos figcaption span{display:block;font-size:10px;letter-spacing:.08em;color:#8b551f;margin-bottom:7px}
+@media(max-width:1100px){.pro-solutions{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.construction-photos{grid-template-columns:1fr;gap:28px}.construction-photos__frame{max-width:577px;width:100%;justify-self:end}}
+@media(max-width:640px){.pro-solutions{grid-template-columns:1fr}.construction-photos figcaption{font-size:13px}.construction-photos__frame{max-width:100%}.engineering-experience .section-head__title{max-width:18ch}}
+
+/* Identify generated category images. */
+.solution-image-note{position:absolute;left:12px;bottom:12px;right:auto;max-width:calc(100% - 24px);z-index:2;background:#14232cdd;color:#fff;font:400 12px/1.4 var(--f-t);padding:6px 9px;letter-spacing:0;pointer-events:none}
+
+/* Каталог: остальные шесть типов зданий фото-карточками (07.09: «всё должно быть», не только зерно) */
+.pro-solutions--all{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-items:start;margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.pro-solutions--all .pro-solution:first-child{grid-column:auto}
+.pro-solutions--all .pro-solution:first-child .pro-solution__photo,.pro-solutions--all .pro-solution:not(:first-child) .pro-solution__photo{aspect-ratio:3/2}
+.pro-solutions--all .pro-solution h3,.pro-solutions--all .pro-solution:first-child h3{font-size:clamp(18px,1.4vw,21px)}
+.pro-solutions--all .pro-solution__body{min-height:0;padding:16px 0 18px}
+.pro-solutions--all .pro-solution p{font-size:13px}
+@media(max-width:1100px){.pro-solutions--all{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.pro-solutions--all .pro-solution:first-child{grid-column:auto}.pro-solutions--all .pro-solution:first-child .pro-solution__photo{aspect-ratio:3/2}}
+@media(max-width:640px){.pro-solutions--all{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:28px;padding-top:24px}.pro-solutions--all .pro-solution .pro-solution__photo,.pro-solutions--all .pro-solution:first-child .pro-solution__photo{aspect-ratio:4/3}.pro-solutions--all .pro-solution h3,.pro-solutions--all .pro-solution:first-child h3{font-size:16px}.pro-solutions--all .pro-solution p{display:none}.pro-solutions--all .pro-solution__body{padding:12px 0 14px;grid-template-columns:1fr 24px}.pro-solutions--all .pro-solution__index{font-size:9px;padding:4px 6px;top:8px;left:8px}}
+/* 26.09 (H-02): мобильная сетка шести карточек — одно соотношение фото, заголовок целым словом
+   (перебивает общее h3{overflow-wrap:anywhere} из site.css), подпись кадра на каждой карточке */
+@media(max-width:640px){
+.pro-solutions--all .pro-solution:first-child .pro-solution__photo,.pro-solutions--all .pro-solution:not(:first-child) .pro-solution__photo{aspect-ratio:4/3}
+.pro-solutions--all .pro-solution__body{grid-template-columns:1fr}
+.pro-solutions--all .pro-solution__arrow{display:none}
+.pro-solutions--all .pro-solution h3{overflow-wrap:normal;word-break:normal;hyphens:manual}
+}
+@media(max-width:360px){.pro-solutions--all .pro-solution h3,.pro-solutions--all .pro-solution:first-child h3{font-size:15px}}
+
+/* П. 6: срок этапа моно-строкой над заголовком шага */
+.pro-process__term{display:block;font-size:11px;letter-spacing:.06em;line-height:1.4;color:var(--ink);margin:-6px 0 10px}
+@media(max-width:540px){.pro-process__term{margin:0 0 6px}}
+
+/* П. 11: типовое решение — карточка с двумя ссылками; вся карточка ведёт в расчёт */
+.pro-typical{position:relative}
+.pro-typical__links{display:flex;flex-direction:column;align-items:flex-start}
+.pro-typical__links a{min-height:44px;display:inline-flex;align-items:center}
+.pro-typical__cta::after{content:"";position:absolute;inset:0}
+.pro-typical__page{position:relative;z-index:1;margin-top:-6px;font-size:13px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:.22em}
+.pro-typical__page:hover{color:var(--ink);text-decoration-color:currentColor}
+
+/* П. 10: «Приехать на завод» */
+.factory-visit{min-height:44px}
+.pro-about .btn-row{align-items:center;column-gap:24px}
+
+/* П. 10: план объекта без фото — тонкие графитовые линии, моно-подписи, один оранжевый акцент */
+.case-plan{margin:18px 0 0}
+.case-plan svg{display:block;width:100%;max-width:380px;height:auto;overflow:visible}
+.case-plan line,.case-plan rect,.case-plan path{vector-effect:non-scaling-stroke}
+.case-plan__outline{stroke:var(--ink);stroke-width:1.5}
+.case-plan__dim line{stroke:#7b868d;stroke-width:1}
+.case-plan text{font-family:var(--f-m);font-size:12px;letter-spacing:.02em;fill:#3a454d}
+.case-plan__mark path{fill:var(--accent);stroke:none}
+.case-plan__mark line{stroke:var(--accent);stroke-width:1}
+.case-plan__mark text{font-size:13px;fill:var(--accent-deep)}
+.case-plan__mark .case-plan__note{font-size:10px;fill:var(--muted)}
+.case-plan__ridge{stroke-dasharray:7 5;opacity:.8}
+.case-plan figcaption{font-size:11px;line-height:1.4;color:var(--muted);margin-top:10px}
+.case-docs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0 0;padding:18px 0 0;border-top:1px solid var(--line);list-style:none}
+.case-docs li{display:flex;flex-direction:column;min-width:0}
+.case-docs__num{font:500 clamp(28px,2.6vw,38px)/1 var(--f-d);letter-spacing:-.04em;color:var(--ink)}
+.case-docs__unit{font-size:11px;color:var(--muted);margin-top:8px}
+.case-docs__label{font-size:13px;line-height:1.35;color:var(--ink-2);margin-top:2px}
+.pro-case .case-docs{margin-top:4px;padding-top:0;border-top:0}
+.obj-card__media--plan{aspect-ratio:auto;display:flex;flex-direction:column;justify-content:center;padding:28px 28px 24px}
+.obj-card__media--plan .case-plan{margin:0}
+@media(max-width:640px){.obj-card__media--plan{padding:22px 18px 20px}.case-docs{gap:10px}.case-docs__num{font-size:28px}.case-docs__label{font-size:12px}}
+
+/* П. 20: Instagram — нейтральная обводка вместо зелёной WhatsApp */
+.btn--outline{--btn-bg:transparent;--btn-fg:var(--ink);--btn-line:var(--line-2)}
+.btn--outline:hover{--btn-bg:var(--paper-2)}
+
+/* 25.09: у передела без реального фото — текстовая карточка (ИИ-кадры сняты перед запуском) */
+.prod-card--text{justify-content:flex-end;background:var(--paper-2);min-height:220px}
+.prod-card--text .prod-card__body{padding-top:var(--space-l)}
+.prod-card--text .prod-card__num{font-size:2.4rem;line-height:1;letter-spacing:-.04em}
+
+/* 27.09: четыре документа на полке (добавлена презентация зернохранилища) */
+.document-shelf__grid--n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.document-shelf__grid--n4 .document-preview h3{font-size:20px}
+@media(max-width:1180px){.document-shelf__grid--n4{grid-template-columns:1fr 1fr}.document-shelf__grid--n4 .document-preview:last-child{grid-column:auto;display:flex}.document-shelf__grid--n4 .document-preview:last-child .document-preview__image{height:auto;aspect-ratio:16/9;min-height:0}.document-shelf__grid--n4 .document-preview--certificate .document-preview__image{aspect-ratio:1.5}}
+@media(max-width:640px){.document-shelf__grid--n4{grid-template-columns:1fr}}
+.side__doc{margin-top:14px}
+.hero-doc{align-self:center;font-size:14px}
