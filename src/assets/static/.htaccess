@@ -1,0 +1,56 @@
+# STEPPESTEEL — статический сайт на хостинге в Казахстане (Apache).
+# Правила зоны .kz: сайт должен работать на серверах в РК — GitHub Pages не подходит.
+# Файл лежит в корне сайта рядом с index.html.
+
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+Options -Indexes
+
+AddType video/mp4 .mp4
+AddType image/webp .webp
+AddType image/svg+xml .svg
+AddType font/woff2 .woff2
+AddType application/manifest+json .webmanifest
+AddDefaultCharset utf-8
+AddCharset utf-8 .html .css .js .xml .txt .json
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Проверка сертификата Let's Encrypt — без редиректов
+  RewriteRule ^\.well-known/ - [L]
+
+  # www → без www
+  RewriteCond %{HTTP_HOST} ^www\.steppesteel\.kz$ [NC]
+  RewriteRule ^ https://steppesteel.kz%{REQUEST_URI} [L,R=301]
+
+  # http → https (включается, когда в панели хостинга выпущен SSL-сертификат)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://steppesteel.kz%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Кэш: CSS/JS версионируются ?v=<хэш>, картинки и видео не меняются под тем же именем
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 10 minutes"
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType text/javascript "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType application/pdf "access plus 7 days"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml text/plain application/manifest+json
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

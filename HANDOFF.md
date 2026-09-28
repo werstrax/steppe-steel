@@ -342,3 +342,29 @@ node tools/deploy.mjs --push      # + push (только после соглас
 страница <url>», те же данные уходят параметром `source` в события
 `calc_submit` / `partner_submit`. UTM сохраняются с первого визита в сессии.
 
+
+## Хостинг в Казахстане — обязательно для .kz (28.09.2026)
+
+Правила KazNIC (пп. 6 п. 16 Правил регистрации): сайт в зоне .kz должен работать на серверах
+в РК. За GitHub Pages (IP 185.199.108–111.153) другой домен этого же заказчика, stroykarkas.kz,
+17.09 получил статус **serverHold** — перестали открываться и сайт, и почта; сняли после
+переезда на ps.kz и уведомления в KazNIC (образец — Downloads «Уведомление KazNIC — для печати.pdf»).
+
+28.09 сайт запущен на steppesteel.kz через GitHub Pages (ветка gh-pages репозитория
+werstrax/steppe-steel, только собранный сайт) — это временно, до переезда:
+
+1. Заказать хостинг с серверами в РК (hoster.kz — там уже домен, DNS и почта; или ps.kz).
+   PHP и база не нужны: сайт статический, ~50 МБ.
+2. В панели хостинга создать сайт steppesteel.kz, в его корневую папку загрузить архив
+   `steppesteel-site-hosting-<дата>.zip` (собирается из dist/ без CNAME и .nojekyll) и распаковать
+   так, чтобы index.html и .htaccess лежали прямо в корне.
+3. Выпустить бесплатный SSL (Let's Encrypt) на steppesteel.kz и www.steppesteel.kz.
+4. DNS домена (hoster.kz → Домены → steppesteel.kz): удалить четыре A-записи 185.199.x.153,
+   добавить A @ → IP хостинга; www → CNAME steppesteel.kz (или A на тот же IP).
+   Запись mail и MX НЕ трогать.
+5. Проверить: https://steppesteel.kz открывается, http и www дают 301 на https://steppesteel.kz,
+   несуществующий адрес — 404 со страницей сайта, видео первого экрана играет.
+6. После переезда: в werstrax/steppe-steel → Settings → Pages снять домен (Pages отключить).
+
+Обновление сайта после переезда: `node build.mjs`, затем залить dist/ на хостинг
+(файловый менеджер или FTP). Правила Apache — src/assets/static/.htaccess (редиректы, 404, кэш).
