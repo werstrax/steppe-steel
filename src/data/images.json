@@ -342,6 +342,19 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JZQC/OCG0vWLJ7NCUq6oAAP7KUyDoiYaqbrSuM1KadPxl0Rdm2u3DlVRNXz9AAAA="
  },
+ "obj-sto-lstk-1": {
+  "w": 1065,
+  "h": 798,
+  "ratio": 1.3346,
+  "widths": [
+   384,
+   576,
+   864,
+   1065
+  ],
+  "fallback": 1065,
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoUAA8APulep00pJSOiMAgBIB0JZQCw7CIgeX2Ehg49gvAAAP7FROHzjQqpfkfp5+TFnZQZe4jUM+G4hIfGumiSmeldJPGdwohjQygSEAA="
+ },
  "og-default": {
   "w": 1200,
   "h": 630,
