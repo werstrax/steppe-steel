@@ -315,6 +315,33 @@
   "fallback": 1152,
   "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAwCdASoUAAsAPulgqU2pJaQiMAgBIB0JQBOgBFFLxCfKnY6flAD+sXfNtBhkDt45Jm805Hreump6UpaCMgcWsVEXXO3TG/Y6cD6l9N6oiFR0mkHQZI0AAAA="
  },
+ "obj-angar-1": {
+  "w": 1135,
+  "h": 847,
+  "ratio": 1.34,
+  "widths": [
+   384,
+   576,
+   864,
+   1135
+  ],
+  "fallback": 1135,
+  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoUAA8APuleqE0pJSQiMAgBIB0JaACdMoMYADGApxcmGvrKAAD9Gtpwby85gyeAQ95m+pr8Np4M+LZUjorl8cvaqzwoL/DEXZKsAC+KFBosi7MUS48UgAAA"
+ },
+ "obj-proizvodstvo-lstk-1": {
+  "w": 1428,
+  "h": 817,
+  "ratio": 1.7479,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1428
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JZQC/OCG0vWLJ7NCUq6oAAP7KUyDoiYaqbrSuM1KadPxl0Rdm2u3DlVRNXz9AAAA="
+ },
  "og-default": {
   "w": 1200,
   "h": 630,
