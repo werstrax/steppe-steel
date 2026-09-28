@@ -464,3 +464,6 @@ html.js .hm-rail__nav{display:flex}
 .hm-hero__video.is-on{opacity:1}
 .hm-hero__media>.brand-tag{z-index:2}
 @media(prefers-reduced-motion:reduce){.hm-hero__video{display:none}}
+
+/* 29.09: точка кадрирования фото в карточках «Проектировщикам» / «Стать дилером» */
+.hm-partner__photo img{object-position:var(--focus,50% 50%)}
