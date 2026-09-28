@@ -1,25 +1,32 @@
 # HANDOFF — как жить с сайтом STEPPESTEEL
 
-## Рабочая версия (с 26.09.2026)
+## Рабочая версия (с 27.09.2026)
 
-Рабочая версия — сайт строго по структуре ТЗ (`docs/TZ.md`). Главная —
-`src/pages/home.mjs`, первый экран дословно по ТЗ §5: H1 «Завод строительных
-металлоконструкций», подзаголовок «Проектирование. Производство. Комплектная
-поставка.», доптекст про металлокаркасы из ЛСТК и ЛМК, кнопки «Получить
-расчёт» и «Посмотреть решения». Редизайн 18.09 откатан по решению заказчика
-26.09 («вернём как было, в структуре и ТЗ») — не возвращать. Тексты главной —
-`src/data/home.json`.
+Живой сайт — **https://steppesteel.kz** (запущен 28.09.2026). Точка входа для
+нового агента — `AGENT-BRIEF.md`.
 
-Фото — только реальные: съёмка объекта завода с дрона 24.09.2026 (слоты
-`drone-*`) и кадры завода из его презентаций (`prod-baza` — цех и линия
-профилирования, `prod-komplekt`, `prod-svarka`), рендеры профилей и узлов
-(`tech-*`), скан сертификата (`cert-p1..p4`). ИИ-изображений на сайте нет;
-снятые кадры лежат в `src/assets/img/raw/viz-archive/` и обратно не
-возвращаются. Видео с объяснением убрано.
+Структура сайта — по ТЗ (`docs/TZ.md`), главная — по макету Шамиля
+(`docs/client/maket-glavnoy-shamil-2026-08-31.jpeg`, 10 блоков): первый экран
+«STEPPESTEEL — завод строительных металлоконструкций» + «Проектирование.
+Производство. Комплектная поставка.», кнопки «Получить расчёт» / «Типовые
+решения», справа видео-петля облёта зернохранилища (`src/assets/video/hero-grain.mp4`,
+кадр `hero-grain`); дальше показатели с иконками, лента «Что мы производим»,
+типовые с фото, реализованные объекты, «Для проектировщиков» / «Стать дилером»,
+5 шагов, «О заводе», документы, CTA. Разметка — `src/pages/home.mjs`, тексты —
+`src/data/home.json`, иконки — `src/lib/icons.mjs`.
 
-Запасной вариант «строго по макету» (`VARIANT=tz node build.mjs`,
-`home-tz.mjs`, `theme-tz.css`, меню `site.json → navTz`) — архив; в рабочую
-сборку `theme-tz.css` не копируется.
+Редизайн 18.09 («Сила стали», 3D-модель) откатан 26.09 по решению заказчика
+(«вернём как было, в структуре и ТЗ») — не возвращать. Видео с объяснением
+(4 минуты с объекта) убрано по просьбе Рамазана — не возвращать; петля первого
+экрана — другое, одобрена.
+
+Фото — реальные (дрон 24.09, объекты от завода 28.09, цех из презентаций),
+где своего кадра нет — свободный сток Pexels с подписью «Пример». ИИ-картинок
+на сайте нет. Подробно — раздел «Как добавить фото».
+
+Запасной вариант «строго по макету» (`VARIANT=tz node build.mjs`, `home-tz.mjs`,
+`theme-tz.css`, меню `site.json → navTz`) — архив; в рабочую сборку
+`theme-tz.css` не копируется.
 
 ## Стили
 
@@ -136,37 +143,39 @@ category (agro / sklady / prom / angary / modulnye / drugie). Фильтр
 
 ## Как добавить фото
 
-Правило заказчика перед запуском (25.09.2026): НИ ОДНОЙ ИИ-картинки. На сайте
-только реальные кадры: съёмка объекта завода с дрона 24.09.2026 (исходники —
-`src/assets/img/raw/drone-2026-09-24/`), кадры завода из его презентаций
-(`src/assets/docs/*.pdf`), рендеры профилей и узлов, скан сертификата. Фото
-конкурентов и стоки не использовать.
+Правила (действуют с 25–28.09.2026):
+- **ни одной ИИ-картинки** — сгенерированное снято в `src/assets/img/raw/viz-archive/`;
+- **фото конкурентов — никогда** (ни как есть, ни «переделать нейросетью»);
+- **свои кадры в приоритете**: съёмка объекта с дрона 24.09 (`raw/drone-2026-09-24/`),
+  фото объектов от завода (`raw/client-2026-09-28/`), кадры цеха из презентаций;
+- **свободный сток (Pexels)** — только где своего кадра нет, с подписью «Пример: …»,
+  и не на `/proizvodstvo/` и «О заводе». Реестр — `docs/stock-photos.md`.
 
-Слоты манифеста (`src/data/images.json`, 26.09.2026):
+Слоты манифеста (`src/data/images.json`, 29.09.2026):
 
 | Слот | Что это |
 |---|---|
-| `drone-frame-front`, `drone-frame-gable`, `drone-frame-long`, `drone-frame-long-2`, `drone-truss`, `drone-span`, `drone-hall`, `drone-storage` | каркас на объекте завода с дрона — обложки решений и первые экраны |
-| `drone-grain-front`, `drone-grain-gable`, `drone-grain-inside`, `drone-interior`, `drone-loading` | построенное зернохранилище на объекте завода — снаружи и внутри |
+| `hero-grain` | первый кадр видео первого экрана (облёт зернохранилища), LCP главной |
+| `drone-grain-front`, `drone-grain-gable`, `drone-grain-inside`, `drone-interior`, `drone-loading` | построенное напольное зернохранилище завода — снаружи и внутри |
+| `drone-frame-front`, `drone-frame-gable`, `drone-frame-long`, `drone-frame-long-2`, `drone-truss`, `drone-span`, `drone-hall`, `drone-storage`, `drone-hero` | каркас на объекте завода с дрона |
 | `drone-montazh`, `drone-panels` | монтаж каркаса и обшивки на объекте |
-| `drone-hero` | общий план объекта сверху |
-| `prod-baza` | производственный корпус в с. Троебратское: цех, линия профилирования, рулоны |
-| `prod-komplekt`, `prod-svarka` | цех с рулонами; сварочные посты |
-| `tech-hub`, `tech-lstk-1`, `tech-lstk-2`, `tech-boltovye-1` | рендеры каркаса, профилей и узлов из презентации (PNG с прозрачностью) |
-| `cert-p1` … `cert-p4` | скан сертификата соответствия РК, 4 листа |
-| `og-default` | картинка для соцсетей (делается `tools/make_og.py`) |
+| `obj-angar-1` | обшитое здание от завода (28.09) — обложка «Склады» |
+| `obj-proizvodstvo-lstk-1` | каркас производственного здания из ЛСТК (28.09) |
+| `obj-sto-lstk-1` | каркас СТО из ЛСТК (28.09) |
+| `obj-ovoshch-1` | овощехранилище — кадр от Рамазана, признаки генерации; подпись нейтральная, заменить при первой возможности |
+| `stock-sport-padel` | Pexels 32474981 — «Пример: крытый корт на стальном каркасе» |
+| `stock-partner-designers`, `stock-partner-dealer` | Pexels 34938429 / 7693144 — карточки «Для проектировщиков» / «Стать дилером» на главной |
+| `prod-baza`, `prod-komplekt`, `prod-svarka` | цех завода: корпус и линия профилирования; цех с рулонами; сварочные посты |
+| `tech-hub`, `tech-lstk-1`, `tech-lstk-2`, `tech-boltovye-1` | рендеры каркаса, профилей и узлов из презентации |
+| `cert-p1` … `cert-p4` | скан сертификата соответствия РК |
+| `og-default` | картинка для соцсетей (`tools/make_og.py`) |
 
-`drone-aerial` и `drone-side` не стояли ни на одной странице — сняты с выдачи 26.09.2026 — исходники и готовые файлы в
-`src/assets/img/raw/viz-archive/removed-2026-09-26/unused-real/`.
+Обложки типов зданий — `solutions.json → items[].cover` + `coverCaption` + `photoAlt`
+(+ `_coverNote` с источником). Подписи: свои объекты — «Объект завода…»,
+«Каркас … на объекте»; сток — «Пример: …». Регион объекта с дрона не писать.
 
-Подписи кадров объекта — только «Каркас завода на объекте, 2026» и «Объект
-завода, сентябрь 2026»: регион объекта не подтверждён. Кадры цеха —
-«Производственный корпус, с. Троебратское» (`prod-baza`), «Цех завода:
-рулоны и линии» (`prod-komplekt`), «Сварочные посты завода» (`prod-svarka`) —
-из `FACTORY_SHOTS` в `components.mjs`.
-
-Порядок: исходник (jpg/png, ≥1400px по ширине) в `src/assets/img/raw/` →
-`python tools/optimize_images.py <имя-слота>` → `node build.mjs`.
+Порядок: исходник (jpg/png, ≥1000 px по ширине) в `src/assets/img/raw/<слот>.jpg` →
+`python tools/optimize_images.py <слот>` → прописать слот в данных → `node build.mjs`.
 
 ⚠️ Оптимизатор запускать **только с именем слота и никогда с `--force`**:
 - без имени он обрабатывает ВСЕ файлы из `raw/` и возвращает в манифест
@@ -174,12 +183,8 @@ category (agro / sklady / prom / angary / modulnye / drugie). Фильтр
 - `--force` пересоздаёт манифест только из переданных имён — остальные
   записи пропадут.
 Чтобы заменить кадр, сначала удалить его файлы `src/assets/img/<имя>-*`,
-затем `optimize_images.py <имя>`. Под одним именем в `raw/` — ОДИН файл
-(`x.jpg` и `x.png` вместе дают непредсказуемый выбор). Всё снятое лежит
-в `raw/viz-archive/` (подпапки оптимизатор не читает): 26.09.2026 туда
-перенесены 35 исходников вне манифеста и снятые слоты `sol-angary`,
-`sol-proizvodstvennye-zdaniya`, `zerno-cutaway`, `zerno-node` —
-`raw/viz-archive/removed-2026-09-26/`.
+затем `optimize_images.py <имя>`. Под одним именем в `raw/` — ОДИН файл.
+Подпапки `raw/` оптимизатор не читает (архивы, исходники съёмок).
 
 ## Формы и приём файлов (ТЗ §17) — РЕШЕНО 30.08.2026
 
@@ -235,15 +240,15 @@ ID, код подключится сам. События (уходят и в М�
 
 ## Домен steppesteel.kz
 
-`site.json` → `url: "https://steppesteel.kz"`, `basePath: ""`. CNAME лежит
-в `src/assets/static/` и сборкой кладётся в корень `dist/` (и отдельно
-пишется `tools/deploy.mjs`) — не удалять, иначе GitHub Pages отвяжет домен.
-DNS: 4 A-записи GitHub Pages на apex (185.199.108–111.153) + CNAME `www` →
-werstrax.github.io. Sitemap: https://steppesteel.kz/sitemap.xml.
+Сайт запущен 28.09.2026. `site.json` → `url: "https://steppesteel.kz"`, `basePath: ""`.
+CNAME и `.htaccess` лежат в `src/assets/static/` и сборкой кладутся в корень `dist/`.
+Сейчас раздаётся GitHub Pages из ветки `gh-pages` репозитория `werstrax/steppe-steel`;
+DNS у hoster.kz: 4 A-записи 185.199.108–111.153 на apex, `www` → редирект на apex,
+`mail` и MX — почтовый сервер hoster.kz (не трогать). Сертификат GitHub выпущен на
+steppesteel.kz и www.
 
-⚠️ По правилам зоны .kz сайт должен хоститься на сервере в РК. Если от
-регистратора придёт предупреждение — на переезд 10 дней: залить `dist/`
-на казахстанский хостинг и перевести A-записи. Код менять не нужно.
+⛔ Это временно: по правилам зоны .kz нужен хостинг в РК — см. раздел
+«Хостинг в Казахстане» ниже.
 
 ## Превью для заказчика
 
@@ -257,42 +262,34 @@ PREVIEW=1 SITE_URL=https://werstrax.github.io/steppesteel-preview BASE_PATH=step
 # на путь установки (C:/Program Files/Git/preview). Сборщик нормализует значение сам.
 ```
 
-## Деплой (с 26.09.2026 — только dist/, отдельный репозиторий)
+## Деплой на боевой домен (с 28.09.2026 — ветка gh-pages)
 
-⛔ Раньше GitHub Pages раздавал корень репозитория исходников
-werstrax/steppe-steel, и по домену открывалось всё: HANDOFF.md,
-docs/image-prompts.md, src/data/*.json, сырые кадры. Так больше нельзя.
-Сайт публикуется из ОТДЕЛЬНОГО публичного dist-репозитория (по образцу
-steppesteel-preview, например werstrax/steppesteel-site), где лежит только
-сборка:
+Домен раздаёт только собранный сайт: ветка `gh-pages` репозитория
+`werstrax/steppe-steel` (orphan, без исходников). Ветка `main` — исходники,
+по домену они не открываются (проверка: `/HANDOFF.md`, `/docs/TZ.md`,
+`/src/data/site.json` → 404).
 
 ```bash
-node tools/deploy.mjs --dry-run   # боевая сборка + проверка: нет *.md, src/, tools/, docs/,
-                                  # raw/, картинок вне манифеста, noindex и файлов > 20 МБ
-node tools/deploy.mjs             # копия dist/ в клон dist-репозитория + CNAME + .nojekyll + коммит
-node tools/deploy.mjs --push      # + push (только после согласования)
-# клон: DEPLOY_DIR=<путь> или --dir <путь>, по умолчанию ../steppesteel-site
+node build.mjs && node tools/check.mjs          # боевая сборка в dist/ (CNAME и .nojekyll внутри)
+git clone --depth 1 -b gh-pages https://github.com/werstrax/steppe-steel.git <клон>
+# в клоне удалить всё, кроме .git, скопировать содержимое dist/, затем:
+git -c user.name=werstrax -c user.email=ramazan.ship@gmail.com -c core.safecrlf=false add -A
+git -c user.name=werstrax -c user.email=ramazan.ship@gmail.com -c core.safecrlf=false commit -m "..."
+git push origin gh-pages
+gh api repos/werstrax/steppe-steel/pages/builds/latest --jq '{status,commit}'   # ждать built
 ```
 
-Разовое переключение (делает владелец аккаунта GitHub):
+CDN кэширует HTML до 10 минут. Если сборка Pages не стартовала —
+`gh api -X POST repos/werstrax/steppe-steel/pages/builds`.
 
-1. Создать публичный репозиторий под сборку и клонировать рядом с проектом.
-2. werstrax/steppe-steel → Settings → Pages: снять домен, отключить Pages.
-3. dist-репозиторий → Settings → Pages: источник `main` / корень, домен
-   `steppesteel.kz`, Enforce HTTPS.
-4. Аккаунт → Settings → Pages → Verified domains: подтвердить steppesteel.kz
-   (TXT-запись у hoster.kz). A-записи 185.199.108–111.153 не меняются.
-5. Репозиторий исходников werstrax/steppe-steel — сделать приватным
-   (на бесплатном плане Pages из приватного репозитория не работает, поэтому
-   сайт и живёт в отдельном dist-репозитории).
-6. Проверка: https://steppesteel.kz/HANDOFF.md, /docs/image-prompts.md,
-   /src/data/site.json → 404; / → 200 с главной по ТЗ; www → редирект.
+`tools/deploy.mjs` написан под другой вариант (отдельный dist-репозиторий
+`../steppesteel-site`) и сейчас не используется; его проверки (`--dry-run`:
+нет *.md, src/, tools/, docs/, raw/, noindex, файлов > 20 МБ) полезны перед заливкой.
 
-⚠️ Перед любым push исходников: в локальной истории были коммиты с роликом
-`src/assets/video/grain-walkthrough.mp4` (45 МБ). Их сворачивают в один
-коммит (`git reset --soft origin/main` + один коммит с текущим деревом);
-проверка — `git rev-list --objects origin/main..main | grep grain-walkthrough`
-пусто.
+Исходники в `main` запушены (в истории есть коммит с роликом 45 МБ — это ниже
+лимита GitHub, сворачивать не нужно). Сделать репозиторий исходников приватным
+можно только вместе с переездом сайта на другой хостинг: на бесплатном плане
+Pages из приватного репозитория не работает.
 
 Со старых URL v1 (`zernohranilishcha.html`) и v3 (`/katalog/…`, `/uslugi/…`,
 `/zayavka/`, `/partnyoram/`, `/predstavitelyam/`, `/process/`) сборка
