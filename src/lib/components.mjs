@@ -619,7 +619,7 @@ export function solutionCard(s, { level = 3 } = {}) {
 
 /** Одна строка под сеткой решений: откуда кадры на карточках. */
 export const solutionsPhotoNote = () =>
-  html`<p class="solutions-photo-note mono"><b>STEPPESTEEL</b> · Фото — объекты завода. Кадры по типам зданий добавляются.</p>`;
+  html`<p class="solutions-photo-note mono"><b>STEPPESTEEL</b> · Фото объектов завода и примеры зданий на стальном каркасе. Кадры по типам зданий добавляются.</p>`;
 
 /* --- Строка реестра решений ------------------------------------------------ */
 

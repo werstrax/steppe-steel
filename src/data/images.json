@@ -328,6 +328,20 @@
   "fallback": 1135,
   "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoUAA8APuleqE0pJSQiMAgBIB0JaACdMoMYADGApxcmGvrKAAD9Gtpwby85gyeAQ95m+pr8Np4M+LZUjorl8cvaqzwoL/DEXZKsAC+KFBosi7MUS48UgAAA"
  },
+ "obj-ovoshch-1": {
+  "w": 1168,
+  "h": 667,
+  "ratio": 1.7511,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1168
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQBACdASoUAAsAPuleqE0pJSQiMAgBIB0JQBOmUI4ABHwb70uJh2hXG6DAAMyhGxRuPxUL5ZLnL2+Wt2DS7gf1ELCIoyMoFtSrgtRsqJ69QmLwo4vLHY2RmAAAAA=="
+ },
  "obj-proizvodstvo-lstk-1": {
   "w": 1428,
   "h": 817,
@@ -409,6 +423,21 @@
   ],
   "fallback": 983,
   "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
+ },
+ "stock-sport-padel": {
+  "w": 2400,
+  "h": 1800,
+  "ratio": 1.3333,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   2400
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABQBACdASoUAA8APulgqE0pJaOiMAgBIB0JagCxGwDs/wGLD7HFF2Xkw+6AAP6PccBqDh1pu9O0IBL89Az6Adx/Ga/85yG/qKsY076K+nECCDZ2RwrzvDz27oMGsBmoxtNbsceqBNRgbI58QAA="
  },
  "tech-boltovye-1": {
   "w": 1536,
