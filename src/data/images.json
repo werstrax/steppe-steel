@@ -424,6 +424,36 @@
   "fallback": 983,
   "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JagCdAB86YUu3bIPegADMb2fig0ntFgMCoF84t+skDPzls32Vsk+fYWv2cCevwa8KYBkP2+Q+aUNjMxHkHLjAck+udC2Oh4I98oQfnYxXkp8ScAA="
  },
+ "stock-partner-dealer": {
+  "w": 1600,
+  "h": 2400,
+  "ratio": 0.6667,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1600
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAAAQBQCdASoUAB4APulorFApJaQiqAqpIB0JQBOgAdeXsy/ugD9lI/SyoR/VLj5uSIMAAPP8vPhFavIRkssFeM5HsHrQeZTIOKf5gjLKhSWVl3ckjsxI+wkvLdVwepaCXiWeh+NEUTFvbx5Y1+igChqJefL0D7/wDI0BG05taBEh81HHgS4gPWCthVoeFyOdxOGXiqcsmb7qX9WgAAA="
+ },
+ "stock-partner-designers": {
+  "w": 1600,
+  "h": 2133,
+  "ratio": 0.7501,
+  "widths": [
+   384,
+   576,
+   864,
+   1152,
+   1536,
+   1600
+  ],
+  "fallback": 1152,
+  "lqip": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAAAwBQCdASoUABsAPuleqk+pJKOiMBgIASAdCUAWI9vgNKbhhrKLOpaOXEYm909AlMnhgADMJjxW69YCdl6ESF1znYd4h1DsqMuRGlHpu5BVsycYBkgw/7dIuZ39o6Yfbo6yDBWZw6vSKCZSmeZh5Iw/DEWI/tOki/jLlL58U4nHlm6xLm9IpaTFPTzDwrO7k7wQzOY793WbkgUD9t+5K5i5hdiQvHP2aHymFu9bI0AAAA=="
+ },
  "stock-sport-padel": {
   "w": 2400,
   "h": 1800,

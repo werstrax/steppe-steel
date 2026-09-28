@@ -228,7 +228,7 @@ export function renderHome(d) {
             <a class="btn btn--ghost hm-btn-sm" href="${p.url}" aria-label="Подробнее: ${p.title}">Подробнее ${iconArrow}</a>
           </div>
           ${hasImage(p.img)
-            ? html`<figure class="hm-partner__photo">${raw(picture(p.img, { alt: p.alt, sizes: '(min-width: 1100px) 300px, (min-width: 641px) 40vw, 100vw' }))}</figure>`
+            ? html`<figure class="hm-partner__photo"${p.focus ? raw(` style="--focus:${p.focus}"`) : ''}>${raw(picture(p.img, { alt: p.alt, sizes: '(min-width: 1100px) 300px, (min-width: 641px) 40vw, 100vw' }))}</figure>`
             : ''}
         </article>`)}
       </div>
