@@ -160,8 +160,6 @@ category (agro / sklady / prom / angary / modulnye / drugie). Фильтр
 | `drone-frame-front`, `drone-frame-gable`, `drone-frame-long`, `drone-frame-long-2`, `drone-truss`, `drone-span`, `drone-hall`, `drone-storage`, `drone-hero` | каркас на объекте завода с дрона |
 | `drone-montazh`, `drone-panels` | монтаж каркаса и обшивки на объекте |
 | `obj-angar-1` | обшитое здание от завода (28.09) — обложка «Склады» |
-| `obj-proizvodstvo-lstk-1` | каркас производственного здания из ЛСТК (28.09) |
-| `obj-sto-lstk-1` | каркас СТО из ЛСТК (28.09) |
 | `obj-ovoshch-1` | овощехранилище — кадр от Рамазана, признаки генерации; подпись нейтральная, заменить при первой возможности |
 | `stock-sport-padel` | Pexels 32474981 — «Пример: крытый корт на стальном каркасе» |
 | `stock-partner-designers`, `stock-partner-dealer` | Pexels 34938429 / 7693144 — карточки «Для проектировщиков» / «Стать дилером» на главной |
